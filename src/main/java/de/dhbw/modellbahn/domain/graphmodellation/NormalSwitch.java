@@ -1,24 +1,26 @@
 package de.dhbw.modellbahn.domain.graphmodellation;
 
 import de.dhbw.modellbahn.domain.trackcomponents.SwitchComponent;
-import de.dhbw.modellbahn.domain.trackcomponents.TrackComponentState;
 
-public class NormalSwitch extends GraphPoint{
-    GraphPoint trunk;
-    GraphPoint strait;
-    GraphPoint diverging;
-    SwitchComponent switchComponent;
+public class NormalSwitch extends GraphPoint implements Switch{
+    private  final SwitchComponent switchComponent;
+    private  final GraphPointConnection straight;
+    private  final GraphPointConnection diverging;
 
-    Connection straight;
-    Connection right;
+    public NormalSwitch(SwitchComponent switchComponent, GraphPointConnection straight, GraphPointConnection diverging) {
+        this.switchComponent = switchComponent;
+        this.straight = straight;
+        this.diverging = diverging;
+    }
 
     public void switchToConnectPoints(GraphPoint point1, GraphPoint point2){
         if(straight.connects(point1, point2)){
-            switchComponent.setState(new TrackComponentState(true));
-        }else if (right.connects(point1, point2)){
-            switchComponent.setState(new TrackComponentState(false));
+            switchComponent.setStraight();
+        }else if (diverging.connects(point1, point2)){
+            switchComponent.setDiverging();
         }else{
             throw new IllegalArgumentException("Points cannot be connected by this switch.");
         }
     }
+
 }

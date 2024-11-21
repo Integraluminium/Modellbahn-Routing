@@ -22,4 +22,11 @@ public class SwitchComponent extends TrackComponent {
         // TODO request API
         this.state = state;
     }
+
+    public void setStraight(){
+        setState(new TrackComponentState(true));
+    }
+    public void setDiverging(){
+        setState(new TrackComponentState(false));
+    }
 }
