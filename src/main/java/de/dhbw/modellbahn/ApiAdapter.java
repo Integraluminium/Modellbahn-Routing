@@ -1,5 +1,7 @@
 package de.dhbw.modellbahn;
 
+import java.util.List;
+
 public interface ApiAdapter {
     void setLocSpeed(LocId locId, Speed speed);
     void setLocFunction(LocId locId, LocFunction locFunction);
@@ -9,7 +11,7 @@ public interface ApiAdapter {
     Fuel getFuel(LocId locId, FuelType fuelType);
     List<Fuel> getAllFuels(LocId locId);
     void emergencyStopLoc();
-    
+
     void setTrackComponentStatus(TrackComponentId trackComponentId, TrackComponentStatus trackComponentStatus);
     TrackComponentStatus getTrackComponentStatus(TrackComponentId trackComponentId);
 
