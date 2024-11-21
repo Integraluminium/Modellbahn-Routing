@@ -4,14 +4,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import javax.management.InvalidAttributeValueException;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SpeedTest {
 
-    public static Stream<Arguments> provideCorrectSpeedValues() {
+    public static Stream<Arguments> provideValidSpeedValues() {
         return Stream.of(
                 Arguments.of(0),
                 Arguments.of(50),
@@ -27,8 +26,8 @@ class SpeedTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideCorrectSpeedValues")
-    void testCorrectSpeedValues(int input){
+    @MethodSource("provideValidSpeedValues")
+    void testValidSpeedValues(int input){
         Speed speed = new Speed(input);
 
         assertEquals(input, speed.value());
