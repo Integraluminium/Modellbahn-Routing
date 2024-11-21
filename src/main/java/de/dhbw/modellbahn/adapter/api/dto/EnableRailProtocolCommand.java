@@ -28,25 +28,20 @@ import java.util.Objects;
         EnableRailProtocolCommand.JSON_PROPERTY_ID,
         EnableRailProtocolCommand.JSON_PROPERTY_BITSET
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class EnableRailProtocolCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_ID = "id";
     public static final String JSON_PROPERTY_BITSET = "bitset";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer id;
-    @javax.annotation.Nonnull
     private Integer bitset;
 
     public EnableRailProtocolCommand() {
     }
 
-    public EnableRailProtocolCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public EnableRailProtocolCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -56,7 +51,6 @@ public class EnableRailProtocolCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -66,12 +60,12 @@ public class EnableRailProtocolCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public EnableRailProtocolCommand response(@javax.annotation.Nonnull Boolean response) {
+    public EnableRailProtocolCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -81,7 +75,6 @@ public class EnableRailProtocolCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -91,12 +84,12 @@ public class EnableRailProtocolCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public EnableRailProtocolCommand id(@javax.annotation.Nonnull Integer id) {
+    public EnableRailProtocolCommand id(Integer id) {
         this.id = id;
         return this;
     }
@@ -106,7 +99,6 @@ public class EnableRailProtocolCommand {
      *
      * @return id
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getId() {
@@ -116,12 +108,12 @@ public class EnableRailProtocolCommand {
 
     @JsonProperty(JSON_PROPERTY_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setId(@javax.annotation.Nonnull Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
 
-    public EnableRailProtocolCommand bitset(@javax.annotation.Nonnull Integer bitset) {
+    public EnableRailProtocolCommand bitset(Integer bitset) {
         this.bitset = bitset;
         return this;
     }
@@ -131,7 +123,6 @@ public class EnableRailProtocolCommand {
      *
      * @return bitset
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_BITSET)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getBitset() {
@@ -141,7 +132,7 @@ public class EnableRailProtocolCommand {
 
     @JsonProperty(JSON_PROPERTY_BITSET)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setBitset(@javax.annotation.Nonnull Integer bitset) {
+    public void setBitset(Integer bitset) {
         this.bitset = bitset;
     }
 

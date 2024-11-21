@@ -28,25 +28,20 @@ import java.util.Objects;
         AccessoryDecoderSwitchingTimeCommand.JSON_PROPERTY_ID,
         AccessoryDecoderSwitchingTimeCommand.JSON_PROPERTY_TIME
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class AccessoryDecoderSwitchingTimeCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_ID = "id";
     public static final String JSON_PROPERTY_TIME = "time";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer id;
-    @javax.annotation.Nonnull
     private Integer time;
 
     public AccessoryDecoderSwitchingTimeCommand() {
     }
 
-    public AccessoryDecoderSwitchingTimeCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public AccessoryDecoderSwitchingTimeCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -56,7 +51,6 @@ public class AccessoryDecoderSwitchingTimeCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -66,12 +60,12 @@ public class AccessoryDecoderSwitchingTimeCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public AccessoryDecoderSwitchingTimeCommand response(@javax.annotation.Nonnull Boolean response) {
+    public AccessoryDecoderSwitchingTimeCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -81,7 +75,6 @@ public class AccessoryDecoderSwitchingTimeCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -91,12 +84,12 @@ public class AccessoryDecoderSwitchingTimeCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public AccessoryDecoderSwitchingTimeCommand id(@javax.annotation.Nonnull Integer id) {
+    public AccessoryDecoderSwitchingTimeCommand id(Integer id) {
         this.id = id;
         return this;
     }
@@ -106,7 +99,6 @@ public class AccessoryDecoderSwitchingTimeCommand {
      *
      * @return id
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getId() {
@@ -116,12 +108,12 @@ public class AccessoryDecoderSwitchingTimeCommand {
 
     @JsonProperty(JSON_PROPERTY_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setId(@javax.annotation.Nonnull Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
 
-    public AccessoryDecoderSwitchingTimeCommand time(@javax.annotation.Nonnull Integer time) {
+    public AccessoryDecoderSwitchingTimeCommand time(Integer time) {
         this.time = time;
         return this;
     }
@@ -131,7 +123,6 @@ public class AccessoryDecoderSwitchingTimeCommand {
      *
      * @return time
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_TIME)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getTime() {
@@ -141,7 +132,7 @@ public class AccessoryDecoderSwitchingTimeCommand {
 
     @JsonProperty(JSON_PROPERTY_TIME)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setTime(@javax.annotation.Nonnull Integer time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 

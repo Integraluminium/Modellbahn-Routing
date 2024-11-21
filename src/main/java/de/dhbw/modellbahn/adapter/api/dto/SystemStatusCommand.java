@@ -29,28 +29,22 @@ import java.util.Objects;
         SystemStatusCommand.JSON_PROPERTY_CHANNEL,
         SystemStatusCommand.JSON_PROPERTY_MEASURED_VALUE
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class SystemStatusCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_ID = "id";
     public static final String JSON_PROPERTY_CHANNEL = "channel";
     public static final String JSON_PROPERTY_MEASURED_VALUE = "measured_value";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer id;
-    @javax.annotation.Nonnull
     private Integer channel;
-    @javax.annotation.Nullable
     private Integer measuredValue;
 
     public SystemStatusCommand() {
     }
 
-    public SystemStatusCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public SystemStatusCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -60,7 +54,6 @@ public class SystemStatusCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -70,12 +63,12 @@ public class SystemStatusCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public SystemStatusCommand response(@javax.annotation.Nonnull Boolean response) {
+    public SystemStatusCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -85,7 +78,6 @@ public class SystemStatusCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -95,12 +87,12 @@ public class SystemStatusCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public SystemStatusCommand id(@javax.annotation.Nonnull Integer id) {
+    public SystemStatusCommand id(Integer id) {
         this.id = id;
         return this;
     }
@@ -110,7 +102,6 @@ public class SystemStatusCommand {
      *
      * @return id
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getId() {
@@ -120,12 +111,12 @@ public class SystemStatusCommand {
 
     @JsonProperty(JSON_PROPERTY_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setId(@javax.annotation.Nonnull Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
 
-    public SystemStatusCommand channel(@javax.annotation.Nonnull Integer channel) {
+    public SystemStatusCommand channel(Integer channel) {
         this.channel = channel;
         return this;
     }
@@ -135,7 +126,6 @@ public class SystemStatusCommand {
      *
      * @return channel
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_CHANNEL)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getChannel() {
@@ -145,12 +135,12 @@ public class SystemStatusCommand {
 
     @JsonProperty(JSON_PROPERTY_CHANNEL)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setChannel(@javax.annotation.Nonnull Integer channel) {
+    public void setChannel(Integer channel) {
         this.channel = channel;
     }
 
 
-    public SystemStatusCommand measuredValue(@javax.annotation.Nullable Integer measuredValue) {
+    public SystemStatusCommand measuredValue(Integer measuredValue) {
         this.measuredValue = measuredValue;
         return this;
     }
@@ -160,7 +150,6 @@ public class SystemStatusCommand {
      *
      * @return measuredValue
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_MEASURED_VALUE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getMeasuredValue() {
@@ -170,7 +159,7 @@ public class SystemStatusCommand {
 
     @JsonProperty(JSON_PROPERTY_MEASURED_VALUE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setMeasuredValue(@javax.annotation.Nullable Integer measuredValue) {
+    public void setMeasuredValue(Integer measuredValue) {
         this.measuredValue = measuredValue;
     }
 

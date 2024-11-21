@@ -30,7 +30,6 @@ import java.util.Objects;
         LocomotiveDiscoveryCommand.JSON_PROPERTY_MFX_RANGE,
         LocomotiveDiscoveryCommand.JSON_PROPERTY_ASK_RATIO
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class LocomotiveDiscoveryCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
@@ -38,23 +37,17 @@ public class LocomotiveDiscoveryCommand {
     public static final String JSON_PROPERTY_PROTOCOL = "protocol";
     public static final String JSON_PROPERTY_MFX_RANGE = "mfx_range";
     public static final String JSON_PROPERTY_ASK_RATIO = "ask_ratio";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nullable
     private Integer locId;
-    @javax.annotation.Nullable
     private ProtocolSchema protocol;
-    @javax.annotation.Nullable
     private Integer mfxRange;
-    @javax.annotation.Nullable
     private Integer askRatio;
 
     public LocomotiveDiscoveryCommand() {
     }
 
-    public LocomotiveDiscoveryCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public LocomotiveDiscoveryCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -64,7 +57,6 @@ public class LocomotiveDiscoveryCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -74,12 +66,12 @@ public class LocomotiveDiscoveryCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public LocomotiveDiscoveryCommand response(@javax.annotation.Nonnull Boolean response) {
+    public LocomotiveDiscoveryCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -89,7 +81,6 @@ public class LocomotiveDiscoveryCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -99,12 +90,12 @@ public class LocomotiveDiscoveryCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public LocomotiveDiscoveryCommand locId(@javax.annotation.Nullable Integer locId) {
+    public LocomotiveDiscoveryCommand locId(Integer locId) {
         this.locId = locId;
         return this;
     }
@@ -114,7 +105,6 @@ public class LocomotiveDiscoveryCommand {
      *
      * @return locId
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getLocId() {
@@ -124,12 +114,12 @@ public class LocomotiveDiscoveryCommand {
 
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setLocId(@javax.annotation.Nullable Integer locId) {
+    public void setLocId(Integer locId) {
         this.locId = locId;
     }
 
 
-    public LocomotiveDiscoveryCommand protocol(@javax.annotation.Nullable ProtocolSchema protocol) {
+    public LocomotiveDiscoveryCommand protocol(ProtocolSchema protocol) {
         this.protocol = protocol;
         return this;
     }
@@ -139,7 +129,6 @@ public class LocomotiveDiscoveryCommand {
      *
      * @return protocol
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_PROTOCOL)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public ProtocolSchema getProtocol() {
@@ -149,12 +138,12 @@ public class LocomotiveDiscoveryCommand {
 
     @JsonProperty(JSON_PROPERTY_PROTOCOL)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setProtocol(@javax.annotation.Nullable ProtocolSchema protocol) {
+    public void setProtocol(ProtocolSchema protocol) {
         this.protocol = protocol;
     }
 
 
-    public LocomotiveDiscoveryCommand mfxRange(@javax.annotation.Nullable Integer mfxRange) {
+    public LocomotiveDiscoveryCommand mfxRange(Integer mfxRange) {
         this.mfxRange = mfxRange;
         return this;
     }
@@ -164,7 +153,6 @@ public class LocomotiveDiscoveryCommand {
      *
      * @return mfxRange
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_MFX_RANGE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getMfxRange() {
@@ -174,12 +162,12 @@ public class LocomotiveDiscoveryCommand {
 
     @JsonProperty(JSON_PROPERTY_MFX_RANGE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setMfxRange(@javax.annotation.Nullable Integer mfxRange) {
+    public void setMfxRange(Integer mfxRange) {
         this.mfxRange = mfxRange;
     }
 
 
-    public LocomotiveDiscoveryCommand askRatio(@javax.annotation.Nullable Integer askRatio) {
+    public LocomotiveDiscoveryCommand askRatio(Integer askRatio) {
         this.askRatio = askRatio;
         return this;
     }
@@ -189,7 +177,6 @@ public class LocomotiveDiscoveryCommand {
      *
      * @return askRatio
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_ASK_RATIO)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getAskRatio() {
@@ -199,7 +186,7 @@ public class LocomotiveDiscoveryCommand {
 
     @JsonProperty(JSON_PROPERTY_ASK_RATIO)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setAskRatio(@javax.annotation.Nullable Integer askRatio) {
+    public void setAskRatio(Integer askRatio) {
         this.askRatio = askRatio;
     }
 

@@ -30,7 +30,6 @@ import java.util.Objects;
         SwitchingAccessoriesCommand.JSON_PROPERTY_POWER,
         SwitchingAccessoriesCommand.JSON_PROPERTY_VALUE
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class SwitchingAccessoriesCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
@@ -38,23 +37,17 @@ public class SwitchingAccessoriesCommand {
     public static final String JSON_PROPERTY_POSITION = "position";
     public static final String JSON_PROPERTY_POWER = "power";
     public static final String JSON_PROPERTY_VALUE = "value";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer locId;
-    @javax.annotation.Nonnull
     private Integer position;
-    @javax.annotation.Nonnull
     private Integer power;
-    @javax.annotation.Nullable
     private Integer value;
 
     public SwitchingAccessoriesCommand() {
     }
 
-    public SwitchingAccessoriesCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public SwitchingAccessoriesCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -64,7 +57,6 @@ public class SwitchingAccessoriesCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -74,12 +66,12 @@ public class SwitchingAccessoriesCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public SwitchingAccessoriesCommand response(@javax.annotation.Nonnull Boolean response) {
+    public SwitchingAccessoriesCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -89,7 +81,6 @@ public class SwitchingAccessoriesCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -99,12 +90,12 @@ public class SwitchingAccessoriesCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public SwitchingAccessoriesCommand locId(@javax.annotation.Nonnull Integer locId) {
+    public SwitchingAccessoriesCommand locId(Integer locId) {
         this.locId = locId;
         return this;
     }
@@ -114,7 +105,6 @@ public class SwitchingAccessoriesCommand {
      *
      * @return locId
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getLocId() {
@@ -124,12 +114,12 @@ public class SwitchingAccessoriesCommand {
 
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setLocId(@javax.annotation.Nonnull Integer locId) {
+    public void setLocId(Integer locId) {
         this.locId = locId;
     }
 
 
-    public SwitchingAccessoriesCommand position(@javax.annotation.Nonnull Integer position) {
+    public SwitchingAccessoriesCommand position(Integer position) {
         this.position = position;
         return this;
     }
@@ -139,7 +129,6 @@ public class SwitchingAccessoriesCommand {
      *
      * @return position
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_POSITION)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getPosition() {
@@ -149,12 +138,12 @@ public class SwitchingAccessoriesCommand {
 
     @JsonProperty(JSON_PROPERTY_POSITION)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setPosition(@javax.annotation.Nonnull Integer position) {
+    public void setPosition(Integer position) {
         this.position = position;
     }
 
 
-    public SwitchingAccessoriesCommand power(@javax.annotation.Nonnull Integer power) {
+    public SwitchingAccessoriesCommand power(Integer power) {
         this.power = power;
         return this;
     }
@@ -164,7 +153,6 @@ public class SwitchingAccessoriesCommand {
      *
      * @return power
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_POWER)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getPower() {
@@ -174,12 +162,12 @@ public class SwitchingAccessoriesCommand {
 
     @JsonProperty(JSON_PROPERTY_POWER)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setPower(@javax.annotation.Nonnull Integer power) {
+    public void setPower(Integer power) {
         this.power = power;
     }
 
 
-    public SwitchingAccessoriesCommand value(@javax.annotation.Nullable Integer value) {
+    public SwitchingAccessoriesCommand value(Integer value) {
         this.value = value;
         return this;
     }
@@ -189,7 +177,6 @@ public class SwitchingAccessoriesCommand {
      *
      * @return value
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_VALUE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getValue() {
@@ -199,7 +186,7 @@ public class SwitchingAccessoriesCommand {
 
     @JsonProperty(JSON_PROPERTY_VALUE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setValue(@javax.annotation.Nullable Integer value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 

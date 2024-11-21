@@ -27,22 +27,18 @@ import java.util.Objects;
         RequestConfigDataCommand.JSON_PROPERTY_RESPONSE,
         RequestConfigDataCommand.JSON_PROPERTY_FILENAME
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class RequestConfigDataCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_FILENAME = "filename";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private String filename;
 
     public RequestConfigDataCommand() {
     }
 
-    public RequestConfigDataCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public RequestConfigDataCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -52,7 +48,6 @@ public class RequestConfigDataCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -62,12 +57,12 @@ public class RequestConfigDataCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public RequestConfigDataCommand response(@javax.annotation.Nonnull Boolean response) {
+    public RequestConfigDataCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -77,7 +72,6 @@ public class RequestConfigDataCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -87,12 +81,12 @@ public class RequestConfigDataCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public RequestConfigDataCommand filename(@javax.annotation.Nonnull String filename) {
+    public RequestConfigDataCommand filename(String filename) {
         this.filename = filename;
         return this;
     }
@@ -102,7 +96,6 @@ public class RequestConfigDataCommand {
      *
      * @return filename
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_FILENAME)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public String getFilename() {
@@ -112,7 +105,7 @@ public class RequestConfigDataCommand {
 
     @JsonProperty(JSON_PROPERTY_FILENAME)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setFilename(@javax.annotation.Nonnull String filename) {
+    public void setFilename(String filename) {
         this.filename = filename;
     }
 

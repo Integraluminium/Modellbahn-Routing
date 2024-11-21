@@ -31,7 +31,6 @@ import java.util.Objects;
         ReadConfigCommand.JSON_PROPERTY_COUNT,
         ReadConfigCommand.JSON_PROPERTY_VALUE
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class ReadConfigCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
@@ -40,25 +39,18 @@ public class ReadConfigCommand {
     public static final String JSON_PROPERTY_NUMBER = "number";
     public static final String JSON_PROPERTY_COUNT = "count";
     public static final String JSON_PROPERTY_VALUE = "value";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer locId;
-    @javax.annotation.Nonnull
     private Integer index;
-    @javax.annotation.Nonnull
     private Integer number;
-    @javax.annotation.Nullable
     private Integer count;
-    @javax.annotation.Nullable
     private Integer value;
 
     public ReadConfigCommand() {
     }
 
-    public ReadConfigCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public ReadConfigCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -68,7 +60,6 @@ public class ReadConfigCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -78,12 +69,12 @@ public class ReadConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public ReadConfigCommand response(@javax.annotation.Nonnull Boolean response) {
+    public ReadConfigCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -93,7 +84,6 @@ public class ReadConfigCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -103,12 +93,12 @@ public class ReadConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public ReadConfigCommand locId(@javax.annotation.Nonnull Integer locId) {
+    public ReadConfigCommand locId(Integer locId) {
         this.locId = locId;
         return this;
     }
@@ -118,7 +108,6 @@ public class ReadConfigCommand {
      *
      * @return locId
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getLocId() {
@@ -128,12 +117,12 @@ public class ReadConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setLocId(@javax.annotation.Nonnull Integer locId) {
+    public void setLocId(Integer locId) {
         this.locId = locId;
     }
 
 
-    public ReadConfigCommand index(@javax.annotation.Nonnull Integer index) {
+    public ReadConfigCommand index(Integer index) {
         this.index = index;
         return this;
     }
@@ -143,7 +132,6 @@ public class ReadConfigCommand {
      *
      * @return index
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_INDEX)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getIndex() {
@@ -153,12 +141,12 @@ public class ReadConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_INDEX)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setIndex(@javax.annotation.Nonnull Integer index) {
+    public void setIndex(Integer index) {
         this.index = index;
     }
 
 
-    public ReadConfigCommand number(@javax.annotation.Nonnull Integer number) {
+    public ReadConfigCommand number(Integer number) {
         this.number = number;
         return this;
     }
@@ -168,7 +156,6 @@ public class ReadConfigCommand {
      *
      * @return number
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_NUMBER)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getNumber() {
@@ -178,12 +165,12 @@ public class ReadConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_NUMBER)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setNumber(@javax.annotation.Nonnull Integer number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
 
-    public ReadConfigCommand count(@javax.annotation.Nullable Integer count) {
+    public ReadConfigCommand count(Integer count) {
         this.count = count;
         return this;
     }
@@ -193,7 +180,6 @@ public class ReadConfigCommand {
      *
      * @return count
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_COUNT)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getCount() {
@@ -203,12 +189,12 @@ public class ReadConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_COUNT)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setCount(@javax.annotation.Nullable Integer count) {
+    public void setCount(Integer count) {
         this.count = count;
     }
 
 
-    public ReadConfigCommand value(@javax.annotation.Nullable Integer value) {
+    public ReadConfigCommand value(Integer value) {
         this.value = value;
         return this;
     }
@@ -218,7 +204,6 @@ public class ReadConfigCommand {
      *
      * @return value
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_VALUE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getValue() {
@@ -228,7 +213,7 @@ public class ReadConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_VALUE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setValue(@javax.annotation.Nullable Integer value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 

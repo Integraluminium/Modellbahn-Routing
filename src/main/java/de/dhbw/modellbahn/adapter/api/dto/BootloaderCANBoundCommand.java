@@ -27,22 +27,18 @@ import java.util.Objects;
         BootloaderCANBoundCommand.JSON_PROPERTY_RESPONSE,
         BootloaderCANBoundCommand.JSON_PROPERTY_DATA
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class BootloaderCANBoundCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_DATA = "data";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nullable
     private String data;
 
     public BootloaderCANBoundCommand() {
     }
 
-    public BootloaderCANBoundCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public BootloaderCANBoundCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -52,7 +48,6 @@ public class BootloaderCANBoundCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -62,12 +57,12 @@ public class BootloaderCANBoundCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public BootloaderCANBoundCommand response(@javax.annotation.Nonnull Boolean response) {
+    public BootloaderCANBoundCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -77,7 +72,6 @@ public class BootloaderCANBoundCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -87,12 +81,12 @@ public class BootloaderCANBoundCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public BootloaderCANBoundCommand data(@javax.annotation.Nullable String data) {
+    public BootloaderCANBoundCommand data(String data) {
         this.data = data;
         return this;
     }
@@ -102,7 +96,6 @@ public class BootloaderCANBoundCommand {
      *
      * @return data
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_DATA)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public String getData() {
@@ -112,7 +105,7 @@ public class BootloaderCANBoundCommand {
 
     @JsonProperty(JSON_PROPERTY_DATA)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setData(@javax.annotation.Nullable String data) {
+    public void setData(String data) {
         this.data = data;
     }
 

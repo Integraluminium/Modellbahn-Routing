@@ -26,19 +26,16 @@ import java.util.Objects;
         WriteConfigResultByte.JSON_PROPERTY_IS_WRITE_SUCCESSFUL,
         WriteConfigResultByte.JSON_PROPERTY_IS_VERIFY_SUCCESSFUL
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class WriteConfigResultByte {
     public static final String JSON_PROPERTY_IS_WRITE_SUCCESSFUL = "is_write_successful";
     public static final String JSON_PROPERTY_IS_VERIFY_SUCCESSFUL = "is_verify_successful";
-    @javax.annotation.Nonnull
     private Boolean isWriteSuccessful;
-    @javax.annotation.Nonnull
     private Boolean isVerifySuccessful;
 
     public WriteConfigResultByte() {
     }
 
-    public WriteConfigResultByte isWriteSuccessful(@javax.annotation.Nonnull Boolean isWriteSuccessful) {
+    public WriteConfigResultByte isWriteSuccessful(Boolean isWriteSuccessful) {
         this.isWriteSuccessful = isWriteSuccessful;
         return this;
     }
@@ -48,7 +45,6 @@ public class WriteConfigResultByte {
      *
      * @return isWriteSuccessful
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_IS_WRITE_SUCCESSFUL)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getIsWriteSuccessful() {
@@ -58,12 +54,12 @@ public class WriteConfigResultByte {
 
     @JsonProperty(JSON_PROPERTY_IS_WRITE_SUCCESSFUL)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setIsWriteSuccessful(@javax.annotation.Nonnull Boolean isWriteSuccessful) {
+    public void setIsWriteSuccessful(Boolean isWriteSuccessful) {
         this.isWriteSuccessful = isWriteSuccessful;
     }
 
 
-    public WriteConfigResultByte isVerifySuccessful(@javax.annotation.Nonnull Boolean isVerifySuccessful) {
+    public WriteConfigResultByte isVerifySuccessful(Boolean isVerifySuccessful) {
         this.isVerifySuccessful = isVerifySuccessful;
         return this;
     }
@@ -73,7 +69,6 @@ public class WriteConfigResultByte {
      *
      * @return isVerifySuccessful
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_IS_VERIFY_SUCCESSFUL)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getIsVerifySuccessful() {
@@ -83,7 +78,7 @@ public class WriteConfigResultByte {
 
     @JsonProperty(JSON_PROPERTY_IS_VERIFY_SUCCESSFUL)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setIsVerifySuccessful(@javax.annotation.Nonnull Boolean isVerifySuccessful) {
+    public void setIsVerifySuccessful(Boolean isVerifySuccessful) {
         this.isVerifySuccessful = isVerifySuccessful;
     }
 

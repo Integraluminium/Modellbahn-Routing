@@ -29,28 +29,22 @@ import java.util.Objects;
         ParticipantPingCommand.JSON_PROPERTY_SOFTWARE_VERSION,
         ParticipantPingCommand.JSON_PROPERTY_DEVICE_ID
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class ParticipantPingCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_SENDER_ID = "sender_id";
     public static final String JSON_PROPERTY_SOFTWARE_VERSION = "software_version";
     public static final String JSON_PROPERTY_DEVICE_ID = "device_id";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nullable
     private Integer senderId;
-    @javax.annotation.Nullable
     private Integer softwareVersion;
-    @javax.annotation.Nullable
     private Integer deviceId;
 
     public ParticipantPingCommand() {
     }
 
-    public ParticipantPingCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public ParticipantPingCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -60,7 +54,6 @@ public class ParticipantPingCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -70,12 +63,12 @@ public class ParticipantPingCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public ParticipantPingCommand response(@javax.annotation.Nonnull Boolean response) {
+    public ParticipantPingCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -85,7 +78,6 @@ public class ParticipantPingCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -95,12 +87,12 @@ public class ParticipantPingCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public ParticipantPingCommand senderId(@javax.annotation.Nullable Integer senderId) {
+    public ParticipantPingCommand senderId(Integer senderId) {
         this.senderId = senderId;
         return this;
     }
@@ -110,7 +102,6 @@ public class ParticipantPingCommand {
      *
      * @return senderId
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_SENDER_ID)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getSenderId() {
@@ -120,12 +111,12 @@ public class ParticipantPingCommand {
 
     @JsonProperty(JSON_PROPERTY_SENDER_ID)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setSenderId(@javax.annotation.Nullable Integer senderId) {
+    public void setSenderId(Integer senderId) {
         this.senderId = senderId;
     }
 
 
-    public ParticipantPingCommand softwareVersion(@javax.annotation.Nullable Integer softwareVersion) {
+    public ParticipantPingCommand softwareVersion(Integer softwareVersion) {
         this.softwareVersion = softwareVersion;
         return this;
     }
@@ -135,7 +126,6 @@ public class ParticipantPingCommand {
      *
      * @return softwareVersion
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_SOFTWARE_VERSION)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getSoftwareVersion() {
@@ -145,12 +135,12 @@ public class ParticipantPingCommand {
 
     @JsonProperty(JSON_PROPERTY_SOFTWARE_VERSION)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setSoftwareVersion(@javax.annotation.Nullable Integer softwareVersion) {
+    public void setSoftwareVersion(Integer softwareVersion) {
         this.softwareVersion = softwareVersion;
     }
 
 
-    public ParticipantPingCommand deviceId(@javax.annotation.Nullable Integer deviceId) {
+    public ParticipantPingCommand deviceId(Integer deviceId) {
         this.deviceId = deviceId;
         return this;
     }
@@ -160,7 +150,6 @@ public class ParticipantPingCommand {
      *
      * @return deviceId
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_DEVICE_ID)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getDeviceId() {
@@ -170,7 +159,7 @@ public class ParticipantPingCommand {
 
     @JsonProperty(JSON_PROPERTY_DEVICE_ID)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setDeviceId(@javax.annotation.Nullable Integer deviceId) {
+    public void setDeviceId(Integer deviceId) {
         this.deviceId = deviceId;
     }
 

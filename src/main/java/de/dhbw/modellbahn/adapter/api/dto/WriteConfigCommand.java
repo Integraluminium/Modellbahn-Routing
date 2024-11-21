@@ -32,7 +32,6 @@ import java.util.Objects;
         WriteConfigCommand.JSON_PROPERTY_CONTROL,
         WriteConfigCommand.JSON_PROPERTY_RESULT
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class WriteConfigCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
@@ -42,27 +41,19 @@ public class WriteConfigCommand {
     public static final String JSON_PROPERTY_VALUE = "value";
     public static final String JSON_PROPERTY_CONTROL = "control";
     public static final String JSON_PROPERTY_RESULT = "result";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer locId;
-    @javax.annotation.Nonnull
     private Integer index;
-    @javax.annotation.Nonnull
     private Integer number;
-    @javax.annotation.Nonnull
     private Integer value;
-    @javax.annotation.Nullable
     private WriteConfigControlByte control;
-    @javax.annotation.Nullable
     private WriteConfigResultByte result;
 
     public WriteConfigCommand() {
     }
 
-    public WriteConfigCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public WriteConfigCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -72,7 +63,6 @@ public class WriteConfigCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -82,12 +72,12 @@ public class WriteConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public WriteConfigCommand response(@javax.annotation.Nonnull Boolean response) {
+    public WriteConfigCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -97,7 +87,6 @@ public class WriteConfigCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -107,12 +96,12 @@ public class WriteConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public WriteConfigCommand locId(@javax.annotation.Nonnull Integer locId) {
+    public WriteConfigCommand locId(Integer locId) {
         this.locId = locId;
         return this;
     }
@@ -122,7 +111,6 @@ public class WriteConfigCommand {
      *
      * @return locId
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getLocId() {
@@ -132,12 +120,12 @@ public class WriteConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setLocId(@javax.annotation.Nonnull Integer locId) {
+    public void setLocId(Integer locId) {
         this.locId = locId;
     }
 
 
-    public WriteConfigCommand index(@javax.annotation.Nonnull Integer index) {
+    public WriteConfigCommand index(Integer index) {
         this.index = index;
         return this;
     }
@@ -147,7 +135,6 @@ public class WriteConfigCommand {
      *
      * @return index
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_INDEX)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getIndex() {
@@ -157,12 +144,12 @@ public class WriteConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_INDEX)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setIndex(@javax.annotation.Nonnull Integer index) {
+    public void setIndex(Integer index) {
         this.index = index;
     }
 
 
-    public WriteConfigCommand number(@javax.annotation.Nonnull Integer number) {
+    public WriteConfigCommand number(Integer number) {
         this.number = number;
         return this;
     }
@@ -172,7 +159,6 @@ public class WriteConfigCommand {
      *
      * @return number
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_NUMBER)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getNumber() {
@@ -182,12 +168,12 @@ public class WriteConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_NUMBER)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setNumber(@javax.annotation.Nonnull Integer number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
 
-    public WriteConfigCommand value(@javax.annotation.Nonnull Integer value) {
+    public WriteConfigCommand value(Integer value) {
         this.value = value;
         return this;
     }
@@ -197,7 +183,6 @@ public class WriteConfigCommand {
      *
      * @return value
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getValue() {
@@ -207,12 +192,12 @@ public class WriteConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setValue(@javax.annotation.Nonnull Integer value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
 
-    public WriteConfigCommand control(@javax.annotation.Nullable WriteConfigControlByte control) {
+    public WriteConfigCommand control(WriteConfigControlByte control) {
         this.control = control;
         return this;
     }
@@ -222,7 +207,6 @@ public class WriteConfigCommand {
      *
      * @return control
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_CONTROL)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public WriteConfigControlByte getControl() {
@@ -232,12 +216,12 @@ public class WriteConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_CONTROL)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setControl(@javax.annotation.Nullable WriteConfigControlByte control) {
+    public void setControl(WriteConfigControlByte control) {
         this.control = control;
     }
 
 
-    public WriteConfigCommand result(@javax.annotation.Nullable WriteConfigResultByte result) {
+    public WriteConfigCommand result(WriteConfigResultByte result) {
         this.result = result;
         return this;
     }
@@ -247,7 +231,6 @@ public class WriteConfigCommand {
      *
      * @return result
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_RESULT)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public WriteConfigResultByte getResult() {
@@ -257,7 +240,7 @@ public class WriteConfigCommand {
 
     @JsonProperty(JSON_PROPERTY_RESULT)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setResult(@javax.annotation.Nullable WriteConfigResultByte result) {
+    public void setResult(WriteConfigResultByte result) {
         this.result = result;
     }
 

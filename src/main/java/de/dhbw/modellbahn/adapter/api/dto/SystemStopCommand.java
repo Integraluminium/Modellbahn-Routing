@@ -27,22 +27,18 @@ import java.util.Objects;
         SystemStopCommand.JSON_PROPERTY_RESPONSE,
         SystemStopCommand.JSON_PROPERTY_ID
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class SystemStopCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_ID = "id";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer id;
 
     public SystemStopCommand() {
     }
 
-    public SystemStopCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public SystemStopCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -52,7 +48,6 @@ public class SystemStopCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -62,12 +57,12 @@ public class SystemStopCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public SystemStopCommand response(@javax.annotation.Nonnull Boolean response) {
+    public SystemStopCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -77,7 +72,6 @@ public class SystemStopCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -87,12 +81,12 @@ public class SystemStopCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public SystemStopCommand id(@javax.annotation.Nonnull Integer id) {
+    public SystemStopCommand id(Integer id) {
         this.id = id;
         return this;
     }
@@ -102,7 +96,6 @@ public class SystemStopCommand {
      *
      * @return id
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getId() {
@@ -112,7 +105,7 @@ public class SystemStopCommand {
 
     @JsonProperty(JSON_PROPERTY_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setId(@javax.annotation.Nonnull Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

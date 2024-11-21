@@ -32,7 +32,6 @@ import java.util.Objects;
         S88EventCommand.JSON_PROPERTY_STATE_NEW,
         S88EventCommand.JSON_PROPERTY_TIME
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class S88EventCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
@@ -42,27 +41,19 @@ public class S88EventCommand {
     public static final String JSON_PROPERTY_STATE_OLD = "state_old";
     public static final String JSON_PROPERTY_STATE_NEW = "state_new";
     public static final String JSON_PROPERTY_TIME = "time";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer deviceId;
-    @javax.annotation.Nonnull
     private Integer contactId;
-    @javax.annotation.Nullable
     private Integer parameter;
-    @javax.annotation.Nullable
     private Integer stateOld;
-    @javax.annotation.Nullable
     private Integer stateNew;
-    @javax.annotation.Nullable
     private Integer time;
 
     public S88EventCommand() {
     }
 
-    public S88EventCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public S88EventCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -72,7 +63,6 @@ public class S88EventCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -82,12 +72,12 @@ public class S88EventCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public S88EventCommand response(@javax.annotation.Nonnull Boolean response) {
+    public S88EventCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -97,7 +87,6 @@ public class S88EventCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -107,12 +96,12 @@ public class S88EventCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public S88EventCommand deviceId(@javax.annotation.Nonnull Integer deviceId) {
+    public S88EventCommand deviceId(Integer deviceId) {
         this.deviceId = deviceId;
         return this;
     }
@@ -122,7 +111,6 @@ public class S88EventCommand {
      *
      * @return deviceId
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_DEVICE_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getDeviceId() {
@@ -132,12 +120,12 @@ public class S88EventCommand {
 
     @JsonProperty(JSON_PROPERTY_DEVICE_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setDeviceId(@javax.annotation.Nonnull Integer deviceId) {
+    public void setDeviceId(Integer deviceId) {
         this.deviceId = deviceId;
     }
 
 
-    public S88EventCommand contactId(@javax.annotation.Nonnull Integer contactId) {
+    public S88EventCommand contactId(Integer contactId) {
         this.contactId = contactId;
         return this;
     }
@@ -147,7 +135,6 @@ public class S88EventCommand {
      *
      * @return contactId
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_CONTACT_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getContactId() {
@@ -157,12 +144,12 @@ public class S88EventCommand {
 
     @JsonProperty(JSON_PROPERTY_CONTACT_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setContactId(@javax.annotation.Nonnull Integer contactId) {
+    public void setContactId(Integer contactId) {
         this.contactId = contactId;
     }
 
 
-    public S88EventCommand parameter(@javax.annotation.Nullable Integer parameter) {
+    public S88EventCommand parameter(Integer parameter) {
         this.parameter = parameter;
         return this;
     }
@@ -172,7 +159,6 @@ public class S88EventCommand {
      *
      * @return parameter
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_PARAMETER)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getParameter() {
@@ -182,12 +168,12 @@ public class S88EventCommand {
 
     @JsonProperty(JSON_PROPERTY_PARAMETER)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setParameter(@javax.annotation.Nullable Integer parameter) {
+    public void setParameter(Integer parameter) {
         this.parameter = parameter;
     }
 
 
-    public S88EventCommand stateOld(@javax.annotation.Nullable Integer stateOld) {
+    public S88EventCommand stateOld(Integer stateOld) {
         this.stateOld = stateOld;
         return this;
     }
@@ -197,7 +183,6 @@ public class S88EventCommand {
      *
      * @return stateOld
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_STATE_OLD)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getStateOld() {
@@ -207,12 +192,12 @@ public class S88EventCommand {
 
     @JsonProperty(JSON_PROPERTY_STATE_OLD)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setStateOld(@javax.annotation.Nullable Integer stateOld) {
+    public void setStateOld(Integer stateOld) {
         this.stateOld = stateOld;
     }
 
 
-    public S88EventCommand stateNew(@javax.annotation.Nullable Integer stateNew) {
+    public S88EventCommand stateNew(Integer stateNew) {
         this.stateNew = stateNew;
         return this;
     }
@@ -222,7 +207,6 @@ public class S88EventCommand {
      *
      * @return stateNew
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_STATE_NEW)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getStateNew() {
@@ -232,12 +216,12 @@ public class S88EventCommand {
 
     @JsonProperty(JSON_PROPERTY_STATE_NEW)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setStateNew(@javax.annotation.Nullable Integer stateNew) {
+    public void setStateNew(Integer stateNew) {
         this.stateNew = stateNew;
     }
 
 
-    public S88EventCommand time(@javax.annotation.Nullable Integer time) {
+    public S88EventCommand time(Integer time) {
         this.time = time;
         return this;
     }
@@ -247,7 +231,6 @@ public class S88EventCommand {
      *
      * @return time
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_TIME)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getTime() {
@@ -257,7 +240,7 @@ public class S88EventCommand {
 
     @JsonProperty(JSON_PROPERTY_TIME)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setTime(@javax.annotation.Nullable Integer time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 

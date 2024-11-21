@@ -29,28 +29,22 @@ import java.util.Objects;
         MfxVerifyCommand.JSON_PROPERTY_MFX_SID,
         MfxVerifyCommand.JSON_PROPERTY_ASK_RATIO
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class MfxVerifyCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_MFX_UID = "mfx_uid";
     public static final String JSON_PROPERTY_MFX_SID = "mfx_sid";
     public static final String JSON_PROPERTY_ASK_RATIO = "ask_ratio";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer mfxUid;
-    @javax.annotation.Nonnull
     private Integer mfxSid;
-    @javax.annotation.Nullable
     private Integer askRatio;
 
     public MfxVerifyCommand() {
     }
 
-    public MfxVerifyCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public MfxVerifyCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -60,7 +54,6 @@ public class MfxVerifyCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -70,12 +63,12 @@ public class MfxVerifyCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public MfxVerifyCommand response(@javax.annotation.Nonnull Boolean response) {
+    public MfxVerifyCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -85,7 +78,6 @@ public class MfxVerifyCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -95,12 +87,12 @@ public class MfxVerifyCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public MfxVerifyCommand mfxUid(@javax.annotation.Nonnull Integer mfxUid) {
+    public MfxVerifyCommand mfxUid(Integer mfxUid) {
         this.mfxUid = mfxUid;
         return this;
     }
@@ -110,7 +102,6 @@ public class MfxVerifyCommand {
      *
      * @return mfxUid
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_MFX_UID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getMfxUid() {
@@ -120,12 +111,12 @@ public class MfxVerifyCommand {
 
     @JsonProperty(JSON_PROPERTY_MFX_UID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setMfxUid(@javax.annotation.Nonnull Integer mfxUid) {
+    public void setMfxUid(Integer mfxUid) {
         this.mfxUid = mfxUid;
     }
 
 
-    public MfxVerifyCommand mfxSid(@javax.annotation.Nonnull Integer mfxSid) {
+    public MfxVerifyCommand mfxSid(Integer mfxSid) {
         this.mfxSid = mfxSid;
         return this;
     }
@@ -135,7 +126,6 @@ public class MfxVerifyCommand {
      *
      * @return mfxSid
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_MFX_SID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getMfxSid() {
@@ -145,12 +135,12 @@ public class MfxVerifyCommand {
 
     @JsonProperty(JSON_PROPERTY_MFX_SID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setMfxSid(@javax.annotation.Nonnull Integer mfxSid) {
+    public void setMfxSid(Integer mfxSid) {
         this.mfxSid = mfxSid;
     }
 
 
-    public MfxVerifyCommand askRatio(@javax.annotation.Nullable Integer askRatio) {
+    public MfxVerifyCommand askRatio(Integer askRatio) {
         this.askRatio = askRatio;
         return this;
     }
@@ -160,7 +150,6 @@ public class MfxVerifyCommand {
      *
      * @return askRatio
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_ASK_RATIO)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getAskRatio() {
@@ -170,7 +159,7 @@ public class MfxVerifyCommand {
 
     @JsonProperty(JSON_PROPERTY_ASK_RATIO)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setAskRatio(@javax.annotation.Nullable Integer askRatio) {
+    public void setAskRatio(Integer askRatio) {
         this.askRatio = askRatio;
     }
 

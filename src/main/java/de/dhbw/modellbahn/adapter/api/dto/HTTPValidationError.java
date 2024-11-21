@@ -27,16 +27,14 @@ import java.util.Objects;
 @JsonPropertyOrder({
         HTTPValidationError.JSON_PROPERTY_DETAIL
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class HTTPValidationError {
     public static final String JSON_PROPERTY_DETAIL = "detail";
-    @javax.annotation.Nullable
     private List<ValidationError> detail = new ArrayList<>();
 
     public HTTPValidationError() {
     }
 
-    public HTTPValidationError detail(@javax.annotation.Nullable List<ValidationError> detail) {
+    public HTTPValidationError detail(List<ValidationError> detail) {
         this.detail = detail;
         return this;
     }
@@ -54,7 +52,6 @@ public class HTTPValidationError {
      *
      * @return detail
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_DETAIL)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public List<ValidationError> getDetail() {
@@ -64,7 +61,7 @@ public class HTTPValidationError {
 
     @JsonProperty(JSON_PROPERTY_DETAIL)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setDetail(@javax.annotation.Nullable List<ValidationError> detail) {
+    public void setDetail(List<ValidationError> detail) {
         this.detail = detail;
     }
 

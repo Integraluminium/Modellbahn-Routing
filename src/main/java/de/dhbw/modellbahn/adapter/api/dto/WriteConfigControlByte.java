@@ -27,22 +27,18 @@ import java.util.Objects;
         WriteConfigControlByte.JSON_PROPERTY_IS_MULTI_BYTE,
         WriteConfigControlByte.JSON_PROPERTY_DCC_PROGRAMMING
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class WriteConfigControlByte {
     public static final String JSON_PROPERTY_IS_MAIN = "is_main";
     public static final String JSON_PROPERTY_IS_MULTI_BYTE = "is_multi_byte";
     public static final String JSON_PROPERTY_DCC_PROGRAMMING = "dcc_programming";
-    @javax.annotation.Nonnull
     private Boolean isMain;
-    @javax.annotation.Nonnull
     private Boolean isMultiByte;
-    @javax.annotation.Nonnull
     private DCCProgramming dccProgramming;
 
     public WriteConfigControlByte() {
     }
 
-    public WriteConfigControlByte isMain(@javax.annotation.Nonnull Boolean isMain) {
+    public WriteConfigControlByte isMain(Boolean isMain) {
         this.isMain = isMain;
         return this;
     }
@@ -52,7 +48,6 @@ public class WriteConfigControlByte {
      *
      * @return isMain
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_IS_MAIN)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getIsMain() {
@@ -62,12 +57,12 @@ public class WriteConfigControlByte {
 
     @JsonProperty(JSON_PROPERTY_IS_MAIN)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setIsMain(@javax.annotation.Nonnull Boolean isMain) {
+    public void setIsMain(Boolean isMain) {
         this.isMain = isMain;
     }
 
 
-    public WriteConfigControlByte isMultiByte(@javax.annotation.Nonnull Boolean isMultiByte) {
+    public WriteConfigControlByte isMultiByte(Boolean isMultiByte) {
         this.isMultiByte = isMultiByte;
         return this;
     }
@@ -77,7 +72,6 @@ public class WriteConfigControlByte {
      *
      * @return isMultiByte
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_IS_MULTI_BYTE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getIsMultiByte() {
@@ -87,12 +81,12 @@ public class WriteConfigControlByte {
 
     @JsonProperty(JSON_PROPERTY_IS_MULTI_BYTE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setIsMultiByte(@javax.annotation.Nonnull Boolean isMultiByte) {
+    public void setIsMultiByte(Boolean isMultiByte) {
         this.isMultiByte = isMultiByte;
     }
 
 
-    public WriteConfigControlByte dccProgramming(@javax.annotation.Nonnull DCCProgramming dccProgramming) {
+    public WriteConfigControlByte dccProgramming(DCCProgramming dccProgramming) {
         this.dccProgramming = dccProgramming;
         return this;
     }
@@ -102,7 +96,6 @@ public class WriteConfigControlByte {
      *
      * @return dccProgramming
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_DCC_PROGRAMMING)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public DCCProgramming getDccProgramming() {
@@ -112,7 +105,7 @@ public class WriteConfigControlByte {
 
     @JsonProperty(JSON_PROPERTY_DCC_PROGRAMMING)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setDccProgramming(@javax.annotation.Nonnull DCCProgramming dccProgramming) {
+    public void setDccProgramming(DCCProgramming dccProgramming) {
         this.dccProgramming = dccProgramming;
     }
 

@@ -29,22 +29,18 @@ import java.util.Objects;
         ValidationError.JSON_PROPERTY_MSG,
         ValidationError.JSON_PROPERTY_TYPE
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class ValidationError {
     public static final String JSON_PROPERTY_LOC = "loc";
     public static final String JSON_PROPERTY_MSG = "msg";
     public static final String JSON_PROPERTY_TYPE = "type";
-    @javax.annotation.Nonnull
     private List<String> loc = new ArrayList<>();
-    @javax.annotation.Nonnull
     private String msg;
-    @javax.annotation.Nonnull
     private String type;
 
     public ValidationError() {
     }
 
-    public ValidationError loc(@javax.annotation.Nonnull List<String> loc) {
+    public ValidationError loc(List<String> loc) {
         this.loc = loc;
         return this;
     }
@@ -62,7 +58,6 @@ public class ValidationError {
      *
      * @return loc
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_LOC)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public List<String> getLoc() {
@@ -72,12 +67,12 @@ public class ValidationError {
 
     @JsonProperty(JSON_PROPERTY_LOC)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setLoc(@javax.annotation.Nonnull List<String> loc) {
+    public void setLoc(List<String> loc) {
         this.loc = loc;
     }
 
 
-    public ValidationError msg(@javax.annotation.Nonnull String msg) {
+    public ValidationError msg(String msg) {
         this.msg = msg;
         return this;
     }
@@ -87,7 +82,6 @@ public class ValidationError {
      *
      * @return msg
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_MSG)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public String getMsg() {
@@ -97,12 +91,12 @@ public class ValidationError {
 
     @JsonProperty(JSON_PROPERTY_MSG)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setMsg(@javax.annotation.Nonnull String msg) {
+    public void setMsg(String msg) {
         this.msg = msg;
     }
 
 
-    public ValidationError type(@javax.annotation.Nonnull String type) {
+    public ValidationError type(String type) {
         this.type = type;
         return this;
     }
@@ -112,7 +106,6 @@ public class ValidationError {
      *
      * @return type
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_TYPE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public String getType() {
@@ -122,7 +115,7 @@ public class ValidationError {
 
     @JsonProperty(JSON_PROPERTY_TYPE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setType(@javax.annotation.Nonnull String type) {
+    public void setType(String type) {
         this.type = type;
     }
 

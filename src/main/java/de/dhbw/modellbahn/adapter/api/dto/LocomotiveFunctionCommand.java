@@ -30,7 +30,6 @@ import java.util.Objects;
         LocomotiveFunctionCommand.JSON_PROPERTY_VALUE,
         LocomotiveFunctionCommand.JSON_PROPERTY_FUNCTION_VALUE
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class LocomotiveFunctionCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
@@ -38,23 +37,17 @@ public class LocomotiveFunctionCommand {
     public static final String JSON_PROPERTY_FUNCTION = "function";
     public static final String JSON_PROPERTY_VALUE = "value";
     public static final String JSON_PROPERTY_FUNCTION_VALUE = "function_value";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer locId;
-    @javax.annotation.Nonnull
     private Integer function;
-    @javax.annotation.Nullable
     private Integer value;
-    @javax.annotation.Nullable
     private Integer functionValue;
 
     public LocomotiveFunctionCommand() {
     }
 
-    public LocomotiveFunctionCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public LocomotiveFunctionCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -64,7 +57,6 @@ public class LocomotiveFunctionCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -74,12 +66,12 @@ public class LocomotiveFunctionCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public LocomotiveFunctionCommand response(@javax.annotation.Nonnull Boolean response) {
+    public LocomotiveFunctionCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -89,7 +81,6 @@ public class LocomotiveFunctionCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -99,12 +90,12 @@ public class LocomotiveFunctionCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public LocomotiveFunctionCommand locId(@javax.annotation.Nonnull Integer locId) {
+    public LocomotiveFunctionCommand locId(Integer locId) {
         this.locId = locId;
         return this;
     }
@@ -114,7 +105,6 @@ public class LocomotiveFunctionCommand {
      *
      * @return locId
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getLocId() {
@@ -124,12 +114,12 @@ public class LocomotiveFunctionCommand {
 
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setLocId(@javax.annotation.Nonnull Integer locId) {
+    public void setLocId(Integer locId) {
         this.locId = locId;
     }
 
 
-    public LocomotiveFunctionCommand function(@javax.annotation.Nonnull Integer function) {
+    public LocomotiveFunctionCommand function(Integer function) {
         this.function = function;
         return this;
     }
@@ -139,7 +129,6 @@ public class LocomotiveFunctionCommand {
      *
      * @return function
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_FUNCTION)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getFunction() {
@@ -149,12 +138,12 @@ public class LocomotiveFunctionCommand {
 
     @JsonProperty(JSON_PROPERTY_FUNCTION)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setFunction(@javax.annotation.Nonnull Integer function) {
+    public void setFunction(Integer function) {
         this.function = function;
     }
 
 
-    public LocomotiveFunctionCommand value(@javax.annotation.Nullable Integer value) {
+    public LocomotiveFunctionCommand value(Integer value) {
         this.value = value;
         return this;
     }
@@ -164,7 +153,6 @@ public class LocomotiveFunctionCommand {
      *
      * @return value
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_VALUE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getValue() {
@@ -174,12 +162,12 @@ public class LocomotiveFunctionCommand {
 
     @JsonProperty(JSON_PROPERTY_VALUE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setValue(@javax.annotation.Nullable Integer value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
 
-    public LocomotiveFunctionCommand functionValue(@javax.annotation.Nullable Integer functionValue) {
+    public LocomotiveFunctionCommand functionValue(Integer functionValue) {
         this.functionValue = functionValue;
         return this;
     }
@@ -189,7 +177,6 @@ public class LocomotiveFunctionCommand {
      *
      * @return functionValue
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_FUNCTION_VALUE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getFunctionValue() {
@@ -199,7 +186,7 @@ public class LocomotiveFunctionCommand {
 
     @JsonProperty(JSON_PROPERTY_FUNCTION_VALUE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setFunctionValue(@javax.annotation.Nullable Integer functionValue) {
+    public void setFunctionValue(Integer functionValue) {
         this.functionValue = functionValue;
     }
 

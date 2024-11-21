@@ -28,25 +28,20 @@ import java.util.Objects;
         LocomotiveSpeedCommand.JSON_PROPERTY_LOC_ID,
         LocomotiveSpeedCommand.JSON_PROPERTY_SPEED
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class LocomotiveSpeedCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_LOC_ID = "loc_id";
     public static final String JSON_PROPERTY_SPEED = "speed";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer locId;
-    @javax.annotation.Nullable
     private Integer speed;
 
     public LocomotiveSpeedCommand() {
     }
 
-    public LocomotiveSpeedCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public LocomotiveSpeedCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -56,7 +51,6 @@ public class LocomotiveSpeedCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -66,12 +60,12 @@ public class LocomotiveSpeedCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public LocomotiveSpeedCommand response(@javax.annotation.Nonnull Boolean response) {
+    public LocomotiveSpeedCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -81,7 +75,6 @@ public class LocomotiveSpeedCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -91,12 +84,12 @@ public class LocomotiveSpeedCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public LocomotiveSpeedCommand locId(@javax.annotation.Nonnull Integer locId) {
+    public LocomotiveSpeedCommand locId(Integer locId) {
         this.locId = locId;
         return this;
     }
@@ -106,7 +99,6 @@ public class LocomotiveSpeedCommand {
      *
      * @return locId
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getLocId() {
@@ -116,12 +108,12 @@ public class LocomotiveSpeedCommand {
 
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setLocId(@javax.annotation.Nonnull Integer locId) {
+    public void setLocId(Integer locId) {
         this.locId = locId;
     }
 
 
-    public LocomotiveSpeedCommand speed(@javax.annotation.Nullable Integer speed) {
+    public LocomotiveSpeedCommand speed(Integer speed) {
         this.speed = speed;
         return this;
     }
@@ -131,7 +123,6 @@ public class LocomotiveSpeedCommand {
      *
      * @return speed
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_SPEED)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getSpeed() {
@@ -141,7 +132,7 @@ public class LocomotiveSpeedCommand {
 
     @JsonProperty(JSON_PROPERTY_SPEED)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setSpeed(@javax.annotation.Nullable Integer speed) {
+    public void setSpeed(Integer speed) {
         this.speed = speed;
     }
 

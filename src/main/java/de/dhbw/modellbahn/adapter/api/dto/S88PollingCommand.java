@@ -30,7 +30,6 @@ import java.util.Objects;
         S88PollingCommand.JSON_PROPERTY_MODULE,
         S88PollingCommand.JSON_PROPERTY_STATE
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-21T20:30:51.693715200+01:00[Europe/Berlin]", comments = "Generator version: 7.10.0")
 public class S88PollingCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
@@ -38,23 +37,17 @@ public class S88PollingCommand {
     public static final String JSON_PROPERTY_MODULE_COUNT = "module_count";
     public static final String JSON_PROPERTY_MODULE = "module";
     public static final String JSON_PROPERTY_STATE = "state";
-    @javax.annotation.Nonnull
     private Integer hashValue;
-    @javax.annotation.Nonnull
     private Boolean response;
-    @javax.annotation.Nonnull
     private Integer locId;
-    @javax.annotation.Nullable
     private Integer moduleCount;
-    @javax.annotation.Nullable
     private Integer module;
-    @javax.annotation.Nullable
     private Integer state;
 
     public S88PollingCommand() {
     }
 
-    public S88PollingCommand hashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public S88PollingCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;
     }
@@ -64,7 +57,6 @@ public class S88PollingCommand {
      *
      * @return hashValue
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getHashValue() {
@@ -74,12 +66,12 @@ public class S88PollingCommand {
 
     @JsonProperty(JSON_PROPERTY_HASH_VALUE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setHashValue(@javax.annotation.Nonnull Integer hashValue) {
+    public void setHashValue(Integer hashValue) {
         this.hashValue = hashValue;
     }
 
 
-    public S88PollingCommand response(@javax.annotation.Nonnull Boolean response) {
+    public S88PollingCommand response(Boolean response) {
         this.response = response;
         return this;
     }
@@ -89,7 +81,6 @@ public class S88PollingCommand {
      *
      * @return response
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Boolean getResponse() {
@@ -99,12 +90,12 @@ public class S88PollingCommand {
 
     @JsonProperty(JSON_PROPERTY_RESPONSE)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setResponse(@javax.annotation.Nonnull Boolean response) {
+    public void setResponse(Boolean response) {
         this.response = response;
     }
 
 
-    public S88PollingCommand locId(@javax.annotation.Nonnull Integer locId) {
+    public S88PollingCommand locId(Integer locId) {
         this.locId = locId;
         return this;
     }
@@ -114,7 +105,6 @@ public class S88PollingCommand {
      *
      * @return locId
      */
-    @javax.annotation.Nonnull
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
     public Integer getLocId() {
@@ -124,12 +114,12 @@ public class S88PollingCommand {
 
     @JsonProperty(JSON_PROPERTY_LOC_ID)
     @JsonInclude(value = JsonInclude.Include.ALWAYS)
-    public void setLocId(@javax.annotation.Nonnull Integer locId) {
+    public void setLocId(Integer locId) {
         this.locId = locId;
     }
 
 
-    public S88PollingCommand moduleCount(@javax.annotation.Nullable Integer moduleCount) {
+    public S88PollingCommand moduleCount(Integer moduleCount) {
         this.moduleCount = moduleCount;
         return this;
     }
@@ -139,7 +129,6 @@ public class S88PollingCommand {
      *
      * @return moduleCount
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_MODULE_COUNT)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getModuleCount() {
@@ -149,12 +138,12 @@ public class S88PollingCommand {
 
     @JsonProperty(JSON_PROPERTY_MODULE_COUNT)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setModuleCount(@javax.annotation.Nullable Integer moduleCount) {
+    public void setModuleCount(Integer moduleCount) {
         this.moduleCount = moduleCount;
     }
 
 
-    public S88PollingCommand module(@javax.annotation.Nullable Integer module) {
+    public S88PollingCommand module(Integer module) {
         this.module = module;
         return this;
     }
@@ -164,7 +153,6 @@ public class S88PollingCommand {
      *
      * @return module
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_MODULE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getModule() {
@@ -174,12 +162,12 @@ public class S88PollingCommand {
 
     @JsonProperty(JSON_PROPERTY_MODULE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setModule(@javax.annotation.Nullable Integer module) {
+    public void setModule(Integer module) {
         this.module = module;
     }
 
 
-    public S88PollingCommand state(@javax.annotation.Nullable Integer state) {
+    public S88PollingCommand state(Integer state) {
         this.state = state;
         return this;
     }
@@ -189,7 +177,6 @@ public class S88PollingCommand {
      *
      * @return state
      */
-    @javax.annotation.Nullable
     @JsonProperty(JSON_PROPERTY_STATE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
     public Integer getState() {
@@ -199,7 +186,7 @@ public class S88PollingCommand {
 
     @JsonProperty(JSON_PROPERTY_STATE)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setState(@javax.annotation.Nullable Integer state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
