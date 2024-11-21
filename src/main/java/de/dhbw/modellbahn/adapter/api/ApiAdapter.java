@@ -8,6 +8,7 @@ import de.dhbw.modellbahn.domain.locomotive.functions.LocFunction;
 import de.dhbw.modellbahn.domain.locomotive.LocId;
 import de.dhbw.modellbahn.domain.locomotive.ressources.LocRessources;
 import de.dhbw.modellbahn.domain.trackcomponents.TrackComponentId;
+import de.dhbw.modellbahn.domain.trackcomponents.TrackComponentState;
 
 public interface ApiAdapter {
     void setLocSpeed(LocId locId, Speed speed);
@@ -19,8 +20,8 @@ public interface ApiAdapter {
     LocRessources getAllFuels(LocId locId);
     void emergencyStopLoc();
 
-    void setTrackComponentStatus(TrackComponentId trackComponentId, SwitchComponentState trackComponentStatus);
-    SwitchComponentState getTrackComponentStatus(TrackComponentId trackComponentId);
+    void setTrackComponentStatus(TrackComponentId trackComponentId, TrackComponentState trackComponentStatus);
+    TrackComponentState getTrackComponentStatus(TrackComponentId trackComponentId);
 
     void systemStop();
     void systemGo();

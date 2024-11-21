@@ -9,7 +9,7 @@ public class LocRessources {
 
     }
 
-    public FuelValue getFuel(FuelType fuelType) {
+    public void getFuel(FuelType fuelType) {
 
     }
 }

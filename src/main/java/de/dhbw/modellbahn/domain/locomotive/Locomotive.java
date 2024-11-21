@@ -23,10 +23,10 @@ public class Locomotive {
 
     }
 
-    public FuelValue getFuel(FuelType fuelType) {
+    public void getFuel(FuelType fuelType) {
 
     }
-    public LocRessources getAllFuels() {
+    public void getAllFuels() {
 
     }
 }
