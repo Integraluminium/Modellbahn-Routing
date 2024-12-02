@@ -1,8 +1,8 @@
-package de.dhbw.modellbahn.domain.graphmodellation;
+package de.dhbw.modellbahn.domain.graph;
 
 import de.dhbw.modellbahn.domain.trackcomponents.SwitchComponent;
 
-public class CrossSwitch extends GraphPoint implements Switch{
+public class CrossSwitch extends GraphPoint implements Switch {
     private final GraphPointConnection straight1;
     private final GraphPointConnection straight2;
     private final GraphPointConnection diverging1;
@@ -18,12 +18,12 @@ public class CrossSwitch extends GraphPoint implements Switch{
         this.switchComponent = switchComponent;
     }
 
-    public void switchToConnectPoints(GraphPoint point1, GraphPoint point2){
-        if(straight1.connects(point1, point2) || straight2.connects(point1, point2)){
+    public void switchToConnectPoints(GraphPoint point1, GraphPoint point2) {
+        if (straight1.connects(point1, point2) || straight2.connects(point1, point2)) {
             switchComponent.setStraight();
-        }else if (diverging1.connects(point1, point2) || diverging2.connects(point1, point2)){
+        } else if (diverging1.connects(point1, point2) || diverging2.connects(point1, point2)) {
             switchComponent.setDiverging();
-        }else{
+        } else {
             throw new IllegalArgumentException("Points cannot be connected by this switch.");
         }
     }

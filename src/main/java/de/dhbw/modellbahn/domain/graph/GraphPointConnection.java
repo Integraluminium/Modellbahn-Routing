@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.domain.graphmodellation;
+package de.dhbw.modellbahn.domain.graph;
 
 public class GraphPointConnection {
     private final GraphPoint point1;
