@@ -6,11 +6,11 @@ import de.dhbw.modellbahn.domain.locomotive.LocDirection;
 import de.dhbw.modellbahn.domain.locomotive.LocId;
 import de.dhbw.modellbahn.domain.locomotive.Speed;
 import de.dhbw.modellbahn.domain.locomotive.functions.LocFunction;
-import de.dhbw.modellbahn.domain.locomotive.ressources.FuelType;
-import de.dhbw.modellbahn.domain.locomotive.ressources.FuelValue;
-import de.dhbw.modellbahn.domain.locomotive.ressources.LocRessources;
-import de.dhbw.modellbahn.domain.trackcomponents.TrackComponentId;
-import de.dhbw.modellbahn.domain.trackcomponents.TrackComponentState;
+import de.dhbw.modellbahn.domain.locomotive.resources.FuelType;
+import de.dhbw.modellbahn.domain.locomotive.resources.FuelValue;
+import de.dhbw.modellbahn.domain.locomotive.resources.LocRessources;
+import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track_components.TrackComponentState;
 
 import java.net.http.HttpClient;
 

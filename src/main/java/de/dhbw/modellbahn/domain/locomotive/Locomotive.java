@@ -1,11 +1,11 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
-import de.dhbw.modellbahn.domain.locomotive.ressources.FuelType;
-import de.dhbw.modellbahn.domain.locomotive.ressources.FuelValue;
-import de.dhbw.modellbahn.domain.locomotive.ressources.LocRessources;
+import de.dhbw.modellbahn.domain.locomotive.resources.FuelType;
+import de.dhbw.modellbahn.domain.locomotive.resources.FuelValue;
+import de.dhbw.modellbahn.domain.locomotive.resources.LocRessources;
 
 public class Locomotive {
-    private LocRessources ressources;
+    private LocRessources resources;
     private final LocId id;
     private final String name;
 
