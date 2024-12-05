@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SpeedTest {
 
-    public static Stream<Arguments> provideValidSpeedValues() {
+    private static Stream<Arguments> provideValidSpeedValues() {
         return Stream.of(
                 Arguments.of(0),
                 Arguments.of(50),
@@ -18,7 +18,7 @@ class SpeedTest {
         );
     }
 
-    public static Stream<Arguments> provideInvalidSpeedValues() {
+    private static Stream<Arguments> provideInvalidSpeedValues() {
         return Stream.of(
                 Arguments.of(101),
                 Arguments.of(-1)

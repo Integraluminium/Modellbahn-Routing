@@ -13,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LocIdTest {
 
-    public static Stream<Arguments> provideValidLocIds() throws IOException {
+    private static Stream<Arguments> provideValidLocIds() throws IOException {
         String projectDir = System.getProperty("user.dir");
         String csvPath = "/src/main/java/de/dhbw/modellbahn/domain/locomotive/LocIds.csv";
         List<Integer> ids = CsvReader.readIntegerList(projectDir + csvPath);
         return ids.stream().map(Arguments::of);
     }
-    public static Stream<Arguments> provideInvalidLocIds() {
+    private static Stream<Arguments> provideInvalidLocIds() {
         return Stream.of(
                 Arguments.of(-120),
                 Arguments.of(0),
