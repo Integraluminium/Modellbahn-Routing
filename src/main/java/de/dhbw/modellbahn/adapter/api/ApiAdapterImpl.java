@@ -8,7 +8,7 @@ import de.dhbw.modellbahn.domain.locomotive.Speed;
 import de.dhbw.modellbahn.domain.locomotive.functions.LocFunction;
 import de.dhbw.modellbahn.domain.locomotive.resources.FuelType;
 import de.dhbw.modellbahn.domain.locomotive.resources.FuelValue;
-import de.dhbw.modellbahn.domain.locomotive.resources.LocRessources;
+import de.dhbw.modellbahn.domain.locomotive.resources.LocResources;
 import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
 import de.dhbw.modellbahn.domain.track_components.TrackComponentState;
 
@@ -127,7 +127,7 @@ public class ApiAdapterImpl implements ApiAdapter {
     }
 
     @Override
-    public LocRessources getAllFuels(LocId locId) {
+    public LocResources getAllFuels(LocId locId) {
         return null;    // TODO
     }
 
