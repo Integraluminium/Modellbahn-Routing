@@ -38,6 +38,12 @@ public class LocomotiveEmergencyStopCommand {
     public LocomotiveEmergencyStopCommand() {
     }
 
+    public LocomotiveEmergencyStopCommand(Integer hashValue, Boolean response, Integer id) {
+        this.hashValue = hashValue;
+        this.response = response;
+        this.id = id;
+    }
+
     public LocomotiveEmergencyStopCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;

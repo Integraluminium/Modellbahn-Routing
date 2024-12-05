@@ -36,9 +36,16 @@ public class LocomotiveDirectionCommand {
     private Integer hashValue;
     private Boolean response;
     private Integer locId;
-    private LocomotiveDirection direction;
+    private String direction;
 
     public LocomotiveDirectionCommand() {
+    }
+
+    public LocomotiveDirectionCommand(Integer hashValue, Boolean response, Integer locId, String direction) {
+        this.hashValue = hashValue;
+        this.response = response;
+        this.locId = locId;
+        this.direction = direction;
     }
 
     public LocomotiveDirectionCommand hashValue(Integer hashValue) {
@@ -113,7 +120,7 @@ public class LocomotiveDirectionCommand {
     }
 
 
-    public LocomotiveDirectionCommand direction(LocomotiveDirection direction) {
+    public LocomotiveDirectionCommand direction(String direction) {
         this.direction = direction;
         return this;
     }
@@ -125,14 +132,14 @@ public class LocomotiveDirectionCommand {
      */
     @JsonProperty(JSON_PROPERTY_DIRECTION)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public LocomotiveDirection getDirection() {
+    public String getDirection() {
         return direction;
     }
 
 
     @JsonProperty(JSON_PROPERTY_DIRECTION)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-    public void setDirection(LocomotiveDirection direction) {
+    public void setDirection(String direction) {
         this.direction = direction;
     }
 

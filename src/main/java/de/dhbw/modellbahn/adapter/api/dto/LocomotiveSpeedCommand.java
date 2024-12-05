@@ -41,6 +41,13 @@ public class LocomotiveSpeedCommand {
     public LocomotiveSpeedCommand() {
     }
 
+    public LocomotiveSpeedCommand(Integer hashValue, Boolean response, Integer locId, Integer speed) {
+        this.hashValue = hashValue;
+        this.response = response;
+        this.locId = locId;
+        this.speed = speed;
+    }
+
     public LocomotiveSpeedCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;

@@ -35,6 +35,11 @@ public class WriteConfigResultByte {
     public WriteConfigResultByte() {
     }
 
+    public WriteConfigResultByte(Boolean isWriteSuccessful, Boolean isVerifySuccessful) {
+        this.isWriteSuccessful = isWriteSuccessful;
+        this.isVerifySuccessful = isVerifySuccessful;
+    }
+
     public WriteConfigResultByte isWriteSuccessful(Boolean isWriteSuccessful) {
         this.isWriteSuccessful = isWriteSuccessful;
         return this;

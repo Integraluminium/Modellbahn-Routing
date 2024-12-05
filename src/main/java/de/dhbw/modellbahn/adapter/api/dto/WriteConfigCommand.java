@@ -53,6 +53,17 @@ public class WriteConfigCommand {
     public WriteConfigCommand() {
     }
 
+    public WriteConfigCommand(Integer hashValue, Boolean response, Integer locId, Integer index, Integer number, Integer value, WriteConfigControlByte control, WriteConfigResultByte result) {
+        this.hashValue = hashValue;
+        this.response = response;
+        this.locId = locId;
+        this.index = index;
+        this.number = number;
+        this.value = value;
+        this.control = control;
+        this.result = result;
+    }
+
     public WriteConfigCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;

@@ -35,6 +35,12 @@ public class SystemStopCommand {
     private Boolean response;
     private Integer id;
 
+    public SystemStopCommand(Integer hashValue, Boolean response, Integer id) {
+        this.hashValue = hashValue;
+        this.response = response;
+        this.id = id;
+    }
+
     public SystemStopCommand() {
     }
 

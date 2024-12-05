@@ -38,6 +38,12 @@ public class WriteConfigControlByte {
     public WriteConfigControlByte() {
     }
 
+    public WriteConfigControlByte(Boolean isMain, Boolean isMultiByte, DCCProgramming dccProgramming) {
+        this.isMain = isMain;
+        this.isMultiByte = isMultiByte;
+        this.dccProgramming = dccProgramming;
+    }
+
     public WriteConfigControlByte isMain(Boolean isMain) {
         this.isMain = isMain;
         return this;

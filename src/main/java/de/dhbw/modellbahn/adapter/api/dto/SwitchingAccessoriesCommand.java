@@ -47,6 +47,15 @@ public class SwitchingAccessoriesCommand {
     public SwitchingAccessoriesCommand() {
     }
 
+    public SwitchingAccessoriesCommand(Integer hashValue, Boolean response, Integer locId, Integer position, Integer power, Integer value) {
+        this.hashValue = hashValue;
+        this.response = response;
+        this.locId = locId;
+        this.position = position;
+        this.power = power;
+        this.value = value;
+    }
+
     public SwitchingAccessoriesCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;

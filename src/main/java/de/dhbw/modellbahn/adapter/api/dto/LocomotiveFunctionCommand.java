@@ -47,6 +47,15 @@ public class LocomotiveFunctionCommand {
     public LocomotiveFunctionCommand() {
     }
 
+    public LocomotiveFunctionCommand(Integer hashValue, Boolean response, Integer locId, Integer function, Integer value, Integer functionValue) {
+        this.hashValue = hashValue;
+        this.response = response;
+        this.locId = locId;
+        this.function = function;
+        this.value = value;
+        this.functionValue = functionValue;
+    }
+
     public LocomotiveFunctionCommand hashValue(Integer hashValue) {
         this.hashValue = hashValue;
         return this;

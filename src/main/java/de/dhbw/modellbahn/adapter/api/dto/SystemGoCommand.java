@@ -35,6 +35,12 @@ public class SystemGoCommand {
     private Boolean response;
     private Integer id;
 
+    public SystemGoCommand(Integer hashValue, Boolean response, Integer id) {
+        this.hashValue = hashValue;
+        this.response = response;
+        this.id = id;
+    }
+
     public SystemGoCommand() {
     }
 
