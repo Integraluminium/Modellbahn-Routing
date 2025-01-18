@@ -1,24 +1,30 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
-import de.dhbw.modellbahn.CsvReader;
+import de.dhbw.modellbahn.plugin.CsvReader;
+import de.dhbw.modellbahn.domain.ConfigReader;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LocIdTest {
+    private static ConfigReader configReader;
 
-    private static Stream<Arguments> provideValidLocIds() throws IOException {
-        String projectDir = System.getProperty("user.dir");
-        String csvPath = "/src/main/java/de/dhbw/modellbahn/domain/locomotive/LocIds.csv";
-        List<Integer> ids = CsvReader.readIntegerList(projectDir + csvPath);
+    @BeforeAll
+    static void createConfigReader() {
+        configReader = new CsvReader();
+    }
+
+    private static Stream<Arguments> provideValidLocIds() {
+        List<Integer> ids = configReader.getValidLocIds();
         return ids.stream().map(Arguments::of);
     }
+
     private static Stream<Arguments> provideInvalidLocIds() {
         return Stream.of(
                 Arguments.of(-120),
@@ -29,15 +35,15 @@ class LocIdTest {
 
     @ParameterizedTest
     @MethodSource("provideValidLocIds")
-    void testValidLocIds(int input){
-        LocId locId = new LocId(input);
+    void testValidLocIds(int input) {
+        LocId locId = new LocId(input, configReader);
 
         assertEquals(input, locId.id());
     }
 
     @ParameterizedTest
     @MethodSource("provideInvalidLocIds")
-    void testInvalidLocIds(int input){
-        assertThrows(IllegalArgumentException.class, () -> new LocId(input));
+    void testInvalidLocIds(int input) {
+        assertThrows(IllegalArgumentException.class, () -> new LocId(input, configReader));
     }
 }
