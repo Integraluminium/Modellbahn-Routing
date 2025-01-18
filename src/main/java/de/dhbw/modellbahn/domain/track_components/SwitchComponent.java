@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.domain.trackcomponents;
+package de.dhbw.modellbahn.domain.track_components;
 
 public class SwitchComponent extends TrackComponent {
     private TrackComponentState state;

@@ -1,6 +1,6 @@
 package de.dhbw.modellbahn.domain.graph;
 
-import de.dhbw.modellbahn.domain.trackcomponents.SwitchComponent;
+import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 
 public class NormalSwitch extends GraphPoint implements Switch {
     private final SwitchComponent switchComponent;

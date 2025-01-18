@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.domain.locomotive.ressources;
+package de.dhbw.modellbahn.domain.locomotive.resources;
 
 public enum FuelType {
     FUEL_A(1),
