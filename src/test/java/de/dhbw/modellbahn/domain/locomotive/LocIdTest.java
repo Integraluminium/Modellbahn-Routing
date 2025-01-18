@@ -1,7 +1,8 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
-import de.dhbw.modellbahn.plugin.CsvReader;
+import de.dhbw.modellbahn.plugin.CsvConfigReader;
 import de.dhbw.modellbahn.domain.ConfigReader;
+import de.dhbw.modellbahn.plugin.JSONConfigReader;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,7 +18,7 @@ class LocIdTest {
 
     @BeforeAll
     static void createConfigReader() {
-        configReader = new CsvReader();
+        configReader = new JSONConfigReader();
     }
 
     private static Stream<Arguments> provideValidLocIds() {
