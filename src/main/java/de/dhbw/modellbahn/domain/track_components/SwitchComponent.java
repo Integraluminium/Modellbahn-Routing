@@ -1,32 +1,42 @@
 package de.dhbw.modellbahn.domain.track_components;
 
+import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
+
 public class SwitchComponent extends TrackComponent {
-    private TrackComponentState state;
+    private final TrackComponentCalls trackComponentCalls;
+    private SwitchState state;
 
-    public SwitchComponent(TrackComponentState state) {
+    public SwitchComponent(String name, TrackComponentId id, SwitchState state, TrackComponentCalls trackComponentCalls) {
+        super(name, id);
         this.state = state;
+        this.trackComponentCalls = trackComponentCalls;
     }
 
-    public SwitchComponent() {
-        // TODO Frage Status über ID ab
-        TrackComponentState actualState = null;
-        this.state = actualState;
+    public SwitchComponent(String name, TrackComponentId id, TrackComponentCalls apiAdapter) {
+        this(name, id, SwitchState.UNKNOWN, apiAdapter);
+
+        this.state = synchroniseState();
     }
 
-    public TrackComponentState getState() {
+    public SwitchState synchroniseState() {
         // TODO request API / Synchronise
         return state;
     }
 
-    public void setState(TrackComponentState state) {
-        // TODO request API
+    public SwitchState getState() {
+        return state;
+    }
+
+    public void setState(SwitchState state) {
+        this.trackComponentCalls.setSwitchComponentStatus(this.getId(), state);
         this.state = state;
     }
 
-    public void setStraight(){
-        setState(new TrackComponentState(true));
+    public void setStraight() {
+        setState(SwitchState.STRAIGHT);
     }
-    public void setDiverging(){
-        setState(new TrackComponentState(false));
+
+    public void setDiverging() {
+        setState(SwitchState.DIVERGENT);
     }
 }
