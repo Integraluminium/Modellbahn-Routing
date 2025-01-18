@@ -1,8 +1,8 @@
 package de.dhbw.modellbahn.application.port.moba.communication;
 
-import de.dhbw.modellbahn.domain.trackcomponents.SignalState;
-import de.dhbw.modellbahn.domain.trackcomponents.SwitchState;
-import de.dhbw.modellbahn.domain.trackcomponents.TrackComponentId;
+import de.dhbw.modellbahn.domain.track_components.SignalState;
+import de.dhbw.modellbahn.domain.track_components.SwitchState;
+import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
 
 public interface TrackComponentCalls {
 //    void setTrackComponentStatus(TrackComponentId trackComponentId, TrackComponentStatus trackComponentStatus);

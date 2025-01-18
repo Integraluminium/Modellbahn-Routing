@@ -4,9 +4,9 @@ import de.dhbw.modellbahn.domain.locomotive.LocDirection;
 import de.dhbw.modellbahn.domain.locomotive.LocId;
 import de.dhbw.modellbahn.domain.locomotive.Speed;
 import de.dhbw.modellbahn.domain.locomotive.functions.LocFunction;
-import de.dhbw.modellbahn.domain.locomotive.ressources.FuelType;
-import de.dhbw.modellbahn.domain.locomotive.ressources.FuelValue;
-import de.dhbw.modellbahn.domain.locomotive.ressources.LocRessources;
+import de.dhbw.modellbahn.domain.locomotive.resources.FuelType;
+import de.dhbw.modellbahn.domain.locomotive.resources.FuelValue;
+import de.dhbw.modellbahn.domain.locomotive.resources.LocResources;
 
 public interface LocCalls {
     void setLocSpeed(LocId locId, Speed speed);
@@ -21,7 +21,7 @@ public interface LocCalls {
 
     FuelValue getFuel(LocId locId, FuelType fuelType);
 
-    LocRessources getAllFuels(LocId locId);
+    LocResources getAllFuels(LocId locId);
 
     void emergencyStopLoc(LocId locId);
 }

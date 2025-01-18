@@ -1,18 +1,16 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
-import de.dhbw.modellbahn.domain.locomotive.ressources.FuelType;
-import de.dhbw.modellbahn.domain.locomotive.ressources.FuelValue;
-import de.dhbw.modellbahn.domain.locomotive.ressources.LocRessources;
+import de.dhbw.modellbahn.domain.locomotive.resources.FuelType;
+import de.dhbw.modellbahn.domain.locomotive.resources.FuelValue;
+import de.dhbw.modellbahn.domain.locomotive.resources.LocResources;
 
 public class Locomotive {
-    private LocRessources ressources;
+    private LocResources resources;
     private final LocId id;
-    private final String name;
 
 
-    public Locomotive(LocId locId, String name) {
+    public Locomotive(LocId locId) {
         this.id = locId;
-        this.name = name;
     }
 
     public LocId getLocId() {
@@ -23,10 +21,10 @@ public class Locomotive {
 
     }
 
-    public void getFuel(FuelType fuelType) {
-
+    public FuelValue getFuel(FuelType fuelType) {
+        return null;
     }
-    public void getAllFuels() {
-
+    public LocResources getAllFuels() {
+        return null;
     }
 }
