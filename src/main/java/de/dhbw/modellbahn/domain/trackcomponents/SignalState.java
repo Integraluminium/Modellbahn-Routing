@@ -1,7 +1,17 @@
 package de.dhbw.modellbahn.domain.trackcomponents;
 
 public enum SignalState {
-    DANGER,
-    CLEAR,
-    UNKNOWN;
+    DANGER(0),
+    CLEAR(1),
+    UNKNOWN(-1);
+
+    private final int value;
+
+    SignalState(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
 }

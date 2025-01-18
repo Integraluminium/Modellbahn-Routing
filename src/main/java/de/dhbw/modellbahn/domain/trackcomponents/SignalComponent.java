@@ -1,7 +1,6 @@
 package de.dhbw.modellbahn.domain.trackcomponents;
 
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.adapter.moba.communication.TrackComponentStatus;
 
 public class SignalComponent extends TrackComponent {
     private SignalState state;
@@ -13,19 +12,19 @@ public class SignalComponent extends TrackComponent {
         this.apiAdapter = apiAdapter;
     }
 
-    public void setState(SignalState state, TrackComponentStatus status) {
+    public void setState(SignalState state) {
         if (state == SignalState.UNKNOWN) {
             throw new IllegalArgumentException("State should not be set to UNDEFINED");
         }
-        this.apiAdapter.setTrackComponentStatus(this.getId(), status);
+        this.apiAdapter.setSignalComponentStatus(this.getId(), state);
         this.state = state;
     }
 
     public void setClear() {
-        setState(SignalState.CLEAR, new TrackComponentStatus(1));
+        setState(SignalState.CLEAR);
     }
 
     public void setDanger() {
-        setState(SignalState.DANGER, new TrackComponentStatus(0));
+        setState(SignalState.DANGER);
     }
 }

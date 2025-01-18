@@ -1,7 +1,6 @@
 package de.dhbw.modellbahn.domain.trackcomponents;
 
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.adapter.moba.communication.TrackComponentStatus;
 
 public class SwitchComponent extends TrackComponent {
     private final TrackComponentCalls trackComponentCalls;
@@ -28,16 +27,16 @@ public class SwitchComponent extends TrackComponent {
         return state;
     }
 
-    public void setState(SwitchState state, TrackComponentStatus status) {
-        this.trackComponentCalls.setTrackComponentStatus(this.getId(), status);
+    public void setState(SwitchState state) {
+        this.trackComponentCalls.setSwitchComponentStatus(this.getId(), state);
         this.state = state;
     }
 
     public void setStraight() {
-        setState(SwitchState.STRAIGHT, new TrackComponentStatus(1));
+        setState(SwitchState.STRAIGHT);
     }
 
     public void setDiverging() {
-        setState(SwitchState.DIVERGENT, new TrackComponentStatus(0));
+        setState(SwitchState.DIVERGENT);
     }
 }
