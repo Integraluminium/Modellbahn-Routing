@@ -5,10 +5,10 @@ package de.dhbw.modellbahn.domain.locomotive.resources;
  *
  * @param value - max 255
  */
-public record FuelValue(short value) {
+public record FuelValue(int value) {
     public FuelValue {
-        if (value < 0) {
-            throw new IllegalArgumentException("Fuel value cannot be negative");
+        if (value < 0 || value > 255) {
+            throw new IllegalArgumentException("Fuel must be in range [0;255]");
         }
     }
 }
