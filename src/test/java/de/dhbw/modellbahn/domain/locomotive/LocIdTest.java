@@ -1,6 +1,5 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
-import de.dhbw.modellbahn.plugin.CsvConfigReader;
 import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.plugin.JSONConfigReader;
 import org.junit.jupiter.api.BeforeAll;
