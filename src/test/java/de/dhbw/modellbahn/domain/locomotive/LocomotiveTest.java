@@ -1,5 +1,6 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
+import de.dhbw.modellbahn.domain.graph.TrackContact;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +10,7 @@ class LocomotiveTest {
 
     @Test
     void testGetLocId() {
-        Locomotive loc = new Locomotive(locId);
+        Locomotive loc = new Locomotive(locId, new TrackContact());
 
         assertEquals(loc.getLocId(), locId);
     }

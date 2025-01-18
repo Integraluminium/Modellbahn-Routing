@@ -8,7 +8,7 @@ import de.dhbw.modellbahn.domain.locomotive.LocId;
 public class Main {
     public static void main(String[] args) {
 
-        LocId id = new LocId(42);
+        LocId id = new LocId(16389);
 
         var apiService = new ApiService(0);
 
