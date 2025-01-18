@@ -9,11 +9,13 @@ public class Locomotive {
     private final LocId id;
     private LocResources resources;
     private GraphPoint currentLocation;
+    private Speed currentSpeed;
 
 
     public Locomotive(LocId locId, GraphPoint startLocation) {
         this.id = locId;
         this.currentLocation = startLocation;
+        this.currentSpeed = new Speed(0);
     }
 
     public LocId getLocId() {
@@ -37,5 +39,13 @@ public class Locomotive {
 
     public void setCurrentLocation(GraphPoint currentLocation) {
         this.currentLocation = currentLocation;
+    }
+
+    public Speed getCurrentSpeed() {
+        return currentSpeed;
+    }
+
+    public void setCurrentSpeed(Speed currentSpeed) {
+        this.currentSpeed = currentSpeed;
     }
 }

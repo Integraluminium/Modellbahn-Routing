@@ -11,8 +11,8 @@ public class Route {
         this.actionList = actionList;
     }
 
-    public void driveRoute(Locomotive loc){
-        for (RoutingAction action:actionList){
+    public void driveRoute(Locomotive loc) {
+        for (RoutingAction action : actionList) {
             action.performAction(loc);
         }
     }
