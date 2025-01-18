@@ -1,19 +1,19 @@
 package de.dhbw.modellbahn.domain.trackcomponents;
 
-import de.dhbw.modellbahn.adapter.api.TrackComponentApiAdapter;
-import de.dhbw.modellbahn.adapter.api.TrackComponentStatus;
+import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
+import de.dhbw.modellbahn.adapter.moba.communication.TrackComponentStatus;
 
 public class SwitchComponent extends TrackComponent {
-    private final TrackComponentApiAdapter trackComponentApiAdapter;
+    private final TrackComponentCalls trackComponentCalls;
     private SwitchState state;
 
-    public SwitchComponent(String name, TrackComponentId id, SwitchState state, TrackComponentApiAdapter trackComponentApiAdapter) {
+    public SwitchComponent(String name, TrackComponentId id, SwitchState state, TrackComponentCalls trackComponentCalls) {
         super(name, id);
         this.state = state;
-        this.trackComponentApiAdapter = trackComponentApiAdapter;
+        this.trackComponentCalls = trackComponentCalls;
     }
 
-    public SwitchComponent(String name, TrackComponentId id, TrackComponentApiAdapter apiAdapter) {
+    public SwitchComponent(String name, TrackComponentId id, TrackComponentCalls apiAdapter) {
         this(name, id, SwitchState.UNKNOWN, apiAdapter);
 
         this.state = synchroniseState();
@@ -29,7 +29,7 @@ public class SwitchComponent extends TrackComponent {
     }
 
     public void setState(SwitchState state, TrackComponentStatus status) {
-        this.trackComponentApiAdapter.setTrackComponentStatus(this.getId(), status);
+        this.trackComponentCalls.setTrackComponentStatus(this.getId(), status);
         this.state = state;
     }
 

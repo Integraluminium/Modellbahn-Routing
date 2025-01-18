@@ -1,7 +1,8 @@
 package de.dhbw.modellbahn;
 
-import de.dhbw.modellbahn.adapter.api.ApiAdapter;
-import de.dhbw.modellbahn.adapter.api.ApiAdapterImpl;
+import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
+import de.dhbw.modellbahn.adapter.moba.communication.calls.SystemCallsAdapter;
+import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;
 import de.dhbw.modellbahn.domain.locomotive.LocId;
 
 public class Main {
@@ -9,7 +10,9 @@ public class Main {
 
         LocId id = new LocId(42);
 
-        ApiAdapter adapter = new ApiAdapterImpl(0, "");
+        var apiService = new ApiService(0);
+
+        SystemCalls adapter = new SystemCallsAdapter(apiService);
         adapter.systemStop();
 
     }

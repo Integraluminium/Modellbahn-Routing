@@ -1,13 +1,13 @@
 package de.dhbw.modellbahn.domain.trackcomponents;
 
-import de.dhbw.modellbahn.adapter.api.TrackComponentApiAdapter;
-import de.dhbw.modellbahn.adapter.api.TrackComponentStatus;
+import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
+import de.dhbw.modellbahn.adapter.moba.communication.TrackComponentStatus;
 
 public class SignalComponent extends TrackComponent {
     private SignalState state;
-    private TrackComponentApiAdapter apiAdapter;
+    private TrackComponentCalls apiAdapter;
 
-    public SignalComponent(String name, TrackComponentId id, TrackComponentApiAdapter apiAdapter) {
+    public SignalComponent(String name, TrackComponentId id, TrackComponentCalls apiAdapter) {
         super(name, id);
         state = SignalState.UNKNOWN;
         this.apiAdapter = apiAdapter;
