@@ -1,14 +1,14 @@
 package de.dhbw.modellbahn.domain.graph;
 
 import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track_components.SwitchState;
 
 public class NormalSwitch extends GraphPoint implements Switch {
     private final SwitchComponent switchComponent;
     private final GraphPointConnection straight;
     private final GraphPointConnection diverging;
 
-    public NormalSwitch(SwitchComponent switchComponent, GraphPointConnection straight, GraphPointConnection diverging) {
+    public NormalSwitch(String name, SwitchComponent switchComponent, GraphPointConnection straight, GraphPointConnection diverging) {
+        super(name);
         this.switchComponent = switchComponent;
         this.straight = straight;
         this.diverging = diverging;
@@ -22,5 +22,9 @@ public class NormalSwitch extends GraphPoint implements Switch {
         } else {
             throw new IllegalArgumentException("Points cannot be connected by this switch.");
         }
+    }
+
+    public boolean checkIfSwitchConnectsPoints(GraphPoint point1, GraphPoint point2) {
+        return straight.connects(point1, point2) || diverging.connects(point1, point2);
     }
 }

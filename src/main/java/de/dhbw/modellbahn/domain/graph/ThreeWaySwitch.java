@@ -10,7 +10,8 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
     private final SwitchComponent firstSwitch;
     private final SwitchComponent secondSwitch;
 
-    public ThreeWaySwitch(GraphPointConnection straight, GraphPointConnection left, GraphPointConnection right, SwitchComponent firstSwitch, SwitchComponent secondSwitch) {
+    public ThreeWaySwitch(String name, GraphPointConnection straight, GraphPointConnection left, GraphPointConnection right, SwitchComponent firstSwitch, SwitchComponent secondSwitch) {
+        super(name);
         this.straight = straight;
         this.left = left;
         this.right = right;
@@ -31,5 +32,9 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
         } else {
             throw new IllegalArgumentException("Points cannot be connected by this switch.");
         }
+    }
+
+    public boolean checkIfSwitchConnectsPoints(GraphPoint point1, GraphPoint point2) {
+        return straight.connects(point1, point2) || left.connects(point1, point2) || right.connects(point1, point2);
     }
 }

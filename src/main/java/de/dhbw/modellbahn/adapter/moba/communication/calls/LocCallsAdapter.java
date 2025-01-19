@@ -52,7 +52,7 @@ public class LocCallsAdapter implements LocCalls {
                 locId.id(),
                 locDirection.getDirection()
         );
-        apiAdapter.sendRequest("/loc/direction", command);
+        apiAdapter.sendRequest("/loc/destinationPoint", command);
     }
 
     @Override

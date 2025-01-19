@@ -19,7 +19,7 @@ class LocomotiveTest {
 
     @Test
     void testGetLocId() {
-        Locomotive loc = new Locomotive(locId, new TrackContact());
+        Locomotive loc = new Locomotive(locId, new TrackContact("startPoint"), new TrackContact("destination"));
 
         assertEquals(loc.getLocId(), locId);
     }
