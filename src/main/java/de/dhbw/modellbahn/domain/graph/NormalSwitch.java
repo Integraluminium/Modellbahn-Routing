@@ -1,6 +1,7 @@
 package de.dhbw.modellbahn.domain.graph;
 
 import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track_components.SwitchState;
 
 public class NormalSwitch extends GraphPoint implements Switch {
     private final SwitchComponent switchComponent;
@@ -22,5 +23,4 @@ public class NormalSwitch extends GraphPoint implements Switch {
             throw new IllegalArgumentException("Points cannot be connected by this switch.");
         }
     }
-
 }
