@@ -34,7 +34,15 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
         }
     }
 
+    public void switchToConnectToPoint(GraphPoint point) {
+
+    }
+
     public boolean checkIfSwitchConnectsPoints(GraphPoint point1, GraphPoint point2) {
         return straight.connects(point1, point2) || left.connects(point1, point2) || right.connects(point1, point2);
+    }
+
+    public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
+        return null;
     }
 }

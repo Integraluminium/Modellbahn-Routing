@@ -29,9 +29,17 @@ public class CrossSwitch extends GraphPoint implements Switch {
         }
     }
 
+    public void switchToConnectToPoint(GraphPoint point) {
+
+    }
+
     public boolean checkIfSwitchConnectsPoints(GraphPoint point1, GraphPoint point2) {
         return straight1.connects(point1, point2) || straight2.connects(point1, point2)
                 || diverging1.connects(point1, point2) || diverging2.connects(point1, point2);
+    }
+
+    public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
+        return null;
     }
 
 
