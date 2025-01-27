@@ -3,20 +3,22 @@ package de.dhbw.modellbahn.domain.graph;
 import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 
 public class ThreeWaySwitch extends GraphPoint implements Switch {
-    private final GraphPointConnection straight;
-    private final GraphPointConnection left;
-    private final GraphPointConnection right;
-
     private final SwitchComponent firstSwitch;
     private final SwitchComponent secondSwitch;
 
-    public ThreeWaySwitch(String name, GraphPointConnection straight, GraphPointConnection left, GraphPointConnection right, SwitchComponent firstSwitch, SwitchComponent secondSwitch) {
+    private final GraphPoint root;
+    private final GraphPoint straight;
+    private final GraphPoint left;
+    private final GraphPoint right;
+
+    public ThreeWaySwitch(String name, SwitchComponent firstSwitch, SwitchComponent secondSwitch, GraphPoint root, GraphPoint straight, GraphPoint left, GraphPoint right) {
         super(name);
+        this.firstSwitch = firstSwitch;
+        this.secondSwitch = secondSwitch;
+        this.root = root;
         this.straight = straight;
         this.left = left;
         this.right = right;
-        this.firstSwitch = firstSwitch;
-        this.secondSwitch = secondSwitch;
     }
 
     @Override

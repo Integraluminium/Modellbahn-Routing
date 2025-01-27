@@ -4,14 +4,17 @@ import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 
 public class NormalSwitch extends GraphPoint implements Switch {
     private final SwitchComponent switchComponent;
-    private final GraphPointConnection straight;
-    private final GraphPointConnection diverging;
 
-    public NormalSwitch(String name, SwitchComponent switchComponent, GraphPointConnection straight, GraphPointConnection diverging) {
+    private final GraphPoint root;
+    private final GraphPoint straight;
+    private final GraphPoint turnout;
+
+    public NormalSwitch(String name, SwitchComponent switchComponent, GraphPoint root, GraphPoint straight, GraphPoint turnout) {
         super(name);
         this.switchComponent = switchComponent;
+        this.root = root;
         this.straight = straight;
-        this.diverging = diverging;
+        this.turnout = turnout;
     }
 
     public void switchToConnectPoints(GraphPoint point1, GraphPoint point2) {
@@ -25,7 +28,7 @@ public class NormalSwitch extends GraphPoint implements Switch {
     }
 
     public void switchToConnectToPoint(GraphPoint point) {
-        
+
     }
 
     public boolean checkIfSwitchConnectsPoints(GraphPoint point1, GraphPoint point2) {

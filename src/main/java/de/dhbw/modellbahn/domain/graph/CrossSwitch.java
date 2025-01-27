@@ -3,20 +3,20 @@ package de.dhbw.modellbahn.domain.graph;
 import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 
 public class CrossSwitch extends GraphPoint implements Switch {
-    private final GraphPointConnection straight1;
-    private final GraphPointConnection straight2;
-    private final GraphPointConnection diverging1;
-    private final GraphPointConnection diverging2;
-
     private final SwitchComponent switchComponent;
 
-    public CrossSwitch(String name, GraphPointConnection straight1, GraphPointConnection straight2, GraphPointConnection diverging1, GraphPointConnection diverging2, SwitchComponent switchComponent) {
+    private final GraphPoint root1;
+    private final GraphPoint root2;
+    private final GraphPoint turnout1;
+    private final GraphPoint turnout2;
+
+    public CrossSwitch(String name, SwitchComponent switchComponent, GraphPoint root1, GraphPoint root2, GraphPoint turnout1, GraphPoint turnout2) {
         super(name);
-        this.straight1 = straight1;
-        this.straight2 = straight2;
-        this.diverging1 = diverging1;
-        this.diverging2 = diverging2;
         this.switchComponent = switchComponent;
+        this.root1 = root1;
+        this.root2 = root2;
+        this.turnout1 = turnout1;
+        this.turnout2 = turnout2;
     }
 
     public void switchToConnectPoints(GraphPoint point1, GraphPoint point2) {
