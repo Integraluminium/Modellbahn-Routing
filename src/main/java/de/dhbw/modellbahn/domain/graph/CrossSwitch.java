@@ -29,10 +29,6 @@ public class CrossSwitch extends GraphPoint implements Switch {
         }
     }
 
-    public void switchToConnectToPoint(GraphPoint point) {
-        throw new RuntimeException("This method should not be called. CrossSwitch only knows how to switch from two given GraphPoints.");
-    }
-
     public boolean checkIfConnectsPoints(GraphPoint point1, GraphPoint point2) {
         return connectsStraight(point1, point2) || connectsDiverging(point1, point2);
     }

@@ -47,18 +47,6 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
         secondSwitch.setDiverging();
     }
 
-    public void switchToConnectToPoint(GraphPoint point) {
-        if (point == straight) {
-            switchStraight();
-        } else if (point == left) {
-            switchLeft();
-        } else if (point == right) {
-            switchRight();
-        } else if (point != root) {
-            throw new IllegalArgumentException("Given GraphPoint is not connected witch this switch.");
-        }
-    }
-
     public boolean checkIfConnectsPoints(GraphPoint point1, GraphPoint point2) {
         return connectsStraight(point1, point2) || connectsLeft(point1, point2) || connectsRight(point1, point2);
     }

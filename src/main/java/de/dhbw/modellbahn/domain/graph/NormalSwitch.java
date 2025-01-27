@@ -27,16 +27,6 @@ public class NormalSwitch extends GraphPoint implements Switch {
         }
     }
 
-    public void switchToConnectToPoint(GraphPoint point) {
-        if (point == straight) {
-            switchComponent.setStraight();
-        } else if (point == turnout) {
-            switchComponent.setDiverging();
-        } else if (point != root) {
-            throw new IllegalArgumentException("Given GraphPoint is not connected witch this switch.");
-        }
-    }
-
     public boolean checkIfConnectsPoints(GraphPoint point1, GraphPoint point2) {
         return connectsStraight(point1, point2) || connectsDiverging(point1, point2);
     }
