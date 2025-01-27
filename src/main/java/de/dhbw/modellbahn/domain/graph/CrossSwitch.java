@@ -20,9 +20,9 @@ public class CrossSwitch extends GraphPoint implements Switch {
     }
 
     public void switchToConnectPoints(GraphPoint point1, GraphPoint point2) {
-        if (straight1.connects(point1, point2) || straight2.connects(point1, point2)) {
+        if (connectsStraight(point1, point2)) {
             switchComponent.setStraight();
-        } else if (diverging1.connects(point1, point2) || diverging2.connects(point1, point2)) {
+        } else if (connectsDiverging(point1, point2)) {
             switchComponent.setDiverging();
         } else {
             throw new IllegalArgumentException("Points cannot be connected by this switch.");
@@ -30,16 +30,31 @@ public class CrossSwitch extends GraphPoint implements Switch {
     }
 
     public void switchToConnectToPoint(GraphPoint point) {
-
+        throw new RuntimeException("This method should not be called. CrossSwitch only knows how to switch from two given GraphPoints.");
     }
 
-    public boolean checkIfSwitchConnectsPoints(GraphPoint point1, GraphPoint point2) {
-        return straight1.connects(point1, point2) || straight2.connects(point1, point2)
-                || diverging1.connects(point1, point2) || diverging2.connects(point1, point2);
+    public boolean checkIfConnectsPoints(GraphPoint point1, GraphPoint point2) {
+        return connectsStraight(point1, point2) || connectsDiverging(point1, point2);
+    }
+
+    private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
+        return (point1 == root1 && point2 == turnout2) || (point2 == root1 && point1 == turnout2) ||
+                (point1 == root2 && point2 == turnout1) || (point2 == root2 && point1 == turnout1);
+    }
+
+    private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
+        return (point1 == root1 && point2 == turnout1) || (point2 == root1 && point1 == turnout1) ||
+                (point1 == root2 && point2 == turnout2) || (point2 == root2 && point1 == turnout2);
     }
 
     public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
-        return null;
+        if (point == root1 || point == root2) {
+            return SwitchSide.IN;
+        } else if (point == turnout1 || point == turnout2) {
+            return SwitchSide.OUT;
+        } else {
+            return SwitchSide.UNDEFINED;
+        }
     }
 
 

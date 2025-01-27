@@ -46,7 +46,7 @@ public abstract class GraphMapper {
 
     private static boolean checkIfTargetPointIsSwitchAndConnectsPoints(GraphPoint targetPoint, GraphPoint point1, GraphPoint point2) {
         if (targetPoint instanceof Switch) {
-            return ((Switch) targetPoint).checkIfSwitchConnectsPoints(point1, point2);
+            return ((Switch) targetPoint).checkIfConnectsPoints(point1, point2);
         }
         return true;
     }

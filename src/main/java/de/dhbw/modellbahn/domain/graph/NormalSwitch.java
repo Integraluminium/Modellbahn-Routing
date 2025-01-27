@@ -18,9 +18,9 @@ public class NormalSwitch extends GraphPoint implements Switch {
     }
 
     public void switchToConnectPoints(GraphPoint point1, GraphPoint point2) {
-        if (straight.connects(point1, point2)) {
+        if (connectsStraight(point1, point2)) {
             switchComponent.setStraight();
-        } else if (diverging.connects(point1, point2)) {
+        } else if (connectsDiverging(point1, point2)) {
             switchComponent.setDiverging();
         } else {
             throw new IllegalArgumentException("Points cannot be connected by this switch.");
@@ -28,14 +28,34 @@ public class NormalSwitch extends GraphPoint implements Switch {
     }
 
     public void switchToConnectToPoint(GraphPoint point) {
-
+        if (point == straight) {
+            switchComponent.setStraight();
+        } else if (point == turnout) {
+            switchComponent.setDiverging();
+        } else if (point != root) {
+            throw new IllegalArgumentException("Given GraphPoint is not connected witch this switch.");
+        }
     }
 
-    public boolean checkIfSwitchConnectsPoints(GraphPoint point1, GraphPoint point2) {
-        return straight.connects(point1, point2) || diverging.connects(point1, point2);
+    public boolean checkIfConnectsPoints(GraphPoint point1, GraphPoint point2) {
+        return connectsStraight(point1, point2) || connectsDiverging(point1, point2);
+    }
+
+    private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
+        return (point1 == root && point2 == straight) || (point2 == root && point1 == straight);
+    }
+
+    private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
+        return (point1 == root && point2 == turnout) || (point2 == root && point1 == turnout);
     }
 
     public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
-        return null;
+        if (point == root) {
+            return SwitchSide.IN;
+        } else if (point == straight || point == turnout) {
+            return SwitchSide.OUT;
+        } else {
+            return SwitchSide.UNDEFINED;
+        }
     }
 }
