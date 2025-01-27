@@ -36,7 +36,7 @@ import java.util.*;
  * Bw->Cs<br>
  * </code>
  */
-public class TrackConfigParser2 {
+public class TrackConfigParser {
     private final Map<String, Map<String, Set<String>>> componentsMap;
     private final Map<String, List<String>> componentsOverview;
 
@@ -48,7 +48,7 @@ public class TrackConfigParser2 {
      * @throws NullPointerException     if the input data is null
      * @throws IllegalArgumentException if the input data is blank
      */
-    public TrackConfigParser2(String inputData) {
+    public TrackConfigParser(String inputData) {
         Objects.requireNonNull(inputData, "Input data must not be null");
         if (inputData.isBlank()) {
             throw new IllegalArgumentException("Input data must not be blank");

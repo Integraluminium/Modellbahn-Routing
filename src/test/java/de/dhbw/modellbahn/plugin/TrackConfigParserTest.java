@@ -30,7 +30,7 @@ class TrackConfigParserTest {
 
     @Test
     void testValidTestcase2() {
-        Map<String, List<String>> nodesWithNeighbours = new TrackConfigParser2(inputData).getDirectedNodesWithNeighbours();
+        Map<String, List<String>> nodesWithNeighbours = new TrackConfigParser(inputData).getDirectedNodesWithNeighbours();
         assertThat(nodesWithNeighbours).isNotNull();
         assertThat(nodesWithNeighbours).containsKeys("As", "Aw", "Bs", "Bw", "Cs", "Cw", "Zw");
 
@@ -49,7 +49,7 @@ class TrackConfigParserTest {
 
     @Test
     void testPrinting() {
-        TrackConfigParser2 parser = new TrackConfigParser2(inputData);
+        TrackConfigParser parser = new TrackConfigParser(inputData);
         String result = parser.convertToString();
 
         assertThat(result).isEqualTo("""
@@ -68,7 +68,7 @@ class TrackConfigParserTest {
 
     @Test
     void getDirectedNodesWithNeighbours() {
-        TrackConfigParser2 parser = new TrackConfigParser2(inputData);
+        TrackConfigParser parser = new TrackConfigParser(inputData);
         var directedNodes = parser.getDirectedNodesWithNeighbours();
 
         assertThat(directedNodes).isNotNull();

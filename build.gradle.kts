@@ -15,7 +15,7 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.27.2")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.2")
-    implementation("org.yaml:snakeyaml:1.30")
+    implementation("org.yaml:snakeyaml:2.3")
     implementation("org.jgrapht:jgrapht-core:1.5.2")
 }
 
