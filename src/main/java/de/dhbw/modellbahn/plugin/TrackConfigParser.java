@@ -179,9 +179,9 @@ public class TrackConfigParser {
             String root = (String) switchData.get("root");
 
             // Create links for straight, diverging, and root connections
-            createLinking(switchName, 2, straight);
-            createLinking(switchName, 2, diverging);
-            createLinking(switchName, 1, root);
+            createLinking(switchName, NODE_DIRECTION.S, straight);
+            createLinking(switchName, NODE_DIRECTION.S, diverging);
+            createLinking(switchName, NODE_DIRECTION.W, root);
         }
     }
 
@@ -202,7 +202,7 @@ public class TrackConfigParser {
             String cn1 = (String) endpointData.get("cn1");
 
             // Create link for cn1 connection
-            createLinking(endpointName, 2, cn1);
+            createLinking(endpointName, NODE_DIRECTION.S, cn1);
         }
     }
 
@@ -213,38 +213,34 @@ public class TrackConfigParser {
      * The connected node information contains the connected node name and the tether.
      *
      * @param nodeName                 the name of the node
-     * @param index                    the index to determine the letter of the node
+     * @param direction                the direction of the node
      * @param connectedNodeInformation the connected node information
      */
-    private void createLinking(String nodeName, int index, String connectedNodeInformation) {
-        String[] letters = {"s", "w", "s"};
+    private void createLinking(String nodeName, NODE_DIRECTION direction, String connectedNodeInformation) {
         Map<String, Set<String>> node = componentsMap.get(nodeName);
 
-        String letter = letters[index];
-        String inverse = letters[index - 1];
-
+        if (!connectedNodeInformation.contains(".")) {
+            throw new IllegalArgumentException("Invalid connected node information, does not provide backlink information");
+        }
         String[] parts = connectedNodeInformation.split("\\.");
         String connectedNodeName = parts[0];
         String connectedNodeTether = parts[1];
         createNodeIfNotExist(connectedNodeName);
         Map<String, Set<String>> connectedNode = componentsMap.get(connectedNodeName);
 
-        String connectedLetter;
-        String connectedInverse;
 
+        NODE_DIRECTION number;
         if (componentsOverview.get("switches").contains(connectedNodeName)) {
-            int number = connectedNodeTether.equals("root") ? 1 : 2;
-            connectedLetter = letters[number];
-            connectedInverse = letters[number - 1];
+            number = connectedNodeTether.equals("root") ? NODE_DIRECTION.W : NODE_DIRECTION.S;
         } else if (componentsOverview.get("endpoints").contains(connectedNodeName)) {
-            connectedLetter = "s";
-            connectedInverse = "w";
+            number = NODE_DIRECTION.S;
         } else {
             throw new IllegalArgumentException("Invalid connected node");
         }
 
-        node.get(inverse).add(connectedNodeName + connectedLetter);
-        connectedNode.get(connectedInverse).add(nodeName + letter);
+        node.get(NODE_DIRECTION.invert(direction).toString()).add(connectedNodeName + number);
+        connectedNode.get(NODE_DIRECTION.invert(number).toString()).add(nodeName + direction);
+
     }
 
     private void createNodeIfNotExist(String nodeName) {
@@ -252,5 +248,18 @@ public class TrackConfigParser {
             put("s", new HashSet<>());
             put("w", new HashSet<>());
         }});
+    }
+
+    private enum NODE_DIRECTION {
+        S, W;
+
+        public static NODE_DIRECTION invert(NODE_DIRECTION direction) {
+            return direction == S ? W : S;
+        }
+
+        @Override
+        public String toString() {
+            return name().toLowerCase();
+        }
     }
 }
