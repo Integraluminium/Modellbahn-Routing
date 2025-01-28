@@ -2,10 +2,10 @@ package de.dhbw.modellbahn.domain.graph;
 
 import java.util.Objects;
 
-public abstract class GraphPoint {
+public class GraphPoint {
     private final String name;
 
-    protected GraphPoint(String name) {
+    public GraphPoint(String name) {
         this.name = name;
     }
 
