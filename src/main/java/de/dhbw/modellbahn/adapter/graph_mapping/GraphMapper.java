@@ -16,30 +16,31 @@ public abstract class GraphMapper {
         Set<GraphPoint> graphPoints = originalGraph.getAllVertices();
         graphPoints.forEach(vertex -> {
             List<WeightedEdge> adjacentEdges = originalGraph.getEdgesOfVertex(vertex);
-            addEdgesToGraph(newGraph, vertex, adjacentEdges);
+            addEdgesToNewGraph(newGraph, vertex, adjacentEdges);
         });
 
         return newGraph;
     }
 
-    private static void addEdgesToGraph(DirectionalEdgeGraph newGraph, GraphPoint vertex, List<WeightedEdge> adjacentEdges) {
-        adjacentEdges.forEach(weightedEdge -> {
-            addAdjacentEdgeConnections(newGraph, new DirectionalEdge(vertex, weightedEdge.destination(), weightedEdge.distance()));
+    private static void addEdgesToNewGraph(DirectionalEdgeGraph newGraph, GraphPoint vertex, List<WeightedEdge> adjacentEdges) {
+        adjacentEdges.forEach(adjacentEdge -> {
+            addAdjacentEdgeToNewGraph(newGraph, new DirectionalEdge(vertex, adjacentEdge.destination(), adjacentEdge.distance()));
         });
     }
 
-    private static void addAdjacentEdgeConnections(DirectionalEdgeGraph newGraph, DirectionalEdge directionalEdge) {
-        addEdgesToGraph(newGraph, directionalEdge);
+    private static void addAdjacentEdgeToNewGraph(DirectionalEdgeGraph newGraph, DirectionalEdge adjacentEdge) {
+        addVerticesToNewGraph(newGraph, adjacentEdge);
 
-        Set<DirectionalEdge> allEdges = newGraph.getAllGraphEdges();
-        allEdges.forEach(edge -> {
-            if (edge.destinationPoint() == directionalEdge.startPoint() && edge.startPoint() != directionalEdge.destinationPoint()) {
-                if (checkIfTargetPointIsSwitchAndConnectsPoints(edge.destinationPoint(), edge.startPoint(), directionalEdge.destinationPoint())) {
-                    newGraph.addGraphEdgeConnection(edge, directionalEdge);
+        Set<DirectionalEdge> allNewVertices = newGraph.getAllVertices();
+        allNewVertices.forEach(vertex -> {
+            // Only add edge to vertex of new graph if there's not already an edge
+            if (vertex.destinationPoint() == adjacentEdge.startPoint() && vertex.startPoint() != adjacentEdge.destinationPoint()) {
+                if (checkIfTargetPointIsSwitchAndConnectsPoints(vertex.destinationPoint(), vertex.startPoint(), adjacentEdge.destinationPoint())) {
+                    newGraph.addEdge(vertex, adjacentEdge);
                 }
-            } else if (edge.startPoint() == directionalEdge.destinationPoint() && edge.destinationPoint() != directionalEdge.startPoint())
-                if (checkIfTargetPointIsSwitchAndConnectsPoints(edge.startPoint(), edge.destinationPoint(), directionalEdge.startPoint())) {
-                    newGraph.addGraphEdgeConnection(directionalEdge, edge);
+            } else if (vertex.startPoint() == adjacentEdge.destinationPoint() && vertex.destinationPoint() != adjacentEdge.startPoint())
+                if (checkIfTargetPointIsSwitchAndConnectsPoints(vertex.startPoint(), vertex.destinationPoint(), adjacentEdge.startPoint())) {
+                    newGraph.addEdge(adjacentEdge, vertex);
                 }
         });
     }
@@ -51,9 +52,9 @@ public abstract class GraphMapper {
         return true;
     }
 
-    private static void addEdgesToGraph(DirectionalEdgeGraph newGraph, DirectionalEdge directionalEdge) {
+    private static void addVerticesToNewGraph(DirectionalEdgeGraph newGraph, DirectionalEdge directionalEdge) {
         DirectionalEdge reversedEdge = new DirectionalEdge(directionalEdge.destinationPoint(), directionalEdge.startPoint(), directionalEdge.distance());
-        newGraph.addGraphEdge(directionalEdge);
-        newGraph.addGraphEdge(reversedEdge);
+        newGraph.addVertex(directionalEdge);
+        newGraph.addVertex(reversedEdge);
     }
 }

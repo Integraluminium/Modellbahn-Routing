@@ -13,19 +13,19 @@ public class DirectionalEdgeGraph {
         this.adjacencyList = new HashMap<>();
     }
 
-    public void addGraphEdgeConnection(DirectionalEdge sourceEdge, DirectionalEdge destinationEdge) {
+    public void addEdge(DirectionalEdge sourceEdge, DirectionalEdge destinationEdge) {
         this.adjacencyList.computeIfAbsent(sourceEdge, _ -> new HashSet<>()).add(destinationEdge);
     }
 
-    public void addGraphEdge(DirectionalEdge edge) {
+    public void addVertex(DirectionalEdge edge) {
         this.adjacencyList.putIfAbsent(edge, new HashSet<>());
     }
 
-    public Set<DirectionalEdge> getEdgesOfGraphPoint(DirectionalEdge edge) {
+    public Set<DirectionalEdge> getEdgesOfVertex(DirectionalEdge edge) {
         return this.adjacencyList.get(edge);
     }
 
-    public Set<DirectionalEdge> getAllGraphEdges() {
+    public Set<DirectionalEdge> getAllVertices() {
         return this.adjacencyList.keySet();
     }
 }
