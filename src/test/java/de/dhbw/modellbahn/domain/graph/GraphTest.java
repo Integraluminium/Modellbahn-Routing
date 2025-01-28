@@ -3,6 +3,9 @@ package de.dhbw.modellbahn.domain.graph;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GraphTest {
@@ -26,5 +29,16 @@ class GraphTest {
         testGraph = new Graph();
         testGraph.addGraphPointConnection(pointA, pointB, distanceAB);
         testGraph.addGraphPointConnection(pointB, pointC, distanceBC);
+    }
+
+    @Test
+    void testGetAllGraphPoints() {
+        Set<GraphPoint> allPoints = testGraph.getAllGraphPoints();
+        Set<GraphPoint> expectedPoints = new HashSet<>();
+        expectedPoints.add(pointA);
+        expectedPoints.add(pointB);
+        expectedPoints.add(pointC);
+
+        assertEquals(allPoints, expectedPoints);
     }
 }
