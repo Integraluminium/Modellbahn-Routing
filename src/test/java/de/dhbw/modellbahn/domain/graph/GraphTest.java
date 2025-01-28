@@ -29,13 +29,13 @@ class GraphTest {
         distanceBC = new Distance(20);
 
         testGraph = new Graph();
-        testGraph.addGraphPointConnection(pointA, pointB, distanceAB);
-        testGraph.addGraphPointConnection(pointB, new WeightedEdge(pointC, distanceBC));
+        testGraph.addEdge(pointA, pointB, distanceAB);
+        testGraph.addEdge(pointB, new WeightedEdge(pointC, distanceBC));
     }
 
     @Test
-    void testGetAllGraphPoints() {
-        Set<GraphPoint> actualPoints = testGraph.getAllGraphPoints();
+    void testGetAllVertices() {
+        Set<GraphPoint> actualPoints = testGraph.getAllVertices();
         Set<GraphPoint> expectedPoints = new HashSet<>();
         expectedPoints.add(pointA);
         expectedPoints.add(pointB);
@@ -45,8 +45,8 @@ class GraphTest {
     }
 
     @Test
-    void testGetEdgesOfGraphPoint() {
-        List<WeightedEdge> actualEdges = testGraph.getEdgesOfGraphPoint(pointB);
+    void testGetEdgesOfVertex() {
+        List<WeightedEdge> actualEdges = testGraph.getEdgesOfVertex(pointB);
         WeightedEdge edgeBA = new WeightedEdge(pointA, distanceAB);
         WeightedEdge edgeBC = new WeightedEdge(pointC, distanceBC);
         List<WeightedEdge> expectedEdges = new ArrayList<>();

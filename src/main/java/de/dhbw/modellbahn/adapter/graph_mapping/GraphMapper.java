@@ -13,18 +13,18 @@ public abstract class GraphMapper {
     public static DirectionalEdgeGraph mapToOneDirectionalGraph(Graph originalGraph) {
         DirectionalEdgeGraph newGraph = new DirectionalEdgeGraph();
 
-        Set<GraphPoint> graphPoints = originalGraph.getAllGraphPoints();
-        graphPoints.forEach(point -> {
-            List<WeightedEdge> adjacentEdges = originalGraph.getEdgesOfGraphPoint(point);
-            addEdgesToGraph(newGraph, point, adjacentEdges);
+        Set<GraphPoint> graphPoints = originalGraph.getAllVertices();
+        graphPoints.forEach(vertex -> {
+            List<WeightedEdge> adjacentEdges = originalGraph.getEdgesOfVertex(vertex);
+            addEdgesToGraph(newGraph, vertex, adjacentEdges);
         });
 
         return newGraph;
     }
 
-    private static void addEdgesToGraph(DirectionalEdgeGraph newGraph, GraphPoint point, List<WeightedEdge> adjacentEdges) {
+    private static void addEdgesToGraph(DirectionalEdgeGraph newGraph, GraphPoint vertex, List<WeightedEdge> adjacentEdges) {
         adjacentEdges.forEach(weightedEdge -> {
-            addAdjacentEdgeConnections(newGraph, new DirectionalEdge(point, weightedEdge.destination(), weightedEdge.distance()));
+            addAdjacentEdgeConnections(newGraph, new DirectionalEdge(vertex, weightedEdge.destination(), weightedEdge.distance()));
         });
     }
 
