@@ -6,6 +6,9 @@ public class GraphPoint {
     private final String name;
 
     public GraphPoint(String name) {
+        if (name == null || name.equals("")) {
+            throw new IllegalArgumentException("Name must not be an empty string or null.");
+        }
         this.name = name;
     }
 
