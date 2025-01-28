@@ -3,7 +3,9 @@ package de.dhbw.modellbahn.domain.graph;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,12 +35,24 @@ class GraphTest {
 
     @Test
     void testGetAllGraphPoints() {
-        Set<GraphPoint> allPoints = testGraph.getAllGraphPoints();
+        Set<GraphPoint> actualPoints = testGraph.getAllGraphPoints();
         Set<GraphPoint> expectedPoints = new HashSet<>();
         expectedPoints.add(pointA);
         expectedPoints.add(pointB);
         expectedPoints.add(pointC);
 
-        assertEquals(allPoints, expectedPoints);
+        assertEquals(actualPoints, expectedPoints);
+    }
+
+    @Test
+    void testGetEdgesOfGraphPoint() {
+        List<WeightedEdge> actualEdges = testGraph.getEdgesOfGraphPoint(pointB);
+        WeightedEdge edgeBA = new WeightedEdge(pointA, distanceAB);
+        WeightedEdge edgeBC = new WeightedEdge(pointC, distanceBC);
+        List<WeightedEdge> expectedEdges = new ArrayList<>();
+        expectedEdges.add(edgeBA);
+        expectedEdges.add(edgeBC);
+
+        assertEquals(actualEdges, expectedEdges);
     }
 }
