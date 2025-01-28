@@ -30,7 +30,7 @@ class GraphTest {
 
         testGraph = new Graph();
         testGraph.addGraphPointConnection(pointA, pointB, distanceAB);
-        testGraph.addGraphPointConnection(pointB, pointC, distanceBC);
+        testGraph.addGraphPointConnection(pointB, new WeightedEdge(pointC, distanceBC));
     }
 
     @Test
