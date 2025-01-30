@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import de.dhbw.modellbahn.adapter.api.ApiConfig;
 import de.dhbw.modellbahn.adapter.graph_mapping.Connection;
-import de.dhbw.modellbahn.adapter.graph_mapping.ConnectionsConfig;
 import de.dhbw.modellbahn.domain.ConfigReader;
 
 import java.io.IOException;
@@ -41,7 +40,7 @@ public class YAMLConfigReader implements ConfigReader {
     public List<Integer> getValidLocIds() {
         if (locIds == null) {
             String file = this.readFile("locs/loc_ids.yaml");
-            locIds = mapFileToObject(file, LocIdsConfig.class).locIds();
+            locIds = List.of(mapFileToObject(file, Integer[].class));
         }
         return Collections.unmodifiableList(locIds);
     }
@@ -55,7 +54,7 @@ public class YAMLConfigReader implements ConfigReader {
     public List<Connection> getConnections() {
         if (this.connections == null) {
             String file = this.readFile("track/connections.yaml");
-            connections = mapFileToObject(file, ConnectionsConfig.class).connections();
+            connections = List.of(mapFileToObject(file, Connection[].class));
         }
         return Collections.unmodifiableList(this.connections);
     }

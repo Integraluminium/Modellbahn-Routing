@@ -1,12 +1,11 @@
-connections:
-  - source: Z
-    destination: C
-    distance: 1
-    height: 1
-    electrified: true
+- source: Z
+  destination: C
+  distance: 1
+  height: 1
+  electrified: true
 
-  - source: Z
-    destination: A
-    distance: 1
-    height: 1
-    electrified: false
+- source: Z
+  destination: A
+  distance: 1
+  height: 1
+  electrified: false
