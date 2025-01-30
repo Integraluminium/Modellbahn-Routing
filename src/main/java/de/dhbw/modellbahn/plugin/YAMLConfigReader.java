@@ -72,4 +72,9 @@ public class YAMLConfigReader implements ConfigReader {
     public List<ConfigTrackContact> getTrackContacts() {
         return List.of(this.readObjectFromPath("track/track_contacts.yaml", ConfigTrackContact[].class));
     }
+
+    @Override
+    public List<ConfigVirtualPoint> getVirtualPoints() {
+        return List.of(this.readObjectFromPath("track/track_contacts.yaml", ConfigVirtualPoint[].class));
+    }
 }

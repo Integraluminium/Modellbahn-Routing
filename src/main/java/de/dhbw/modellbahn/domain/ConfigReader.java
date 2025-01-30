@@ -19,4 +19,6 @@ public interface ConfigReader {
     List<ConfigThreeWaySwitch> getThreeWaySwitches();
 
     List<ConfigTrackContact> getTrackContacts();
+
+    List<ConfigVirtualPoint> getVirtualPoints();
 }

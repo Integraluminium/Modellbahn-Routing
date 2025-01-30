@@ -1,4 +1,3 @@
-VirtualPoints:
-  - name: "virtual_point1"
-  - name: "virtual_point2"
-  - name: "virtual_point3"
+- name: virtual_point1
+- name: virtual_point2
+- name: virtual_point3
