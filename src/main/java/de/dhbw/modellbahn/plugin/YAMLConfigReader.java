@@ -25,17 +25,17 @@ public class YAMLConfigReader implements ConfigReader {
         }
     }
 
-    private <T> T mapFileToObject(String file, Class<T> tClass) {
+    private <T> T mapFileToObject(String file, Class<T> objectClass) {
         try {
-            return mapper.readValue(file, tClass);
+            return mapper.readValue(file, objectClass);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Could not parse YAML file for " + tClass + "\n" + e);
+            throw new RuntimeException("Could not parse YAML file for " + objectClass + "\n" + e);
         }
     }
 
-    private <T> T readObjectFromPath(String path, Class<T> tClass) {
+    private <T> T readObjectFromPath(String path, Class<T> objectClass) {
         String file = this.readFile(path);
-        return mapFileToObject(file, tClass);
+        return mapFileToObject(file, objectClass);
     }
 
     @Override
