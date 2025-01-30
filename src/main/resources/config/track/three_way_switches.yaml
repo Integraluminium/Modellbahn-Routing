@@ -1,14 +1,13 @@
-ThreeWaySwitches:
-  - name: "switch1"
-    id: 00000
-    root: "A"
-    straight: "B"
-    left: "C"
-    right: "D"
+- name: switch1
+  id: 00000
+  root: A
+  straight: B
+  left: C
+  right: D
 
-  - name: "switch2"
-    id: 00001
-    root: "A"
-    straight: "B"
-    left: "C"
-    right: "D"
+- name: switch2
+  id: 00001
+  root: A
+  straight: B
+  left: C
+  right: D
