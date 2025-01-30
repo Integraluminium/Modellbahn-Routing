@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import de.dhbw.modellbahn.adapter.api.ApiConfig;
 import de.dhbw.modellbahn.adapter.graph_mapping.Connection;
+import de.dhbw.modellbahn.adapter.graph_mapping.CrossSwitch;
 import de.dhbw.modellbahn.domain.ConfigReader;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class YAMLConfigReader implements ConfigReader {
     private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     private List<Integer> locIds = null;
     private List<Connection> connections = null;
+    private List<CrossSwitch> crossSwitches = null;
 
     private String readFile(String path) {
         try {
@@ -57,5 +59,14 @@ public class YAMLConfigReader implements ConfigReader {
             connections = List.of(mapFileToObject(file, Connection[].class));
         }
         return Collections.unmodifiableList(this.connections);
+    }
+
+    @Override
+    public List<CrossSwitch> getCrossSwitches() {
+        if (this.crossSwitches == null) {
+            String file = this.readFile("track/cross_switches.yaml");
+            crossSwitches = List.of(mapFileToObject(file, CrossSwitch[].class));
+        }
+        return Collections.unmodifiableList(this.crossSwitches);
     }
 }
