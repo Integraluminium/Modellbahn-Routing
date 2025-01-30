@@ -6,6 +6,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import de.dhbw.modellbahn.adapter.api.ApiConfig;
 import de.dhbw.modellbahn.adapter.graph_mapping.ConfigConnection;
 import de.dhbw.modellbahn.adapter.graph_mapping.ConfigCrossSwitch;
+import de.dhbw.modellbahn.adapter.graph_mapping.ConfigNormalSwitch;
 import de.dhbw.modellbahn.domain.ConfigReader;
 
 import java.io.IOException;
@@ -57,5 +58,10 @@ public class YAMLConfigReader implements ConfigReader {
     @Override
     public List<ConfigCrossSwitch> getCrossSwitches() {
         return List.of(this.readObjectFromPath("track/cross_switches.yaml", ConfigCrossSwitch[].class));
+    }
+
+    @Override
+    public List<ConfigNormalSwitch> getNormalSwitches() {
+        return List.of(this.readObjectFromPath("track/cross_switches.yaml", ConfigNormalSwitch[].class));
     }
 }

@@ -1,12 +1,11 @@
-normal_switches:
-  - name: "switch1"
-    id: 00000
-    root: "A"
-    straight: "B"
-    turnout: "C"
+- name: switch1
+  id: 00000
+  root: A
+  straight: B
+  turnout: C
 
-  - name: "switch2"
-    id: 00001
-    root: "A"
-    straight: "B"
-    turnout: "C"
+- name: switch2
+  id: 00001
+  root: A
+  straight: B
+  turnout: C
