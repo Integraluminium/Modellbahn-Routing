@@ -1,6 +1,6 @@
 package de.dhbw.modellbahn.adapter.graph_mapping;
 
-public record CrossSwitch(
+public record ConfigCrossSwitch(
         String name,
         int id,
         String root1,
