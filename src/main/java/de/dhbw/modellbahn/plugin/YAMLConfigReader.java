@@ -11,16 +11,12 @@ import de.dhbw.modellbahn.domain.ConfigReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 
 public class YAMLConfigReader implements ConfigReader {
     private final String projectDir = System.getProperty("user.dir");
     private final String configPath = projectDir + "/src/main/resources/config/";
     private final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-    private List<Integer> locIds = null;
-    private List<Connection> connections = null;
-    private List<CrossSwitch> crossSwitches = null;
 
     private String readFile(String path) {
         try {
@@ -38,13 +34,14 @@ public class YAMLConfigReader implements ConfigReader {
         }
     }
 
+    private <T> T readObjectFromPath(String path, Class<T> tClass) {
+        String file = this.readFile(path);
+        return mapFileToObject(file, tClass);
+    }
+
     @Override
     public List<Integer> getValidLocIds() {
-        if (locIds == null) {
-            String file = this.readFile("locs/loc_ids.yaml");
-            locIds = List.of(mapFileToObject(file, Integer[].class));
-        }
-        return Collections.unmodifiableList(locIds);
+        return List.of(this.readObjectFromPath("locs/loc_ids.yaml", Integer[].class));
     }
 
     @Override
@@ -54,19 +51,11 @@ public class YAMLConfigReader implements ConfigReader {
 
     @Override
     public List<Connection> getConnections() {
-        if (this.connections == null) {
-            String file = this.readFile("track/connections.yaml");
-            connections = List.of(mapFileToObject(file, Connection[].class));
-        }
-        return Collections.unmodifiableList(this.connections);
+        return List.of(this.readObjectFromPath("track/connections.yaml", Connection[].class));
     }
 
     @Override
     public List<CrossSwitch> getCrossSwitches() {
-        if (this.crossSwitches == null) {
-            String file = this.readFile("track/cross_switches.yaml");
-            crossSwitches = List.of(mapFileToObject(file, CrossSwitch[].class));
-        }
-        return Collections.unmodifiableList(this.crossSwitches);
+        return List.of(this.readObjectFromPath("track/cross_switches.yaml", CrossSwitch[].class));
     }
 }
