@@ -14,6 +14,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.2")
+    implementation("org.jgrapht:jgrapht-core:1.5.2")
 }
 
 tasks.test {
