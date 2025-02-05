@@ -28,7 +28,7 @@ class ThreeWaySwitchTest {
         TrackComponentCallsAdapter adapter = new TrackComponentCallsAdapter(apiService);
         SwitchComponent switchComponent = new SwitchComponent("switchComponent", new TrackComponentId(42), adapter);
         SwitchComponent switchComponent2 = new SwitchComponent("switchComponent2", new TrackComponentId(43), adapter);
-        testSwitch = new ThreeWaySwitch(name, switchComponent, switchComponent2, root, straight, left, right);
+        testSwitch = new ThreeWaySwitch(name, switchComponent, switchComponent2, root.getName(), straight.getName(), left.getName(), right.getName());
     }
 
     private static Stream<Arguments> provideValidConnectedPoints() {

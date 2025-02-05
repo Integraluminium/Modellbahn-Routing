@@ -27,7 +27,7 @@ class NormalSwitchTest {
         ApiService apiService = new ApiService(0);
         TrackComponentCallsAdapter adapter = new TrackComponentCallsAdapter(apiService);
         SwitchComponent switchComponent = new SwitchComponent("switchComponent", new TrackComponentId(42), adapter);
-        testSwitch = new NormalSwitch(name, switchComponent, root, straight, turnout);
+        testSwitch = new NormalSwitch(name, switchComponent, root.getName(), straight.getName(), turnout.getName());
     }
 
     private static Stream<Arguments> provideValidConnectedPoints() {

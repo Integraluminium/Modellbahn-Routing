@@ -28,7 +28,7 @@ class CrossSwitchTest {
         ApiService apiService = new ApiService(0);
         TrackComponentCallsAdapter adapter = new TrackComponentCallsAdapter(apiService);
         SwitchComponent switchComponent = new SwitchComponent("switchComponent", new TrackComponentId(42), adapter);
-        testSwitch = new CrossSwitch(name, switchComponent, root1, root2, turnout1, turnout2);
+        testSwitch = new CrossSwitch(name, switchComponent, root1.getName(), root2.getName(), turnout1.getName(), turnout2.getName());
     }
 
     private static Stream<Arguments> provideValidConnectedPoints() {

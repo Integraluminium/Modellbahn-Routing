@@ -5,11 +5,11 @@ import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 public class NormalSwitch extends GraphPoint implements Switch {
     private final SwitchComponent switchComponent;
 
-    private final GraphPoint root;
-    private final GraphPoint straight;
-    private final GraphPoint turnout;
+    private final String root;
+    private final String straight;
+    private final String turnout;
 
-    public NormalSwitch(String name, SwitchComponent switchComponent, GraphPoint root, GraphPoint straight, GraphPoint turnout) {
+    public NormalSwitch(String name, SwitchComponent switchComponent, String root, String straight, String turnout) {
         super(name);
         this.switchComponent = switchComponent;
         this.root = root;
@@ -32,17 +32,19 @@ public class NormalSwitch extends GraphPoint implements Switch {
     }
 
     private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
-        return (point1 == root && point2 == straight) || (point2 == root && point1 == straight);
+        return (point1.equals(root) && point2.equals(straight))
+                || (point2.equals(root) && point1.equals(straight));
     }
 
     private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
-        return (point1 == root && point2 == turnout) || (point2 == root && point1 == turnout);
+        return (point1.equals(root) && point2.equals(turnout))
+                || (point2.equals(root) && point1.equals(turnout));
     }
 
     public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
-        if (point == root) {
+        if (point.equals(root)) {
             return SwitchSide.IN;
-        } else if (point == straight || point == turnout) {
+        } else if (point.equals(straight) || point.equals(turnout)) {
             return SwitchSide.OUT;
         } else {
             return SwitchSide.UNDEFINED;

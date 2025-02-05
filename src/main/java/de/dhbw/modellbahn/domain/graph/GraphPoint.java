@@ -23,6 +23,10 @@ public class GraphPoint {
         return Objects.equals(this.name, that.getName());
     }
 
+    public boolean equals(String s) {
+        return Objects.equals(this.name, s);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(this.name);
