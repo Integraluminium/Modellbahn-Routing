@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import de.dhbw.modellbahn.adapter.api.ApiConfig;
-import de.dhbw.modellbahn.adapter.graph_mapping.*;
+import de.dhbw.modellbahn.adapter.track_generation.*;
 import de.dhbw.modellbahn.domain.ConfigReader;
 
 import java.io.IOException;
