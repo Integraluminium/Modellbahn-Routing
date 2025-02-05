@@ -19,6 +19,10 @@ public class Graph {
         this.addEdge(startPoint, weightedEdge.destination(), weightedEdge.distance());
     }
 
+    public void addEdge(GraphConnection graphConnection) {
+        this.addEdge(graphConnection.startPoint(), graphConnection.weightedEdge());
+    }
+
     public List<WeightedEdge> getEdgesOfVertex(GraphPoint point) {
         return this.adjacencyList.get(point);
     }
