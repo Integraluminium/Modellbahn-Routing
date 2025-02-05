@@ -1,12 +1,14 @@
 - name: switch1
-  id: 00000
+  id1: 00000
+  id2: 00001
   root: A
   straight: B
   left: C
   right: D
 
 - name: switch2
-  id: 00001
+  id1: 00010
+  id2: 00011
   root: A
   straight: B
   left: C
