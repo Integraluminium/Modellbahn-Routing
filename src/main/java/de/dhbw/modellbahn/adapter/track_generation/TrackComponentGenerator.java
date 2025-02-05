@@ -18,6 +18,7 @@ public class TrackComponentGenerator {
     private final List<ThreeWaySwitch> threeWaySwitches;
     private final List<CrossSwitch> crossSwitches;
     private final List<TrackContact> trackContacts;
+    private final List<GraphPoint> virtualPoints;
 
     public TrackComponentGenerator(ConfigReader configReader, TrackComponentCalls trackComponentCalls) {
         this.configReader = configReader;
@@ -27,6 +28,7 @@ public class TrackComponentGenerator {
         this.crossSwitches = generateCrossSwitches();
         this.threeWaySwitches = generateThreeWaySwitches();
         this.trackContacts = generateTrackContacts();
+        this.virtualPoints = generateVirtualPoints();
     }
 
     private List<NormalSwitch> generateNormalSwitches() {
@@ -71,6 +73,12 @@ public class TrackComponentGenerator {
         }).toList();
     }
 
+    private List<GraphPoint> generateVirtualPoints() {
+        List<ConfigVirtualPoint> virtualPointList = this.configReader.getVirtualPoints();
+
+        return virtualPointList.stream().map(p -> new GraphPoint(p.name())).toList();
+    }
+
     public List<NormalSwitch> getNormalSwitches() {
         return Collections.unmodifiableList(normalSwitches);
     }
@@ -87,12 +95,17 @@ public class TrackComponentGenerator {
         return Collections.unmodifiableList(trackContacts);
     }
 
+    public List<GraphPoint> getVirtualPoints() {
+        return Collections.unmodifiableList(virtualPoints);
+    }
+
     public List<GraphPoint> getAllComponents() {
         List<GraphPoint> allComponents = new ArrayList<>();
         allComponents.addAll(this.normalSwitches);
         allComponents.addAll(this.threeWaySwitches);
         allComponents.addAll(this.crossSwitches);
         allComponents.addAll(this.trackContacts);
+        allComponents.addAll(this.virtualPoints);
         return Collections.unmodifiableList(allComponents);
     }
 }
