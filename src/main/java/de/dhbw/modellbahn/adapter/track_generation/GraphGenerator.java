@@ -7,34 +7,19 @@ import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
 import de.dhbw.modellbahn.domain.track_components.TrackSensor;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GraphGenerator {
     private final ConfigReader configReader;
     private final TrackComponentCalls trackComponentCalls;
-    private final List<NormalSwitch> normalSwitches;
-    private final List<ThreeWaySwitch> threeWaySwitches;
-    private final List<CrossSwitch> crossSwitches;
-    private final List<TrackContact> trackContacts;
-    private final List<GraphPoint> virtualPoints;
-    private final List<GraphConnection> graphConnections;
-    private final Graph graph;
 
     public GraphGenerator(ConfigReader configReader, TrackComponentCalls trackComponentCalls) {
         this.configReader = configReader;
         this.trackComponentCalls = trackComponentCalls;
-
-        this.normalSwitches = generateNormalSwitches();
-        this.crossSwitches = generateCrossSwitches();
-        this.threeWaySwitches = generateThreeWaySwitches();
-        this.trackContacts = generateTrackContacts();
-        this.virtualPoints = generateVirtualPoints();
-        this.graphConnections = generateGraphConnections();
-        this.graph = generateGraph();
     }
 
     private List<NormalSwitch> generateNormalSwitches() {
@@ -85,9 +70,12 @@ public class GraphGenerator {
         return virtualPointList.stream().map(p -> new GraphPoint(p.name())).toList();
     }
 
-    private List<GraphConnection> generateGraphConnections() {
+    private List<GraphConnection> generateGraphConnections(List<NormalSwitch> normalSwitches, List<ThreeWaySwitch> threeWaySwitches, List<CrossSwitch> crossSwitches,
+                                                           List<TrackContact> trackContacts, List<GraphPoint> virtualPoints) {
         List<ConfigConnection> connectionList = this.configReader.getConnections();
-        Map<String, GraphPoint> graphPointMap = this.getAllComponents().stream().collect(Collectors.toMap(GraphPoint::getName, point -> point));
+        List<GraphPoint> allComponents = Stream.of(normalSwitches, threeWaySwitches, crossSwitches, trackContacts, virtualPoints)
+                .flatMap(Collection::stream).collect(Collectors.toList());
+        Map<String, GraphPoint> graphPointMap = allComponents.stream().collect(Collectors.toMap(GraphPoint::getName, point -> point));
 
         return connectionList.stream().map(c -> {
             GraphPoint startPoint = graphPointMap.get(c.source());
@@ -98,28 +86,17 @@ public class GraphGenerator {
         }).toList();
     }
 
-    private Graph generateGraph() {
-        List<GraphConnection> edges = this.getAllGraphConnections();
+    public Graph generateGraph() {
+        List<NormalSwitch> normalSwitches = generateNormalSwitches();
+        List<ThreeWaySwitch> threeWaySwitches = generateThreeWaySwitches();
+        List<CrossSwitch> crossSwitches = generateCrossSwitches();
+        List<TrackContact> trackContacts = generateTrackContacts();
+        List<GraphPoint> virtualPoints = generateVirtualPoints();
+        List<GraphConnection> graphConnections = generateGraphConnections(
+                normalSwitches, threeWaySwitches, crossSwitches, trackContacts, virtualPoints);
+
         Graph returnGraph = new Graph();
-        edges.forEach(returnGraph::addEdge);
+        graphConnections.forEach(returnGraph::addEdge);
         return returnGraph;
-    }
-
-    private List<GraphPoint> getAllComponents() {
-        List<GraphPoint> allComponents = new ArrayList<>();
-        allComponents.addAll(this.normalSwitches);
-        allComponents.addAll(this.threeWaySwitches);
-        allComponents.addAll(this.crossSwitches);
-        allComponents.addAll(this.trackContacts);
-        allComponents.addAll(this.virtualPoints);
-        return Collections.unmodifiableList(allComponents);
-    }
-
-    private List<GraphConnection> getAllGraphConnections() {
-        return Collections.unmodifiableList(graphConnections);
-    }
-
-    public Graph getGraph() {
-        return graph;
     }
 }
