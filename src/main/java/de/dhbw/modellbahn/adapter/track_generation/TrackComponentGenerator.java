@@ -2,12 +2,12 @@ package de.dhbw.modellbahn.adapter.track_generation;
 
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.domain.ConfigReader;
-import de.dhbw.modellbahn.domain.graph.CrossSwitch;
-import de.dhbw.modellbahn.domain.graph.NormalSwitch;
-import de.dhbw.modellbahn.domain.graph.ThreeWaySwitch;
+import de.dhbw.modellbahn.domain.graph.*;
 import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track_components.TrackSensor;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,17 +17,19 @@ public class TrackComponentGenerator {
     private final List<NormalSwitch> normalSwitches;
     private final List<ThreeWaySwitch> threeWaySwitches;
     private final List<CrossSwitch> crossSwitches;
+    private final List<TrackContact> trackContacts;
 
     public TrackComponentGenerator(ConfigReader configReader, TrackComponentCalls trackComponentCalls) {
         this.configReader = configReader;
         this.trackComponentCalls = trackComponentCalls;
 
-        this.normalSwitches = createNormalSwitches();
-        this.crossSwitches = createCrossSwitches();
-        this.threeWaySwitches = createThreeWaySwitches();
+        this.normalSwitches = generateNormalSwitches();
+        this.crossSwitches = generateCrossSwitches();
+        this.threeWaySwitches = generateThreeWaySwitches();
+        this.trackContacts = generateTrackContacts();
     }
 
-    private List<NormalSwitch> createNormalSwitches() {
+    private List<NormalSwitch> generateNormalSwitches() {
         List<ConfigNormalSwitch> switchList = this.configReader.getNormalSwitches();
 
         return switchList.stream().map(s -> {
@@ -36,7 +38,7 @@ public class TrackComponentGenerator {
         }).toList();
     }
 
-    private List<ThreeWaySwitch> createThreeWaySwitches() {
+    private List<ThreeWaySwitch> generateThreeWaySwitches() {
         List<ConfigThreeWaySwitch> switchList = this.configReader.getThreeWaySwitches();
 
         return switchList.stream().map(s -> {
@@ -46,7 +48,7 @@ public class TrackComponentGenerator {
         }).toList();
     }
 
-    private List<CrossSwitch> createCrossSwitches() {
+    private List<CrossSwitch> generateCrossSwitches() {
         List<ConfigCrossSwitch> switchList = this.configReader.getCrossSwitches();
 
         return switchList.stream().map(s -> {
@@ -60,6 +62,15 @@ public class TrackComponentGenerator {
         return new SwitchComponent(name, trackComponentId, this.trackComponentCalls);
     }
 
+    private List<TrackContact> generateTrackContacts() {
+        List<ConfigTrackContact> trackContactList = this.configReader.getTrackContacts();
+
+        return trackContactList.stream().map(t -> {
+            TrackSensor trackSensor = new TrackSensor(t.name(), new TrackComponentId(t.id()));
+            return new TrackContact(t.name(), trackSensor);
+        }).toList();
+    }
+
     public List<NormalSwitch> getNormalSwitches() {
         return Collections.unmodifiableList(normalSwitches);
     }
@@ -70,5 +81,18 @@ public class TrackComponentGenerator {
 
     public List<CrossSwitch> getCrossSwitches() {
         return Collections.unmodifiableList(crossSwitches);
+    }
+
+    public List<TrackContact> getTrackContacts() {
+        return Collections.unmodifiableList(trackContacts);
+    }
+
+    public List<GraphPoint> getAllComponents() {
+        List<GraphPoint> allComponents = new ArrayList<>();
+        allComponents.addAll(this.normalSwitches);
+        allComponents.addAll(this.threeWaySwitches);
+        allComponents.addAll(this.crossSwitches);
+        allComponents.addAll(this.trackContacts);
+        return Collections.unmodifiableList(allComponents);
     }
 }
