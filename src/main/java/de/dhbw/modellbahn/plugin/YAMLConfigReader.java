@@ -74,6 +74,11 @@ public class YAMLConfigReader implements ConfigReader {
     }
 
     @Override
+    public List<ConfigSignal> getSignals() {
+        return List.of(this.readObjectFromPath("track/signals.yaml", ConfigSignal[].class));
+    }
+
+    @Override
     public List<ConfigVirtualPoint> getVirtualPoints() {
         return List.of(this.readObjectFromPath("track/track_contacts.yaml", ConfigVirtualPoint[].class));
     }

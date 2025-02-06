@@ -3,9 +3,10 @@ package de.dhbw.modellbahn.adapter.track_generation;
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.graph.*;
+import de.dhbw.modellbahn.domain.track_components.SignalComponent;
 import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
-import de.dhbw.modellbahn.domain.track_components.TrackSensor;
+import de.dhbw.modellbahn.domain.track_components.TrackContactComponent;
 
 import java.util.Collection;
 import java.util.List;
@@ -59,8 +60,17 @@ public class GraphGenerator {
         List<ConfigTrackContact> trackContactList = this.configReader.getTrackContacts();
 
         return trackContactList.stream().map(t -> {
-            TrackSensor trackSensor = new TrackSensor(t.name(), new TrackComponentId(t.id()));
-            return new TrackContact(t.name(), trackSensor);
+            TrackContactComponent trackContactComponent = new TrackContactComponent(t.name(), new TrackComponentId(t.id()));
+            return new TrackContact(t.name(), trackContactComponent);
+        }).toList();
+    }
+
+    private List<Signal> generateSignals() {
+        List<ConfigSignal> signalList = this.configReader.getSignals();
+
+        return signalList.stream().map(s -> {
+            SignalComponent signalComponent = new SignalComponent(s.name(), new TrackComponentId(s.id()), this.trackComponentCalls);
+            return new Signal(s.name(), signalComponent);
         }).toList();
     }
 
@@ -71,9 +81,9 @@ public class GraphGenerator {
     }
 
     private List<GraphConnection> generateGraphConnections(List<NormalSwitch> normalSwitches, List<ThreeWaySwitch> threeWaySwitches, List<CrossSwitch> crossSwitches,
-                                                           List<TrackContact> trackContacts, List<GraphPoint> virtualPoints) {
+                                                           List<TrackContact> trackContacts, List<Signal> signals, List<GraphPoint> virtualPoints) {
         List<ConfigConnection> connectionList = this.configReader.getConnections();
-        List<GraphPoint> allComponents = Stream.of(normalSwitches, threeWaySwitches, crossSwitches, trackContacts, virtualPoints)
+        List<GraphPoint> allComponents = Stream.of(normalSwitches, threeWaySwitches, crossSwitches, trackContacts, signals, virtualPoints)
                 .flatMap(Collection::stream).collect(Collectors.toList());
         Map<String, GraphPoint> graphPointMap = allComponents.stream().collect(Collectors.toMap(GraphPoint::getName, point -> point));
 
@@ -91,9 +101,10 @@ public class GraphGenerator {
         List<ThreeWaySwitch> threeWaySwitches = generateThreeWaySwitches();
         List<CrossSwitch> crossSwitches = generateCrossSwitches();
         List<TrackContact> trackContacts = generateTrackContacts();
+        List<Signal> signals = generateSignals();
         List<GraphPoint> virtualPoints = generateVirtualPoints();
         List<GraphConnection> graphConnections = generateGraphConnections(
-                normalSwitches, threeWaySwitches, crossSwitches, trackContacts, virtualPoints);
+                normalSwitches, threeWaySwitches, crossSwitches, trackContacts, signals, virtualPoints);
 
         Graph returnGraph = new Graph();
         graphConnections.forEach(returnGraph::addEdge);

@@ -21,4 +21,6 @@ public interface ConfigReader {
     List<ConfigTrackContact> getTrackContacts();
 
     List<ConfigVirtualPoint> getVirtualPoints();
+
+    List<ConfigSignal> getSignals();
 }
