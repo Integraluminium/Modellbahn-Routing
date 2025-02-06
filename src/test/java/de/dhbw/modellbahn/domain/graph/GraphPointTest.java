@@ -27,4 +27,12 @@ class GraphPointTest {
 
         assertEquals(point1, point2);
     }
+
+    @Test
+    void testEqualsWithString() {
+        String name = "Test";
+        GraphPoint point1 = new GraphPoint(name);
+
+        assertTrue(point1.equals(name));
+    }
 }
