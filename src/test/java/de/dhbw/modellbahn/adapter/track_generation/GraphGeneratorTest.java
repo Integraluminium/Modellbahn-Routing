@@ -21,6 +21,7 @@ class GraphGeneratorTest {
 
     @Test
     void testGenerateGraph() {
+        // Generated graph of MockedConfigReader can be seen in plugin/MockedGraph.png
         ConfigReader configReader = new MockedConfigReader();
         ApiService apiService = new ApiService(0);
         TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
