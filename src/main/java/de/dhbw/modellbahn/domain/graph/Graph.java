@@ -10,13 +10,13 @@ public class Graph {
         this.adjacencyList = new HashMap<>();
     }
 
-    public void addEdge(GraphPoint point1, GraphPoint point2, Distance distance) {
-        this.adjacencyList.computeIfAbsent(point1, _ -> new ArrayList<>()).add(new WeightedEdge(point2, distance));
-        this.adjacencyList.computeIfAbsent(point2, _ -> new ArrayList<>()).add(new WeightedEdge(point1, distance));
+    public void addEdge(GraphPoint point1, GraphPoint point2, Distance distance, Height height, boolean electrified) {
+        this.adjacencyList.computeIfAbsent(point1, _ -> new ArrayList<>()).add(new WeightedEdge(point2, distance, height, electrified));
+        this.adjacencyList.computeIfAbsent(point2, _ -> new ArrayList<>()).add(new WeightedEdge(point1, distance, height, electrified));
     }
 
     public void addEdge(GraphPoint startPoint, WeightedEdge weightedEdge) {
-        this.addEdge(startPoint, weightedEdge.destination(), weightedEdge.distance());
+        this.addEdge(startPoint, weightedEdge.destination(), weightedEdge.distance(), weightedEdge.height(), weightedEdge.electrified());
     }
 
     public void addEdge(GraphConnection graphConnection) {

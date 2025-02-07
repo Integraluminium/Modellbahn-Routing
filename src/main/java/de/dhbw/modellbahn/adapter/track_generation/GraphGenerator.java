@@ -91,7 +91,8 @@ public class GraphGenerator {
             GraphPoint startPoint = graphPointMap.get(c.source());
             GraphPoint destination = graphPointMap.get(c.destination());
             Distance distance = new Distance(c.distance());
-            WeightedEdge weightedEdge = new WeightedEdge(destination, distance);
+            Height height = new Height(c.height());
+            WeightedEdge weightedEdge = new WeightedEdge(destination, distance, height, c.electrified());
             return new GraphConnection(startPoint, weightedEdge);
         }).toList();
     }

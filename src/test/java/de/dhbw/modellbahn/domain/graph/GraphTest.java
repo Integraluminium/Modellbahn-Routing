@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class GraphTest {
     private static GraphPoint pointA, pointB, pointC;
     private static Distance distanceAB, distanceBC;
+    private static final Height height = new Height(0);
+    private static final boolean electrified = true;
     private static Graph testGraph;
 
     @BeforeAll
@@ -29,8 +31,8 @@ class GraphTest {
         distanceBC = new Distance(20);
 
         testGraph = new Graph();
-        testGraph.addEdge(pointA, pointB, distanceAB);
-        testGraph.addEdge(pointB, new WeightedEdge(pointC, distanceBC));
+        testGraph.addEdge(pointA, pointB, distanceAB, height, electrified);
+        testGraph.addEdge(pointB, new WeightedEdge(pointC, distanceBC, height, electrified));
     }
 
     @Test
@@ -47,8 +49,8 @@ class GraphTest {
     @Test
     void testGetEdgesOfVertex() {
         List<WeightedEdge> actualEdges = testGraph.getEdgesOfVertex(pointB);
-        WeightedEdge edgeBA = new WeightedEdge(pointA, distanceAB);
-        WeightedEdge edgeBC = new WeightedEdge(pointC, distanceBC);
+        WeightedEdge edgeBA = new WeightedEdge(pointA, distanceAB, height, electrified);
+        WeightedEdge edgeBC = new WeightedEdge(pointC, distanceBC, height, electrified);
         List<WeightedEdge> expectedEdges = new ArrayList<>();
         expectedEdges.add(edgeBA);
         expectedEdges.add(edgeBC);
