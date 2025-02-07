@@ -33,9 +33,18 @@ class GraphGeneratorTest {
         Set<String> expectedVerticeNames = Set.of("A", "B", "C", "D", "E", "F", "G");
         assertEquals(actualVerticeNames, expectedVerticeNames);
 
-        List<WeightedEdge> actualEdgesOfA = graph.getEdgesOfVertex("A");
-        List<String> actualNamesOfEdgesOfA = actualEdgesOfA.stream().map(edge -> edge.destination().getName()).toList();
-        List<String> expectedNamesOfEdgesOfA = List.of("B", "D", "E");
-        assertThat(actualNamesOfEdgesOfA).containsExactlyInAnyOrderElementsOf(expectedNamesOfEdgesOfA);
+        testEdgesOfVertex(graph, "A", List.of("B", "D", "E"));
+        testEdgesOfVertex(graph, "B", List.of("A", "C"));
+        testEdgesOfVertex(graph, "C", List.of("B", "E", "G", "F"));
+        testEdgesOfVertex(graph, "D", List.of("A", "E"));
+        testEdgesOfVertex(graph, "E", List.of("A", "C", "D", "F"));
+        testEdgesOfVertex(graph, "F", List.of("C", "G", "E"));
+        testEdgesOfVertex(graph, "G", List.of("C", "F"));
+    }
+
+    private void testEdgesOfVertex(Graph graph, String vertexName, List<String> expectedNamesOfEdges) {
+        List<WeightedEdge> actualEdges = graph.getEdgesOfVertex(vertexName);
+        List<String> actualNamesOfEdges = actualEdges.stream().map(edge -> edge.destination().getName()).toList();
+        assertThat(actualNamesOfEdges).containsExactlyInAnyOrderElementsOf(expectedNamesOfEdges);
     }
 }
