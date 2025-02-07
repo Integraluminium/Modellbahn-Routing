@@ -24,7 +24,17 @@ public class Graph {
     }
 
     public List<WeightedEdge> getEdgesOfVertex(GraphPoint point) {
-        return this.adjacencyList.get(point);
+        return this.getEdgesOfVertex(point.getName());
+    }
+
+    public List<WeightedEdge> getEdgesOfVertex(String name) {
+        List<WeightedEdge> returnList = new ArrayList<>();
+        this.adjacencyList.keySet().forEach(vertex -> {
+            if (vertex.getName().equals(name)) {
+                returnList.addAll(this.adjacencyList.get(vertex));
+            }
+        });
+        return returnList;
     }
 
     public Set<GraphPoint> getAllVertices() {
