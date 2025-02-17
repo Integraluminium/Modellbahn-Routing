@@ -1,6 +1,6 @@
 package de.dhbw.modellbahn.domain.graph;
 
-public enum SwitchSide {
+public enum PointSide {
     IN,
-    OUT
+    OUT;
 }

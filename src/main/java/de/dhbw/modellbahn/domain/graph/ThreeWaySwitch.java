@@ -37,11 +37,11 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
         return connectsStraight(point1, point2) || connectsLeft(point1, point2) || connectsRight(point1, point2);
     }
 
-    public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
+    public PointSide getSwitchSideFromPoint(GraphPoint point) {
         if (point == root) {
-            return SwitchSide.IN;
+            return PointSide.IN;
         } else if (point == straight || point == left || point == right) {
-            return SwitchSide.OUT;
+            return PointSide.OUT;
         } else {
             throw new IllegalArgumentException("Point is not connected to this switch.");
         }

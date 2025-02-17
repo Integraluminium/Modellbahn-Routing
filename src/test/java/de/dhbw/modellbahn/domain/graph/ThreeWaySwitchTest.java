@@ -69,10 +69,10 @@ class ThreeWaySwitchTest {
 
     @Test
     void testGetSwitchSideFromPoint() {
-        assertEquals(PointSide.W, testSwitch.getSwitchSideFromPoint(root));
-        assertEquals(PointSide.S, testSwitch.getSwitchSideFromPoint(straight));
-        assertEquals(PointSide.S, testSwitch.getSwitchSideFromPoint(left));
-        assertEquals(PointSide.S, testSwitch.getSwitchSideFromPoint(right));
+        assertEquals(PointSide.IN, testSwitch.getSwitchSideFromPoint(root));
+        assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(straight));
+        assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(left));
+        assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(right));
         assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(new GraphPoint("unknown")));
     }
 }

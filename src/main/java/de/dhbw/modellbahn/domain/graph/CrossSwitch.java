@@ -33,11 +33,11 @@ public class CrossSwitch extends GraphPoint implements Switch {
         return connectsStraight(point1, point2) || connectsDiverging(point1, point2);
     }
 
-    public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
+    public PointSide getSwitchSideFromPoint(GraphPoint point) {
         if (point == root1 || point == root2) {
-            return SwitchSide.IN;
+            return PointSide.IN;
         } else if (point == turnout1 || point == turnout2) {
-            return SwitchSide.OUT;
+            return PointSide.OUT;
         } else {
             throw new IllegalArgumentException("Point is not connected to this switch.");
         }

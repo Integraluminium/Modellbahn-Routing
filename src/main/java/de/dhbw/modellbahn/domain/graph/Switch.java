@@ -4,5 +4,6 @@ public interface Switch {
     void switchToConnectPoints(GraphPoint point1, GraphPoint point2) throws IllegalArgumentException;
 
     boolean checkIfConnectsPoints(GraphPoint point1, GraphPoint point2);
-    SwitchSide getSwitchSideFromPoint(GraphPoint point);
+
+    PointSide getSwitchSideFromPoint(GraphPoint point);
 }
