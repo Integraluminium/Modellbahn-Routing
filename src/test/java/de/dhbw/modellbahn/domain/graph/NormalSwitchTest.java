@@ -69,6 +69,6 @@ class NormalSwitchTest {
         assertEquals(PointSide.IN, testSwitch.getSwitchSideFromPoint(root));
         assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(straight));
         assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(turnout));
-        assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(new GraphPoint("unknown")));
+        assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(new GraphPoint(new PointName("unknown"))));
     }
 }

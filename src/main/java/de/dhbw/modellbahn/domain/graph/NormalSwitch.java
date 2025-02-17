@@ -32,9 +32,9 @@ public class NormalSwitch extends GraphPoint implements Switch {
     }
 
     public PointSide getSwitchSideFromPoint(GraphPoint point) {
-        if (point == root) {
+        if (point.equals(root)) {
             return PointSide.IN;
-        } else if (point == straight || point == turnout) {
+        } else if (point.equals(straight) || point.equals(turnout)) {
             return PointSide.OUT;
         } else {
             throw new IllegalArgumentException("Point is not connected to this switch.");
@@ -50,4 +50,5 @@ public class NormalSwitch extends GraphPoint implements Switch {
         return (point1.equals(root) && point2.equals(turnout))
                 || (point2.equals(root) && point1.equals(turnout));
     }
+
 }

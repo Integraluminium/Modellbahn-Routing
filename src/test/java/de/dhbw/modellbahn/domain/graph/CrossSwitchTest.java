@@ -70,6 +70,6 @@ class CrossSwitchTest {
         assertEquals(PointSide.IN, testSwitch.getSwitchSideFromPoint(root2));
         assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(turnout1));
         assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(turnout2));
-        assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(new GraphPoint("unknown")));
+        assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(new GraphPoint(new PointName("unknown"))));
     }
 }

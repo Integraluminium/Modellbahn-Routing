@@ -16,13 +16,6 @@ public class GraphPoint {
         return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        GraphPoint that = (GraphPoint) o;
-        return this.name.equals(that.getName());
-    }
-
     public boolean equals(PointName s) {
         return this.name.equals(s);
     }
@@ -30,5 +23,12 @@ public class GraphPoint {
     @Override
     public int hashCode() {
         return Objects.hashCode(this.name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!this.getClass().isInstance(o)) return false;
+        GraphPoint that = (GraphPoint) o;
+        return this.name.equals(that.getName());
     }
 }

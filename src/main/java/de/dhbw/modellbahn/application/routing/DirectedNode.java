@@ -21,7 +21,7 @@ public class DirectedNode {
     }
 
     public String getNodeName() {
-        return point.getName() + side;
+        return point.getName().name() + side;
     }
 
     @Override
