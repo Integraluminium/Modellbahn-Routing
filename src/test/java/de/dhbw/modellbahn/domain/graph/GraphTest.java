@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class GraphTest {
     private static GraphPoint pointA, pointB, pointC;
     private static Distance distanceAB, distanceBC;
+    private static final Height height = new Height(0);
+    private static final boolean electrified = true;
     private static Graph testGraph;
 
     @BeforeAll
@@ -21,16 +23,16 @@ class GraphTest {
         testGraph:  A ------ B ------ C
         distances:      10       20
          */
-        pointA = new GraphPoint("A");
-        pointB = new GraphPoint("B");
-        pointC = new GraphPoint("C");
+        pointA = new GraphPoint(new PointName("A"));
+        pointB = new GraphPoint(new PointName("B"));
+        pointC = new GraphPoint(new PointName("C"));
 
         distanceAB = new Distance(10);
         distanceBC = new Distance(20);
 
         testGraph = new Graph();
-        testGraph.addEdge(pointA, pointB, distanceAB);
-        testGraph.addEdge(pointB, new WeightedEdge(pointC, distanceBC));
+        testGraph.addEdge(pointA, pointB, distanceAB, height, electrified);
+        testGraph.addEdge(pointB, new WeightedEdge(pointC, distanceBC, height, electrified));
     }
 
     @Test
@@ -47,8 +49,8 @@ class GraphTest {
     @Test
     void testGetEdgesOfVertex() {
         List<WeightedEdge> actualEdges = testGraph.getEdgesOfVertex(pointB);
-        WeightedEdge edgeBA = new WeightedEdge(pointA, distanceAB);
-        WeightedEdge edgeBC = new WeightedEdge(pointC, distanceBC);
+        WeightedEdge edgeBA = new WeightedEdge(pointA, distanceAB, height, electrified);
+        WeightedEdge edgeBC = new WeightedEdge(pointC, distanceBC, height, electrified);
         List<WeightedEdge> expectedEdges = new ArrayList<>();
         expectedEdges.add(edgeBA);
         expectedEdges.add(edgeBC);

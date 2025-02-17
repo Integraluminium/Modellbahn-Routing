@@ -5,12 +5,12 @@ import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 public class CrossSwitch extends GraphPoint implements Switch {
     private final SwitchComponent switchComponent;
 
-    private final GraphPoint root1;
-    private final GraphPoint root2;
-    private final GraphPoint turnout1;
-    private final GraphPoint turnout2;
+    private final PointName root1;
+    private final PointName root2;
+    private final PointName turnout1;
+    private final PointName turnout2;
 
-    public CrossSwitch(String name, SwitchComponent switchComponent, GraphPoint root1, GraphPoint root2, GraphPoint turnout1, GraphPoint turnout2) {
+    public CrossSwitch(PointName name, SwitchComponent switchComponent, PointName root1, PointName root2, PointName turnout1, PointName turnout2) {
         super(name);
         this.switchComponent = switchComponent;
         this.root1 = root1;
@@ -34,19 +34,19 @@ public class CrossSwitch extends GraphPoint implements Switch {
     }
 
     private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
-        return (point1 == root1 && point2 == turnout2) || (point2 == root1 && point1 == turnout2) ||
-                (point1 == root2 && point2 == turnout1) || (point2 == root2 && point1 == turnout1);
+        return (point1.equals(root1) && point2.equals(turnout2)) || (point2.equals(root1) && point1.equals(turnout2)) ||
+                (point1.equals(root2) && point2.equals(turnout1)) || (point2.equals(root2) && point1.equals(turnout1));
     }
 
     private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
-        return (point1 == root1 && point2 == turnout1) || (point2 == root1 && point1 == turnout1) ||
-                (point1 == root2 && point2 == turnout2) || (point2 == root2 && point1 == turnout2);
+        return (point1.equals(root1) && point2.equals(turnout1)) || (point2.equals(root1) && point1.equals(turnout1)) ||
+                (point1.equals(root2) && point2.equals(turnout2)) || (point2.equals(root2) && point1.equals(turnout2));
     }
 
     public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
-        if (point == root1 || point == root2) {
+        if (point.equals(root1) || point.equals(root2)) {
             return SwitchSide.IN;
-        } else if (point == turnout1 || point == turnout2) {
+        } else if (point.equals(turnout1) || point.equals(turnout2)) {
             return SwitchSide.OUT;
         } else {
             return SwitchSide.UNDEFINED;

@@ -6,8 +6,8 @@ public class SignalComponent extends TrackComponent {
     private SignalState state;
     private TrackComponentCalls apiAdapter;
 
-    public SignalComponent(String name, TrackComponentId id, TrackComponentCalls apiAdapter) {
-        super(name, id);
+    public SignalComponent(TrackComponentId id, TrackComponentCalls apiAdapter) {
+        super(id);
         state = SignalState.UNKNOWN;
         this.apiAdapter = apiAdapter;
     }

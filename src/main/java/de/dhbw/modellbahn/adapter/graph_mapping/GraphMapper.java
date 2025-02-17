@@ -34,11 +34,11 @@ public abstract class GraphMapper {
         Set<DirectionalEdge> allNewVertices = newGraph.getAllVertices();
         allNewVertices.forEach(vertex -> {
             // Only add edge to vertex of new graph if there's not already an edge
-            if (vertex.destinationPoint() == adjacentEdge.startPoint() && vertex.startPoint() != adjacentEdge.destinationPoint()) {
+            if (vertex.destinationPoint().equals(adjacentEdge.startPoint()) && !vertex.startPoint().equals(adjacentEdge.destinationPoint())) {
                 if (checkIfTargetPointIsSwitchAndConnectsPoints(vertex.destinationPoint(), vertex.startPoint(), adjacentEdge.destinationPoint())) {
                     newGraph.addEdge(vertex, adjacentEdge);
                 }
-            } else if (vertex.startPoint() == adjacentEdge.destinationPoint() && vertex.destinationPoint() != adjacentEdge.startPoint())
+            } else if (vertex.startPoint().equals(adjacentEdge.destinationPoint()) && vertex.destinationPoint().equals(adjacentEdge.startPoint()))
                 if (checkIfTargetPointIsSwitchAndConnectsPoints(vertex.startPoint(), vertex.destinationPoint(), adjacentEdge.startPoint())) {
                     newGraph.addEdge(adjacentEdge, vertex);
                 }

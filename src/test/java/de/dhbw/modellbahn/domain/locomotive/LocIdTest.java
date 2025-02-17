@@ -1,7 +1,7 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
 import de.dhbw.modellbahn.domain.ConfigReader;
-import de.dhbw.modellbahn.plugin.JSONConfigReader;
+import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,14 +10,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class LocIdTest {
     private static ConfigReader configReader;
 
     @BeforeAll
     static void createConfigReader() {
-        configReader = new JSONConfigReader();
+        configReader = new YAMLConfigReader();
     }
 
     private static Stream<Arguments> provideValidLocIds() {

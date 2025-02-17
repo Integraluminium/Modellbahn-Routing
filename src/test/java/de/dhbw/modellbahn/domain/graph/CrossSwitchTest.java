@@ -16,19 +16,19 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CrossSwitchTest {
-    private static final String name = "Test";
-    private static final GraphPoint root1 = new GraphPoint("root1"),
-            root2 = new GraphPoint("root2"),
-            turnout1 = new GraphPoint("turnout1"),
-            turnout2 = new GraphPoint("turnout2");
+    private static final PointName name = new PointName("Test");
+    private static final GraphPoint root1 = new GraphPoint(new PointName("root1")),
+            root2 = new GraphPoint(new PointName("root2")),
+            turnout1 = new GraphPoint(new PointName("turnout1")),
+            turnout2 = new GraphPoint(new PointName("turnout2"));
     private static CrossSwitch testSwitch;
 
     @BeforeAll
     static void beforeAll() {
         ApiService apiService = new ApiService(0);
         TrackComponentCallsAdapter adapter = new TrackComponentCallsAdapter(apiService);
-        SwitchComponent switchComponent = new SwitchComponent("switchComponent", new TrackComponentId(42), adapter);
-        testSwitch = new CrossSwitch(name, switchComponent, root1, root2, turnout1, turnout2);
+        SwitchComponent switchComponent = new SwitchComponent(new TrackComponentId(42), adapter);
+        testSwitch = new CrossSwitch(name, switchComponent, root1.getName(), root2.getName(), turnout1.getName(), turnout2.getName());
     }
 
     private static Stream<Arguments> provideValidConnectedPoints() {
@@ -45,7 +45,7 @@ class CrossSwitchTest {
                 Arguments.of(root1, root1),
                 Arguments.of(root1, root2),
                 Arguments.of(turnout1, turnout2),
-                Arguments.of(root1, new GraphPoint("Invalid"))
+                Arguments.of(root1, new GraphPoint(new PointName("Invalid")))
         );
     }
 
@@ -71,6 +71,6 @@ class CrossSwitchTest {
         assertEquals(SwitchSide.IN, testSwitch.getSwitchSideFromPoint(root2));
         assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(turnout1));
         assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(turnout2));
-        assertEquals(SwitchSide.UNDEFINED, testSwitch.getSwitchSideFromPoint(new GraphPoint("unknown")));
+        assertEquals(SwitchSide.UNDEFINED, testSwitch.getSwitchSideFromPoint(new GraphPoint(new PointName("unknown"))));
     }
 }

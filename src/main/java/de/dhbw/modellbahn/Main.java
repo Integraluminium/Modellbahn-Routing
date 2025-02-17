@@ -5,12 +5,12 @@ import de.dhbw.modellbahn.adapter.moba.communication.calls.SystemCallsAdapter;
 import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;
 import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.locomotive.LocId;
-import de.dhbw.modellbahn.plugin.JSONConfigReader;
+import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 
 public class Main {
     public static void main(String[] args) {
 
-        ConfigReader configReader = new JSONConfigReader();
+        ConfigReader configReader = new YAMLConfigReader();
         LocId id = new LocId(16389, configReader);
 
         var apiService = new ApiService(0);
