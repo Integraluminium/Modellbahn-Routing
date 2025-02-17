@@ -1,18 +1,19 @@
-package de.dhbw.modellbahn.adapter.routing.directional_graph;
+package de.dhbw.modellbahn.application.routing;
 
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
+import de.dhbw.modellbahn.domain.graph.PointSide;
 
 public class DirectedNode {
     private final GraphPoint undirectedGraphPoint;
-    private final NodeDirection direction;
+    private final PointSide side;
 
-    public DirectedNode(final GraphPoint undirectedGraphPoint, final NodeDirection direction) {
+    public DirectedNode(final GraphPoint undirectedGraphPoint, final PointSide side) {
         this.undirectedGraphPoint = undirectedGraphPoint;
-        this.direction = direction;
+        this.side = side;
     }
 
     public String getNodeName() {
-        return undirectedGraphPoint.getName() + direction;
+        return undirectedGraphPoint.getName() + side;
     }
 
     @Override

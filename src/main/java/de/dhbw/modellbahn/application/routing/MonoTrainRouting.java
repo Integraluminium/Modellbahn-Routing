@@ -1,8 +1,5 @@
 package de.dhbw.modellbahn.application.routing;
 
-import de.dhbw.modellbahn.adapter.routing.PathNotPossibleException;
-import de.dhbw.modellbahn.adapter.routing.directional_graph.DirectedNode;
-
 import java.util.List;
 
 public interface MonoTrainRouting {

@@ -1,8 +1,8 @@
-package de.dhbw.modellbahn.adapter.routing.alg;
+package de.dhbw.modellbahn.plugin.routing.alg;
 
-import de.dhbw.modellbahn.adapter.routing.PathNotPossibleException;
-import de.dhbw.modellbahn.adapter.routing.directional_graph.DirectedNode;
+import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.application.routing.MonoTrainRouting;
+import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
 import org.jgrapht.Graph;
 import org.jgrapht.alg.interfaces.ShortestPathAlgorithm;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;

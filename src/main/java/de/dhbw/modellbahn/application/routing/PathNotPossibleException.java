@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.adapter.routing;
+package de.dhbw.modellbahn.application.routing;
 
 public class PathNotPossibleException extends Exception {
     public PathNotPossibleException(String message) {
