@@ -4,16 +4,24 @@ import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointSide;
 
 public class DirectedNode {
-    private final GraphPoint undirectedGraphPoint;
+    private final GraphPoint point;
     private final PointSide side;
 
     public DirectedNode(final GraphPoint undirectedGraphPoint, final PointSide side) {
-        this.undirectedGraphPoint = undirectedGraphPoint;
+        this.point = undirectedGraphPoint;
         this.side = side;
     }
 
+    public GraphPoint getPoint() {
+        return point;
+    }
+
+    public PointSide getSide() {
+        return side;
+    }
+
     public String getNodeName() {
-        return undirectedGraphPoint.getName() + side;
+        return point.getName() + side;
     }
 
     @Override
