@@ -34,17 +34,42 @@ public class GraphMapper {
             if (adjacentEdges.size() > 2) {
                 throw new IllegalArgumentException("A non-switch point can only have a maximum of 2 adjacent edges.");
             }
-            for (WeightedEdge edge : adjacentEdges) {
-                addEdge(newGraph, point, sourceSide, edge);
-                sourceSide = sourceSide.getOpposite();
+            if (containsGraphPoint(newGraph, point)) {
+                if (outSideAlreadyConnected(newGraph, point)) {
+                    return;
+                }
+                for (WeightedEdge edge : adjacentEdges) {
+                    Set<DefaultWeightedEdge> edges = newGraph.edgesOf(new DirectedNode(point, PointSide.IN));
+                    System.out.println(edges);
+                    if (isEdgeAlreadyConnected(newGraph, edge, edges)) {
+                        continue;
+                    }
+                    addEdge(newGraph, point, PointSide.OUT, edge);
+                }
+            } else {
+                for (WeightedEdge edge : adjacentEdges) {
+                    addEdge(newGraph, point, sourceSide, edge);
+                    sourceSide = sourceSide.getOpposite();
+                }
             }
         }
+    }
+
+    private boolean isEdgeAlreadyConnected(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, final WeightedEdge edge, final Set<DefaultWeightedEdge> edges) {
+        for (DefaultWeightedEdge weightedEdge : edges) {
+            if (newGraph.getEdgeTarget(weightedEdge).getPoint().equals(edge.destination()) || newGraph.getEdgeSource(weightedEdge).getPoint().equals(edge.destination())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void addEdge(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point, PointSide sourceSide, WeightedEdge edge) {
         PointSide destinationSide;
         if (edge.destination() instanceof Switch) {
             destinationSide = ((Switch) edge.destination()).getSwitchSideFromPoint(point);
+            newGraph.addVertex(new DirectedNode(edge.destination(), PointSide.IN));
+            newGraph.addVertex(new DirectedNode(edge.destination(), PointSide.OUT));
         } else {
             if (containsGraphPoint(newGraph, edge.destination())) {
                 if (outSideAlreadyConnected(newGraph, edge.destination())) {
@@ -52,9 +77,9 @@ public class GraphMapper {
                 }
                 destinationSide = PointSide.OUT;
             } else {
+                destinationSide = PointSide.IN;
                 newGraph.addVertex(new DirectedNode(edge.destination(), PointSide.IN));
                 newGraph.addVertex(new DirectedNode(edge.destination(), PointSide.OUT));
-                destinationSide = PointSide.IN;
             }
         }
         newGraph.addEdge(new DirectedNode(point, sourceSide.getOpposite()), new DirectedNode(edge.destination(), destinationSide));
@@ -62,7 +87,7 @@ public class GraphMapper {
     }
 
     private boolean outSideAlreadyConnected(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point) {
-        return newGraph.edgesOf(new DirectedNode(point, PointSide.OUT)).size() > 0;
+        return newGraph.edgesOf(new DirectedNode(point, PointSide.OUT)).size() > 1;
     }
 
     private boolean containsGraphPoint(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point) {

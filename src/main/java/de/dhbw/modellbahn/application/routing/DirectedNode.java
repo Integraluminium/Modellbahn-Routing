@@ -21,7 +21,22 @@ public class DirectedNode {
     }
 
     public String getNodeName() {
-        return point.getName().name() + side;
+        return point.getName().name() + "-" + side;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getPoint().hashCode();
+        result = 31 * result + getSide().hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DirectedNode that = (DirectedNode) o;
+        return getPoint().equals(that.getPoint()) && getSide() == that.getSide();
     }
 
     @Override
