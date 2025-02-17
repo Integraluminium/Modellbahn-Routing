@@ -26,8 +26,8 @@ class ThreeWaySwitchTest {
     static void beforeAll() {
         ApiService apiService = new ApiService(0);
         TrackComponentCallsAdapter adapter = new TrackComponentCallsAdapter(apiService);
-        SwitchComponent switchComponent = new SwitchComponent("switchComponent", new TrackComponentId(42), adapter);
-        SwitchComponent switchComponent2 = new SwitchComponent("switchComponent2", new TrackComponentId(43), adapter);
+        SwitchComponent switchComponent = new SwitchComponent(new TrackComponentId(42), adapter);
+        SwitchComponent switchComponent2 = new SwitchComponent(new TrackComponentId(43), adapter);
         testSwitch = new ThreeWaySwitch(name, switchComponent, switchComponent2, root.getName(), straight.getName(), left.getName(), right.getName());
     }
 

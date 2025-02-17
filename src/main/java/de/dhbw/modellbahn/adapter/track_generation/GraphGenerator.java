@@ -27,7 +27,7 @@ public class GraphGenerator {
         List<ConfigNormalSwitch> switchList = this.configReader.getNormalSwitches();
 
         return switchList.stream().map(s -> {
-            SwitchComponent switchComponent = this.createSwitchComponent(s.name(), s.id());
+            SwitchComponent switchComponent = this.createSwitchComponent(s.id());
             return new NormalSwitch(s.name(), switchComponent, s.root(), s.straight(), s.turnout());
         }).toList();
     }
@@ -36,8 +36,8 @@ public class GraphGenerator {
         List<ConfigThreeWaySwitch> switchList = this.configReader.getThreeWaySwitches();
 
         return switchList.stream().map(s -> {
-            SwitchComponent switchComponent1 = this.createSwitchComponent(s.name() + "1", s.id1());
-            SwitchComponent switchComponent2 = this.createSwitchComponent(s.name() + "2", s.id2());
+            SwitchComponent switchComponent1 = this.createSwitchComponent(s.id1());
+            SwitchComponent switchComponent2 = this.createSwitchComponent(s.id2());
             return new ThreeWaySwitch(s.name(), switchComponent1, switchComponent2, s.root(), s.straight(), s.left(), s.right());
         }).toList();
     }
@@ -46,21 +46,21 @@ public class GraphGenerator {
         List<ConfigCrossSwitch> switchList = this.configReader.getCrossSwitches();
 
         return switchList.stream().map(s -> {
-            SwitchComponent switchComponent = this.createSwitchComponent(s.name(), s.id());
+            SwitchComponent switchComponent = this.createSwitchComponent(s.id());
             return new CrossSwitch(s.name(), switchComponent, s.root1(), s.root2(), s.turnout1(), s.turnout2());
         }).toList();
     }
 
-    private SwitchComponent createSwitchComponent(String name, int id) {
+    private SwitchComponent createSwitchComponent(int id) {
         TrackComponentId trackComponentId = new TrackComponentId(id);
-        return new SwitchComponent(name, trackComponentId, this.trackComponentCalls);
+        return new SwitchComponent(trackComponentId, this.trackComponentCalls);
     }
 
     private List<TrackContact> generateTrackContacts() {
         List<ConfigTrackContact> trackContactList = this.configReader.getTrackContacts();
 
         return trackContactList.stream().map(t -> {
-            TrackContactComponent trackContactComponent = new TrackContactComponent(t.name(), new TrackComponentId(t.id()));
+            TrackContactComponent trackContactComponent = new TrackContactComponent(new TrackComponentId(t.id()));
             return new TrackContact(t.name(), trackContactComponent);
         }).toList();
     }
@@ -69,7 +69,7 @@ public class GraphGenerator {
         List<ConfigSignal> signalList = this.configReader.getSignals();
 
         return signalList.stream().map(s -> {
-            SignalComponent signalComponent = new SignalComponent(s.name(), new TrackComponentId(s.id()), this.trackComponentCalls);
+            SignalComponent signalComponent = new SignalComponent(new TrackComponentId(s.id()), this.trackComponentCalls);
             return new Signal(s.name(), signalComponent);
         }).toList();
     }

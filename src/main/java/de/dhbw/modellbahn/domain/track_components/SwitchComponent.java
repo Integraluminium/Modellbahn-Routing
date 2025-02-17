@@ -6,14 +6,14 @@ public class SwitchComponent extends TrackComponent {
     private final TrackComponentCalls trackComponentCalls;
     private SwitchState state;
 
-    public SwitchComponent(String name, TrackComponentId id, SwitchState state, TrackComponentCalls trackComponentCalls) {
-        super(name, id);
+    public SwitchComponent(TrackComponentId id, SwitchState state, TrackComponentCalls trackComponentCalls) {
+        super(id);
         this.state = state;
         this.trackComponentCalls = trackComponentCalls;
     }
 
-    public SwitchComponent(String name, TrackComponentId id, TrackComponentCalls apiAdapter) {
-        this(name, id, SwitchState.UNKNOWN, apiAdapter);
+    public SwitchComponent(TrackComponentId id, TrackComponentCalls apiAdapter) {
+        this(id, SwitchState.UNKNOWN, apiAdapter);
 
         this.state = synchroniseState();
     }
