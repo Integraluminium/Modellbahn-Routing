@@ -16,18 +16,18 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NormalSwitchTest {
-    private static final String name = "Test";
-    private static final GraphPoint root = new GraphPoint("root"),
-            straight = new GraphPoint("straight"),
-            turnout = new GraphPoint("turnout");
+    private static final PointName name = new PointName("Test");
+    private static final GraphPoint root = new GraphPoint(new PointName("root")),
+            straight = new GraphPoint(new PointName("straight")),
+            turnout = new GraphPoint(new PointName("turnout"));
     private static NormalSwitch testSwitch;
 
     @BeforeAll
     static void beforeAll() {
         ApiService apiService = new ApiService(0);
         TrackComponentCallsAdapter adapter = new TrackComponentCallsAdapter(apiService);
-        SwitchComponent switchComponent = new SwitchComponent("switchComponent", new TrackComponentId(42), adapter);
-        testSwitch = new NormalSwitch(name, switchComponent, root, straight, turnout);
+        SwitchComponent switchComponent = new SwitchComponent(new TrackComponentId(42), adapter);
+        testSwitch = new NormalSwitch(name, switchComponent, root.getName(), straight.getName(), turnout.getName());
     }
 
     private static Stream<Arguments> provideValidConnectedPoints() {
@@ -44,7 +44,7 @@ class NormalSwitchTest {
                 Arguments.of(root, root),
                 Arguments.of(straight, turnout),
                 Arguments.of(turnout, straight),
-                Arguments.of(root, new GraphPoint("Invalid"))
+                Arguments.of(root, new GraphPoint(new PointName("Invalid")))
         );
     }
 
