@@ -31,21 +31,21 @@ public class NormalSwitch extends GraphPoint implements Switch {
         return connectsStraight(point1, point2) || connectsDiverging(point1, point2);
     }
 
-    private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
-        return (point1 == root && point2 == straight) || (point2 == root && point1 == straight);
-    }
-
-    private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
-        return (point1 == root && point2 == turnout) || (point2 == root && point1 == turnout);
-    }
-
     public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
         if (point == root) {
             return SwitchSide.IN;
         } else if (point == straight || point == turnout) {
             return SwitchSide.OUT;
         } else {
-            return SwitchSide.UNDEFINED;
+            throw new IllegalArgumentException("Point is not connected to this switch.");
         }
+    }
+
+    private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
+        return (point1 == root && point2 == straight) || (point2 == root && point1 == straight);
+    }
+
+    private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
+        return (point1 == root && point2 == turnout) || (point2 == root && point1 == turnout);
     }
 }

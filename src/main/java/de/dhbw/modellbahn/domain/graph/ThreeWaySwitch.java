@@ -33,6 +33,20 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
         }
     }
 
+    public boolean checkIfConnectsPoints(GraphPoint point1, GraphPoint point2) {
+        return connectsStraight(point1, point2) || connectsLeft(point1, point2) || connectsRight(point1, point2);
+    }
+
+    public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
+        if (point == root) {
+            return SwitchSide.IN;
+        } else if (point == straight || point == left || point == right) {
+            return SwitchSide.OUT;
+        } else {
+            throw new IllegalArgumentException("Point is not connected to this switch.");
+        }
+    }
+
     private void switchStraight() {
         firstSwitch.setStraight();
         secondSwitch.setStraight();
@@ -47,10 +61,6 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
         secondSwitch.setDiverging();
     }
 
-    public boolean checkIfConnectsPoints(GraphPoint point1, GraphPoint point2) {
-        return connectsStraight(point1, point2) || connectsLeft(point1, point2) || connectsRight(point1, point2);
-    }
-
     private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
         return (point1 == root && point2 == straight) || (point2 == root && point1 == straight);
     }
@@ -61,15 +71,5 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
 
     private boolean connectsRight(GraphPoint point1, GraphPoint point2) {
         return (point1 == root && point2 == right) || (point2 == root && point1 == right);
-    }
-
-    public SwitchSide getSwitchSideFromPoint(GraphPoint point) {
-        if (point == root) {
-            return SwitchSide.IN;
-        } else if (point == straight || point == left || point == right) {
-            return SwitchSide.OUT;
-        } else {
-            return SwitchSide.UNDEFINED;
-        }
     }
 }

@@ -13,7 +13,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CrossSwitchTest {
     private static final String name = "Test";
@@ -67,10 +66,10 @@ class CrossSwitchTest {
 
     @Test
     void testGetSwitchSideFromPoint() {
-        assertEquals(SwitchSide.IN, testSwitch.getSwitchSideFromPoint(root1));
-        assertEquals(SwitchSide.IN, testSwitch.getSwitchSideFromPoint(root2));
-        assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(turnout1));
-        assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(turnout2));
-        assertEquals(SwitchSide.UNDEFINED, testSwitch.getSwitchSideFromPoint(new GraphPoint("unknown")));
+        assertEquals(PointSide.W, testSwitch.getSwitchSideFromPoint(root1));
+        assertEquals(PointSide.W, testSwitch.getSwitchSideFromPoint(root2));
+        assertEquals(PointSide.S, testSwitch.getSwitchSideFromPoint(turnout1));
+        assertEquals(PointSide.S, testSwitch.getSwitchSideFromPoint(turnout2));
+        assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(new GraphPoint("unknown")));
     }
 }

@@ -66,9 +66,9 @@ class NormalSwitchTest {
 
     @Test
     void testGetSwitchSideFromPoint() {
-        assertEquals(SwitchSide.IN, testSwitch.getSwitchSideFromPoint(root));
-        assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(straight));
-        assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(turnout));
-        assertEquals(SwitchSide.UNDEFINED, testSwitch.getSwitchSideFromPoint(new GraphPoint("unknown")));
+        assertEquals(PointSide.W, testSwitch.getSwitchSideFromPoint(root));
+        assertEquals(PointSide.S, testSwitch.getSwitchSideFromPoint(straight));
+        assertEquals(PointSide.S, testSwitch.getSwitchSideFromPoint(turnout));
+        assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(new GraphPoint("unknown")));
     }
 }
