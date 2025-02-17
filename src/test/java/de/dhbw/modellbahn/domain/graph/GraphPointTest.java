@@ -8,12 +8,12 @@ class GraphPointTest {
     @Test
     void testInvalidConstructor() {
         assertThrows(IllegalArgumentException.class, () -> new GraphPoint(null));
-        assertThrows(IllegalArgumentException.class, () -> new GraphPoint(""));
+        assertThrows(IllegalArgumentException.class, () -> new GraphPoint(new PointName("")));
     }
 
     @Test
     void testGetName() {
-        String name = "Test";
+        PointName name = new PointName("Test");
         GraphPoint graphPoint = new GraphPoint(name);
 
         assertEquals(name, graphPoint.getName());
@@ -21,7 +21,7 @@ class GraphPointTest {
 
     @Test
     void testEquals() {
-        String name = "Test";
+        PointName name = new PointName("Test");
         GraphPoint point1 = new GraphPoint(name);
         GraphPoint point2 = new GraphPoint(name);
 
@@ -30,7 +30,7 @@ class GraphPointTest {
 
     @Test
     void testEqualsWithString() {
-        String name = "Test";
+        PointName name = new PointName("Test");
         GraphPoint point1 = new GraphPoint(name);
 
         assertTrue(point1.equals(name));

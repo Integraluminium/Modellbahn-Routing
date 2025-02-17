@@ -6,6 +6,7 @@ import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCall
 import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
+import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.graph.WeightedEdge;
 import de.dhbw.modellbahn.plugin.MockedConfigReader;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ class GraphGeneratorTest {
         Graph graph = graphGenerator.generateGraph();
 
         Set<GraphPoint> actualVertices = graph.getAllVertices();
-        Set<String> actualVerticeNames = actualVertices.stream().map(GraphPoint::getName).collect(Collectors.toSet());
+        Set<String> actualVerticeNames = actualVertices.stream().map(point -> point.getName().name()).collect(Collectors.toSet());
         Set<String> expectedVerticeNames = Set.of("A", "B", "C", "D", "E", "F", "G");
         assertEquals(actualVerticeNames, expectedVerticeNames);
 
@@ -44,8 +45,8 @@ class GraphGeneratorTest {
     }
 
     private void testEdgesOfVertex(Graph graph, String vertexName, List<String> expectedNamesOfEdges) {
-        List<WeightedEdge> actualEdges = graph.getEdgesOfVertex(vertexName);
-        List<String> actualNamesOfEdges = actualEdges.stream().map(edge -> edge.destination().getName()).toList();
+        List<WeightedEdge> actualEdges = graph.getEdgesOfVertex(new PointName(vertexName));
+        List<String> actualNamesOfEdges = actualEdges.stream().map(edge -> edge.destination().getName().name()).toList();
         assertThat(actualNamesOfEdges).containsExactlyInAnyOrderElementsOf(expectedNamesOfEdges);
     }
 }

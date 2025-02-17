@@ -23,9 +23,9 @@ class GraphTest {
         testGraph:  A ------ B ------ C
         distances:      10       20
          */
-        pointA = new GraphPoint("A");
-        pointB = new GraphPoint("B");
-        pointC = new GraphPoint("C");
+        pointA = new GraphPoint(new PointName("A"));
+        pointB = new GraphPoint(new PointName("B"));
+        pointC = new GraphPoint(new PointName("C"));
 
         distanceAB = new Distance(10);
         distanceBC = new Distance(20);

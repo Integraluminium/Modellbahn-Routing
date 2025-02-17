@@ -6,12 +6,12 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
     private final SwitchComponent firstSwitch;
     private final SwitchComponent secondSwitch;
 
-    private final String root;
-    private final String straight;
-    private final String left;
-    private final String right;
+    private final PointName root;
+    private final PointName straight;
+    private final PointName left;
+    private final PointName right;
 
-    public ThreeWaySwitch(String name, SwitchComponent firstSwitch, SwitchComponent secondSwitch, String root, String straight, String left, String right) {
+    public ThreeWaySwitch(PointName name, SwitchComponent firstSwitch, SwitchComponent secondSwitch, PointName root, PointName straight, PointName left, PointName right) {
         super(name);
         this.firstSwitch = firstSwitch;
         this.secondSwitch = secondSwitch;

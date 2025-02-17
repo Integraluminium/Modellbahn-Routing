@@ -16,10 +16,10 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NormalSwitchTest {
-    private static final String name = "Test";
-    private static final GraphPoint root = new GraphPoint("root"),
-            straight = new GraphPoint("straight"),
-            turnout = new GraphPoint("turnout");
+    private static final PointName name = new PointName("Test");
+    private static final GraphPoint root = new GraphPoint(new PointName("root")),
+            straight = new GraphPoint(new PointName("straight")),
+            turnout = new GraphPoint(new PointName("turnout"));
     private static NormalSwitch testSwitch;
 
     @BeforeAll
@@ -44,7 +44,7 @@ class NormalSwitchTest {
                 Arguments.of(root, root),
                 Arguments.of(straight, turnout),
                 Arguments.of(turnout, straight),
-                Arguments.of(root, new GraphPoint("Invalid"))
+                Arguments.of(root, new GraphPoint(new PointName("Invalid")))
         );
     }
 
@@ -69,6 +69,6 @@ class NormalSwitchTest {
         assertEquals(SwitchSide.IN, testSwitch.getSwitchSideFromPoint(root));
         assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(straight));
         assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(turnout));
-        assertEquals(SwitchSide.UNDEFINED, testSwitch.getSwitchSideFromPoint(new GraphPoint("unknown")));
+        assertEquals(SwitchSide.UNDEFINED, testSwitch.getSwitchSideFromPoint(new GraphPoint(new PointName("unknown"))));
     }
 }

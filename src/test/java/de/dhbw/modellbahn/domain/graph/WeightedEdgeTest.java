@@ -10,7 +10,7 @@ class WeightedEdgeTest {
         Distance distance = new Distance(10);
         Height height = new Height(0);
         boolean electrified = true;
-        GraphPoint graphPoint = new GraphPoint("Test");
+        GraphPoint graphPoint = new GraphPoint(new PointName("Test"));
 
         WeightedEdge weightedEdge = new WeightedEdge(graphPoint, distance, height, electrified);
 
@@ -23,7 +23,7 @@ class WeightedEdgeTest {
         Distance distance = new Distance(10);
         Height height = new Height(0);
         boolean electrified = true;
-        GraphPoint graphPoint = new GraphPoint("Test");
+        GraphPoint graphPoint = new GraphPoint(new PointName("Test"));
 
         assertThrows(IllegalArgumentException.class, () -> new WeightedEdge(null, distance, height, electrified));
         assertThrows(IllegalArgumentException.class, () -> new WeightedEdge(graphPoint, null, height, electrified));

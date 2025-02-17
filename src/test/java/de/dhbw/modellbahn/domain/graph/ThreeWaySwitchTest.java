@@ -15,11 +15,11 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ThreeWaySwitchTest {
-    private static final String name = "Test";
-    private static final GraphPoint root = new GraphPoint("root"),
-            straight = new GraphPoint("straight"),
-            left = new GraphPoint("left"),
-            right = new GraphPoint("right");
+    private static final PointName name = new PointName("Test");
+    private static final GraphPoint root = new GraphPoint(new PointName("root")),
+            straight = new GraphPoint(new PointName("straight")),
+            left = new GraphPoint(new PointName("left")),
+            right = new GraphPoint(new PointName("right"));
     private static ThreeWaySwitch testSwitch;
 
     @BeforeAll
@@ -47,7 +47,7 @@ class ThreeWaySwitchTest {
                 Arguments.of(root, root),
                 Arguments.of(straight, left),
                 Arguments.of(right, straight),
-                Arguments.of(root, new GraphPoint("Invalid"))
+                Arguments.of(root, new GraphPoint(new PointName("Invalid")))
         );
     }
 
@@ -73,6 +73,6 @@ class ThreeWaySwitchTest {
         assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(straight));
         assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(left));
         assertEquals(SwitchSide.OUT, testSwitch.getSwitchSideFromPoint(right));
-        assertEquals(SwitchSide.UNDEFINED, testSwitch.getSwitchSideFromPoint(new GraphPoint("unknown")));
+        assertEquals(SwitchSide.UNDEFINED, testSwitch.getSwitchSideFromPoint(new GraphPoint(new PointName("unknown"))));
     }
 }

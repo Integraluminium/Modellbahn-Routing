@@ -5,12 +5,12 @@ import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 public class CrossSwitch extends GraphPoint implements Switch {
     private final SwitchComponent switchComponent;
 
-    private final String root1;
-    private final String root2;
-    private final String turnout1;
-    private final String turnout2;
+    private final PointName root1;
+    private final PointName root2;
+    private final PointName turnout1;
+    private final PointName turnout2;
 
-    public CrossSwitch(String name, SwitchComponent switchComponent, String root1, String root2, String turnout1, String turnout2) {
+    public CrossSwitch(PointName name, SwitchComponent switchComponent, PointName root1, PointName root2, PointName turnout1, PointName turnout2) {
         super(name);
         this.switchComponent = switchComponent;
         this.root1 = root1;

@@ -27,7 +27,7 @@ public class Graph {
         return this.getEdgesOfVertex(point.getName());
     }
 
-    public List<WeightedEdge> getEdgesOfVertex(String name) {
+    public List<WeightedEdge> getEdgesOfVertex(PointName name) {
         List<WeightedEdge> returnList = new ArrayList<>();
         this.adjacencyList.keySet().forEach(vertex -> {
             if (vertex.getName().equals(name)) {

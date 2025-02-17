@@ -3,16 +3,16 @@ package de.dhbw.modellbahn.domain.graph;
 import java.util.Objects;
 
 public class GraphPoint {
-    private final String name;
+    private final PointName name;
 
-    public GraphPoint(String name) {
-        if (name == null || name.equals("")) {
+    public GraphPoint(PointName name) {
+        if (name == null) {
             throw new IllegalArgumentException("Name must not be an empty string or null.");
         }
         this.name = name;
     }
 
-    public String getName() {
+    public PointName getName() {
         return name;
     }
 
@@ -20,11 +20,11 @@ public class GraphPoint {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         GraphPoint that = (GraphPoint) o;
-        return Objects.equals(this.name, that.getName());
+        return this.name.equals(that.getName());
     }
 
-    public boolean equals(String s) {
-        return Objects.equals(this.name, s);
+    public boolean equals(PointName s) {
+        return this.name.equals(s);
     }
 
     @Override

@@ -28,7 +28,8 @@ public class GraphGenerator {
 
         return switchList.stream().map(s -> {
             SwitchComponent switchComponent = this.createSwitchComponent(s.id());
-            return new NormalSwitch(s.name(), switchComponent, s.root(), s.straight(), s.turnout());
+            return new NormalSwitch(new PointName(s.name()), switchComponent, new PointName(s.root()),
+                    new PointName(s.straight()), new PointName(s.turnout()));
         }).toList();
     }
 
@@ -38,7 +39,8 @@ public class GraphGenerator {
         return switchList.stream().map(s -> {
             SwitchComponent switchComponent1 = this.createSwitchComponent(s.id1());
             SwitchComponent switchComponent2 = this.createSwitchComponent(s.id2());
-            return new ThreeWaySwitch(s.name(), switchComponent1, switchComponent2, s.root(), s.straight(), s.left(), s.right());
+            return new ThreeWaySwitch(new PointName(s.name()), switchComponent1, switchComponent2, new PointName(s.root()),
+                    new PointName(s.straight()), new PointName(s.left()), new PointName(s.right()));
         }).toList();
     }
 
@@ -47,7 +49,8 @@ public class GraphGenerator {
 
         return switchList.stream().map(s -> {
             SwitchComponent switchComponent = this.createSwitchComponent(s.id());
-            return new CrossSwitch(s.name(), switchComponent, s.root1(), s.root2(), s.turnout1(), s.turnout2());
+            return new CrossSwitch(new PointName(s.name()), switchComponent, new PointName(s.root1()),
+                    new PointName(s.root2()), new PointName(s.turnout1()), new PointName(s.turnout2()));
         }).toList();
     }
 
@@ -61,7 +64,7 @@ public class GraphGenerator {
 
         return trackContactList.stream().map(t -> {
             TrackContactComponent trackContactComponent = new TrackContactComponent(new TrackComponentId(t.id()));
-            return new TrackContact(t.name(), trackContactComponent);
+            return new TrackContact(new PointName(t.name()), trackContactComponent);
         }).toList();
     }
 
@@ -70,14 +73,14 @@ public class GraphGenerator {
 
         return signalList.stream().map(s -> {
             SignalComponent signalComponent = new SignalComponent(new TrackComponentId(s.id()), this.trackComponentCalls);
-            return new Signal(s.name(), signalComponent);
+            return new Signal(new PointName(s.name()), signalComponent);
         }).toList();
     }
 
     private List<GraphPoint> generateVirtualPoints() {
         List<ConfigVirtualPoint> virtualPointList = this.configReader.getVirtualPoints();
 
-        return virtualPointList.stream().map(p -> new GraphPoint(p.name())).toList();
+        return virtualPointList.stream().map(p -> new GraphPoint(new PointName(p.name()))).toList();
     }
 
     private List<GraphConnection> generateGraphConnections(List<NormalSwitch> normalSwitches, List<ThreeWaySwitch> threeWaySwitches, List<CrossSwitch> crossSwitches,
@@ -85,7 +88,7 @@ public class GraphGenerator {
         List<ConfigConnection> connectionList = this.configReader.getConnections();
         List<GraphPoint> allComponents = Stream.of(normalSwitches, threeWaySwitches, crossSwitches, trackContacts, signals, virtualPoints)
                 .flatMap(Collection::stream).collect(Collectors.toList());
-        Map<String, GraphPoint> graphPointMap = allComponents.stream().collect(Collectors.toMap(GraphPoint::getName, point -> point));
+        Map<String, GraphPoint> graphPointMap = allComponents.stream().collect(Collectors.toMap(point -> point.getName().name(), point -> point));
 
         return connectionList.stream().map(c -> {
             GraphPoint startPoint = graphPointMap.get(c.source());

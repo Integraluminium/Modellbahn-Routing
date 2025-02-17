@@ -5,11 +5,11 @@ import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 public class NormalSwitch extends GraphPoint implements Switch {
     private final SwitchComponent switchComponent;
 
-    private final String root;
-    private final String straight;
-    private final String turnout;
+    private final PointName root;
+    private final PointName straight;
+    private final PointName turnout;
 
-    public NormalSwitch(String name, SwitchComponent switchComponent, String root, String straight, String turnout) {
+    public NormalSwitch(PointName name, SwitchComponent switchComponent, PointName root, PointName straight, PointName turnout) {
         super(name);
         this.switchComponent = switchComponent;
         this.root = root;
