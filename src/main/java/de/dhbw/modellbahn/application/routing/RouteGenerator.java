@@ -13,17 +13,15 @@ import java.util.Optional;
 public class RouteGenerator {
     private final Locomotive loc;
     private final List<DirectedDistanceEdge> routingEdges;
-    private final Distance minimalDistance;
 
-    public RouteGenerator(List<DirectedDistanceEdge> routingEdges, Locomotive loc, Distance minimalDistance) {
+    public RouteGenerator(List<DirectedDistanceEdge> routingEdges, Locomotive loc) {
         this.routingEdges = Collections.unmodifiableList(routingEdges);
         this.loc = loc;
-        this.minimalDistance = minimalDistance;
     }
 
     public Route generateRoute() throws PathNotPossibleException {
         double sum = routingEdges.stream().mapToDouble(edge -> edge.distance().value()).sum();
-        if (sum < minimalDistance.value()) {
+        if (sum < this.loc.getAccelerationDistance().value() + this.loc.getDecelerationDistance().value()) {
             throw new PathNotPossibleException("Path is shorter than the minimal distance.");
         }
 
