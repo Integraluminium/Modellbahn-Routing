@@ -1,5 +1,6 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
+import de.dhbw.modellbahn.domain.graph.Distance;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.resources.FuelType;
 import de.dhbw.modellbahn.domain.locomotive.resources.FuelValue;
@@ -7,14 +8,18 @@ import de.dhbw.modellbahn.domain.locomotive.resources.LocResources;
 
 public class Locomotive {
     private final LocId id;
+    private final Distance accelerationDistance;
+    private final Distance decelerationDistance;
     private LocResources resources;
     private GraphPoint currentPosition;
     private GraphPoint currentFacingDirection;
     private Speed currentSpeed;
 
 
-    public Locomotive(LocId locId, GraphPoint startPosition, GraphPoint startFacingDirection) {
+    public Locomotive(LocId locId, Distance accelerationDistance, Distance decelerationDistance, GraphPoint startPosition, GraphPoint startFacingDirection) {
         this.id = locId;
+        this.accelerationDistance = accelerationDistance;
+        this.decelerationDistance = decelerationDistance;
         this.currentPosition = startPosition;
         this.currentFacingDirection = startFacingDirection;
         this.currentSpeed = new Speed(0);
@@ -58,5 +63,13 @@ public class Locomotive {
 
     public void setCurrentSpeed(Speed currentSpeed) {
         this.currentSpeed = currentSpeed;
+    }
+
+    public Distance getAccelerationDistance() {
+        return accelerationDistance;
+    }
+
+    public Distance getDecelerationDistance() {
+        return decelerationDistance;
     }
 }

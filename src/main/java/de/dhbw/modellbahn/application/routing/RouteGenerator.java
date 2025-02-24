@@ -1,11 +1,13 @@
 package de.dhbw.modellbahn.application.routing;
 
 import de.dhbw.modellbahn.domain.graph.Distance;
+import de.dhbw.modellbahn.domain.graph.Switch;
 import de.dhbw.modellbahn.domain.locomotive.Speed;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class RouteGenerator {
     private final List<DirectedDistanceEdge> routingEdges;
@@ -26,16 +28,33 @@ public class RouteGenerator {
         routingActions.add(new LocSpeedAction(new Speed(100)));
 
         // TODO handle case: only two edges provided
+        Distance currentDistance = new Distance(0);
+        double currentWaitTime = 0;
         DirectedDistanceEdge previousEdge = routingEdges.removeFirst();
         while (routingEdges.size() > 1) {
             DirectedDistanceEdge currentEdge = routingEdges.removeFirst();
             DirectedDistanceEdge nextEdge = routingEdges.getFirst();
-            
+            currentDistance = currentDistance.add(currentEdge.distance());
+
+            Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateIfNecessary(previousEdge, currentEdge, nextEdge);
+            if(switchAction.isPresent()){
+                WaitAction waitAction = new WaitAction(currentDistance, new Distance(300));
+                routingActions.add(waitAction);
+                routingActions.add(switchAction.get());
+            }
+
             previousEdge = currentEdge;
         }
 
         routingActions.add(new LocSpeedAction(new Speed(0)));
         return new Route(routingActions);
+    }
+
+    private Optional<ChangeSwitchStateAction> generateSwitchStateIfNecessary(DirectedDistanceEdge previousEdge, DirectedDistanceEdge currentEdge, DirectedDistanceEdge nextEdge) {
+        if(!(currentEdge.node().getPoint() instanceof Switch)){
+            return Optional.empty();
+        }
+        return Optional.of(new ChangeSwitchStateAction((Switch) currentEdge.node(), previousEdge.node().getPoint(), nextEdge.node().getPoint()));
     }
 
 }
