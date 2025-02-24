@@ -8,6 +8,8 @@ import de.dhbw.modellbahn.domain.locomotive.resources.LocResources;
 
 public class Locomotive {
     private final LocId id;
+    private final MaxLocSpeed maxSpeed;
+    private final long accelerationTime;
     private final Distance accelerationDistance;
     private final Distance decelerationDistance;
     private LocResources resources;
@@ -16,8 +18,10 @@ public class Locomotive {
     private Speed currentSpeed;
 
 
-    public Locomotive(LocId locId, Distance accelerationDistance, Distance decelerationDistance, GraphPoint startPosition, GraphPoint startFacingDirection) {
+    public Locomotive(LocId locId, MaxLocSpeed maxSpeed, long accelerationTime, Distance accelerationDistance, Distance decelerationDistance, GraphPoint startPosition, GraphPoint startFacingDirection) {
         this.id = locId;
+        this.maxSpeed = maxSpeed;
+        this.accelerationTime = accelerationTime;
         this.accelerationDistance = accelerationDistance;
         this.decelerationDistance = decelerationDistance;
         this.currentPosition = startPosition;
@@ -71,5 +75,13 @@ public class Locomotive {
 
     public Distance getDecelerationDistance() {
         return decelerationDistance;
+    }
+
+    public MaxLocSpeed getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public long getAccelerationTime() {
+        return accelerationTime;
     }
 }
