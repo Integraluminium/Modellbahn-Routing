@@ -38,7 +38,7 @@ public class GraphVisualisation {
         showRoutingGraph(actualGraph);
     }
 
-    static void showNormalGraph(Graph graph) {
+    public static void showNormalGraph(Graph graph) {
         org.graphstream.graph.Graph graphStreamGraph = new org.graphstream.graph.implementations.SingleGraph("Normal Graph");
 
         for (GraphPoint graphPoint : graph.getAllVertices()) {
@@ -78,7 +78,7 @@ public class GraphVisualisation {
 
     }
 
-    static void showRoutingGraph(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> graph) {
+    public static void showRoutingGraph(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> graph) {
         org.graphstream.graph.Graph graphStreamGraph = new org.graphstream.graph.implementations.SingleGraph("Routing Graph");
 
         for (DirectedNode node : graph.vertexSet()) {
@@ -94,6 +94,7 @@ public class GraphVisualisation {
             Edge msedge = graphStreamGraph.addEdge(source.getNodeName() + " => " + target.getNodeName(), source.getNodeName(), target.getNodeName(), true);
             msedge.setAttribute("ui.style", "arrow-size: 8px;");
             msedge.setAttribute("ui.arrow", "true");
+            msedge.setAttribute("ui.label", graph.getEdgeWeight(edge));
 
         }
 
