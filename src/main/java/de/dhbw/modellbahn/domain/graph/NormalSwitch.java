@@ -51,4 +51,14 @@ public class NormalSwitch extends GraphPoint implements Switch {
                 || (point2.equals(root) && point1.equals(turnout));
     }
 
+    public GraphPoint getPointThatCanConnectThisPoint(GraphPoint point) {
+        PointName pointName = point.getName();
+        if (pointName.equals(root)) {
+            return new GraphPoint(straight);
+        } else if (pointName.equals(straight) || pointName.equals(turnout)) {
+            return new GraphPoint(root);
+        } else {
+            throw new IllegalArgumentException("This point is not connected with the switch");
+        }
+    }
 }
