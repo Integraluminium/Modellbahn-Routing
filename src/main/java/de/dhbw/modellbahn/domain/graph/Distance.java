@@ -12,6 +12,6 @@ public record Distance(int value) {
     }
 
     public Distance add(Distance distance) {
-        return add(distance.value());
+        return this.add(distance.value());
     }
 }

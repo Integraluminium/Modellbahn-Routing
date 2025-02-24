@@ -13,8 +13,8 @@ import java.util.Optional;
 public class RouteGenerator {
     private final Locomotive loc;
     private final List<DirectedDistanceEdge> routingEdges;
-    private boolean alreadyDecelerated;
-    private long currentWaitTime;
+    private boolean alreadyDecelerated = false;
+    private long currentWaitTime = 0;
 
     public RouteGenerator(List<DirectedDistanceEdge> routingEdges, Locomotive loc) {
         this.routingEdges = Collections.unmodifiableList(routingEdges);
@@ -68,7 +68,7 @@ public class RouteGenerator {
 
     private List<RoutingAction> generateSwitchActions(ChangeSwitchStateAction switchAction, Distance currentDistance, long decelerationTime) {
         List<RoutingAction> returnActions = new ArrayList<>();
-        long waitTime = calculateWaitTime(currentDistance, new Distance(300));
+        long waitTime = calculateWaitTimeForSwitch(currentDistance, new Distance(300));
 
         if (!this.alreadyDecelerated && this.currentWaitTime + waitTime > decelerationTime) {
             long decelerationWaitTime = decelerationTime - this.currentWaitTime;
@@ -98,9 +98,13 @@ public class RouteGenerator {
         return maxSpeedTime + this.loc.getAccelerationTime();
     }
 
-    private long calculateWaitTime(Distance currentDistance, Distance pufferDistance) {
-        //TODO calculate time
-        return 0;
+    private long calculateWaitTimeForSwitch(Distance currentDistance, Distance pufferDistance) {
+        int absolutePufferDistance = currentDistance.value() - pufferDistance.value();
+        if (absolutePufferDistance <= this.loc.getAccelerationDistance().value()) {
+            return 0;
+        }
+        long absolutePufferWaitTime = (long) (absolutePufferDistance / this.loc.getMaxSpeed().value());
+        return absolutePufferWaitTime - this.currentWaitTime;
     }
 
 }
