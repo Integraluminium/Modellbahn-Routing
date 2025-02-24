@@ -27,6 +27,13 @@ public class RouteGenerator {
         List<RoutingAction> routingActions = new ArrayList<>();
         routingActions.add(new LocSpeedAction(new Speed(100)));
 
+        generateActions(routingActions);
+
+        routingActions.add(new LocSpeedAction(new Speed(0)));
+        return new Route(routingActions);
+    }
+
+    private void generateActions(List<RoutingAction> routingActions) {
         // TODO handle case: only two edges provided
         Distance currentDistance = new Distance(0);
         double currentWaitTime = 0;
@@ -45,9 +52,6 @@ public class RouteGenerator {
 
             previousEdge = currentEdge;
         }
-
-        routingActions.add(new LocSpeedAction(new Speed(0)));
-        return new Route(routingActions);
     }
 
     private Optional<ChangeSwitchStateAction> generateSwitchStateIfNecessary(DirectedDistanceEdge previousEdge, DirectedDistanceEdge currentEdge, DirectedDistanceEdge nextEdge) {
