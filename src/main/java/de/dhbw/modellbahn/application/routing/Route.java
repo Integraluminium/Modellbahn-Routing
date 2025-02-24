@@ -13,7 +13,7 @@ public class Route {
 
     public void driveRoute(Locomotive loc) {
         for (RoutingAction action : actionList) {
-            action.performAction(loc);
+            action.performAction();
         }
     }
 }

@@ -2,6 +2,7 @@ package de.dhbw.modellbahn.application.routing;
 
 import de.dhbw.modellbahn.domain.graph.Distance;
 import de.dhbw.modellbahn.domain.graph.Switch;
+import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.Speed;
 
 import java.util.ArrayList;
@@ -10,11 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class RouteGenerator {
+    private final Locomotive loc;
     private final List<DirectedDistanceEdge> routingEdges;
     private final Distance minimalDistance;
 
-    public RouteGenerator(List<DirectedDistanceEdge> routingEdges, Distance minimalDistance) {
+    public RouteGenerator(List<DirectedDistanceEdge> routingEdges, Locomotive loc, Distance minimalDistance) {
         this.routingEdges = Collections.unmodifiableList(routingEdges);
+        this.loc = loc;
         this.minimalDistance = minimalDistance;
     }
 
@@ -25,11 +28,11 @@ public class RouteGenerator {
         }
 
         List<RoutingAction> routingActions = new ArrayList<>();
-        routingActions.add(new LocSpeedAction(new Speed(100)));
+        routingActions.add(new LocSpeedAction(this.loc, new Speed(100)));
 
         generateActions(routingActions);
 
-        routingActions.add(new LocSpeedAction(new Speed(0)));
+        routingActions.add(new LocSpeedAction(this.loc, new Speed(0)));
         return new Route(routingActions);
     }
 
@@ -44,8 +47,8 @@ public class RouteGenerator {
             currentDistance = currentDistance.add(currentEdge.distance());
 
             Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateIfNecessary(previousEdge, currentEdge, nextEdge);
-            if(switchAction.isPresent()){
-                WaitAction waitAction = new WaitAction(currentDistance, new Distance(300));
+            if (switchAction.isPresent()) {
+                WaitAction waitAction = new WaitAction(this.loc, currentDistance, new Distance(300));
                 routingActions.add(waitAction);
                 routingActions.add(switchAction.get());
             }
@@ -55,7 +58,7 @@ public class RouteGenerator {
     }
 
     private Optional<ChangeSwitchStateAction> generateSwitchStateIfNecessary(DirectedDistanceEdge previousEdge, DirectedDistanceEdge currentEdge, DirectedDistanceEdge nextEdge) {
-        if(!(currentEdge.node().getPoint() instanceof Switch)){
+        if (!(currentEdge.node().getPoint() instanceof Switch)) {
             return Optional.empty();
         }
         return Optional.of(new ChangeSwitchStateAction((Switch) currentEdge.node(), previousEdge.node().getPoint(), nextEdge.node().getPoint()));
