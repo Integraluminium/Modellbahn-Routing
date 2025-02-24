@@ -22,7 +22,7 @@ public class RouteGenerator {
     }
 
     public Route generateRoute() throws PathNotPossibleException {
-        double distanceSum = this.routingEdges.stream().mapToDouble(edge -> edge.distance().value()).sum();
+        long distanceSum = this.routingEdges.stream().mapToLong(edge -> edge.distance().value()).sum();
         if (distanceSum < this.loc.getAccelerationDistance().value() + this.loc.getDecelerationDistance().value()) {
             throw new PathNotPossibleException("Path is shorter than the minimal distance.");
         }
@@ -36,7 +36,7 @@ public class RouteGenerator {
         return new Route(routingActions);
     }
 
-    private List<RoutingAction> generateActions(double distanceSum) {
+    private List<RoutingAction> generateActions(long distanceSum) {
         List<RoutingAction> returnActions = new ArrayList<>();
         // TODO handle case: only two edges provided
         Distance currentDistance = new Distance(0);
@@ -92,8 +92,8 @@ public class RouteGenerator {
         return Optional.of(new ChangeSwitchStateAction((Switch) currentEdge.node(), previousEdge.node().getPoint(), nextEdge.node().getPoint()));
     }
 
-    private long calculateDecelerationTime(double distanceSum) {
-        double decelerationDistance = distanceSum - this.loc.getDecelerationDistance().value() - this.loc.getAccelerationDistance().value();
+    private long calculateDecelerationTime(long distanceSum) {
+        long decelerationDistance = distanceSum - this.loc.getDecelerationDistance().value() - this.loc.getAccelerationDistance().value();
         long maxSpeedTime = (long) (decelerationDistance / this.loc.getMaxSpeed().value());
         return maxSpeedTime + this.loc.getAccelerationTime();
     }
