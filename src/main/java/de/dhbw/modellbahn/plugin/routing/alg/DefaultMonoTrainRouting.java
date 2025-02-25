@@ -21,8 +21,8 @@ public class DefaultMonoTrainRouting implements MonoTrainRouting {
 
     // TODO needs extendable weight parameter and a function to calculate the weight of an edge
     void addEdge(DirectedNode start, DirectedNode end, double weight) {
-        Objects.requireNonNull(start, "Start node must not be null");
-        Objects.requireNonNull(end, "End node must not be null");
+        Objects.requireNonNull(start, "Start point must not be null");
+        Objects.requireNonNull(end, "End point must not be null");
 
         graph.addVertex(start);
         graph.addVertex(end);

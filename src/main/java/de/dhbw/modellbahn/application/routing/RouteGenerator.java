@@ -10,12 +10,12 @@ import java.util.*;
 
 public class RouteGenerator {
     private final Locomotive loc;
-    private final List<DirectedDistanceEdge> routingEdges;
+    private final List<WeightedDistanceEdge> routingEdges;
     private boolean alreadyDecelerated = false;
     private long currentWaitTime = 0;
     private long distanceSum = 0;
 
-    public RouteGenerator(List<DirectedDistanceEdge> routingEdges, Locomotive loc) {
+    public RouteGenerator(List<WeightedDistanceEdge> routingEdges, Locomotive loc) {
         this.routingEdges = Collections.unmodifiableList(routingEdges);
         this.loc = loc;
     }
@@ -62,13 +62,13 @@ public class RouteGenerator {
     private List<RoutingAction> generateActionsForMoreThanTwoNodes() {
         List<RoutingAction> returnActions = new ArrayList<>();
         Distance currentDistance = new Distance(0);
-        DirectedDistanceEdge previousEdge = this.routingEdges.removeFirst();
+        WeightedDistanceEdge previousEdge = this.routingEdges.removeFirst();
         while (this.routingEdges.size() > 1) {
-            DirectedDistanceEdge currentEdge = this.routingEdges.removeFirst();
-            DirectedDistanceEdge nextEdge = this.routingEdges.getFirst();
+            WeightedDistanceEdge currentEdge = this.routingEdges.removeFirst();
+            WeightedDistanceEdge nextEdge = this.routingEdges.getFirst();
             currentDistance = currentDistance.add(currentEdge.distance());
 
-            Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.node().getPoint(), currentEdge, nextEdge.node().getPoint());
+            Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.point(), currentEdge.point(), nextEdge.point());
             if (switchAction.isPresent()) {
                 returnActions.addAll(generateSwitchActions(switchAction.get(), currentDistance));
             }
@@ -76,18 +76,18 @@ public class RouteGenerator {
             previousEdge = currentEdge;
         }
 
-        DirectedDistanceEdge lastNode = this.routingEdges.getFirst();
-        if (lastNode.node().getPoint() instanceof Switch) {
-            returnActions.addAll(generateActionsForLastSwitch(previousEdge, lastNode, currentDistance));
+        WeightedDistanceEdge lastEdge = this.routingEdges.getFirst();
+        if (lastEdge.point() instanceof Switch) {
+            returnActions.addAll(generateActionsForLastSwitch(previousEdge, lastEdge, currentDistance));
         }
         return returnActions;
     }
 
-    private List<RoutingAction> generateActionsForLastSwitch(DirectedDistanceEdge previousEdge, DirectedDistanceEdge switchEdge, Distance currentDistance) {
-        Switch switchNode = (Switch) switchEdge.node().getPoint();
-        GraphPoint endNode = switchNode.getPointThatCanConnectThisPoint(switchEdge.node().getPoint());
+    private List<RoutingAction> generateActionsForLastSwitch(WeightedDistanceEdge previousEdge, WeightedDistanceEdge switchEdge, Distance currentDistance) {
+        Switch switchNode = (Switch) switchEdge.point();
+        GraphPoint endNode = switchNode.getPointThatCanConnectThisPoint(switchEdge.point());
         //TODO facing direction must be updated in loc
-        Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.node().getPoint(), switchEdge, endNode);
+        Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.point(), switchEdge.point(), endNode);
         if (switchAction.isEmpty()) {
             throw new RuntimeException("SwitchAction should not be empty.");
         }
@@ -95,10 +95,10 @@ public class RouteGenerator {
     }
 
     private List<RoutingAction> generateActionsForTwoNodes() {
-        DirectedDistanceEdge firstEdge = this.routingEdges.removeFirst();
-        DirectedDistanceEdge secondEdge = this.routingEdges.getFirst();
+        WeightedDistanceEdge firstEdge = this.routingEdges.removeFirst();
+        WeightedDistanceEdge secondEdge = this.routingEdges.getFirst();
         List<RoutingAction> returnActions = new ArrayList<>();
-        if (secondEdge.node().getPoint() instanceof Switch) {
+        if (secondEdge.point() instanceof Switch) {
             returnActions.addAll(generateActionsForLastSwitch(firstEdge, secondEdge, new Distance(0)));
         }
         return returnActions;
@@ -124,11 +124,11 @@ public class RouteGenerator {
         return returnActions;
     }
 
-    private Optional<ChangeSwitchStateAction> generateSwitchStateActionIfNecessary(GraphPoint previousPoint, DirectedDistanceEdge currentEdge, GraphPoint nextPoint) {
-        if (!(currentEdge.node().getPoint() instanceof Switch)) {
+    private Optional<ChangeSwitchStateAction> generateSwitchStateActionIfNecessary(GraphPoint previousPoint, GraphPoint currentPoint, GraphPoint nextPoint) {
+        if (!(currentPoint instanceof Switch)) {
             return Optional.empty();
         }
-        return Optional.of(new ChangeSwitchStateAction((Switch) currentEdge.node().getPoint(), previousPoint, nextPoint));
+        return Optional.of(new ChangeSwitchStateAction((Switch) currentPoint, previousPoint, nextPoint));
     }
 
     private long calculateDecelerationTime() {
