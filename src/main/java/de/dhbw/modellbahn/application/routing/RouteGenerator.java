@@ -9,16 +9,17 @@ import de.dhbw.modellbahn.domain.locomotive.Speed;
 import java.util.*;
 
 public class RouteGenerator {
-    private final Locomotive loc;
     private final List<WeightedDistanceEdge> routingEdges;
+    private final Locomotive loc;
+    private final GraphPoint newFacingDirection;
     private boolean alreadyDecelerated = false;
     private long currentWaitTime = 0;
     private long distanceSum = 0;
-    private GraphPoint newFacingDirection;
 
-    public RouteGenerator(List<WeightedDistanceEdge> routingEdges, Locomotive loc) {
+    public RouteGenerator(List<WeightedDistanceEdge> routingEdges, Locomotive loc, GraphPoint newFacingDirection) {
         this.routingEdges = new ArrayList<>(routingEdges);
         this.loc = loc;
+        this.newFacingDirection = newFacingDirection;
     }
 
     public Route generateRoute() throws PathNotPossibleException {
@@ -40,7 +41,6 @@ public class RouteGenerator {
         routingActions.add(new LocSpeedAction(this.loc, new Speed(100)));
 
         routingActions.addAll(generateActions());
-
 
         return new Route(this.loc, routingActions, newPosition, newFacingDirection);
     }
@@ -89,11 +89,7 @@ public class RouteGenerator {
     }
 
     private List<RoutingAction> generateActionsForLastSwitch(WeightedDistanceEdge previousEdge, WeightedDistanceEdge switchEdge, Distance currentDistance) {
-        Switch switchNode = (Switch) switchEdge.point();
-        GraphPoint endNode = switchNode.getPointThatCanConnectThisPoint(previousEdge.point());
-        this.newFacingDirection = endNode;
-        //TODO facing direction must be updated in loc
-        Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.point(), switchEdge.point(), endNode);
+        Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.point(), switchEdge.point(), this.newFacingDirection);
         if (switchAction.isEmpty()) {
             throw new RuntimeException("SwitchAction should not be empty.");
         }

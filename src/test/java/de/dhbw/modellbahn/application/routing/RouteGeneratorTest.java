@@ -3,7 +3,10 @@ package de.dhbw.modellbahn.application.routing;
 import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.domain.graph.*;
+import de.dhbw.modellbahn.domain.graph.Distance;
+import de.dhbw.modellbahn.domain.graph.GraphPoint;
+import de.dhbw.modellbahn.domain.graph.NormalSwitch;
+import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.MaxLocSpeed;
 import de.dhbw.modellbahn.domain.locomotive.MockedLocomotive;
@@ -30,6 +33,7 @@ class RouteGeneratorTest {
     private static final GraphPoint point1 = new GraphPoint(new PointName("A"));
     private static final GraphPoint point2 = new GraphPoint(new PointName("B"));
     private static final GraphPoint point3 = new GraphPoint(new PointName("C"));
+    private static GraphPoint newFacingDirection;
     private static NormalSwitch normalSwitch;
     private static RouteGenerator routeGenerator;
 
@@ -40,6 +44,7 @@ class RouteGeneratorTest {
         TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
         SwitchComponent switchComponent = new SwitchComponent(new TrackComponentId(0), trackComponentCalls);
         normalSwitch = new NormalSwitch(new PointName("D"), switchComponent, point3.getName(), point1.getName(), point2.getName());
+        newFacingDirection = normalSwitch.getPointThatCanConnectThisPoint(point3);
         List<WeightedDistanceEdge> routingEdges = List.of(
                 new WeightedDistanceEdge(point1, new Distance(0)),
                 new WeightedDistanceEdge(point2, new Distance(200)),
@@ -47,7 +52,7 @@ class RouteGeneratorTest {
                 new WeightedDistanceEdge(normalSwitch, new Distance(300))
 
         );
-        routeGenerator = new RouteGenerator(routingEdges, loc);
+        routeGenerator = new RouteGenerator(routingEdges, loc, newFacingDirection);
     }
 
     @Test
@@ -69,7 +74,7 @@ class RouteGeneratorTest {
 
             assertThat(action3).isExactlyInstanceOf(ChangeSwitchStateAction.class);
             assertEquals(((ChangeSwitchStateAction) action3).getPoint1(), point3);
-            assertEquals(((ChangeSwitchStateAction) action3).getPoint2(), normalSwitch.getPointThatCanConnectThisPoint(point3));
+            assertEquals(((ChangeSwitchStateAction) action3).getPoint2(), newFacingDirection);
 
             assertThat(action4).isExactlyInstanceOf(WaitAction.class);
             assertEquals(((WaitAction) action4).getWaitTime(), 400);
