@@ -14,6 +14,7 @@ public class RouteGenerator {
     private boolean alreadyDecelerated = false;
     private long currentWaitTime = 0;
     private long distanceSum = 0;
+    private GraphPoint newFacingDirection;
 
     public RouteGenerator(List<WeightedDistanceEdge> routingEdges, Locomotive loc) {
         this.routingEdges = new ArrayList<>(routingEdges);
@@ -33,12 +34,15 @@ public class RouteGenerator {
         this.alreadyDecelerated = false;
         this.currentWaitTime = 0;
 
+        GraphPoint newPosition = this.routingEdges.getLast().point();
+
         List<RoutingAction> routingActions = new ArrayList<>();
         routingActions.add(new LocSpeedAction(this.loc, new Speed(100)));
 
         routingActions.addAll(generateActions());
 
-        return new Route(routingActions);
+
+        return new Route(this.loc, routingActions, newPosition, newFacingDirection);
     }
 
     private List<RoutingAction> generateActions() {
@@ -87,6 +91,7 @@ public class RouteGenerator {
     private List<RoutingAction> generateActionsForLastSwitch(WeightedDistanceEdge previousEdge, WeightedDistanceEdge switchEdge, Distance currentDistance) {
         Switch switchNode = (Switch) switchEdge.point();
         GraphPoint endNode = switchNode.getPointThatCanConnectThisPoint(previousEdge.point());
+        this.newFacingDirection = endNode;
         //TODO facing direction must be updated in loc
         Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.point(), switchEdge.point(), endNode);
         if (switchAction.isEmpty()) {
