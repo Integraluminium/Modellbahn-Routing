@@ -19,4 +19,20 @@ public class ChangeSwitchStateAction extends RoutingAction {
     public void performAction() {
         switchComponent.switchToConnectPoints(point1, point2);
     }
+
+    public GraphPoint getPoint1() {
+        return point1;
+    }
+
+    public GraphPoint getPoint2() {
+        return point2;
+    }
+
+    @Override
+    public String toString() {
+        return "ChangeSwitchStateAction{" +
+                "point1=" + point1.getName().name() +
+                ", point2=" + point2.getName().name() +
+                '}';
+    }
 }

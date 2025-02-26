@@ -24,6 +24,7 @@ public class RouteGenerator {
         if (this.routingEdges.size() < 2) {
             throw new PathNotPossibleException("Not enough Nodes provided to calculate route.");
         }
+
         this.distanceSum = this.routingEdges.stream().mapToLong(edge -> edge.distance().value()).sum();
         if (this.distanceSum < this.loc.getAccelerationDistance().value() + this.loc.getDecelerationDistance().value()) {
             throw new PathNotPossibleException("Path is shorter than the minimal distance.");
@@ -31,7 +32,7 @@ public class RouteGenerator {
 
         this.alreadyDecelerated = false;
         this.currentWaitTime = 0;
-        this.distanceSum = 0;
+
         List<RoutingAction> routingActions = new ArrayList<>();
         routingActions.add(new LocSpeedAction(this.loc, new Speed(100)));
 
@@ -132,8 +133,8 @@ public class RouteGenerator {
     }
 
     private long calculateDecelerationTime() {
-        long decelerationDistance = this.distanceSum - this.loc.getDecelerationDistance().value() - this.loc.getAccelerationDistance().value();
-        long maxSpeedTime = (long) (decelerationDistance / this.loc.getMaxSpeed().value());
+        long decelerationMaxSpeedDistance = this.distanceSum - this.loc.getDecelerationDistance().value() - this.loc.getAccelerationDistance().value();
+        long maxSpeedTime = (long) (decelerationMaxSpeedDistance / this.loc.getMaxSpeed().value());
         return maxSpeedTime + this.loc.getAccelerationTime();
     }
 
@@ -142,7 +143,7 @@ public class RouteGenerator {
         if (absolutePufferDistance <= this.loc.getAccelerationDistance().value()) {
             return 0;
         }
-        long absolutePufferWaitTime = (long) (absolutePufferDistance / this.loc.getMaxSpeed().value());
+        long absolutePufferWaitTime = (long) ((absolutePufferDistance - this.loc.getAccelerationDistance().value()) / this.loc.getMaxSpeed().value()) + this.loc.getAccelerationTime();
         return absolutePufferWaitTime - this.currentWaitTime;
     }
 
