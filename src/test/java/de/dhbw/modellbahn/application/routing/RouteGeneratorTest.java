@@ -52,7 +52,7 @@ class RouteGeneratorTest {
                 new WeightedDistanceEdge(normalSwitch, new Distance(300))
 
         );
-        routeGenerator = new RouteGenerator(routingEdges, loc, newFacingDirection);
+        routeGenerator = new RouteGenerator(loc, routingEdges, newFacingDirection);
     }
 
     @Test

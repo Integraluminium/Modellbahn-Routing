@@ -9,16 +9,16 @@ import de.dhbw.modellbahn.domain.locomotive.Speed;
 import java.util.*;
 
 public class RouteGenerator {
-    private final List<WeightedDistanceEdge> routingEdges;
     private final Locomotive loc;
+    private final List<WeightedDistanceEdge> routingEdges;
     private final GraphPoint newFacingDirection;
     private boolean alreadyDecelerated = false;
     private long currentWaitTime = 0;
     private long distanceSum = 0;
 
-    public RouteGenerator(List<WeightedDistanceEdge> routingEdges, Locomotive loc, GraphPoint newFacingDirection) {
-        this.routingEdges = new ArrayList<>(routingEdges);
+    public RouteGenerator(Locomotive loc, List<WeightedDistanceEdge> routingEdges, GraphPoint newFacingDirection) {
         this.loc = loc;
+        this.routingEdges = new ArrayList<>(routingEdges);
         this.newFacingDirection = newFacingDirection;
     }
 
