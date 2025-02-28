@@ -1,14 +1,32 @@
 package de.dhbw.modellbahn.application.routing;
 
-public interface MonoTrainRouting {
-    // the directed graph to search in, must be already mapped with all constraints, like electrification
+import de.dhbw.modellbahn.domain.graph.GraphPoint;
 
-//    /**
-//     * Find the shortest for just one train
-//     *
-//     * @param start the start point for the Train
-//     * @param end   the end point for the Train
-//     * @return a list of edges that represent the shortest path
-//     */
-//    List<DirectedNode> findShortestPath(DirectedNode start, DirectedNode end) throws PathNotPossibleException;
+import java.util.List;
+
+/**
+ * This interface is used to find the shortest path for a single train
+ * <p>
+ * All constraints like electrification must be adjusted in the graph before calling this method
+ */
+public interface MonoTrainRouting {
+    /**
+     * Find the shortest for just one train
+     * with <b>fixed</b> direction in destination
+     *
+     * @param start the start point for the Train
+     * @param end   the end point for the Train
+     * @return a list of edges that represent the shortest path
+     */
+    List<WeightedDistanceEdge> findShortestPath(DirectedNode start, DirectedNode end) throws PathNotPossibleException;
+
+    /**
+     * Find the shortest for just one train
+     * with <b>dynamic</b> direction in destination
+     *
+     * @param start       the start point for the Train
+     * @param destination the destination for the Train
+     * @return a list of edges that represent the shortest path
+     */
+    List<WeightedDistanceEdge> findShortestPath(DirectedNode start, GraphPoint destination) throws PathNotPossibleException;
 }
