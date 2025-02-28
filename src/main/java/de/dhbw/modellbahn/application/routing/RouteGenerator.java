@@ -1,12 +1,18 @@
 package de.dhbw.modellbahn.application.routing;
 
+import de.dhbw.modellbahn.application.routing.action.ChangeSwitchStateAction;
+import de.dhbw.modellbahn.application.routing.action.LocSpeedAction;
+import de.dhbw.modellbahn.application.routing.action.RoutingAction;
+import de.dhbw.modellbahn.application.routing.action.WaitAction;
 import de.dhbw.modellbahn.domain.graph.Distance;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.Speed;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class RouteGenerator {
     private final Locomotive loc;
@@ -38,7 +44,7 @@ public class RouteGenerator {
         GraphPoint newPosition = this.routingEdges.getLast().point();
 
         List<RoutingAction> routingActions = new ArrayList<>();
-        routingActions.add(new LocSpeedAction(this.loc, new Speed(100)));
+        routingActions.add(new LocSpeedAction(this.loc, new Speed(100)));  // TODO: Parameterize speed
 
         routingActions.addAll(generateActions());
 

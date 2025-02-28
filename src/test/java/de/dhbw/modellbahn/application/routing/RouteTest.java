@@ -1,6 +1,10 @@
 package de.dhbw.modellbahn.application.routing;
 
 import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedTrackComponentCalls;
+import de.dhbw.modellbahn.application.routing.action.ChangeSwitchStateAction;
+import de.dhbw.modellbahn.application.routing.action.LocSpeedAction;
+import de.dhbw.modellbahn.application.routing.action.RoutingAction;
+import de.dhbw.modellbahn.application.routing.action.WaitAction;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.NormalSwitch;
 import de.dhbw.modellbahn.domain.graph.PointName;

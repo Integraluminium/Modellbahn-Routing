@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.application.routing;
+package de.dhbw.modellbahn.application.routing.action;
 
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;

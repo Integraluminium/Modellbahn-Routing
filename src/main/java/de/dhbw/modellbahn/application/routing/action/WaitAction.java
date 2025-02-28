@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.application.routing;
+package de.dhbw.modellbahn.application.routing.action;
 
 public class WaitAction extends RoutingAction {
     private final long waitTime;

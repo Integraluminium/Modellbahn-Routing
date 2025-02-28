@@ -7,6 +7,12 @@ public class DirectedNode {
     private final GraphPoint point;
     private final PointSide side;
 
+    /**
+     * Creates a new directed node.
+     *
+     * @param undirectedGraphPoint The GraphPoint e.g. a track component or a virtual point
+     * @param side                 Side of entry of the GraphPoint, used to determine direction
+     */
     public DirectedNode(final GraphPoint undirectedGraphPoint, final PointSide side) {
         this.point = undirectedGraphPoint;
         this.side = side;

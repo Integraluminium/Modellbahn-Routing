@@ -1,5 +1,6 @@
 package de.dhbw.modellbahn.application.routing;
 
+import de.dhbw.modellbahn.application.routing.action.RoutingAction;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 
@@ -22,6 +23,9 @@ public class Route {
     public void driveRoute() {
         for (RoutingAction action : actionList) {
             action.performAction();
+            // NOTE: Maybe the action should be performed at correct time
+            //  With some feedback from the hardware there could be a check if the action was successful
+            //  further more: position should be present at all time enabling routing of multiple trains
         }
         this.loc.setCurrentPosition(this.newPosition);
         this.loc.setCurrentFacingDirection(this.newFacingDirection);
