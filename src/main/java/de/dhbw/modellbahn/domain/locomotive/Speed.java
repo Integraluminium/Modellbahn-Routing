@@ -6,4 +6,21 @@ public record Speed(int value) {
             throw new IllegalArgumentException("Speed value must be in range [0, 100].");
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Speed that = (Speed) o;
+        return this.value() == that.value();
+    }
+
+    public boolean equals(int value){
+        return this.value() == value;
+    }
+
+    @Override
+    public int hashCode() {
+        return value();
+    }
 }

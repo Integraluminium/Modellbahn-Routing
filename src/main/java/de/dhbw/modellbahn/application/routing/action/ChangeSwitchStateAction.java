@@ -1,8 +1,7 @@
-package de.dhbw.modellbahn.domain.routing;
+package de.dhbw.modellbahn.application.routing.action;
 
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;
-import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 
 public class ChangeSwitchStateAction extends RoutingAction {
     private final Switch switchComponent;
@@ -17,7 +16,23 @@ public class ChangeSwitchStateAction extends RoutingAction {
     }
 
     @Override
-    public void performAction(Locomotive loc) {
+    public void performAction() {
         switchComponent.switchToConnectPoints(point1, point2);
+    }
+
+    public GraphPoint getPoint1() {
+        return point1;
+    }
+
+    public GraphPoint getPoint2() {
+        return point2;
+    }
+
+    @Override
+    public String toString() {
+        return "ChangeSwitchStateAction{" +
+                "point1=" + point1.getName().name() +
+                ", point2=" + point2.getName().name() +
+                '}';
     }
 }

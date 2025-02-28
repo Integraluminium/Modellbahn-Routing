@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DistanceTest {
     private static Stream<Arguments> provideValidDistanceValues() {
         return Stream.of(
+                Arguments.of(0),
                 Arguments.of(1),
                 Arguments.of(50),
                 Arguments.of(100)
@@ -19,7 +20,7 @@ class DistanceTest {
 
     private static Stream<Arguments> provideInvalidDistanceValues() {
         return Stream.of(
-                Arguments.of(0),
+                Arguments.of(-1),
                 Arguments.of(-10)
         );
     }

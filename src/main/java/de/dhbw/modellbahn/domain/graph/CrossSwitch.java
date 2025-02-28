@@ -52,4 +52,15 @@ public class CrossSwitch extends GraphPoint implements Switch {
         return (point1.equals(root1) && point2.equals(turnout1)) || (point2.equals(root1) && point1.equals(turnout1)) ||
                 (point1.equals(root2) && point2.equals(turnout2)) || (point2.equals(root2) && point1.equals(turnout2));
     }
+
+    public GraphPoint getPointThatCanConnectThisPoint(GraphPoint point) {
+        PointName pointName = point.getName();
+        if (pointName.equals(root1) || pointName.equals(root2)) {
+            return new GraphPoint(turnout1);
+        } else if (pointName.equals(turnout1) || pointName.equals(turnout2)) {
+            return new GraphPoint(root1);
+        } else {
+            throw new IllegalArgumentException("This point is not connected with the switch");
+        }
+    }
 }
