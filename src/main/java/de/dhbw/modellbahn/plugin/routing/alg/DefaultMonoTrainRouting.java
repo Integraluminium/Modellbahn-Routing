@@ -3,8 +3,6 @@ package de.dhbw.modellbahn.plugin.routing.alg;
 import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.application.routing.MonoTrainRouting;
 import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
-import de.dhbw.modellbahn.application.routing.WeightedDistanceEdge;
-import de.dhbw.modellbahn.domain.graph.Distance;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointSide;
 import org.jgrapht.Graph;
@@ -13,40 +11,14 @@ import org.jgrapht.alg.interfaces.ShortestPathAlgorithm;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 public class DefaultMonoTrainRouting implements MonoTrainRouting {
     private final Graph<DirectedNode, DefaultWeightedEdge> graph;
 
     public DefaultMonoTrainRouting(Graph<DirectedNode, DefaultWeightedEdge> routingGraph) {
         this.graph = routingGraph;
-    }
-
-    /**
-     * Converts the GraphPath to a list of WeightedDistanceEdges
-     * <p>
-     * This method is needed, because the Information stored in the Edge List is protected!
-     *
-     * @param path the path to convert
-     * @return a list of WeightedDistanceEdges
-     */
-    protected static List<WeightedDistanceEdge> getWeightedDistanceEdgesList(final GraphPath<DirectedNode, DefaultWeightedEdge> path) {
-        List<DirectedNode> vertexList = path.getVertexList();
-        if (vertexList.size() < 2) return Collections.emptyList();
-
-        Graph<DirectedNode, DefaultWeightedEdge> graph1 = path.getGraph();
-        List<WeightedDistanceEdge> edgeList = new ArrayList<>();
-        Iterator<DirectedNode> vertexIterator = vertexList.iterator();
-        DirectedNode currentNode = vertexIterator.next();
-        while (vertexIterator.hasNext()) {
-            DirectedNode nextNode = vertexIterator.next();
-
-            int distance = (int) Math.round(graph1.getEdgeWeight(graph1.getEdge(currentNode, nextNode)));
-            edgeList.add(new WeightedDistanceEdge(currentNode.getPoint(), new Distance(distance)));
-
-            currentNode = nextNode;
-        }
-        return edgeList;
     }
 
     /**
@@ -94,7 +66,7 @@ public class DefaultMonoTrainRouting implements MonoTrainRouting {
     }
 
     @Override
-    public List<WeightedDistanceEdge> findShortestPath(final DirectedNode start, final DirectedNode end) throws PathNotPossibleException {
+    public List<DirectedNode> findShortestPath(final DirectedNode start, final DirectedNode end) throws PathNotPossibleException {
         Objects.requireNonNull(start, "Start edge must not be null");
         Objects.requireNonNull(end, "End edge must not be null");
 
@@ -105,11 +77,11 @@ public class DefaultMonoTrainRouting implements MonoTrainRouting {
         DijkstraShortestPath<DirectedNode, DefaultWeightedEdge> dijkstraShortestPath = new DijkstraShortestPath<>(graph);
 
         GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathForExactDirection(dijkstraShortestPath, start, end);
-        return getWeightedDistanceEdgesList(path);
+        return path.getVertexList();
     }
 
     @Override
-    public List<WeightedDistanceEdge> findShortestPath(final DirectedNode start, final GraphPoint destination) throws PathNotPossibleException {
+    public List<DirectedNode> findShortestPath(final DirectedNode start, final GraphPoint destination) throws PathNotPossibleException {
         Objects.requireNonNull(start, "Start edge must not be null");
         Objects.requireNonNull(destination, "End edge must not be null");
 
@@ -120,11 +92,11 @@ public class DefaultMonoTrainRouting implements MonoTrainRouting {
         DijkstraShortestPath<DirectedNode, DefaultWeightedEdge> dijkstraShortestPath = new DijkstraShortestPath<>(graph);
         GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathWithAlternative(dijkstraShortestPath, start, preferredEnd, alternativeEnd);
 
-        return getWeightedDistanceEdgesList(path);
+        return path.getVertexList();
     }
 
-
-    public List<WeightedDistanceEdge> findShortestPath(final GraphPoint start, final GraphPoint facingDirection, final GraphPoint end) throws PathNotPossibleException {
+    @Override
+    public List<DirectedNode> findShortestPath(final GraphPoint start, final GraphPoint facingDirection, final GraphPoint end) throws PathNotPossibleException {
         DirectedNode startNode = new DirectedNode(start, PointSide.OUT); // TODO Determine the correct direction with facingDirection
         return findShortestPath(startNode, end);
     }

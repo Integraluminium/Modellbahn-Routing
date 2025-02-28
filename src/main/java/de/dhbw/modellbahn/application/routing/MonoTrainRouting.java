@@ -18,7 +18,7 @@ public interface MonoTrainRouting {
      * @param end   the end point for the Train
      * @return a list of edges that represent the shortest path
      */
-    List<WeightedDistanceEdge> findShortestPath(DirectedNode start, DirectedNode end) throws PathNotPossibleException;
+    List<DirectedNode> findShortestPath(DirectedNode start, DirectedNode end) throws PathNotPossibleException;
 
     /**
      * Find the shortest for just one train
@@ -28,5 +28,7 @@ public interface MonoTrainRouting {
      * @param destination the destination for the Train
      * @return a list of edges that represent the shortest path
      */
-    List<WeightedDistanceEdge> findShortestPath(DirectedNode start, GraphPoint destination) throws PathNotPossibleException;
+    List<DirectedNode> findShortestPath(DirectedNode start, GraphPoint destination) throws PathNotPossibleException;
+
+    List<DirectedNode> findShortestPath(GraphPoint start, GraphPoint facingDirection, GraphPoint end) throws PathNotPossibleException;
 }
