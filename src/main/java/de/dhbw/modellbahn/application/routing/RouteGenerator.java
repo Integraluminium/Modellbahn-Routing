@@ -1,14 +1,13 @@
 package de.dhbw.modellbahn.application.routing;
 
+import de.dhbw.modellbahn.application.routing.action.ActionFactory;
 import de.dhbw.modellbahn.application.routing.action.ChangeSwitchStateAction;
-import de.dhbw.modellbahn.application.routing.action.LocSpeedAction;
 import de.dhbw.modellbahn.application.routing.action.RoutingAction;
 import de.dhbw.modellbahn.application.routing.action.WaitAction;
 import de.dhbw.modellbahn.domain.graph.Distance;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
-import de.dhbw.modellbahn.domain.locomotive.Speed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +17,7 @@ public class RouteGenerator {
     private final Locomotive loc;
     private final List<WeightedDistanceEdge> routingEdges;
     private final GraphPoint newFacingDirection;
+    private final ActionFactory actionFactory;
     private boolean alreadyDecelerated = false;
     private long currentWaitTime = 0;
     private long distanceSum = 0;
@@ -26,6 +26,7 @@ public class RouteGenerator {
         this.loc = loc;
         this.routingEdges = new ArrayList<>(routingEdges);
         this.newFacingDirection = newFacingDirection;
+        this.actionFactory = new ActionFactory();
     }
 
     public Route generateRoute() throws PathNotPossibleException {
@@ -44,7 +45,9 @@ public class RouteGenerator {
         GraphPoint newPosition = this.routingEdges.getLast().point();
 
         List<RoutingAction> routingActions = new ArrayList<>();
-        routingActions.add(new LocSpeedAction(this.loc, new Speed(100)));  // TODO: Parameterize speed
+        routingActions.add(
+                actionFactory.createLocSpeedAction(this.loc, 100)
+        );  // TODO: Parameterize speed
 
         routingActions.addAll(generateActions());
 
@@ -64,7 +67,7 @@ public class RouteGenerator {
             long decelerationWaitTime = calculateDecelerationTime() - this.currentWaitTime;
             returnActions.add(new WaitAction(decelerationWaitTime));
             this.currentWaitTime += decelerationWaitTime;
-            returnActions.add(new LocSpeedAction(this.loc, new Speed(0)));
+            returnActions.add(this.actionFactory.createLocSpeedAction(this.loc, 0));
         }
 
         return returnActions;
@@ -121,7 +124,9 @@ public class RouteGenerator {
             long decelerationWaitTime = decelerationTime - this.currentWaitTime;
             returnActions.add(new WaitAction(decelerationWaitTime));
             this.currentWaitTime += decelerationWaitTime;
-            returnActions.add(new LocSpeedAction(this.loc, new Speed(0)));
+            returnActions.add(
+                    actionFactory.createLocSpeedAction(this.loc, 0)
+            );
             waitTime -= decelerationWaitTime;
             this.alreadyDecelerated = true;
         }
