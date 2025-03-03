@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.adapter.track_generation;
+package de.dhbw.modellbahn.adapter.locomotive_reading;
 
 public record ConfigLocomotive(
         int id,

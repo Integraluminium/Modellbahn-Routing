@@ -7,6 +7,7 @@ import de.dhbw.modellbahn.domain.locomotive.resources.FuelValue;
 import de.dhbw.modellbahn.domain.locomotive.resources.LocResources;
 
 public class Locomotive {
+    private final LocName name;
     private final LocId id;
     private final MaxLocSpeed maxSpeed;
     private final long accelerationTime;
@@ -18,7 +19,8 @@ public class Locomotive {
     private Speed currentSpeed;
 
 
-    public Locomotive(LocId locId, MaxLocSpeed maxSpeed, long accelerationTime, Distance accelerationDistance, Distance decelerationDistance, GraphPoint startPosition, GraphPoint startFacingDirection) {
+    public Locomotive(LocName locName, LocId locId, MaxLocSpeed maxSpeed, long accelerationTime, Distance accelerationDistance, Distance decelerationDistance, GraphPoint startPosition, GraphPoint startFacingDirection) {
+        this.name = locName;
         this.id = locId;
         this.maxSpeed = maxSpeed;
         this.accelerationTime = accelerationTime;
@@ -31,6 +33,10 @@ public class Locomotive {
 
     public LocId getLocId() {
         return id;
+    }
+
+    public LocName getName() {
+        return name;
     }
 
     private void setFuel(FuelType fuelType, FuelValue fuelValue) {

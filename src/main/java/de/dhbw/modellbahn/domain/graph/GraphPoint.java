@@ -31,4 +31,8 @@ public class GraphPoint {
         GraphPoint that = (GraphPoint) o;
         return this.name.equals(that.getName());
     }
+
+    public static GraphPoint of(String name){
+        return new GraphPoint(new PointName(name));
+    }
 }

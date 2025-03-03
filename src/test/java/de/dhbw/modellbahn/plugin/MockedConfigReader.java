@@ -1,6 +1,7 @@
 package de.dhbw.modellbahn.plugin;
 
 import de.dhbw.modellbahn.adapter.api.ApiConfig;
+import de.dhbw.modellbahn.adapter.locomotive_reading.ConfigLocomotive;
 import de.dhbw.modellbahn.adapter.track_generation.*;
 import de.dhbw.modellbahn.domain.ConfigReader;
 
