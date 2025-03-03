@@ -8,6 +8,8 @@ import java.util.List;
 public interface ConfigReader {
     List<Integer> getValidLocIds();
 
+    List<ConfigLocomotive> getLocomotives();
+
     ApiConfig getApiConfig();
 
     List<ConfigConnection> getConnections();

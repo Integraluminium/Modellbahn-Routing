@@ -44,6 +44,11 @@ public class YAMLConfigReader implements ConfigReader {
     }
 
     @Override
+    public List<ConfigLocomotive> getLocomotives() {
+        return List.of(this.readObjectFromPath("locs/locs.yaml", ConfigLocomotive[].class));
+    }
+
+    @Override
     public ApiConfig getApiConfig() {
         return null;
     }

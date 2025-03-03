@@ -14,6 +14,11 @@ public class MockedConfigReader implements ConfigReader {
     }
 
     @Override
+    public List<ConfigLocomotive> getLocomotives() {
+        return List.of(new ConfigLocomotive(1, "mockedLoc", 1.0, 1000, 200, 200, "A", "B"));
+    }
+
+    @Override
     public ApiConfig getApiConfig() {
         return null;
     }
@@ -50,17 +55,17 @@ public class MockedConfigReader implements ConfigReader {
 
     @Override
     public List<ConfigThreeWaySwitch> getThreeWaySwitches() {
-        return List.of(new ConfigThreeWaySwitch("E", 5,6,"D", "C", "A","F"));
+        return List.of(new ConfigThreeWaySwitch("E", 5, 6, "D", "C", "A", "F"));
     }
 
     @Override
     public List<ConfigTrackContact> getTrackContacts() {
-        return List.of(new ConfigTrackContact("D",4));
+        return List.of(new ConfigTrackContact("D", 4));
     }
 
     @Override
     public List<ConfigSignal> getSignals() {
-        return List.of(new ConfigSignal("G",8));
+        return List.of(new ConfigSignal("G", 8));
     }
 
     @Override
