@@ -31,7 +31,7 @@ public class GraphVisualisation {
         GraphGenerator generator = new GraphGenerator(new MockedConfigReader(), calls);
 
         Graph graph = generator.generateGraph();
-        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> actualGraph = mapper.mapGraph(graph);
+        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> actualGraph = mapper.mapGraphToJGraphT(graph);
 
 
         showNormalGraph(graph);

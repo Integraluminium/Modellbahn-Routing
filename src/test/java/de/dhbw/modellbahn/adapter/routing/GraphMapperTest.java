@@ -35,7 +35,7 @@ class GraphMapperTest {
         Graph graph = generator.generateGraph();
 
         // Act
-        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> actualGraph = mapper.mapGraph(graph);
+        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> actualGraph = mapper.mapGraphToJGraphT(graph);
         Set<DirectedNode> actualVertices = actualGraph.vertexSet();
         Set<DirectedNode> expectedVertices = createNodesFromStrings(List.of("A", "B", "C", "D", "E", "F", "G"));
 

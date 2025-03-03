@@ -16,7 +16,7 @@ public class GraphMapper {
         }
     }
 
-    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraph(Graph originalGraph) {
+    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToJGraphT(Graph originalGraph) {
         org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph = new DefaultDirectedWeightedGraph<>(DefaultWeightedEdge.class);
 
         Set<GraphPoint> graphPoints = originalGraph.getAllVertices();

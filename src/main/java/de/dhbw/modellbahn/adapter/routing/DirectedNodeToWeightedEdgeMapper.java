@@ -11,6 +11,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * A mapper class that converts a list of directed nodes to a list of weighted distance edges.
+ */
 public class DirectedNodeToWeightedEdgeMapper {
 
     /**

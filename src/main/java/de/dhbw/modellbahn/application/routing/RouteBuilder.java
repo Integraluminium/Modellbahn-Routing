@@ -1,8 +1,6 @@
 package de.dhbw.modellbahn.application.routing;
 
 import de.dhbw.modellbahn.adapter.routing.DirectedNodeToWeightedEdgeMapper;
-import de.dhbw.modellbahn.adapter.routing.GraphMapper;
-import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -14,13 +12,10 @@ import java.util.Set;
 public class RouteBuilder {
     private final MonoTrainRouting monoTrainRouting;
     private final DirectedNodeToWeightedEdgeMapper directedNodeToWeightedEdgeMapper;
-    private final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph;
 
-    public RouteBuilder(final Graph graph, final MonoTrainRouting monoTrainRouting, final GraphMapper graphMapper, final DirectedNodeToWeightedEdgeMapper directedNodeToWeightedEdgeMapper) {
+    public RouteBuilder(final MonoTrainRouting monoTrainRouting) {
         this.monoTrainRouting = monoTrainRouting;
-        this.directedNodeToWeightedEdgeMapper = directedNodeToWeightedEdgeMapper;
-
-        this.routingGraph = graphMapper.mapGraph(graph);
+        this.directedNodeToWeightedEdgeMapper = new DirectedNodeToWeightedEdgeMapper();
     }
 
     public Route calculateRoute(Locomotive locomotive, GraphPoint start, GraphPoint facingDirection, GraphPoint end) throws PathNotPossibleException {

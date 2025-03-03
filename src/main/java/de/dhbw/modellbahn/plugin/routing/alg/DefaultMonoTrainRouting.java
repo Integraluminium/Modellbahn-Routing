@@ -1,5 +1,6 @@
 package de.dhbw.modellbahn.plugin.routing.alg;
 
+import de.dhbw.modellbahn.adapter.routing.GraphMapper;
 import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.application.routing.MonoTrainRouting;
 import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
@@ -17,8 +18,9 @@ import java.util.Objects;
 public class DefaultMonoTrainRouting implements MonoTrainRouting {
     private final Graph<DirectedNode, DefaultWeightedEdge> graph;
 
-    public DefaultMonoTrainRouting(Graph<DirectedNode, DefaultWeightedEdge> routingGraph) {
-        this.graph = routingGraph;
+    public DefaultMonoTrainRouting(de.dhbw.modellbahn.domain.graph.Graph graph) {
+        GraphMapper graphMapper = new GraphMapper();
+        this.graph = graphMapper.mapGraphToJGraphT(graph);
     }
 
     /**
@@ -49,6 +51,7 @@ public class DefaultMonoTrainRouting implements MonoTrainRouting {
      * @throws PathNotPossibleException if no path is found
      */
     protected static GraphPath<DirectedNode, DefaultWeightedEdge> runShortestPathWithAlternative(final ShortestPathAlgorithm<DirectedNode, DefaultWeightedEdge> shortestPathAlgorithm, final DirectedNode start, final DirectedNode preferredEnd, final DirectedNode alternativeEnd) throws PathNotPossibleException {
+        // Different implementation as runShortestPathForExactDirection, therefore no call to that method
         ShortestPathAlgorithm.SingleSourcePaths<DirectedNode, DefaultWeightedEdge> singleSourcePaths = shortestPathAlgorithm.getPaths(start);
 
         GraphPath<DirectedNode, DefaultWeightedEdge> preferredPath = singleSourcePaths.getPath(preferredEnd);
