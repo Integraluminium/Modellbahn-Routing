@@ -32,7 +32,7 @@ public class LocomotiveDirectionCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_LOC_ID = "loc_id";
-    public static final String JSON_PROPERTY_DIRECTION = "direction";
+    public static final String JSON_PROPERTY_DIRECTION = "destinationPoint";
     private Integer hashValue;
     private Boolean response;
     private Integer locId;
@@ -126,9 +126,9 @@ public class LocomotiveDirectionCommand {
     }
 
     /**
-     * Get direction
+     * Get destinationPoint
      *
-     * @return direction
+     * @return destinationPoint
      */
     @JsonProperty(JSON_PROPERTY_DIRECTION)
     @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
@@ -173,7 +173,7 @@ public class LocomotiveDirectionCommand {
         sb.append("    hashValue: ").append(toIndentedString(hashValue)).append("\n");
         sb.append("    response: ").append(toIndentedString(response)).append("\n");
         sb.append("    locId: ").append(toIndentedString(locId)).append("\n");
-        sb.append("    direction: ").append(toIndentedString(direction)).append("\n");
+        sb.append("    destinationPoint: ").append(toIndentedString(direction)).append("\n");
         sb.append("}");
         return sb.toString();
     }

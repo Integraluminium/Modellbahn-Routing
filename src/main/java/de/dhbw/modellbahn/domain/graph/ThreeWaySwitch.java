@@ -3,33 +3,84 @@ package de.dhbw.modellbahn.domain.graph;
 import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 
 public class ThreeWaySwitch extends GraphPoint implements Switch {
-    private final GraphPointConnection straight;
-    private final GraphPointConnection left;
-    private final GraphPointConnection right;
-
     private final SwitchComponent firstSwitch;
     private final SwitchComponent secondSwitch;
 
-    public ThreeWaySwitch(GraphPointConnection straight, GraphPointConnection left, GraphPointConnection right, SwitchComponent firstSwitch, SwitchComponent secondSwitch) {
+    private final PointName root;
+    private final PointName straight;
+    private final PointName left;
+    private final PointName right;
+
+    public ThreeWaySwitch(PointName name, SwitchComponent firstSwitch, SwitchComponent secondSwitch, PointName root, PointName straight, PointName left, PointName right) {
+        super(name);
+        this.firstSwitch = firstSwitch;
+        this.secondSwitch = secondSwitch;
+        this.root = root;
         this.straight = straight;
         this.left = left;
         this.right = right;
-        this.firstSwitch = firstSwitch;
-        this.secondSwitch = secondSwitch;
     }
 
-    @Override
     public void switchToConnectPoints(GraphPoint point1, GraphPoint point2) throws IllegalArgumentException {
-        if (right.connects(point1, point2)) {
-            firstSwitch.setStraight();
-            secondSwitch.setDiverging();
-        } else if (straight.connects(point1, point2)) {
-            firstSwitch.setStraight();
-            secondSwitch.setStraight();
-        } else if (left.connects(point1, point2)) {
-            firstSwitch.setDiverging();
+        if (connectsRight(point1, point2)) {
+            switchRight();
+        } else if (connectsStraight(point1, point2)) {
+            switchStraight();
+        } else if (connectsLeft(point1, point2)) {
+            switchLeft();
         } else {
             throw new IllegalArgumentException("Points cannot be connected by this switch.");
+        }
+    }
+
+    public boolean checkIfConnectsPoints(GraphPoint point1, GraphPoint point2) {
+        return connectsStraight(point1, point2) || connectsLeft(point1, point2) || connectsRight(point1, point2);
+    }
+
+    public PointSide getSwitchSideFromPoint(GraphPoint point) {
+        if (point.equals(root)) {
+            return PointSide.IN;
+        } else if (point.equals(straight) || point.equals(left) || point.equals(right)) {
+            return PointSide.OUT;
+        } else {
+            throw new IllegalArgumentException("Illegal point");
+        }
+    }
+
+    private void switchStraight() {
+        firstSwitch.setStraight();
+        secondSwitch.setStraight();
+    }
+
+    private void switchLeft() {
+        firstSwitch.setDiverging();
+    }
+
+    private void switchRight() {
+        firstSwitch.setStraight();
+        secondSwitch.setDiverging();
+    }
+
+    private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
+        return (point1.equals(root) && point2.equals(straight)) || (point2.equals(root) && point1.equals(straight));
+    }
+
+    private boolean connectsLeft(GraphPoint point1, GraphPoint point2) {
+        return (point1.equals(root) && point2.equals(left)) || (point2.equals(root) && point1.equals(left));
+    }
+
+    private boolean connectsRight(GraphPoint point1, GraphPoint point2) {
+        return (point1.equals(root) && point2.equals(right)) || (point2.equals(root) && point1.equals(right));
+    }
+
+    public GraphPoint getPointThatCanConnectThisPoint(GraphPoint point) {
+        PointName pointName = point.getName();
+        if (pointName.equals(root)) {
+            return new GraphPoint(left);
+        } else if (pointName.equals(left) || pointName.equals(straight) || pointName.equals(right)) {
+            return new GraphPoint(root);
+        } else {
+            throw new IllegalArgumentException("This point is not connected with the switch");
         }
     }
 }
