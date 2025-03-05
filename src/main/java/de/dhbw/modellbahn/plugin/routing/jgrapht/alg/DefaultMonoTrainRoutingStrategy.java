@@ -76,8 +76,7 @@ public class DefaultMonoTrainRoutingStrategy implements MonoTrainRoutingStrategy
     private ShortestPathAlgorithm<DirectedNode, DefaultWeightedEdge> getMonoTrainRoutingStrategy(RoutingAlgorithm algorithm) {
         return switch (algorithm) {
             case DIJKSTRA -> new DijkstraShortestPath<>(graph);
-//            case A_STAR -> new AStarShortestPath<>(graph, DirectedNode::getDistanceTo);
-            default -> throw new IllegalArgumentException("The algorithm " + algorithm + " is not supported.");
+            case A_STAR -> throw new UnsupportedOperationException("A* is not implemented yet.");
         };
     }
 
@@ -90,9 +89,6 @@ public class DefaultMonoTrainRoutingStrategy implements MonoTrainRoutingStrategy
         if (!graph.containsVertex(start) || !graph.containsVertex(end)) {
             throw new IllegalArgumentException("Start or end node not in graph");
         }
-
-        DijkstraShortestPath<DirectedNode, DefaultWeightedEdge> shortestPathAlgorithm = new DijkstraShortestPath<>(graph);
-
         GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathForExactDirection(shortestPathAlgorithm, start, end);
         return path.getVertexList();
     }
@@ -106,10 +102,7 @@ public class DefaultMonoTrainRoutingStrategy implements MonoTrainRoutingStrategy
         DirectedNode preferredEnd = new DirectedNode(destination, PointSide.IN);
         DirectedNode alternativeEnd = new DirectedNode(destination, PointSide.OUT);
 
-
-        DijkstraShortestPath<DirectedNode, DefaultWeightedEdge> shortestPathAlgorithm = new DijkstraShortestPath<>(graph);
         GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathWithAlternative(shortestPathAlgorithm, start, preferredEnd, alternativeEnd);
-
         return path.getVertexList();
     }
 

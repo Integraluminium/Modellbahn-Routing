@@ -17,7 +17,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@SuppressWarnings("UtilityClassCanBeEnum")
 public class GraphVisualisation {
     public static void main(String[] args) {
 
@@ -103,10 +103,6 @@ public class GraphVisualisation {
         graphStreamGraph.setAttribute("ui.antialias");
 
         graphStreamGraph.display();
-
-//        Viewer viewer = graphStreamGraph.display();
-//        viewer.enableAutoLayout();
-
     }
 
 }

@@ -1,6 +1,7 @@
 package de.dhbw.modellbahn.plugin.routing.jgrapht;
 
 import de.dhbw.modellbahn.application.RoutingAlgorithm;
+import de.dhbw.modellbahn.application.RoutingOptimisations;
 import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
 import de.dhbw.modellbahn.application.routing.Route;
@@ -26,7 +27,8 @@ public class MonoTrainRoutingWrapper {
         this.strategy = new DefaultMonoTrainRoutingStrategy(routingGraph, algorithm);
     }
 
-    public Route generateRoute(Locomotive locomotive, GraphPoint end) throws PathNotPossibleException {
+    public Route generateRoute(Locomotive locomotive, GraphPoint end, RoutingOptimisations optimisations) throws PathNotPossibleException {
+        // TODO optimisations are not considered
         GraphPoint start = locomotive.getCurrentPosition();
         GraphPoint facingDirection = locomotive.getCurrentFacingDirection();
         List<DirectedNode> path = strategy.findShortestPath(start, facingDirection, end);

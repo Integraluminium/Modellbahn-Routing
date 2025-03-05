@@ -75,7 +75,8 @@ public class RouteGeneratorForJGraphT implements RouteGenerator {
             MonoTrainRoutingWrapper monoTrainRoutingWrapper = new MonoTrainRoutingWrapper(algorithm, routingGraph);
             Route route = monoTrainRoutingWrapper.generateRoute(
                     locomotive,
-                    locomotivesToConsiderInRouting.get(locomotive).getDestination()
+                    locomotivesToConsiderInRouting.get(locomotive).getDestination(),
+                    locomotivesToConsiderInRouting.get(locomotive).getOptimisation()
             );
             routes.put(locomotive, route);
 
