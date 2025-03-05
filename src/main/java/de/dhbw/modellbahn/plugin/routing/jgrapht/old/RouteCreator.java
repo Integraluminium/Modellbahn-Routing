@@ -1,5 +1,8 @@
-package de.dhbw.modellbahn.application.routing;
+package de.dhbw.modellbahn.plugin.routing.jgrapht.old;
 
+import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
+import de.dhbw.modellbahn.application.routing.Route;
+import de.dhbw.modellbahn.application.routing.WeightedDistanceEdge;
 import de.dhbw.modellbahn.application.routing.action.ActionFactory;
 import de.dhbw.modellbahn.application.routing.action.ChangeSwitchStateAction;
 import de.dhbw.modellbahn.application.routing.action.RoutingAction;
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RouteGenerator {
+public class RouteCreator {
     private final Locomotive loc;
     private final List<WeightedDistanceEdge> routingEdges;
     private final GraphPoint newFacingDirection;
@@ -22,7 +25,7 @@ public class RouteGenerator {
     private long currentWaitTime = 0;
     private long distanceSum = 0;
 
-    public RouteGenerator(Locomotive loc, List<WeightedDistanceEdge> routingEdges, GraphPoint newFacingDirection) {
+    public RouteCreator(Locomotive loc, List<WeightedDistanceEdge> routingEdges, GraphPoint newFacingDirection) {
         this.loc = loc;
         this.routingEdges = new ArrayList<>(routingEdges);
         this.newFacingDirection = newFacingDirection;

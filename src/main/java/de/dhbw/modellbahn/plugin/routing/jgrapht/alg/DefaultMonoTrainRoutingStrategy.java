@@ -1,11 +1,11 @@
-package de.dhbw.modellbahn.plugin.routing.alg;
+package de.dhbw.modellbahn.plugin.routing.jgrapht.alg;
 
-import de.dhbw.modellbahn.adapter.routing.GraphMapper;
+import de.dhbw.modellbahn.application.RoutingAlgorithm;
 import de.dhbw.modellbahn.application.routing.DirectedNode;
-import de.dhbw.modellbahn.application.routing.MonoTrainRouting;
 import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointSide;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.MonoTrainRoutingStrategy;
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.interfaces.ShortestPathAlgorithm;
@@ -15,12 +15,13 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import java.util.List;
 import java.util.Objects;
 
-public class DefaultMonoTrainRouting implements MonoTrainRouting {
+public class DefaultMonoTrainRoutingStrategy implements MonoTrainRoutingStrategy {
     private final Graph<DirectedNode, DefaultWeightedEdge> graph;
+    private final ShortestPathAlgorithm<DirectedNode, DefaultWeightedEdge> shortestPathAlgorithm;
 
-    public DefaultMonoTrainRouting(de.dhbw.modellbahn.domain.graph.Graph graph) {
-        GraphMapper graphMapper = new GraphMapper();
-        this.graph = graphMapper.mapGraphToJGraphT(graph);
+    public DefaultMonoTrainRoutingStrategy(final Graph<DirectedNode, DefaultWeightedEdge> graph, final RoutingAlgorithm algorithm) {
+        this.graph = graph;
+        this.shortestPathAlgorithm = getMonoTrainRoutingStrategy(algorithm);
     }
 
     /**
@@ -32,7 +33,9 @@ public class DefaultMonoTrainRouting implements MonoTrainRouting {
      * @return the path in graph_t format
      * @throws PathNotPossibleException if no path is found
      */
-    protected static GraphPath<DirectedNode, DefaultWeightedEdge> runShortestPathForExactDirection(final ShortestPathAlgorithm<DirectedNode, DefaultWeightedEdge> shortestPathAlgorithm, final DirectedNode start, final DirectedNode end) throws PathNotPossibleException {
+    protected static GraphPath<DirectedNode, DefaultWeightedEdge> runShortestPathForExactDirection(
+            final ShortestPathAlgorithm<DirectedNode, DefaultWeightedEdge> shortestPathAlgorithm, final DirectedNode start,
+            final DirectedNode end) throws PathNotPossibleException {
         GraphPath<DirectedNode, DefaultWeightedEdge> path = shortestPathAlgorithm.getPath(start, end);
         if (path == null) {
             throw new PathNotPossibleException("No path found between " + start.getNodeName() + " and " + end.getNodeName());
@@ -50,7 +53,9 @@ public class DefaultMonoTrainRouting implements MonoTrainRouting {
      * @return the path in graph_t format
      * @throws PathNotPossibleException if no path is found
      */
-    protected static GraphPath<DirectedNode, DefaultWeightedEdge> runShortestPathWithAlternative(final ShortestPathAlgorithm<DirectedNode, DefaultWeightedEdge> shortestPathAlgorithm, final DirectedNode start, final DirectedNode preferredEnd, final DirectedNode alternativeEnd) throws PathNotPossibleException {
+    protected static GraphPath<DirectedNode, DefaultWeightedEdge> runShortestPathWithAlternative(
+            final ShortestPathAlgorithm<DirectedNode, DefaultWeightedEdge> shortestPathAlgorithm, final DirectedNode start,
+            final DirectedNode preferredEnd, final DirectedNode alternativeEnd) throws PathNotPossibleException {
         // Different implementation as runShortestPathForExactDirection, therefore no call to that method
         ShortestPathAlgorithm.SingleSourcePaths<DirectedNode, DefaultWeightedEdge> singleSourcePaths = shortestPathAlgorithm.getPaths(start);
 
@@ -68,8 +73,17 @@ public class DefaultMonoTrainRouting implements MonoTrainRouting {
         }
     }
 
+    private ShortestPathAlgorithm<DirectedNode, DefaultWeightedEdge> getMonoTrainRoutingStrategy(RoutingAlgorithm algorithm) {
+        return switch (algorithm) {
+            case DIJKSTRA -> new DijkstraShortestPath<>(graph);
+//            case A_STAR -> new AStarShortestPath<>(graph, DirectedNode::getDistanceTo);
+            default -> throw new IllegalArgumentException("The algorithm " + algorithm + " is not supported.");
+        };
+    }
+
     @Override
-    public List<DirectedNode> findShortestPath(final DirectedNode start, final DirectedNode end) throws PathNotPossibleException {
+    public List<DirectedNode> findShortestPath(final DirectedNode start, final DirectedNode end) throws
+            PathNotPossibleException {
         Objects.requireNonNull(start, "Start edge must not be null");
         Objects.requireNonNull(end, "End edge must not be null");
 
@@ -77,14 +91,15 @@ public class DefaultMonoTrainRouting implements MonoTrainRouting {
             throw new IllegalArgumentException("Start or end node not in graph");
         }
 
-        DijkstraShortestPath<DirectedNode, DefaultWeightedEdge> dijkstraShortestPath = new DijkstraShortestPath<>(graph);
+        DijkstraShortestPath<DirectedNode, DefaultWeightedEdge> shortestPathAlgorithm = new DijkstraShortestPath<>(graph);
 
-        GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathForExactDirection(dijkstraShortestPath, start, end);
+        GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathForExactDirection(shortestPathAlgorithm, start, end);
         return path.getVertexList();
     }
 
     @Override
-    public List<DirectedNode> findShortestPath(final DirectedNode start, final GraphPoint destination) throws PathNotPossibleException {
+    public List<DirectedNode> findShortestPath(final DirectedNode start, final GraphPoint destination) throws
+            PathNotPossibleException {
         Objects.requireNonNull(start, "Start edge must not be null");
         Objects.requireNonNull(destination, "End edge must not be null");
 
@@ -92,14 +107,15 @@ public class DefaultMonoTrainRouting implements MonoTrainRouting {
         DirectedNode alternativeEnd = new DirectedNode(destination, PointSide.OUT);
 
 
-        DijkstraShortestPath<DirectedNode, DefaultWeightedEdge> dijkstraShortestPath = new DijkstraShortestPath<>(graph);
-        GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathWithAlternative(dijkstraShortestPath, start, preferredEnd, alternativeEnd);
+        DijkstraShortestPath<DirectedNode, DefaultWeightedEdge> shortestPathAlgorithm = new DijkstraShortestPath<>(graph);
+        GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathWithAlternative(shortestPathAlgorithm, start, preferredEnd, alternativeEnd);
 
         return path.getVertexList();
     }
 
     @Override
-    public List<DirectedNode> findShortestPath(final GraphPoint start, final GraphPoint facingDirection, final GraphPoint end) throws PathNotPossibleException {
+    public List<DirectedNode> findShortestPath(final GraphPoint start, final GraphPoint facingDirection,
+                                               final GraphPoint end) throws PathNotPossibleException {
         DirectedNode startNode = new DirectedNode(start, PointSide.OUT); // TODO Determine the correct direction with facingDirection
         return findShortestPath(startNode, end);
     }

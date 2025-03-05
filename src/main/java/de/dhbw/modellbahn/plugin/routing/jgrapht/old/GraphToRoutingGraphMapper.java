@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.adapter.routing;
+package de.dhbw.modellbahn.plugin.routing.jgrapht.old;
 
 import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.domain.graph.*;
@@ -8,7 +8,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import java.util.List;
 import java.util.Set;
 
-public class GraphMapper {
+public class GraphToRoutingGraphMapper {
     private static void addEdgeToGraph(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> graph, final DirectedNode source, final DirectedNode target, double weight) {
         DefaultWeightedEdge edge = graph.addEdge(source, target);
         if (edge != null) {

@@ -10,6 +10,7 @@ import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.graph.PointSide;
 import de.dhbw.modellbahn.plugin.MockedConfigReader;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.old.GraphToRoutingGraphMapper;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.junit.jupiter.api.Test;
 
@@ -21,12 +22,12 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GraphMapperTest {
+class GraphToRoutingGraphMapperTest {
 
     @Test
     void mapGraph() {
         // Arrange
-        GraphMapper mapper = new GraphMapper();
+        GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper();
 
         ApiService apiService = new ApiService(0);
         TrackComponentCalls calls = new TrackComponentCallsAdapter(apiService);

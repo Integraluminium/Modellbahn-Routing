@@ -1,5 +1,7 @@
-package de.dhbw.modellbahn.application.routing;
+package de.dhbw.modellbahn.plugin.routing.jgrapht;
 
+import de.dhbw.modellbahn.application.routing.DirectedNode;
+import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.List;
  * <p>
  * All constraints like electrification must be adjusted in the graph before calling this method
  */
-public interface MonoTrainRouting {
+public interface MonoTrainRoutingStrategy {
     /**
      * Find the shortest for just one train
      * with <b>fixed</b> direction in destination

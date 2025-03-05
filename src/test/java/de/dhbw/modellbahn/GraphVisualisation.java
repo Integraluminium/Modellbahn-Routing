@@ -2,7 +2,6 @@ package de.dhbw.modellbahn;
 
 import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
-import de.dhbw.modellbahn.adapter.routing.GraphMapper;
 import de.dhbw.modellbahn.adapter.track_generation.GraphGenerator;
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.application.routing.DirectedNode;
@@ -10,6 +9,7 @@ import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;
 import de.dhbw.modellbahn.plugin.MockedConfigReader;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.old.GraphToRoutingGraphMapper;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -24,7 +24,7 @@ public class GraphVisualisation {
         System.out.println(java.awt.GraphicsEnvironment.isHeadless());
 
         // Arrange
-        GraphMapper mapper = new GraphMapper();
+        GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper();
 
         ApiService apiService = new ApiService(0);
         TrackComponentCalls calls = new TrackComponentCallsAdapter(apiService);
