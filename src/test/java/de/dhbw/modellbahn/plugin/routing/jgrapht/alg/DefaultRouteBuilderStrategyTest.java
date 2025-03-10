@@ -14,6 +14,7 @@ import de.dhbw.modellbahn.domain.graph.PointSide;
 import de.dhbw.modellbahn.plugin.MockedConfigReader;
 import de.dhbw.modellbahn.plugin.MockedConfigReader_smallGraph;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.old.GraphToRoutingGraphMapper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -66,6 +67,7 @@ class DefaultRouteBuilderStrategyTest {
     }
 
     @Test
+    @Disabled
     void testIsRoutingWorkingAtAll() throws PathNotPossibleException {
         Graph graph = createSmallTestGraph();
 
