@@ -34,7 +34,13 @@ public class GraphToRoutingGraphMapper {
         if (point instanceof Switch) {
             for (WeightedEdge edge : adjacentEdges) {
                 PointSide sourceSide = ((Switch) point).getSwitchSideFromPoint(edge.destination());
-                addEdge(newGraph, point, sourceSide, edge);
+                if (point.equals(edge.destination())) {
+                    // Special case if a switch is connected to itself
+                    DefaultWeightedEdge newEdge = newGraph.addEdge(new DirectedNode(point, sourceSide.getOpposite()), new DirectedNode(point, sourceSide));
+                    newGraph.setEdgeWeight(newEdge, edge.distance().value());
+                } else {
+                    addEdge(newGraph, point, sourceSide, edge);
+                }
             }
         } else {
             PointSide sourceSide = PointSide.IN;

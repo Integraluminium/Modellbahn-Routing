@@ -39,7 +39,6 @@ class RouteCreatorTest {
     private static final GraphPoint point2 = new GraphPoint(new PointName("B"));
     private static final GraphPoint point3 = new GraphPoint(new PointName("C"));
     private static GraphPoint newFacingDirection;
-    private static NormalSwitch normalSwitch;
     private static RouteCreator routeCreator;
 
     @BeforeAll
@@ -48,7 +47,7 @@ class RouteCreatorTest {
         ApiService apiService = new ApiService(0);
         TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
         SwitchComponent switchComponent = new SwitchComponent(new TrackComponentId(0), trackComponentCalls);
-        normalSwitch = new NormalSwitch(new PointName("D"), switchComponent, point3.getName(), point1.getName(), point2.getName());
+        NormalSwitch normalSwitch = new NormalSwitch(new PointName("D"), switchComponent, point3.getName(), point1.getName(), point2.getName());
         newFacingDirection = normalSwitch.getPointThatCanConnectThisPoint(point3);
         List<WeightedDistanceEdge> routingEdges = List.of(
                 new WeightedDistanceEdge(point1, new Distance(0)),

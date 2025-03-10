@@ -13,6 +13,7 @@ import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.NormalSwitch;
 import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.locomotive.LocId;
+import de.dhbw.modellbahn.domain.locomotive.LocName;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.MaxLocSpeed;
 import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
@@ -84,8 +85,9 @@ class RouteIntegrationTest {
     }
 
     private Locomotive getMockedLocomotive(GraphPoint start, GraphPoint facingDirection) {
+        LocName name = new LocName("TestLoc");
         LocId locId = new LocId(16389, configReader);
-        return new Locomotive(locId, new MaxLocSpeed(50), 0, new Distance(0), new Distance(0), start, facingDirection);
+        return new Locomotive(name, locId, new MaxLocSpeed(50), 0, new Distance(0), new Distance(0), start, facingDirection);
     }
 
     private PointName createPointName(String name) {

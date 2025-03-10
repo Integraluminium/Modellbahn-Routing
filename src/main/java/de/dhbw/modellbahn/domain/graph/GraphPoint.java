@@ -30,4 +30,8 @@ public class GraphPoint {
         if (!(o instanceof GraphPoint that)) return false;
         return Objects.equals(getName(), that.getName());
     }
+
+    public static GraphPoint of(String name){
+        return new GraphPoint(new PointName(name));
+    }
 }

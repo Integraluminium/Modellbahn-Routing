@@ -1,12 +1,15 @@
 package de.dhbw.modellbahn.domain;
 
 import de.dhbw.modellbahn.adapter.api.ApiConfig;
+import de.dhbw.modellbahn.adapter.locomotive_reading.ConfigLocomotive;
 import de.dhbw.modellbahn.adapter.track_generation.*;
 
 import java.util.List;
 
 public interface ConfigReader {
     List<Integer> getValidLocIds();
+
+    List<ConfigLocomotive> getLocomotives();
 
     ApiConfig getApiConfig();
 
