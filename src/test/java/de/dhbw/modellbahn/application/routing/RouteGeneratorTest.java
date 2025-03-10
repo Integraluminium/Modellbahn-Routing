@@ -17,7 +17,6 @@ import de.dhbw.modellbahn.domain.locomotive.MockedLocomotive;
 import de.dhbw.modellbahn.domain.locomotive.Speed;
 import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
-import de.dhbw.modellbahn.plugin.routing.jgrapht.old.RouteCreator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-class RouteCreatorTest {
+class RouteGeneratorTest {
     private static final MaxLocSpeed maxLocSpeed = new MaxLocSpeed(1.0);
     private static final long accelerationTime = 1000;
     private static final Distance accelerationDistance = new Distance(200);
@@ -39,7 +38,7 @@ class RouteCreatorTest {
     private static final GraphPoint point2 = new GraphPoint(new PointName("B"));
     private static final GraphPoint point3 = new GraphPoint(new PointName("C"));
     private static GraphPoint newFacingDirection;
-    private static RouteCreator routeCreator;
+    private static RouteGenerator routeGenerator;
 
     @BeforeAll
     static void beforeAll() {
@@ -56,13 +55,13 @@ class RouteCreatorTest {
                 new WeightedDistanceEdge(normalSwitch, new Distance(300))
 
         );
-        routeCreator = new RouteCreator(loc, routingEdges, newFacingDirection);
+        routeGenerator = new RouteGenerator(loc, routingEdges, newFacingDirection);
     }
 
     @Test
     void generateRoute() {
         try {
-            Route route = routeCreator.generateRoute();
+            Route route = routeGenerator.generateRoute();
             List<RoutingAction> actualActionList = new ArrayList<>(route.getActionList());
             RoutingAction action1 = actualActionList.removeFirst();
             RoutingAction action2 = actualActionList.removeFirst();

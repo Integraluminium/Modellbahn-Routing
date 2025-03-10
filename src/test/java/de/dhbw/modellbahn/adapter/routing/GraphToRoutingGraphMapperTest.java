@@ -10,7 +10,7 @@ import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.graph.PointSide;
 import de.dhbw.modellbahn.plugin.MockedConfigReader;
-import de.dhbw.modellbahn.plugin.routing.jgrapht.old.GraphToRoutingGraphMapper;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.junit.jupiter.api.Test;
 

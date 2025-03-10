@@ -9,6 +9,7 @@ import de.dhbw.modellbahn.plugin.routing.jgrapht.MonoTrainRoutingStrategy;
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.interfaces.ShortestPathAlgorithm;
+import org.jgrapht.alg.shortestpath.BellmanFordShortestPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
@@ -76,8 +77,7 @@ public class DefaultMonoTrainRoutingStrategy implements MonoTrainRoutingStrategy
     private ShortestPathAlgorithm<DirectedNode, DefaultWeightedEdge> getMonoTrainRoutingStrategy(RoutingAlgorithm algorithm) {
         return switch (algorithm) {
             case DIJKSTRA -> new DijkstraShortestPath<>(graph);
-            case A_STAR ->
-                    throw new UnsupportedOperationException("A* is not implemented yet."); // TODO Heuristic is missing
+            case BELLMAN_FORD -> new BellmanFordShortestPath<>(graph);
         };
     }
 
@@ -108,7 +108,7 @@ public class DefaultMonoTrainRoutingStrategy implements MonoTrainRoutingStrategy
     }
 
     @Override
-    public List<DirectedNode> findShortestPath(final GraphPoint start, final GraphPoint facingDirection,
+    public List<DirectedNode> findShortestPath(final GraphPoint start, final GraphPoint startFacingDirection,
                                                final GraphPoint end) throws PathNotPossibleException {
         DirectedNode startNode = new DirectedNode(start, PointSide.OUT); // TODO Determine the correct direction with facingDirection
         return findShortestPath(startNode, end);

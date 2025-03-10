@@ -32,5 +32,5 @@ public interface MonoTrainRoutingStrategy {
      */
     List<DirectedNode> findShortestPath(DirectedNode start, GraphPoint destination) throws PathNotPossibleException;
 
-    List<DirectedNode> findShortestPath(GraphPoint start, GraphPoint facingDirection, GraphPoint end) throws PathNotPossibleException;
+    List<DirectedNode> findShortestPath(GraphPoint start, GraphPoint startFacingDirection, GraphPoint end) throws PathNotPossibleException;
 }

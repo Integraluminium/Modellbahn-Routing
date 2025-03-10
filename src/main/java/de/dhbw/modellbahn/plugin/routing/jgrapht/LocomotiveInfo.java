@@ -11,7 +11,7 @@ class LocomotiveInfo {
 
     public LocomotiveInfo(final Locomotive loc) {
         this.loc = loc;
-        this.destination = null;
+        this.destination = loc.getCurrentPosition();
         this.optimisation = RoutingOptimization.DISTANCE;
     }
 

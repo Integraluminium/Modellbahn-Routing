@@ -19,7 +19,6 @@ import de.dhbw.modellbahn.domain.locomotive.MaxLocSpeed;
 import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
 import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
-import de.dhbw.modellbahn.plugin.routing.jgrapht.old.RouteCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,10 +69,10 @@ class RouteIntegrationTest {
         routingEdges.add(switchEdge2);
         routingEdges.add(switchEdge3);
 
-        RouteCreator routeCreator = new RouteCreator(mockedLocomotive, routingEdges, createGraphPoint("B"));
+        RouteGenerator routeGenerator = new RouteGenerator(mockedLocomotive, routingEdges, createGraphPoint("B"));
 
         System.out.println("Generating route");
-        Route route = routeCreator.generateRoute();
+        Route route = routeGenerator.generateRoute();
         System.out.println("Driving route");
         route.driveRoute();
         System.out.println("Route driven");

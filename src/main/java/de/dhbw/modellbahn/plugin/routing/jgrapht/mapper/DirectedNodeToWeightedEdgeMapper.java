@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.plugin.routing.jgrapht.old;
+package de.dhbw.modellbahn.plugin.routing.jgrapht.mapper;
 
 import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.application.routing.WeightedDistanceEdge;

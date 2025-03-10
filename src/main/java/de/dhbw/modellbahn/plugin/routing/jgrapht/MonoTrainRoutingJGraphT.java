@@ -2,26 +2,22 @@ package de.dhbw.modellbahn.plugin.routing.jgrapht;
 
 import de.dhbw.modellbahn.application.RoutingAlgorithm;
 import de.dhbw.modellbahn.application.RoutingOptimization;
-import de.dhbw.modellbahn.application.routing.DirectedNode;
-import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
-import de.dhbw.modellbahn.application.routing.Route;
-import de.dhbw.modellbahn.application.routing.WeightedDistanceEdge;
+import de.dhbw.modellbahn.application.routing.*;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.alg.DefaultMonoTrainRoutingStrategy;
-import de.dhbw.modellbahn.plugin.routing.jgrapht.old.DirectedNodeToWeightedEdgeMapper;
-import de.dhbw.modellbahn.plugin.routing.jgrapht.old.RouteCreator;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.DirectedNodeToWeightedEdgeMapper;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
 import java.util.List;
 import java.util.Set;
 
-public class MonoTrainRoutingWrapper {
+public class MonoTrainRoutingJGraphT {
     private final DirectedNodeToWeightedEdgeMapper directedNodeToWeightedEdgeMapper;
     private final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph;
     private final MonoTrainRoutingStrategy strategy;
 
-    public MonoTrainRoutingWrapper(RoutingAlgorithm algorithm, org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph) {
+    public MonoTrainRoutingJGraphT(RoutingAlgorithm algorithm, org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph) {
         this.directedNodeToWeightedEdgeMapper = new DirectedNodeToWeightedEdgeMapper();
         this.routingGraph = routingGraph;
         this.strategy = new DefaultMonoTrainRoutingStrategy(routingGraph, algorithm);
@@ -35,7 +31,7 @@ public class MonoTrainRoutingWrapper {
         List<WeightedDistanceEdge> weightedDistanceEdges = mapPathToWeightedEdges(path);
         GraphPoint newFacingDirection = determineNewFacingDirection(path);
 
-        RouteCreator generator = new RouteCreator(locomotive, weightedDistanceEdges, newFacingDirection);
+        RouteGenerator generator = new RouteGenerator(locomotive, weightedDistanceEdges, newFacingDirection);
         return generator.generateRoute();
     }
 

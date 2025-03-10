@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.plugin.routing.jgrapht.old;
+package de.dhbw.modellbahn.plugin.routing.jgrapht.mapper;
 
 import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.domain.graph.*;
@@ -36,8 +36,9 @@ public class GraphToRoutingGraphMapper {
                 PointSide sourceSide = ((Switch) point).getSwitchSideFromPoint(edge.destination());
                 if (point.equals(edge.destination())) {
                     // Special case if a switch is connected to itself
-                    DefaultWeightedEdge newEdge = newGraph.addEdge(new DirectedNode(point, sourceSide.getOpposite()), new DirectedNode(point, sourceSide));
-                    newGraph.setEdgeWeight(newEdge, edge.distance().value());
+                    DirectedNode source = new DirectedNode(point, sourceSide.getOpposite());
+                    DirectedNode destination = new DirectedNode(point, sourceSide);
+                    addEdgeToGraph(newGraph, source, destination, edge.distance().value());
                 } else {
                     addEdge(newGraph, point, sourceSide, edge);
                 }

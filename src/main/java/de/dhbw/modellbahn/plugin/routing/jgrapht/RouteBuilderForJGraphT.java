@@ -1,6 +1,6 @@
 package de.dhbw.modellbahn.plugin.routing.jgrapht;
 
-import de.dhbw.modellbahn.application.RouteGenerator;
+import de.dhbw.modellbahn.application.RouteBuilder;
 import de.dhbw.modellbahn.application.RoutingAlgorithm;
 import de.dhbw.modellbahn.application.RoutingOptimization;
 import de.dhbw.modellbahn.application.routing.DirectedNode;
@@ -9,12 +9,12 @@ import de.dhbw.modellbahn.application.routing.Route;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
-import de.dhbw.modellbahn.plugin.routing.jgrapht.old.GraphToRoutingGraphMapper;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
 import java.util.HashMap;
 
-public class RouteGeneratorForJGraphT implements RouteGenerator {
+public class RouteBuilderForJGraphT implements RouteBuilder {
     private final HashMap<Locomotive, LocomotiveInfo> locomotivesToConsiderInRouting;
     private final Graph graph;
     private final HashMap<Locomotive, Route> routes;
@@ -23,7 +23,7 @@ public class RouteGeneratorForJGraphT implements RouteGenerator {
     private RoutingAlgorithm algorithm;
 
 
-    public RouteGeneratorForJGraphT(Graph graph) {
+    public RouteBuilderForJGraphT(Graph graph) {
         this.locomotivesToConsiderInRouting = new HashMap<>();
         this.routes = new HashMap<>();
         this.considerElectrification = false;
@@ -33,37 +33,37 @@ public class RouteGeneratorForJGraphT implements RouteGenerator {
     }
 
     @Override
-    public RouteGenerator addLocomotive(final Locomotive loc) {
+    public RouteBuilder addLocomotive(final Locomotive loc) {
         this.locomotivesToConsiderInRouting.put(loc, new LocomotiveInfo(loc));
         return this;
     }
 
     @Override
-    public RouteGenerator setDestinationForLoc(final Locomotive loc, final GraphPoint destination) {
+    public RouteBuilder setDestinationForLoc(final Locomotive loc, final GraphPoint destination) {
         this.locomotivesToConsiderInRouting.get(loc).setDestination(destination);
         return this;
     }
 
     @Override
-    public RouteGenerator setFacingDirectionForLoc(final Locomotive loc, final GraphPoint facingDirection) {
+    public RouteBuilder setFacingDirectionForLoc(final Locomotive loc, final GraphPoint facingDirection) {
         this.locomotivesToConsiderInRouting.get(loc).getLoc().setCurrentFacingDirection(facingDirection);
         return this;
     }
 
     @Override
-    public RouteGenerator considerElectrification(boolean toConsider) {
+    public RouteBuilder considerElectrification(boolean toConsider) {
         this.considerElectrification = true;
         return this;
     }
 
     @Override
-    public RouteGenerator considerHeight(boolean toConsider) {
+    public RouteBuilder considerHeight(boolean toConsider) {
         this.considerHeight = true;
         return this;
     }
 
     @Override
-    public RouteGenerator setRouteOptimization(final Locomotive loc, final RoutingOptimization optimization) {
+    public RouteBuilder setRouteOptimization(final Locomotive loc, final RoutingOptimization optimization) {
         this.locomotivesToConsiderInRouting.get(loc).setOptimisation(optimization);
         return this;
     }
@@ -72,22 +72,16 @@ public class RouteGeneratorForJGraphT implements RouteGenerator {
     public void generateRoute() throws PathNotPossibleException {
         if (getAmountOfLocomotivesToConsider() == 0) {
             throw new IllegalStateException("No locomotives to consider in routing.");
-        } else if (getAmountOfLocomotivesToConsider() > 1) {
-            throw new UnsupportedOperationException("Routing of multiple locomotives is not implemented yet.");
-        } else {
-            Locomotive locomotive = locomotivesToConsiderInRouting.keySet().iterator().next();
-            org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph = mapGraphToRoutingGraph();
+        }
+        // TODO consider Height
+        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph = mapGraphToRoutingGraph(considerHeight);
 
-            MonoTrainRoutingWrapper monoTrainRoutingWrapper = new MonoTrainRoutingWrapper(algorithm, routingGraph);
-            Route route = monoTrainRoutingWrapper.generateRoute(
-                    locomotive,
-                    locomotivesToConsiderInRouting.get(locomotive).getDestination(),
-                    locomotivesToConsiderInRouting.get(locomotive).getOptimisation()
-            );
-            routes.put(locomotive, route);
+        if (getAmountOfLocomotivesToConsider() > 1) {
+            generateRouteForMultipleLocomotives(routingGraph);
+        } else {
+            generateRouteForSingleLocomotive(routingGraph);
 
         }
-        // TODO: Implement routing
     }
 
     @Override
@@ -101,7 +95,23 @@ public class RouteGeneratorForJGraphT implements RouteGenerator {
         return routes.get(loc);
     }
 
-    private org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToRoutingGraph() {
+    private void generateRouteForMultipleLocomotives(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph) throws PathNotPossibleException {
+        throw new UnsupportedOperationException("Routing of multiple locomotives is not implemented yet.");
+    }
+
+    private void generateRouteForSingleLocomotive(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph) throws PathNotPossibleException {
+        Locomotive locomotive = locomotivesToConsiderInRouting.keySet().iterator().next();
+        // TODO consider electrification IF locomotive is electric
+        MonoTrainRoutingJGraphT monoTrainRoutingJGraphT = new MonoTrainRoutingJGraphT(algorithm, routingGraph);
+        Route route = monoTrainRoutingJGraphT.generateRoute(
+                locomotive,
+                locomotivesToConsiderInRouting.get(locomotive).getDestination(),
+                locomotivesToConsiderInRouting.get(locomotive).getOptimisation()
+        );
+        routes.put(locomotive, route);
+    }
+
+    private org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToRoutingGraph(boolean considerHeight) {
         GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper(); // TODO consider height and electrification
         return mapper.mapGraphToJGraphT(graph);
     }
@@ -110,7 +120,7 @@ public class RouteGeneratorForJGraphT implements RouteGenerator {
         return this.locomotivesToConsiderInRouting.values().stream().filter(loc -> loc.getDestination() != null).count();
     }
 
-    public RouteGenerator setRoutingAlgorithm(final RoutingAlgorithm algorithm) {
+    public RouteBuilder setRoutingAlgorithm(final RoutingAlgorithm algorithm) {
         this.algorithm = algorithm;
         return this;
     }

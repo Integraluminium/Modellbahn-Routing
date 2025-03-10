@@ -9,7 +9,7 @@ import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;
 import de.dhbw.modellbahn.plugin.MockedConfigReader;
-import de.dhbw.modellbahn.plugin.routing.jgrapht.old.GraphToRoutingGraphMapper;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 import org.jgrapht.graph.DefaultWeightedEdge;
