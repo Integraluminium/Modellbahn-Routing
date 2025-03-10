@@ -76,7 +76,8 @@ public class DefaultMonoTrainRoutingStrategy implements MonoTrainRoutingStrategy
     private ShortestPathAlgorithm<DirectedNode, DefaultWeightedEdge> getMonoTrainRoutingStrategy(RoutingAlgorithm algorithm) {
         return switch (algorithm) {
             case DIJKSTRA -> new DijkstraShortestPath<>(graph);
-            case A_STAR -> throw new UnsupportedOperationException("A* is not implemented yet.");
+            case A_STAR ->
+                    throw new UnsupportedOperationException("A* is not implemented yet."); // TODO Heuristic is missing
         };
     }
 
