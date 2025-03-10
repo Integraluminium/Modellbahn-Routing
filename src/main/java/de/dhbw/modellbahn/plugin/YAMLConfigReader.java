@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import de.dhbw.modellbahn.adapter.api.ApiConfig;
+import de.dhbw.modellbahn.adapter.locomotive_reading.ConfigLocomotive;
 import de.dhbw.modellbahn.adapter.track_generation.*;
 import de.dhbw.modellbahn.domain.ConfigReader;
 
@@ -41,6 +42,11 @@ public class YAMLConfigReader implements ConfigReader {
     @Override
     public List<Integer> getValidLocIds() {
         return List.of(this.readObjectFromPath("locs/loc_ids.yaml", Integer[].class));
+    }
+
+    @Override
+    public List<ConfigLocomotive> getLocomotives() {
+        return List.of(this.readObjectFromPath("locs/locs.yaml", ConfigLocomotive[].class));
     }
 
     @Override

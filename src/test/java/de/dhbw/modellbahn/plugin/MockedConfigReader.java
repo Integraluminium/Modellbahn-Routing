@@ -1,6 +1,7 @@
 package de.dhbw.modellbahn.plugin;
 
 import de.dhbw.modellbahn.adapter.api.ApiConfig;
+import de.dhbw.modellbahn.adapter.locomotive_reading.ConfigLocomotive;
 import de.dhbw.modellbahn.adapter.track_generation.*;
 import de.dhbw.modellbahn.domain.ConfigReader;
 
@@ -11,6 +12,11 @@ public class MockedConfigReader implements ConfigReader {
     @Override
     public List<Integer> getValidLocIds() {
         return List.of(1, 2, 3);
+    }
+
+    @Override
+    public List<ConfigLocomotive> getLocomotives() {
+        return List.of(new ConfigLocomotive(1, "mockedLoc", 1.0, 1000, 200, 200, "A", "B"));
     }
 
     @Override
@@ -50,17 +56,17 @@ public class MockedConfigReader implements ConfigReader {
 
     @Override
     public List<ConfigThreeWaySwitch> getThreeWaySwitches() {
-        return List.of(new ConfigThreeWaySwitch("E", 5,6,"D", "C", "A","F"));
+        return List.of(new ConfigThreeWaySwitch("E", 5, 6, "D", "C", "A", "F"));
     }
 
     @Override
     public List<ConfigTrackContact> getTrackContacts() {
-        return List.of(new ConfigTrackContact("D",4));
+        return List.of(new ConfigTrackContact("D", 4));
     }
 
     @Override
     public List<ConfigSignal> getSignals() {
-        return List.of(new ConfigSignal("G",8));
+        return List.of(new ConfigSignal("G", 8));
     }
 
     @Override
