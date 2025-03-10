@@ -1,7 +1,7 @@
 package de.dhbw.modellbahn.application;
 
-public enum RoutingOptimisations {
+public enum RoutingOptimization {
     TIME,
-    ENERGY,
+    SUPPLIES,
     DISTANCE
 }

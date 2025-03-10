@@ -2,7 +2,7 @@ package de.dhbw.modellbahn.plugin.routing.jgrapht;
 
 import de.dhbw.modellbahn.application.RouteGenerator;
 import de.dhbw.modellbahn.application.RoutingAlgorithm;
-import de.dhbw.modellbahn.application.RoutingOptimisations;
+import de.dhbw.modellbahn.application.RoutingOptimization;
 import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
 import de.dhbw.modellbahn.application.routing.Route;
@@ -39,8 +39,14 @@ public class RouteGeneratorForJGraphT implements RouteGenerator {
     }
 
     @Override
-    public RouteGenerator setDestinationForLoc(final Locomotive locomotive, final GraphPoint destination) {
-        this.locomotivesToConsiderInRouting.get(locomotive).setDestination(destination);
+    public RouteGenerator setDestinationForLoc(final Locomotive loc, final GraphPoint destination) {
+        this.locomotivesToConsiderInRouting.get(loc).setDestination(destination);
+        return this;
+    }
+
+    @Override
+    public RouteGenerator setFacingDirectionForLoc(final Locomotive loc, final GraphPoint facingDirection) {
+        this.locomotivesToConsiderInRouting.get(loc).getLoc().setCurrentFacingDirection(facingDirection);
         return this;
     }
 
@@ -57,8 +63,8 @@ public class RouteGeneratorForJGraphT implements RouteGenerator {
     }
 
     @Override
-    public RouteGenerator setRouteOptimisation(final Locomotive loc, final RoutingOptimisations optimisation) {
-        this.locomotivesToConsiderInRouting.get(loc).setOptimisation(optimisation);
+    public RouteGenerator setRouteOptimization(final Locomotive loc, final RoutingOptimization optimization) {
+        this.locomotivesToConsiderInRouting.get(loc).setOptimisation(optimization);
         return this;
     }
 

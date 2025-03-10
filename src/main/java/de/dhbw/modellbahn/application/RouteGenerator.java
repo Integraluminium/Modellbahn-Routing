@@ -8,13 +8,15 @@ import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 public interface RouteGenerator {
     RouteGenerator addLocomotive(Locomotive loc);
 
-    RouteGenerator setDestinationForLoc(Locomotive locomotive, GraphPoint destination);
+    RouteGenerator setDestinationForLoc(Locomotive loc, GraphPoint destination);
+
+    RouteGenerator setFacingDirectionForLoc(Locomotive loc, GraphPoint facingDirection);
 
     RouteGenerator considerElectrification(boolean toConsider);
 
     RouteGenerator considerHeight(boolean toConsider);
 
-    RouteGenerator setRouteOptimisation(Locomotive loc, RoutingOptimisations optimisation);
+    RouteGenerator setRouteOptimization(Locomotive loc, RoutingOptimization optimization);
 
     void generateRoute() throws PathNotPossibleException;
 
