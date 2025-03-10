@@ -27,7 +27,13 @@ public class GraphMapper {
         if (point instanceof Switch) {
             for (WeightedEdge edge : adjacentEdges) {
                 PointSide sourceSide = ((Switch) point).getSwitchSideFromPoint(edge.destination());
-                addEdge(newGraph, point, sourceSide, edge);
+                if (point.equals(edge.destination())) {
+                    // Special case if a switch is connected to itself
+                    DefaultWeightedEdge newEdge = newGraph.addEdge(new DirectedNode(point, sourceSide.getOpposite()), new DirectedNode(point, sourceSide));
+                    newGraph.setEdgeWeight(newEdge, edge.distance().value());
+                } else {
+                    addEdge(newGraph, point, sourceSide, edge);
+                }
             }
         } else {
             PointSide sourceSide = PointSide.IN;
@@ -82,8 +88,16 @@ public class GraphMapper {
                 newGraph.addVertex(new DirectedNode(edge.destination(), PointSide.OUT));
             }
         }
-        newGraph.addEdge(new DirectedNode(point, sourceSide.getOpposite()), new DirectedNode(edge.destination(), destinationSide));
-        newGraph.addEdge(new DirectedNode(edge.destination(), destinationSide.getOpposite()), new DirectedNode(point, sourceSide));
+        DefaultWeightedEdge newEdge1 = newGraph.addEdge(new DirectedNode(point, sourceSide.getOpposite()), new DirectedNode(edge.destination(), destinationSide));
+        DefaultWeightedEdge newEdge2 = newGraph.addEdge(new DirectedNode(edge.destination(), destinationSide.getOpposite()), new DirectedNode(point, sourceSide));
+
+        // Only set weight if edge does not already exist
+        if (newEdge1 != null) {
+            newGraph.setEdgeWeight(newEdge1, edge.distance().value());
+        }
+        if (newEdge2 != null) {
+            newGraph.setEdgeWeight(newEdge2, edge.distance().value());
+        }
     }
 
     private boolean outSideAlreadyConnected(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point) {
