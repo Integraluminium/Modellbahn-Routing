@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.adapter.routing;
+package de.dhbw.modellbahn.plugin.routing.jgrapht.mapper;
 
 import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.domain.graph.*;
@@ -8,8 +8,15 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import java.util.List;
 import java.util.Set;
 
-public class GraphMapper {
-    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraph(Graph originalGraph) {
+public class GraphToRoutingGraphMapper {
+    private static void addEdgeToGraph(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> graph, final DirectedNode source, final DirectedNode target, double weight) {
+        DefaultWeightedEdge edge = graph.addEdge(source, target);
+        if (edge != null) {
+            graph.setEdgeWeight(edge, weight);
+        }
+    }
+
+    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToJGraphT(Graph originalGraph) {
         org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph = new DefaultDirectedWeightedGraph<>(DefaultWeightedEdge.class);
 
         Set<GraphPoint> graphPoints = originalGraph.getAllVertices();
@@ -29,8 +36,9 @@ public class GraphMapper {
                 PointSide sourceSide = ((Switch) point).getSwitchSideFromPoint(edge.destination());
                 if (point.equals(edge.destination())) {
                     // Special case if a switch is connected to itself
-                    DefaultWeightedEdge newEdge = newGraph.addEdge(new DirectedNode(point, sourceSide.getOpposite()), new DirectedNode(point, sourceSide));
-                    newGraph.setEdgeWeight(newEdge, edge.distance().value());
+                    DirectedNode source = new DirectedNode(point, sourceSide.getOpposite());
+                    DirectedNode destination = new DirectedNode(point, sourceSide);
+                    addEdgeToGraph(newGraph, source, destination, edge.distance().value());
                 } else {
                     addEdge(newGraph, point, sourceSide, edge);
                 }
@@ -88,16 +96,13 @@ public class GraphMapper {
                 newGraph.addVertex(new DirectedNode(edge.destination(), PointSide.OUT));
             }
         }
-        DefaultWeightedEdge newEdge1 = newGraph.addEdge(new DirectedNode(point, sourceSide.getOpposite()), new DirectedNode(edge.destination(), destinationSide));
-        DefaultWeightedEdge newEdge2 = newGraph.addEdge(new DirectedNode(edge.destination(), destinationSide.getOpposite()), new DirectedNode(point, sourceSide));
+        DirectedNode connection1source = new DirectedNode(point, sourceSide.getOpposite());
+        DirectedNode connection1destination = new DirectedNode(edge.destination(), destinationSide);
+        DirectedNode connection2source = new DirectedNode(edge.destination(), destinationSide.getOpposite());
+        DirectedNode connection2destination = new DirectedNode(point, sourceSide);
 
-        // Only set weight if edge does not already exist
-        if (newEdge1 != null) {
-            newGraph.setEdgeWeight(newEdge1, edge.distance().value());
-        }
-        if (newEdge2 != null) {
-            newGraph.setEdgeWeight(newEdge2, edge.distance().value());
-        }
+        addEdgeToGraph(newGraph, connection1source, connection1destination, edge.distance().value());
+        addEdgeToGraph(newGraph, connection2source, connection2destination, edge.distance().value());
     }
 
     private boolean outSideAlreadyConnected(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point) {

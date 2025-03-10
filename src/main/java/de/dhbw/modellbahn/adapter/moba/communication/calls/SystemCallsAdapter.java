@@ -14,7 +14,7 @@ public class SystemCallsAdapter implements SystemCalls {
 
     @Override
     public void systemStop() {
-        apiService.sendRequest("system/stop", new SystemStopCommand(
+        apiService.sendRequest("/system/stop", new SystemStopCommand(
                 apiService.getSenderHash(),
                 true,
                 0
@@ -23,7 +23,7 @@ public class SystemCallsAdapter implements SystemCalls {
 
     @Override
     public void systemGo() {
-        apiService.sendRequest("system/go", new SystemGoCommand(
+        apiService.sendRequest("/system/go", new SystemGoCommand(
                 apiService.getSenderHash(),
                 true,
                 0

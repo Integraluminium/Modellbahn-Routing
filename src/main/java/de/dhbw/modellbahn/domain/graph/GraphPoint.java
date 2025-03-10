@@ -26,10 +26,9 @@ public class GraphPoint {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (!this.getClass().isInstance(o)) return false;
-        GraphPoint that = (GraphPoint) o;
-        return this.name.equals(that.getName());
+    public boolean equals(final Object o) {
+        if (!(o instanceof GraphPoint that)) return false;
+        return Objects.equals(getName(), that.getName());
     }
 
     public static GraphPoint of(String name){

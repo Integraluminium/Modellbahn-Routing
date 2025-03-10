@@ -48,9 +48,11 @@ public class ApiService {
 
             // Send the request and get the response
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            // System.out.println("Requested: " + uri + " with body: " + jsonBody); // TODO Logging
 
             // Check the response status code
-            if (response.statusCode() != 200) {
+            int statusCode = response.statusCode();
+            if (statusCode != 200 && statusCode != 204) {
                 System.err.println("Request failed with status code: " + response.statusCode());
             }
         } catch (HttpTimeoutException e) {
@@ -68,8 +70,6 @@ public class ApiService {
     public <T> void sendRequest(String locator, T bodyObject) {
         try {
             String jsonBody = transformDtoToJson(bodyObject);
-
-            System.out.printf(jsonBody);
 
             URI uri = URI.create(url + locator);
             sendHttpRequest(uri, jsonBody, this.timeout);

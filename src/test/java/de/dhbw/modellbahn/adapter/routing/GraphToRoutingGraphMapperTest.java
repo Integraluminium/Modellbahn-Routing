@@ -10,6 +10,7 @@ import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.graph.PointSide;
 import de.dhbw.modellbahn.plugin.MockedConfigReader;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.junit.jupiter.api.Test;
 
@@ -21,12 +22,12 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GraphMapperTest {
+class GraphToRoutingGraphMapperTest {
 
     @Test
     void mapGraph() {
         // Arrange
-        GraphMapper mapper = new GraphMapper();
+        GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper();
 
         ApiService apiService = new ApiService(0);
         TrackComponentCalls calls = new TrackComponentCallsAdapter(apiService);
@@ -35,7 +36,7 @@ class GraphMapperTest {
         Graph graph = generator.generateGraph();
 
         // Act
-        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> actualGraph = mapper.mapGraph(graph);
+        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> actualGraph = mapper.mapGraphToJGraphT(graph);
         Set<DirectedNode> actualVertices = actualGraph.vertexSet();
         Set<DirectedNode> expectedVertices = createNodesFromStrings(List.of("A", "B", "C", "D", "E", "F", "G"));
 

@@ -17,7 +17,7 @@ public class Main {
 
         SystemCalls adapter = new SystemCallsAdapter(apiService);
         adapter.systemStop();
-
+        System.out.println("System stopped");
     }
 
     public static int foo() {

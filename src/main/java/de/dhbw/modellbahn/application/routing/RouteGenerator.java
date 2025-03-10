@@ -1,19 +1,21 @@
 package de.dhbw.modellbahn.application.routing;
 
+import de.dhbw.modellbahn.application.routing.action.ActionFactory;
 import de.dhbw.modellbahn.application.routing.action.ChangeSwitchStateAction;
-import de.dhbw.modellbahn.application.routing.action.LocSpeedAction;
 import de.dhbw.modellbahn.application.routing.action.RoutingAction;
 import de.dhbw.modellbahn.application.routing.action.WaitAction;
 import de.dhbw.modellbahn.domain.graph.Distance;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
-import de.dhbw.modellbahn.domain.locomotive.Speed;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Generates a route for a given Locomotive and a list of WeightedDistanceEdges.
+ */
 public class RouteGenerator {
     private final Locomotive loc;
     private final List<WeightedDistanceEdge> routingEdges;
@@ -22,12 +24,26 @@ public class RouteGenerator {
     private long currentWaitTime = 0;
     private long distanceSum = 0;
 
+    /**
+     * Constructor for RouteGenerator.
+     *
+     * @param loc                Locomotive which should drive the route.
+     * @param routingEdges       List of WeightedDistanceEdges which represent the route.
+     * @param newFacingDirection New facing direction of the Locomotive after the route.
+     */
     public RouteGenerator(Locomotive loc, List<WeightedDistanceEdge> routingEdges, GraphPoint newFacingDirection) {
         this.loc = loc;
         this.routingEdges = new ArrayList<>(routingEdges);
         this.newFacingDirection = newFacingDirection;
     }
 
+    /**
+     * Generates a route for the given Locomotive and the list of WeightedDistanceEdges.
+     * Multiple calls generate different instances of the same Route.
+     *
+     * @return Route for the Locomotive.
+     * @throws PathNotPossibleException If the path is not possible.
+     */
     public Route generateRoute() throws PathNotPossibleException {
         if (this.routingEdges.size() < 2) {
             throw new PathNotPossibleException("Not enough Nodes provided to calculate route.");
@@ -44,7 +60,9 @@ public class RouteGenerator {
         GraphPoint newPosition = this.routingEdges.getLast().point();
 
         List<RoutingAction> routingActions = new ArrayList<>();
-        routingActions.add(new LocSpeedAction(this.loc, new Speed(100)));  // TODO: Parameterize speed
+        routingActions.add(
+                ActionFactory.createLocSpeedAction(this.loc, 100)
+        );  // TODO: Parameterize speed
 
         routingActions.addAll(generateActions());
 
@@ -64,7 +82,7 @@ public class RouteGenerator {
             long decelerationWaitTime = calculateDecelerationTime() - this.currentWaitTime;
             returnActions.add(new WaitAction(decelerationWaitTime));
             this.currentWaitTime += decelerationWaitTime;
-            returnActions.add(new LocSpeedAction(this.loc, new Speed(0)));
+            returnActions.add(ActionFactory.createLocSpeedAction(this.loc, 0));
         }
 
         return returnActions;
@@ -115,13 +133,16 @@ public class RouteGenerator {
     private List<RoutingAction> generateSwitchActions(ChangeSwitchStateAction switchAction, Distance currentDistance) {
         List<RoutingAction> returnActions = new ArrayList<>();
         long waitTime = calculateWaitTimeForSwitch(currentDistance, new Distance(300));
+        // TODO Parameterize puffer distance
 
         long decelerationTime = calculateDecelerationTime();
         if (!this.alreadyDecelerated && this.currentWaitTime + waitTime > decelerationTime) {
             long decelerationWaitTime = decelerationTime - this.currentWaitTime;
             returnActions.add(new WaitAction(decelerationWaitTime));
             this.currentWaitTime += decelerationWaitTime;
-            returnActions.add(new LocSpeedAction(this.loc, new Speed(0)));
+            returnActions.add(
+                    ActionFactory.createLocSpeedAction(this.loc, 0)
+            );
             waitTime -= decelerationWaitTime;
             this.alreadyDecelerated = true;
         }
