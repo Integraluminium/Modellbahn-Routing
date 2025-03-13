@@ -25,7 +25,7 @@ public class LocCallsAdapter implements LocCalls {
                 apiAdapter.getSenderHash(),
                 false,
                 locId.id(),
-                speed.value()
+                speed.value() * 10 // speed in API is in 1/10
         );
         apiAdapter.sendRequest("/loc/speed", command);
 

@@ -8,6 +8,7 @@ import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.locomotive.LocId;
+import de.dhbw.modellbahn.domain.locomotive.Speed;
 import de.dhbw.modellbahn.domain.track_components.SwitchState;
 import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
@@ -54,10 +55,17 @@ class ApiServiceIntegrationTest {
     }
 
     @Test
-    @Disabled("This test is disabled because it requires a physical locomotive to be connected to the system")
+        //@Disabled("This test is disabled because it requires a physical locomotive to be connected to the system")
     void testLocomotive() {
-        LocId id = new LocId(16389, configReader);
+        LocId id = new LocId(16397, configReader);
+        locCalls.setLocSpeed(id, new Speed(100));
+    }
 
+    @Test
+        //@Disabled("This test is disabled because it requires a physical locomotive to be connected to the system")
+    void testEmergencyStop() {
+        LocId id = new LocId(16397, configReader);
+        locCalls.emergencyStopLoc(id);
     }
 
     /*

@@ -36,13 +36,14 @@ class RoutingApplication {
 
         TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
         domainGraph = new GraphGenerator(configReader, trackComponentCalls).generateGraph();
-        locomotiveList = new LocomotiveReader(configReader).readLocomotives();
+        locomotiveList = new LocomotiveReader(configReader).readLocomotives(locCalls);
     }
 
     public static void main(String[] args) {
         RoutingApplication app = new RoutingApplication();
         try {
-            app.driveLocomotive("16389", "K2");
+//            app.driveLocomotive("16389", "K2");
+            app.driveLocomotive("16397", "W6");
         } catch (PathNotPossibleException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package de.dhbw.modellbahn.adapter.locomotive_reading;
 
+import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
 import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.graph.Distance;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
@@ -17,7 +18,7 @@ public class LocomotiveReader {
         this.configReader = configReader;
     }
 
-    public List<Locomotive> readLocomotives() {
+    public List<Locomotive> readLocomotives(LocCalls locCalls) {
         return this.configReader.getLocomotives().stream().map(loc -> new Locomotive(
                 new LocName(loc.name()),
                 new LocId(loc.id(), configReader),
@@ -26,7 +27,8 @@ public class LocomotiveReader {
                 new Distance(loc.accelerationDistance()),
                 new Distance(loc.decelerationDistance()),
                 GraphPoint.of(loc.position()),
-                GraphPoint.of(loc.facingDirection())
+                GraphPoint.of(loc.facingDirection()),
+                locCalls
         )).toList();
     }
 }
