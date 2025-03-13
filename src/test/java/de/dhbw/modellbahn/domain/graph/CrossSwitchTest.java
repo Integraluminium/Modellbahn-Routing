@@ -16,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CrossSwitchTest {
     private static final PointName name = new PointName("Test");
-    private static final GraphPoint root1 = new GraphPoint(new PointName("root1")),
-            root2 = new GraphPoint(new PointName("root2")),
-            turnout1 = new GraphPoint(new PointName("turnout1")),
-            turnout2 = new GraphPoint(new PointName("turnout2"));
+    private static final GraphPoint root1 = GraphPoint.of("root1"),
+            root2 = GraphPoint.of("root2"),
+            turnout1 = GraphPoint.of("turnout1"),
+            turnout2 = GraphPoint.of("turnout2");
     private static CrossSwitch testSwitch;
 
     @BeforeAll
@@ -44,7 +44,7 @@ class CrossSwitchTest {
                 Arguments.of(root1, root1),
                 Arguments.of(root1, root2),
                 Arguments.of(turnout1, turnout2),
-                Arguments.of(root1, new GraphPoint(new PointName("Invalid")))
+                Arguments.of(root1, GraphPoint.of("Invalid"))
         );
     }
 
@@ -70,6 +70,6 @@ class CrossSwitchTest {
         assertEquals(PointSide.IN, testSwitch.getSwitchSideFromPoint(root2));
         assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(turnout1));
         assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(turnout2));
-        assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(new GraphPoint(new PointName("unknown"))));
+        assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(GraphPoint.of("unknown")));
     }
 }

@@ -32,11 +32,11 @@ class RouteGeneratorTest {
     private static final long accelerationTime = 1000;
     private static final Distance accelerationDistance = new Distance(200);
     private static final Distance decelerationDistance = new Distance(200);
-    private static final GraphPoint startPosition = new GraphPoint(new PointName("A"));
-    private static final GraphPoint facingDirection = new GraphPoint(new PointName("B"));
-    private static final GraphPoint point1 = new GraphPoint(new PointName("A"));
-    private static final GraphPoint point2 = new GraphPoint(new PointName("B"));
-    private static final GraphPoint point3 = new GraphPoint(new PointName("C"));
+    private static final GraphPoint startPosition = GraphPoint.of("A");
+    private static final GraphPoint facingDirection = GraphPoint.of("B");
+    private static final GraphPoint point1 = GraphPoint.of("A");
+    private static final GraphPoint point2 = GraphPoint.of("B");
+    private static final GraphPoint point3 = GraphPoint.of("C");
     private static GraphPoint newFacingDirection;
     private static RouteGenerator routeGenerator;
 

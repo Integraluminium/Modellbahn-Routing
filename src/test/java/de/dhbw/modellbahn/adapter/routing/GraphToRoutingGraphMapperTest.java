@@ -40,7 +40,7 @@ class GraphToRoutingGraphMapperTest {
         Set<DirectedNode> actualVertices = actualGraph.vertexSet();
         Set<DirectedNode> expectedVertices = createNodesFromStrings(List.of("A", "B", "C", "D", "E", "F", "G"));
 
-        actualGraph.edgesOf(new DirectedNode(new GraphPoint(new PointName("A")), PointSide.IN));
+        actualGraph.edgesOf(new DirectedNode(GraphPoint.of("A"), PointSide.IN));
 
         // Assert
         assertThat(actualGraph).isNotNull();
@@ -59,92 +59,92 @@ class GraphToRoutingGraphMapperTest {
         Set<Map<DirectedNode, DirectedNode>> expectedEdges = new HashSet<>();
 
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("A")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("B")), PointSide.IN)
+                new DirectedNode(GraphPoint.of("A"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("B"), PointSide.IN)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("A")), PointSide.OUT),
-                new DirectedNode(new GraphPoint(new PointName("D")), PointSide.IN)
+                new DirectedNode(GraphPoint.of("A"), PointSide.OUT),
+                new DirectedNode(GraphPoint.of("D"), PointSide.IN)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("D")), PointSide.OUT),
-                new DirectedNode(new GraphPoint(new PointName("A")), PointSide.IN)
+                new DirectedNode(GraphPoint.of("D"), PointSide.OUT),
+                new DirectedNode(GraphPoint.of("A"), PointSide.IN)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("A")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("E")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("A"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("E"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("B")), PointSide.OUT),
-                new DirectedNode(new GraphPoint(new PointName("A")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("B"), PointSide.OUT),
+                new DirectedNode(GraphPoint.of("A"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("E")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("A")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("E"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("A"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("B")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("C")), PointSide.IN)
+                new DirectedNode(GraphPoint.of("B"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("C"), PointSide.IN)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("C")), PointSide.OUT),
-                new DirectedNode(new GraphPoint(new PointName("B")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("C"), PointSide.OUT),
+                new DirectedNode(GraphPoint.of("B"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("G")), PointSide.OUT),
-                new DirectedNode(new GraphPoint(new PointName("C")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("G"), PointSide.OUT),
+                new DirectedNode(GraphPoint.of("C"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("C")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("G")), PointSide.IN)
+                new DirectedNode(GraphPoint.of("C"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("G"), PointSide.IN)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("F")), PointSide.OUT),
-                new DirectedNode(new GraphPoint(new PointName("C")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("F"), PointSide.OUT),
+                new DirectedNode(GraphPoint.of("C"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("C")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("F")), PointSide.IN)
+                new DirectedNode(GraphPoint.of("C"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("F"), PointSide.IN)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("F")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("G")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("F"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("G"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("E")), PointSide.OUT),
-                new DirectedNode(new GraphPoint(new PointName("D")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("E"), PointSide.OUT),
+                new DirectedNode(GraphPoint.of("D"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("E")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("F")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("E"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("F"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("D")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("E")), PointSide.IN)
+                new DirectedNode(GraphPoint.of("D"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("E"), PointSide.IN)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("E")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("A")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("E"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("A"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("E")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("C")), PointSide.IN)
+                new DirectedNode(GraphPoint.of("E"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("C"), PointSide.IN)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("C")), PointSide.OUT),
-                new DirectedNode(new GraphPoint(new PointName("E")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("C"), PointSide.OUT),
+                new DirectedNode(GraphPoint.of("E"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("E")), PointSide.OUT),
-                new DirectedNode(new GraphPoint(new PointName("D")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("E"), PointSide.OUT),
+                new DirectedNode(GraphPoint.of("D"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("F")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("E")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("F"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("E"), PointSide.OUT)
         ));
         expectedEdges.add(Map.of(
-                new DirectedNode(new GraphPoint(new PointName("G")), PointSide.IN),
-                new DirectedNode(new GraphPoint(new PointName("F")), PointSide.OUT)
+                new DirectedNode(GraphPoint.of("G"), PointSide.IN),
+                new DirectedNode(GraphPoint.of("F"), PointSide.OUT)
         ));
 
         return expectedEdges;

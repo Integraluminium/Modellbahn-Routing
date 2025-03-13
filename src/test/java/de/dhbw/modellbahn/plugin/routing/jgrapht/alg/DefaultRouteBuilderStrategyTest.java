@@ -9,7 +9,6 @@ import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
-import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.graph.PointSide;
 import de.dhbw.modellbahn.plugin.MockedConfigReader;
 import de.dhbw.modellbahn.plugin.MockedConfigReader_smallGraph;
@@ -36,20 +35,16 @@ class DefaultRouteBuilderStrategyTest {
         GraphGenerator generator = new GraphGenerator(new MockedConfigReader_smallGraph(), calls);
         return generator.generateGraph();
     }
-
-    static GraphPoint createGraphPoint(String name) {
-        return new GraphPoint(new PointName(name));
-    }
-
+    
     @Test
     void findShortestPath() throws PathNotPossibleException {
         // Arrange
         Graph graph = createTestGraph();
 
         // Action
-        GraphPoint start = createGraphPoint("A");
-        GraphPoint direction = createGraphPoint("D");
-        GraphPoint end = createGraphPoint("G");
+        GraphPoint start = GraphPoint.of("A");
+        GraphPoint direction = GraphPoint.of("D");
+        GraphPoint end = GraphPoint.of("G");
 
         GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper(); // TODO consider height and electrification
         var routingGraph = mapper.mapGraphToJGraphT(graph);
@@ -74,14 +69,14 @@ class DefaultRouteBuilderStrategyTest {
         GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper(); // TODO consider height and electrification
         var routingGraph = mapper.mapGraphToJGraphT(graph);
 
-        DirectedNode pointAIn = new DirectedNode(new GraphPoint(new PointName("A")), PointSide.IN);
-        DirectedNode pointAOut = new DirectedNode(new GraphPoint(new PointName("A")), PointSide.OUT);
-        DirectedNode pointBIn = new DirectedNode(new GraphPoint(new PointName("B")), PointSide.IN);
-        DirectedNode pointBOut = new DirectedNode(new GraphPoint(new PointName("B")), PointSide.OUT);
-        DirectedNode pointCIn = new DirectedNode(new GraphPoint(new PointName("C")), PointSide.IN);
-        DirectedNode pointCOut = new DirectedNode(new GraphPoint(new PointName("C")), PointSide.OUT);
-        DirectedNode pointZIn = new DirectedNode(new GraphPoint(new PointName("Z")), PointSide.IN);
-        DirectedNode pointZOut = new DirectedNode(new GraphPoint(new PointName("Z")), PointSide.OUT);
+        DirectedNode pointAIn = new DirectedNode(GraphPoint.of("A"), PointSide.IN);
+        DirectedNode pointAOut = new DirectedNode(GraphPoint.of("A"), PointSide.OUT);
+        DirectedNode pointBIn = new DirectedNode(GraphPoint.of("B"), PointSide.IN);
+        DirectedNode pointBOut = new DirectedNode(GraphPoint.of("B"), PointSide.OUT);
+        DirectedNode pointCIn = new DirectedNode(GraphPoint.of("C"), PointSide.IN);
+        DirectedNode pointCOut = new DirectedNode(GraphPoint.of("C"), PointSide.OUT);
+        DirectedNode pointZIn = new DirectedNode(GraphPoint.of("Z"), PointSide.IN);
+        DirectedNode pointZOut = new DirectedNode(GraphPoint.of("Z"), PointSide.OUT);
 
         DefaultMonoTrainRoutingStrategy routing = new DefaultMonoTrainRoutingStrategy(routingGraph, RoutingAlgorithm.DIJKSTRA);
         List<DirectedNode> shortestPath = routing.findShortestPath(pointAIn, pointZIn);
