@@ -5,7 +5,7 @@
   accelerationTime: 1000 # in ms
   accelerationDistance: 200 # in mm
   decelerationDistance: 200 # in mm
-  position: A
+  position: W17
   facingDirection: B
 
 - id: 16390

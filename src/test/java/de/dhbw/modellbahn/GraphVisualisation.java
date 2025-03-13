@@ -9,6 +9,7 @@ import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;
+import de.dhbw.modellbahn.plugin.MockedConfigReader;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
 import org.graphstream.graph.Edge;
@@ -31,6 +32,7 @@ import java.util.Set;
  */
 public class GraphVisualisation {
     public static void main(String[] args) {
+        boolean mocked = false;
 
         System.out.println(java.awt.GraphicsEnvironment.isHeadless());
 
@@ -40,10 +42,13 @@ public class GraphVisualisation {
         ApiService apiService = new ApiService(0);
         TrackComponentCalls calls = new TrackComponentCallsAdapter(apiService);
 
-        //        GraphGenerator generator = new GraphGenerator(new MockedConfigReader(), calls);
-        ConfigReader configReader = new YAMLConfigReader();
-        GraphGenerator generator = new GraphGenerator(configReader, calls);
-
+        GraphGenerator generator;
+        if (mocked) {
+            generator = new GraphGenerator(new MockedConfigReader(), calls);
+        } else {
+            ConfigReader configReader = new YAMLConfigReader();
+            generator = new GraphGenerator(configReader, calls);
+        }
         Graph graph = generator.generateGraph();
         org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> actualGraph = mapper.mapGraphToJGraphT(graph);
 
@@ -112,7 +117,7 @@ public class GraphVisualisation {
         viewer.enableAutoLayout();
         ViewPanel view = (ViewPanel) viewer.getDefaultView();
         view.resizeFrame(1200, 800);
-        view.getCamera().setViewPercent(1);
+
 
     }
 
@@ -133,6 +138,7 @@ public class GraphVisualisation {
             msedge.setAttribute("ui.style", "arrow-size: 4px;");
             msedge.setAttribute("ui.arrow", "true");
             msedge.setAttribute("ui.label", graph.getEdgeWeight(edge));
+            msedge.setAttribute("ui.style", "text-size: 10px; text-color: black;");
 
         }
 

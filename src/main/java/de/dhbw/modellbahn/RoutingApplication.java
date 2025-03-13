@@ -42,7 +42,7 @@ class RoutingApplication {
     public static void main(String[] args) {
         RoutingApplication app = new RoutingApplication();
         try {
-            app.driveLocomotive("16389", "Bahnhof 1");
+            app.driveLocomotive("16389", "K2");
         } catch (PathNotPossibleException e) {
             e.printStackTrace();
         }
