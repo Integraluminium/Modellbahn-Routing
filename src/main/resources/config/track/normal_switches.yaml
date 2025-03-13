@@ -1,11 +1,59 @@
-- name: switch1
+- name: W?
   id: 00000
-  root: A
-  straight: B
-  turnout: C
+  root: W13
+  straight: W9
+  turnout: P1
 
-- name: switch2
-  id: 00001
-  root: A
-  straight: B
-  turnout: C
+- name: W3
+  id: 12290
+  root: K6
+  straight: K3
+  turnout: W4
+
+- name: W6
+  id: 12293
+  root: K13
+  straight: S1
+  turnout: S7
+
+- name: W9
+  id: 12296
+  root: W?
+  straight: S6
+  turnout: W10
+
+- name: W10
+  id: 12297
+  root: K7
+  straight: S8
+  turnout: W9
+
+- name: W13
+  id: 12300
+  root: W?
+  straight: W12
+  turnout: W14
+
+- name: W14
+  id: 12301
+  root: W13
+  straight: K25
+  turnout: K23
+
+- name: W15
+  id: 12315
+  root: K7
+  straight: K16
+  turnout: W16
+
+- name: W16
+  id: 12312
+  root: W17
+  straight: W15
+  turnout: S2
+
+- name: W17
+  id: 12313
+  root: W16
+  straight: K13
+  turnout: W17

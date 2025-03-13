@@ -1,3 +1,6 @@
-- name: virtual_point1
-- name: virtual_point2
-- name: virtual_point3
+- name: W4
+- name: W11
+- name: P1
+- name: P2
+- name: P3
+- name: P4

@@ -1,6 +1,6 @@
-- name: cross_switch_1
-  id: 00000
-  root1: A
-  root2: B
-  turnout1: C
-  turnout2: D
+- name: W12
+  id: 12299
+  root1: W1
+  root2: W11
+  turnout1: P3
+  turnout2: W13
