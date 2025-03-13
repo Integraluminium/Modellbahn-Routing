@@ -19,8 +19,10 @@ public class NormalSwitch extends GraphPoint implements Switch {
 
     public void switchToConnectPoints(GraphPoint point1, GraphPoint point2) {
         if (connectsStraight(point1, point2)) {
+            System.out.println(getClass().getSimpleName() + " " + getName() + " switch Straight");
             switchComponent.setStraight();
         } else if (connectsDiverging(point1, point2)) {
+            System.out.println(getClass().getSimpleName() + " " + getName() + " switch Diverging");
             switchComponent.setDiverging();
         } else {
             throw new IllegalArgumentException("Points cannot be connected by this switch.");
@@ -41,16 +43,6 @@ public class NormalSwitch extends GraphPoint implements Switch {
         }
     }
 
-    private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
-        return (point1.equals(root) && point2.equals(straight))
-                || (point2.equals(root) && point1.equals(straight));
-    }
-
-    private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
-        return (point1.equals(root) && point2.equals(turnout))
-                || (point2.equals(root) && point1.equals(turnout));
-    }
-
     public GraphPoint getPointThatCanConnectThisPoint(GraphPoint point) {
         PointName pointName = point.getName();
         if (pointName.equals(root)) {
@@ -60,5 +52,15 @@ public class NormalSwitch extends GraphPoint implements Switch {
         } else {
             throw new IllegalArgumentException("This point is not connected with the switch");
         }
+    }
+
+    private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
+        return (point1.equals(root) && point2.equals(straight))
+               || (point2.equals(root) && point1.equals(straight));
+    }
+
+    private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
+        return (point1.equals(root) && point2.equals(turnout))
+               || (point2.equals(root) && point1.equals(turnout));
     }
 }

@@ -29,6 +29,7 @@ public class TrackComponentCallsAdapter implements TrackComponentCalls {
     }
 
     private void setTrackComponentStatus(TrackComponentId trackComponentId, int trackComponentStatus) {
+        System.out.printf("setTrackComponentStatus<%s>: %s->%s\n", apiAdapter.getSenderHash(), trackComponentId.id(), trackComponentStatus);
         apiAdapter.sendRequest("/loc/switch_accessory", new SwitchingAccessoriesCommand(
                 apiAdapter.getSenderHash(),
                 false,

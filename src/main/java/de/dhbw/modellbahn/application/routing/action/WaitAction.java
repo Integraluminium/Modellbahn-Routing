@@ -16,6 +16,7 @@ public class WaitAction extends RoutingAction {
             return;
         }
         try {
+            System.out.println("Waiting for " + this.waitTime + "ms");
             Thread.sleep(this.waitTime);
         } catch (InterruptedException e) {
             throw new RuntimeException("Waiting in route failed. \n" + e);
@@ -29,7 +30,7 @@ public class WaitAction extends RoutingAction {
     @Override
     public String toString() {
         return "WaitAction{" +
-                "waitTime=" + waitTime +
-                "ms}";
+               "waitTime=" + waitTime +
+               "ms}";
     }
 }
