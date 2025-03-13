@@ -38,7 +38,10 @@ public class GraphToRoutingGraphMapper {
                     // Special case if a switch is connected to itself
                     DirectedNode source = new DirectedNode(point, sourceSide.getOpposite());
                     DirectedNode destination = new DirectedNode(point, sourceSide);
-                    addEdgeToGraph(newGraph, source, destination, edge.distance().value());
+
+                    if (!newGraph.containsEdge(source, destination)) {    // Checks if edge already exists to prevent duplicate edges
+                        addEdgeToGraph(newGraph, source, destination, edge.distance().value());
+                    }
                 } else {
                     addEdge(newGraph, point, sourceSide, edge);
                 }
