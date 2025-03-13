@@ -31,6 +31,8 @@ public class MonoTrainRoutingJGraphT {
         List<WeightedDistanceEdge> weightedDistanceEdges = mapPathToWeightedEdges(path);
         GraphPoint newFacingDirection = determineNewFacingDirection(path);
 
+        System.out.println("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList()); // TODO Logging
+
         RouteGenerator generator = new RouteGenerator(locomotive, weightedDistanceEdges, newFacingDirection);
         return generator.generateRoute();
     }
@@ -41,10 +43,11 @@ public class MonoTrainRoutingJGraphT {
     }
 
     private GraphPoint determineNewFacingDirection(final List<DirectedNode> path) {
-        if (routingGraph.outDegreeOf(path.getLast()) == 0) {
-            throw new IllegalArgumentException("The last node of the path has no outgoing edges.");
+        DirectedNode lastNode = path.getLast();
+        if (routingGraph.outDegreeOf(lastNode) == 0) {
+            throw new IllegalArgumentException("The last node (" + lastNode.getNodeName() + ") of the path has no outgoing edges.");
         }
-        Set<DefaultWeightedEdge> edges = routingGraph.outgoingEdgesOf(path.getLast());
+        Set<DefaultWeightedEdge> edges = routingGraph.outgoingEdgesOf(lastNode);
         DefaultWeightedEdge weightedEdge = edges.stream().toList().get(0);
         DirectedNode randomNextNodeConnectedToLastNodeUsedToObtainDirection = routingGraph.getEdgeTarget(weightedEdge);
         return randomNextNodeConnectedToLastNodeUsedToObtainDirection.getPoint();

@@ -39,6 +39,10 @@ public class DirectedNodeToWeightedEdgeMapper {
 
             currentNode = nextNode;
         }
+
+        // add final node
+        edgeList.add(new WeightedDistanceEdge(currentNode.getPoint(), new Distance(0)));
+
         return edgeList;
     }
 
