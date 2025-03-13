@@ -29,8 +29,12 @@ public class GraphMapper {
                 PointSide sourceSide = ((Switch) point).getSwitchSideFromPoint(edge.destination());
                 if (point.equals(edge.destination())) {
                     // Special case if a switch is connected to itself
-                    DefaultWeightedEdge newEdge = newGraph.addEdge(new DirectedNode(point, sourceSide.getOpposite()), new DirectedNode(point, sourceSide));
-                    newGraph.setEdgeWeight(newEdge, edge.distance().value());
+                    DirectedNode v = new DirectedNode(point, sourceSide.getOpposite());
+                    DirectedNode v1 = new DirectedNode(point, sourceSide);
+                    if (!newGraph.containsEdge(v, v1)) {    // Checks if edge already exists to prevent duplicate edges
+                        DefaultWeightedEdge newEdge = newGraph.addEdge(v, v1);
+                        newGraph.setEdgeWeight(newEdge, edge.distance().value());
+                    }
                 } else {
                     addEdge(newGraph, point, sourceSide, edge);
                 }

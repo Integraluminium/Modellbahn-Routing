@@ -12,7 +12,9 @@ public class Graph {
 
     public void addEdge(GraphPoint point1, GraphPoint point2, Distance distance, Height height, boolean electrified) {
         this.adjacencyList.computeIfAbsent(point1, _ -> new ArrayList<>()).add(new WeightedEdge(point2, distance, height, electrified));
-        this.adjacencyList.computeIfAbsent(point2, _ -> new ArrayList<>()).add(new WeightedEdge(point1, distance, height, electrified));
+        if (!point1.equals(point2)) { // Allowing self loops without adding the edge twice
+            this.adjacencyList.computeIfAbsent(point2, _ -> new ArrayList<>()).add(new WeightedEdge(point1, distance, height, electrified));
+        }
     }
 
     public void addEdge(GraphPoint startPoint, WeightedEdge weightedEdge) {
