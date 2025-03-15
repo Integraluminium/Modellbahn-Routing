@@ -21,7 +21,7 @@ public class LocomotiveReader {
     public List<Locomotive> readLocomotives(LocCalls locCalls) {
         return this.configReader.getLocomotives().stream().map(loc -> new Locomotive(
                 new LocName(loc.name()),
-                new LocId(loc.id(), configReader),
+                new LocId(loc.id()),
                 new MaxLocSpeed(loc.maxSpeed()),
                 loc.accelerationTime(),
                 new Distance(loc.accelerationDistance()),

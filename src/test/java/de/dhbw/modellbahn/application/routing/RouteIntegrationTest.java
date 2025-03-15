@@ -86,7 +86,7 @@ class RouteIntegrationTest {
 
     private Locomotive getMockedLocomotive(GraphPoint start, GraphPoint facingDirection) {
         LocName name = new LocName("TestLoc");
-        LocId locId = new LocId(16389, configReader);
+        LocId locId = new LocId(16389);
         LocCalls locCalls = new MockedLockCalls();
         return new Locomotive(name, locId, new MaxLocSpeed(50), 0, new Distance(0), new Distance(0), start, facingDirection, locCalls);
     }

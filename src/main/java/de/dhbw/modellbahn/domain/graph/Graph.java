@@ -37,4 +37,8 @@ public class Graph {
     public Set<GraphPoint> getAllVertices() {
         return this.adjacencyList.keySet();
     }
+
+    public boolean contains(GraphPoint point) {
+        return this.adjacencyList.containsKey(point);
+    }
 }
