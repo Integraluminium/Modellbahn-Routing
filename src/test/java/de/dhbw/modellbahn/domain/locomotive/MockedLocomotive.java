@@ -12,4 +12,8 @@ public class MockedLocomotive extends Locomotive {
     public MockedLocomotive(MaxLocSpeed maxLocSpeed, long accelerationTime, Distance accelerationDistance, Distance decelerationDistance, GraphPoint startPosition, GraphPoint startFacingDirection) {
         super(new LocName("MockedLoc"), new LocId(1), maxLocSpeed, accelerationTime, accelerationDistance, decelerationDistance, startPosition, startFacingDirection, new MockedLockCalls());
     }
+
+    public MockedLocomotive(int id, GraphPoint startPosition, GraphPoint startFacingDirection) {
+        super(new LocName("MockedLoc-" + id), new LocId(id), new MaxLocSpeed(1.0), 1000, new Distance(500), new Distance(500), startPosition, startFacingDirection, new MockedLockCalls());
+    }
 }
