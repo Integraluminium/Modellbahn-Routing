@@ -37,11 +37,6 @@ public class GraphPoint {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append("GP-")
-                .append(getClass().getSimpleName())
-                .append("{")
-                .append(name.name())
-                .append('}').toString();
+        return String.format("GP-%s{%s}", getClass().getSimpleName(), name.name());
     }
 }

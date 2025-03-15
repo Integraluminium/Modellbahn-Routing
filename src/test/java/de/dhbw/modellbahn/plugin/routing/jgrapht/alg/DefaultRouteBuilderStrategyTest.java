@@ -12,6 +12,7 @@ import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointSide;
 import de.dhbw.modellbahn.plugin.MockedConfigReader;
 import de.dhbw.modellbahn.plugin.MockedConfigReader_smallGraph;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.MonoTrainRoutingStrategy;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ class DefaultRouteBuilderStrategyTest {
         GraphGenerator generator = new GraphGenerator(new MockedConfigReader_smallGraph(), calls);
         return generator.generateGraph();
     }
-    
+
     @Test
     void findShortestPath() throws PathNotPossibleException {
         // Arrange
@@ -49,7 +50,7 @@ class DefaultRouteBuilderStrategyTest {
         GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper(); // TODO consider height and electrification
         var routingGraph = mapper.mapGraphToJGraphT(graph);
 
-        DefaultMonoTrainRoutingStrategy routing = new DefaultMonoTrainRoutingStrategy(routingGraph, RoutingAlgorithm.DIJKSTRA);
+        MonoTrainRoutingStrategy routing = new DefaultMonoTrainRoutingStrategy(routingGraph, RoutingAlgorithm.DIJKSTRA);
         routing.findShortestPath(new DirectedNode(start, PointSide.IN), direction);
         List<DirectedNode> shortestPath = routing.findShortestPath(start, direction, end);
 
@@ -74,11 +75,9 @@ class DefaultRouteBuilderStrategyTest {
         DirectedNode pointBIn = new DirectedNode(GraphPoint.of("B"), PointSide.IN);
         DirectedNode pointBOut = new DirectedNode(GraphPoint.of("B"), PointSide.OUT);
         DirectedNode pointCIn = new DirectedNode(GraphPoint.of("C"), PointSide.IN);
-        DirectedNode pointCOut = new DirectedNode(GraphPoint.of("C"), PointSide.OUT);
         DirectedNode pointZIn = new DirectedNode(GraphPoint.of("Z"), PointSide.IN);
-        DirectedNode pointZOut = new DirectedNode(GraphPoint.of("Z"), PointSide.OUT);
 
-        DefaultMonoTrainRoutingStrategy routing = new DefaultMonoTrainRoutingStrategy(routingGraph, RoutingAlgorithm.DIJKSTRA);
+        MonoTrainRoutingStrategy routing = new DefaultMonoTrainRoutingStrategy(routingGraph, RoutingAlgorithm.DIJKSTRA);
         List<DirectedNode> shortestPath = routing.findShortestPath(pointAIn, pointZIn);
 
         assertThat(shortestPath).isNotNull();

@@ -21,7 +21,6 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import java.util.HashSet;
 import java.util.Set;
 
-@SuppressWarnings("UtilityClassCanBeEnum")
 /**
  * This class is used to visualize the generated graph.
  * <p>
@@ -30,6 +29,7 @@ import java.util.Set;
  * Zooming: Page up/Page down
  * Reset view: shift-R
  */
+@SuppressWarnings("UtilityClassCanBeEnum")
 public class GraphVisualisation {
     public static void main(String[] args) {
         boolean mocked = false;
