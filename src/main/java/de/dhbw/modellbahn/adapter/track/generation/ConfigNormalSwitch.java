@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.adapter.track_generation;
+package de.dhbw.modellbahn.adapter.track.generation;
 
 public record ConfigNormalSwitch(
         String name,

@@ -7,8 +7,8 @@ import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.NormalSwitch;
 import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.graph.PointSide;
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -2,7 +2,7 @@ package de.dhbw.modellbahn.adapter.routing;
 
 import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
-import de.dhbw.modellbahn.adapter.track_generation.GraphGenerator;
+import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.domain.graph.Graph;

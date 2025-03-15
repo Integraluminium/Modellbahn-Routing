@@ -2,8 +2,8 @@ package de.dhbw.modellbahn.domain.graph;
 
 import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

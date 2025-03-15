@@ -1,12 +1,12 @@
-package de.dhbw.modellbahn.adapter.track_generation;
+package de.dhbw.modellbahn.adapter.track.generation;
 
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.graph.*;
-import de.dhbw.modellbahn.domain.track_components.SignalComponent;
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
-import de.dhbw.modellbahn.domain.track_components.TrackContactComponent;
+import de.dhbw.modellbahn.domain.track.components.SignalComponent;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track.components.TrackContactComponent;
 
 import java.util.Collection;
 import java.util.List;

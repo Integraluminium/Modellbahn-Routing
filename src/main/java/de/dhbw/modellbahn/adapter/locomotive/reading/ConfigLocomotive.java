@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.adapter.locomotive_reading;
+package de.dhbw.modellbahn.adapter.locomotive.reading;
 
 public record ConfigLocomotive(
         int id,
@@ -9,5 +9,5 @@ public record ConfigLocomotive(
         int decelerationDistance,
         String position,
         String facingDirection
-        ) {
+) {
 }

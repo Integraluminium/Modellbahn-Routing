@@ -1,6 +1,6 @@
 package de.dhbw.modellbahn.domain.graph;
 
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
 
 public class CrossSwitch extends GraphPoint implements Switch {
     private final SwitchComponent switchComponent;
@@ -58,11 +58,11 @@ public class CrossSwitch extends GraphPoint implements Switch {
 
     private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
         return (point1.equals(root1) && point2.equals(turnout2)) || (point2.equals(root1) && point1.equals(turnout2)) ||
-               (point1.equals(root2) && point2.equals(turnout1)) || (point2.equals(root2) && point1.equals(turnout1));
+                (point1.equals(root2) && point2.equals(turnout1)) || (point2.equals(root2) && point1.equals(turnout1));
     }
 
     private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
         return (point1.equals(root1) && point2.equals(turnout1)) || (point2.equals(root1) && point1.equals(turnout1)) ||
-               (point1.equals(root2) && point2.equals(turnout2)) || (point2.equals(root2) && point1.equals(turnout2));
+                (point1.equals(root2) && point2.equals(turnout2)) || (point2.equals(root2) && point1.equals(turnout2));
     }
 }

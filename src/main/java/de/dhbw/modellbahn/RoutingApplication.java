@@ -1,11 +1,11 @@
 package de.dhbw.modellbahn;
 
-import de.dhbw.modellbahn.adapter.locomotive_reading.LocomotiveReader;
+import de.dhbw.modellbahn.adapter.locomotive.reading.LocomotiveReader;
 import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.LocCallsAdapter;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.SystemCallsAdapter;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
-import de.dhbw.modellbahn.adapter.track_generation.GraphGenerator;
+import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
 import de.dhbw.modellbahn.application.RouteBuilder;
 import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
 import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;

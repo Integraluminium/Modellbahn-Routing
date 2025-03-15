@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.domain.track_components;
+package de.dhbw.modellbahn.domain.track.components;
 
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
 

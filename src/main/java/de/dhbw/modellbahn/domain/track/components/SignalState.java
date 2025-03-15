@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.domain.track_components;
+package de.dhbw.modellbahn.domain.track.components;
 
 public enum SignalState {
     DANGER(0),

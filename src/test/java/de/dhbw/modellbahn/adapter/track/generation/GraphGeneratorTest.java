@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.adapter.track_generation;
+package de.dhbw.modellbahn.adapter.track.generation;
 
 import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GraphGeneratorTest {
 

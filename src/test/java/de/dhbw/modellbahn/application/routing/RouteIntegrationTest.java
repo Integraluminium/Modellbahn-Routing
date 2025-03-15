@@ -17,8 +17,8 @@ import de.dhbw.modellbahn.domain.locomotive.LocId;
 import de.dhbw.modellbahn.domain.locomotive.LocName;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.MaxLocSpeed;
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 
 import java.util.ArrayList;

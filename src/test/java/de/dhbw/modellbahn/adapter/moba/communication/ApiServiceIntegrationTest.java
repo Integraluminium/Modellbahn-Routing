@@ -9,8 +9,8 @@ import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCall
 import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.locomotive.LocId;
 import de.dhbw.modellbahn.domain.locomotive.Speed;
-import de.dhbw.modellbahn.domain.track_components.SwitchState;
-import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track.components.SwitchState;
+import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

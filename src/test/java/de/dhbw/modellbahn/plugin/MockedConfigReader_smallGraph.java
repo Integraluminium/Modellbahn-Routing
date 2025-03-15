@@ -1,6 +1,6 @@
 package de.dhbw.modellbahn.plugin;
 
-import de.dhbw.modellbahn.adapter.track_generation.*;
+import de.dhbw.modellbahn.adapter.track.generation.*;
 import de.dhbw.modellbahn.domain.ConfigReader;
 
 import java.util.List;
@@ -56,12 +56,12 @@ public class MockedConfigReader_smallGraph extends MockedConfigReader implements
     }
 
     @Override
-    public List<ConfigSignal> getSignals() {
-        return List.of();
+    public List<ConfigVirtualPoint> getVirtualPoints() {
+        return List.of(new ConfigVirtualPoint("F"));
     }
 
     @Override
-    public List<ConfigVirtualPoint> getVirtualPoints() {
-        return List.of(new ConfigVirtualPoint("F"));
+    public List<ConfigSignal> getSignals() {
+        return List.of();
     }
 }

@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.adapter.api;
+package de.dhbw.modellbahn.adapter.moba.config;
 
 public class ApiConfig {
     private final int requestTimeout;

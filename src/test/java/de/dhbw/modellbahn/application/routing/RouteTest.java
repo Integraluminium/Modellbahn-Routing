@@ -11,8 +11,8 @@ import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.MockedLocomotive;
 import de.dhbw.modellbahn.domain.locomotive.Speed;
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

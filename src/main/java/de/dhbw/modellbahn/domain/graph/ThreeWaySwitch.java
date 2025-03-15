@@ -1,6 +1,6 @@
 package de.dhbw.modellbahn.domain.graph;
 
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
 
 public class ThreeWaySwitch extends GraphPoint implements Switch {
     private final SwitchComponent firstSwitch;

@@ -1,4 +1,4 @@
-package de.dhbw.modellbahn.adapter.locomotive_reading;
+package de.dhbw.modellbahn.adapter.locomotive.reading;
 
 import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
 import de.dhbw.modellbahn.domain.ConfigReader;

@@ -1,6 +1,6 @@
 package de.dhbw.modellbahn.domain.graph;
 
-import de.dhbw.modellbahn.domain.track_components.TrackContactComponent;
+import de.dhbw.modellbahn.domain.track.components.TrackContactComponent;
 
 public class TrackContact extends GraphPoint {
     private final TrackContactComponent trackContactComponent;
