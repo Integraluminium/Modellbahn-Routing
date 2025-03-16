@@ -116,30 +116,39 @@ class LexerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"stationA", "W12", "A13", "junction1", "junction_5", "123A", "TIMO"})
+    @ValueSource(strings = {"stationA", "S", "W12", "A13", "junction1", "junction_5", "TIMO", "A1B2C3"})
     void testCorrectGraphPoint(String tokenValue) throws LexerException {
         lexer.init(tokenValue);
-        assertEquals(TokenType.GRAPH_POINT, lexer.lookAhead().type());
+        assertEquals(TokenType.GRAPH_POINT, lexer.lookAhead().type(), "value=(" + lexer.lookAhead().value() + ")");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"ADD", "1234"})
-    void testNotRecognizeAsGraphPoint(String tokenValue) throws LexerException {
-        lexer.init(tokenValue);
-        assertNotEquals(TokenType.GRAPH_POINT, lexer.lookAhead().type());
+    @ValueSource(strings = {"ADD", "1234", "123abc", "_abcd", "", " ", "1a2b3c"})
+    void testNotRecognizeAsGraphPoint(String tokenValue) {
+        try {
+            lexer.init(tokenValue);
+            assertNotEquals(TokenType.GRAPH_POINT, lexer.lookAhead().type(), "value=(" + lexer.lookAhead().value() + ")");
+        } catch (LexerException e) {
+            // Expected if token is invalid
+        }
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"1234", "0", "9999", "1", "1000"})
     void testCorrectLocID(String tokenValue) throws LexerException {
         lexer.init(tokenValue);
-        assertEquals(TokenType.LOC_ID, lexer.lookAhead().type());
+        assertEquals(TokenType.LOC_ID, lexer.lookAhead().type(), "value=(" + lexer.lookAhead().value() + ")");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"stationA", "W12", "A13", "junction1", "junction_5", "123A", "TIMO"})
-    void testNotRecognizeAsLocID(String tokenValue) throws LexerException {
-        lexer.init(tokenValue);
-        assertNotEquals(TokenType.LOC_ID, lexer.lookAhead().type());
+    @ValueSource(strings = {"stationA", "W12", "A13", "junction1", "1.12", "123A", "-1"})
+    void testNotRecognizeAsLocID(String tokenValue) {
+        try {
+            lexer.init(tokenValue);
+            Token token = lexer.lookAhead();
+            assertNotEquals(TokenType.LOC_ID, token.type(), "value=(" + token.value() + ")");
+        } catch (LexerException e) {
+            // Expected if token is invalid
+        }
     }
 }

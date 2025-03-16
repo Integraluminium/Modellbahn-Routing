@@ -13,7 +13,11 @@ public class GraphPointMachine extends TokenMachine {
             return 0;
         }
 
-        int currentPos = pos;
+        if (!Character.isLetter(input.charAt(pos))) {
+            return 0;
+        }
+
+        int currentPos = pos + 1;
         while (currentPos < input.length() && isValidGraphPointChar(input.charAt(currentPos))) {
             currentPos++;
         }
@@ -26,9 +30,6 @@ public class GraphPointMachine extends TokenMachine {
     }
 
     private boolean isValidGraphPointChar(char c) {
-        return (c >= 'A' && c <= 'Z') ||  // Uppercase letters
-                (c >= 'a' && c <= 'z') ||  // Lowercase letters
-                (c >= '1' && c <= '9') ||  // Digits 1-9 (excluding 0)
-                c == '_';                  // Underscore
+        return Character.isLetterOrDigit(c) || c == '_';
     }
 }
