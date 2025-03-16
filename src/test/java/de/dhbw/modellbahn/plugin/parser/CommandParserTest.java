@@ -74,11 +74,11 @@ class CommandParserTest {
         List<Instruction> instructions = parser.parse("ADD 123 TO stationA DRIVE");
 
         assertEquals(3, instructions.size());
-        assertInstanceOf(AddLocomotiveInstr.class, instructions.get(0));
+        assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(1));
         assertInstanceOf(DriveInstr.class, instructions.get(2));
 
-        AddLocomotiveInstr addInstr = (AddLocomotiveInstr) instructions.get(0);
+        AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
         assertEquals(new LocId(LOC_ID1), addInstr.locId());
 
         SetDestinationInstr destInstr = (SetDestinationInstr) instructions.get(1);
@@ -91,7 +91,7 @@ class CommandParserTest {
                 "ADD 456 AT stationA TO stationB FACING junctionC USING TIME DRIVE CONSIDER ELECTRIFICATION");
 
         assertEquals(7, instructions.size());
-        assertInstanceOf(AddLocomotiveInstr.class, instructions.get(0));
+        assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(ModifyLocPosInstr.class, instructions.get(1));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(2));
         assertInstanceOf(SetFacingDirectionInstr.class, instructions.get(3));
@@ -100,7 +100,7 @@ class CommandParserTest {
         assertInstanceOf(DriveInstr.class, instructions.get(6));
 
 
-        AddLocomotiveInstr addInstr = (AddLocomotiveInstr) instructions.get(0);
+        AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
         assertEquals(new LocId(LOC_ID2), addInstr.locId());
 
         ModifyLocPosInstr modInstr = (ModifyLocPosInstr) instructions.get(1);
@@ -162,13 +162,13 @@ class CommandParserTest {
 
         assertEquals(4, instructions.size());
 
-        assertInstanceOf(AddLocomotiveInstr.class, instructions.get(0));
+        assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(1));
         assertInstanceOf(ConsiderHeightInstr.class, instructions.get(2));
         assertInstanceOf(DriveInstr.class, instructions.get(3));
 
 
-        AddLocomotiveInstr addInstr = (AddLocomotiveInstr) instructions.get(0);
+        AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
         assertEquals(new LocId(LOC_ID1), addInstr.locId());
 
 
@@ -185,13 +185,13 @@ class CommandParserTest {
 
         assertEquals(4, instructions.size());
 
-        assertInstanceOf(AddLocomotiveInstr.class, instructions.get(0));
+        assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(1));
         assertInstanceOf(ConsiderElectrificationInstr.class, instructions.get(2));
         assertInstanceOf(DriveInstr.class, instructions.get(3));
 
 
-        AddLocomotiveInstr addInstr = (AddLocomotiveInstr) instructions.get(0);
+        AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
         assertEquals(new LocId(LOC_ID1), addInstr.locId());
 
         SetDestinationInstr destInstr = (SetDestinationInstr) instructions.get(1);
@@ -211,20 +211,20 @@ class CommandParserTest {
 
         assertEquals(6, instructions.size());
         // First command
-        assertInstanceOf(AddLocomotiveInstr.class, instructions.get(0));
+        assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(1));
         assertInstanceOf(DriveInstr.class, instructions.get(2));
         // Second command
-        assertInstanceOf(AddLocomotiveInstr.class, instructions.get(3));
+        assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(3));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(4));
         assertInstanceOf(DriveInstr.class, instructions.get(5));
 
-        AddLocomotiveInstr addInstr = (AddLocomotiveInstr) instructions.get(0);
+        AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
         assertEquals(new LocId(LOC_ID1), addInstr.locId());
         SetDestinationInstr destInstr = (SetDestinationInstr) instructions.get(1);
         assertEquals(gp_statA, destInstr.destination());
 
-        AddLocomotiveInstr addInstr2 = (AddLocomotiveInstr) instructions.get(3);
+        AddLocomotiveToRoutingInstr addInstr2 = (AddLocomotiveToRoutingInstr) instructions.get(3);
         assertEquals(new LocId(LOC_ID2), addInstr2.locId());
         SetDestinationInstr destInstr2 = (SetDestinationInstr) instructions.get(4);
         assertEquals(gp_statB, destInstr2.destination());

@@ -41,4 +41,9 @@ public class Graph {
     public boolean contains(GraphPoint point) {
         return this.adjacencyList.containsKey(point);
     }
+
+    public List<GraphPoint> getNeighbors(GraphPoint point) {
+        List<WeightedEdge> edgesOfVertex = getEdgesOfVertex(point);
+        return edgesOfVertex.stream().map(WeightedEdge::destination).toList();
+    }
 }

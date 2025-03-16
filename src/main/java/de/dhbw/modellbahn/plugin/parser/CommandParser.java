@@ -40,10 +40,76 @@ public class CommandParser {
         lexer.init(input);
 
         while (lexer.lookAhead().type() != TokenType.EOF) {
-            parseRoutingCommand();
+            parseStatement();
         }
 
         return instructions;
+    }
+
+    private void parseStatement() throws LexerException, ParseException {
+        // MODIFY <modification> | ADD <routingCommand>
+
+        Token token = lexer.lookAhead();
+        if (token.type() == TokenType.ADD_KEYWORD) {
+            parseRoutingCommand();
+        } else if (token.type() == TokenType.MODIFY_KEYWORD) {
+            parseModificationCommand();
+        } else if (token.type() == TokenType.LIST_KEYWORD) {
+            parseInformationCommand();
+        } else {
+            throw new LexerException("Expected statement but got: " + token);
+        }
+    }
+
+    private void parseModificationCommand() throws LexerException, ParseException {
+        lexer.expect(TokenType.MODIFY_KEYWORD);
+
+        // Parse locomotive ID
+        Token token = lexer.lookAhead();
+        if (token.type() != TokenType.LOC_ID) {
+            throw new ParseException("Expected locomotive ID after MODIFY but got: " + token);
+        }
+
+        LocId locId = parser.parseLocId(token.value());
+        lexer.advance();
+
+        // Parse modification type
+        Token modification_token = lexer.lookAhead();
+
+        if (modification_token.type() == TokenType.TOGGLE_KEYWORD) {
+            lexer.advance();
+            lexer.expect(TokenType.DIRECTION_KEYWORD);
+            instructions.add(new ToggleDirectionInstr(locId));
+        } else if (modification_token.type() == TokenType.POSITION_KEYWORD) {
+            lexer.advance();
+            modification_token = lexer.lookAhead();
+
+            if (modification_token.type() != TokenType.GRAPH_POINT) {
+                throw new ParseException("Expected graph point for position but got: " + modification_token);
+            }
+
+            GraphPoint position = parser.parseGraphPoint(modification_token.value());
+            instructions.add(new ModifyLocPosInstr(locId, position));
+            lexer.advance();
+        } else {
+            throw new ParseException("Expected TOGGLE or POSITION after locomotive ID but got: " + modification_token);
+        }
+    }
+
+    private void parseInformationCommand() throws LexerException, ParseException {
+        lexer.expect(TokenType.LIST_KEYWORD);
+
+        Token token = lexer.lookAhead();
+
+        if (token.type() == TokenType.LOCOMOTIVES_KEYWORD) {
+            lexer.advance();
+            instructions.add(new ListLocomotivesInstr());
+        } else if (token.type() == TokenType.GRAPHPOINTS_KEYWORD) {
+            lexer.advance();
+            instructions.add(new ListGraphPointsInstr());
+        } else {
+            throw new ParseException("Expected LOCOMOTIVES or GRAPHPOINTS after LIST but got: " + token);
+        }
     }
 
     private void parseRoutingCommand() throws LexerException, ParseException {
@@ -57,7 +123,7 @@ public class CommandParser {
         }
         LocId locId = parser.parseLocId(token.value());
         lexer.advance();
-        instructions.add(new AddLocomotiveInstr(locId));
+        instructions.add(new AddLocomotiveToRoutingInstr(locId));
 
         // Optional AT <graphpoint>
         if (lexer.lookAhead().type() == TokenType.AT_KEYWORD) {

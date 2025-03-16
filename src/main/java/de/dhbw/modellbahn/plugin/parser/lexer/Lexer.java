@@ -31,6 +31,15 @@ public class Lexer {
 
         addKeywordMachine("HEIGHT", TokenType.HEIGHT_KEYWORD);
         addKeywordMachine("ELECTRIFICATION", TokenType.ELECTRIFICATION_KEYWORD);
+
+        addKeywordMachine("MODIFY", TokenType.MODIFY_KEYWORD);
+        addKeywordMachine("LIST", TokenType.LIST_KEYWORD);
+
+        addKeywordMachine("TOGGLE", TokenType.TOGGLE_KEYWORD);
+        addKeywordMachine("DIRECTION", TokenType.DIRECTION_KEYWORD);
+        addKeywordMachine("POSITION", TokenType.POSITION_KEYWORD);
+        addKeywordMachine("LOCOMOTIVES", TokenType.LOCOMOTIVES_KEYWORD);
+        addKeywordMachine("GRAPHPOINTS", TokenType.GRAPHPOINTS_KEYWORD);
         addMachine(new OptimizationMachine());
         addMachine(new LocIdMachine());
         addMachine(new GraphPointMachine());
