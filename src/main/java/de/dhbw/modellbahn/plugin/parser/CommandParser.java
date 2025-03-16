@@ -216,7 +216,7 @@ public class CommandParser {
             throw new ParseException("Expected graph point after FACING but got: " + token);
         }
         GraphPoint facing = parser.parseGraphPoint(token.value());
-        instructions.add(new SetFacingDirectionInstr(locId, facing));
+        instructions.add(new SetFacingDirectionForDestinationInstr(locId, facing));
         lexer.advance();
     }
 

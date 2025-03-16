@@ -94,7 +94,7 @@ class CommandParserTest {
         assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(ModifyLocPosInstr.class, instructions.get(1));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(2));
-        assertInstanceOf(SetFacingDirectionInstr.class, instructions.get(3));
+        assertInstanceOf(SetFacingDirectionForDestinationInstr.class, instructions.get(3));
         assertInstanceOf(SetOptimizationInstr.class, instructions.get(4));
         assertInstanceOf(ConsiderElectrificationInstr.class, instructions.get(5));
         assertInstanceOf(DriveInstr.class, instructions.get(6));
@@ -109,7 +109,7 @@ class CommandParserTest {
         SetDestinationInstr destInstr = (SetDestinationInstr) instructions.get(2);
         assertEquals(gp_statB, destInstr.destination());
 
-        SetFacingDirectionInstr faceInstr = (SetFacingDirectionInstr) instructions.get(3);
+        SetFacingDirectionForDestinationInstr faceInstr = (SetFacingDirectionForDestinationInstr) instructions.get(3);
         assertEquals(gp_junC, faceInstr.facing());
 
         SetOptimizationInstr optInstr = (SetOptimizationInstr) instructions.get(4);
