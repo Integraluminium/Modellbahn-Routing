@@ -20,6 +20,7 @@ public class CommandContext {
         this.locomotiveRepository = locomotiveRepository;
         this.graph = graph;
         this.output = output;
+        resetRouteBuilder();
     }
 
     public Locomotive getLocomotive(final LocId locId) {
