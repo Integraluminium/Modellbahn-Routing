@@ -1,7 +1,10 @@
 package de.dhbw.modellbahn.plugin.parser.lexer;
 
+import de.dhbw.modellbahn.plugin.parser.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -82,7 +85,7 @@ class LexerTest {
     }
 
     @Test
-    void testExpectMethod() throws LexerException {
+    void testExpectMethod() throws LexerException, ParseException {
         lexer.init("ADD TO");
 
         // This should work fine
@@ -101,7 +104,7 @@ class LexerTest {
         assertDoesNotThrow(() -> lexer.expect(TokenType.ADD_KEYWORD));
 
         // Next token is DRIVE_COMMAND, not TO_KEYWORD
-        assertThrows(LexerException.class, () -> lexer.expect(TokenType.TO_KEYWORD));
+        assertThrows(ParseException.class, () -> lexer.expect(TokenType.TO_KEYWORD));
     }
 
     @Test
@@ -110,5 +113,33 @@ class LexerTest {
         lexer.init(invalidInput);
 
         assertThrows(LexerException.class, () -> lexer.advance());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"stationA", "W12", "A13", "junction1", "junction_5", "123A", "TIMO"})
+    void testCorrectGraphPoint(String tokenValue) throws LexerException {
+        lexer.init(tokenValue);
+        assertEquals(TokenType.GRAPH_POINT, lexer.lookAhead().type());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"ADD", "1234"})
+    void testNotRecognizeAsGraphPoint(String tokenValue) throws LexerException {
+        lexer.init(tokenValue);
+        assertNotEquals(TokenType.GRAPH_POINT, lexer.lookAhead().type());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1234", "0", "9999", "1", "1000"})
+    void testCorrectLocID(String tokenValue) throws LexerException {
+        lexer.init(tokenValue);
+        assertEquals(TokenType.LOC_ID, lexer.lookAhead().type());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"stationA", "W12", "A13", "junction1", "junction_5", "123A", "TIMO"})
+    void testNotRecognizeAsLocID(String tokenValue) throws LexerException {
+        lexer.init(tokenValue);
+        assertNotEquals(TokenType.LOC_ID, lexer.lookAhead().type());
     }
 }

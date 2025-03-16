@@ -1,5 +1,6 @@
 package de.dhbw.modellbahn.plugin.parser.lexer;
 
+import de.dhbw.modellbahn.plugin.parser.ParseException;
 import de.dhbw.modellbahn.plugin.parser.lexer.machines.*;
 
 import java.util.ArrayList;
@@ -116,9 +117,9 @@ public class Lexer {
     }
 
 
-    public void expect(TokenType type) throws LexerException {
+    public void expect(TokenType type) throws ParseException, LexerException {
         if (currentToken.type() != type) {
-            throw new LexerException("Unexpected Token: Expected " + type + " but got " + currentToken.type());
+            throw new ParseException("Unexpected Token: Expected " + type + " but got " + currentToken.type());
         }
         advance();
     }
