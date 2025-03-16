@@ -57,7 +57,7 @@ public class MockedConfigReader_smallGraph extends MockedConfigReader implements
 
     @Override
     public List<ConfigVirtualPoint> getVirtualPoints() {
-        return List.of(new ConfigVirtualPoint("F"));
+        return List.of(new ConfigVirtualPoint("F"), new ConfigVirtualPoint("Z"));
     }
 
     @Override

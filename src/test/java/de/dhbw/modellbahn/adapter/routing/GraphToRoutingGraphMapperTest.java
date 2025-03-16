@@ -1,15 +1,11 @@
 package de.dhbw.modellbahn.adapter.routing;
 
-import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
-import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
-import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.application.routing.DirectedNode;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.graph.PointSide;
-import de.dhbw.modellbahn.plugin.MockedConfigReader;
+import de.dhbw.modellbahn.plugin.DomainGraphFactory;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.junit.jupiter.api.Test;
@@ -29,12 +25,7 @@ class GraphToRoutingGraphMapperTest {
         // Arrange
         GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper();
 
-        ApiService apiService = new ApiService(0);
-        TrackComponentCalls calls = new TrackComponentCallsAdapter(apiService);
-        GraphGenerator generator = new GraphGenerator(new MockedConfigReader(), calls);
-
-        Graph graph = generator.generateGraph();
-
+        Graph graph = DomainGraphFactory.createTestGraph();
         // Act
         org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> actualGraph = mapper.mapGraphToJGraphT(graph);
         Set<DirectedNode> actualVertices = actualGraph.vertexSet();

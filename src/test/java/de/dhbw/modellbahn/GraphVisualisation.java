@@ -1,7 +1,6 @@
 package de.dhbw.modellbahn;
 
-import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
+import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedTrackComponentCalls;
 import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.application.routing.DirectedNode;
@@ -9,7 +8,7 @@ import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;
-import de.dhbw.modellbahn.plugin.MockedConfigReader;
+import de.dhbw.modellbahn.plugin.DomainGraphFactory;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
 import org.graphstream.graph.Edge;
@@ -35,21 +34,19 @@ public class GraphVisualisation {
         boolean mocked = false;
 
         System.out.println(java.awt.GraphicsEnvironment.isHeadless());
+        Graph graph;
+        if (mocked) {
+            graph = DomainGraphFactory.createTestGraph();
+        } else {
+            TrackComponentCalls calls = new MockedTrackComponentCalls();
+            ConfigReader configReader = new YAMLConfigReader();
+            GraphGenerator generator = new GraphGenerator(configReader, calls);
+            graph = generator.generateGraph();
+        }
+
 
         // Arrange
         GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper();
-
-        ApiService apiService = new ApiService(0);
-        TrackComponentCalls calls = new TrackComponentCallsAdapter(apiService);
-
-        GraphGenerator generator;
-        if (mocked) {
-            generator = new GraphGenerator(new MockedConfigReader(), calls);
-        } else {
-            ConfigReader configReader = new YAMLConfigReader();
-            generator = new GraphGenerator(configReader, calls);
-        }
-        Graph graph = generator.generateGraph();
         org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> actualGraph = mapper.mapGraphToJGraphT(graph);
 
 
