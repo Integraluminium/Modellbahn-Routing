@@ -11,4 +11,10 @@ public record SetFacingDirectionInstr(LocId locId, GraphPoint facing) implements
         Locomotive loc = context.getLocomotive(locId);
         context.getCurrentRouteBuilder().setFacingDirectionForLoc(loc, facing);
     }
+
+    @Override
+    public void trace(final CommandContext context) {
+        Locomotive loc = context.getLocomotive(locId);
+        context.getOutput().println("Set Facingdirection for locomotive: <" + loc.getName().name() + "> to <" + facing.getName().name() + ">");
+    }
 }

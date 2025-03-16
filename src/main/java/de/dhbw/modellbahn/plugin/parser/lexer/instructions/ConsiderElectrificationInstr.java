@@ -8,4 +8,9 @@ public record ConsiderElectrificationInstr(boolean toConsider) implements Instru
     public void execute(final CommandContext context) {
         context.getCurrentRouteBuilder().considerElectrification(toConsider);
     }
+
+    @Override
+    public void trace(final CommandContext context) {
+        context.getOutput().println("Consider Electrification: " + toConsider);
+    }
 }

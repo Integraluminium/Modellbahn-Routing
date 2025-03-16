@@ -11,4 +11,9 @@ public record SetOptimizationInstr(LocId locId, RoutingOptimization optimization
         Locomotive loc = context.getLocomotive(locId);
         context.getCurrentRouteBuilder().setRouteOptimization(loc, optimization);
     }
+
+    @Override
+    public void trace(final CommandContext context) {
+        context.getOutput().println("Set Routing Optimization for " + locId + " to " + optimization);
+    }
 }

@@ -10,4 +10,10 @@ public record AddLocomotiveInstr(LocId locId) implements Instruction {
         Locomotive loc = context.getLocomotive(locId);
         context.getCurrentRouteBuilder().addLocomotive(loc);
     }
+
+    @Override
+    public void trace(CommandContext context) {
+        Locomotive loc = context.getLocomotive(locId);
+        context.getOutput().println("Added locomotive: " + loc.getName().name());
+    }
 }

@@ -7,4 +7,9 @@ public record ConsiderHeightInstr(boolean toConsider) implements Instruction {
     public void execute(final CommandContext context) {
         context.getCurrentRouteBuilder().considerHeight(toConsider);
     }
+
+    @Override
+    public void trace(final CommandContext context) {
+        context.getOutput().println("Consider Height: " + toConsider);
+    }
 }

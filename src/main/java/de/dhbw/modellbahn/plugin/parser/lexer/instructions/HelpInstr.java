@@ -13,4 +13,9 @@ public class HelpInstr implements Instruction {
         output.println("Available Commands:");
         // TODO: Add all available commands
     }
+
+    @Override
+    public void trace(final CommandContext context) {
+        context.getOutput().println("Help command");
+    }
 }
