@@ -25,13 +25,13 @@ import java.util.List;
  */
 public class CommandParser {
     private final Lexer lexer;
-    private final Parser parser;
+    private final DomainObjectParser parser;
 
     private List<Instruction> instructions;
 
     public CommandParser(Lexer lexer, Graph graph, LocomotiveRepository locomotiveRepository) {
         this.lexer = lexer;
-        this.parser = new Parser(graph, locomotiveRepository);
+        this.parser = new DomainObjectParser(graph, locomotiveRepository);
     }
 
     public List<Instruction> parse(String input) throws LexerException, ParseException {

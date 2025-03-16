@@ -8,14 +8,14 @@ import de.dhbw.modellbahn.domain.locomotive.LocId;
 
 
 @SuppressWarnings("UseOfSystemOutOrSystemErr")
-public class Parser {
+public class DomainObjectParser {
 
 
     private final Graph graph;
     private final LocomotiveRepository locomotiveRepository;
 
 
-    public Parser(Graph graph, LocomotiveRepository locomotiveRepository) {
+    public DomainObjectParser(Graph graph, LocomotiveRepository locomotiveRepository) {
         this.graph = graph;
         this.locomotiveRepository = locomotiveRepository;
     }
