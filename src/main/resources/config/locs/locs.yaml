@@ -45,13 +45,13 @@
 - id: 16397
   name: 150 144-4 DB AG
   # Default values
-  maxSpeed: 1.0
-  accelerationTime: 1000
-  accelerationDistance: 200
-  decelerationTime: 1000
-  decelerationDistance: 200
+  maxSpeed: 0.59645
+  accelerationTime: 2960
+  accelerationDistance: 713
+  decelerationTime: 2960
+  decelerationDistance: 713
   position: W15
-  facingDirection: B
+  facingDirection: K7
 
 - id: 16398
   name: Fc 2x3/4 122 01
