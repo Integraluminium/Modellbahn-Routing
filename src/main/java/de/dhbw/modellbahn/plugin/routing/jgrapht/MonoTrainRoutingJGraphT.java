@@ -5,7 +5,6 @@ import de.dhbw.modellbahn.application.RoutingOptimization;
 import de.dhbw.modellbahn.application.routing.*;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointSide;
-import de.dhbw.modellbahn.domain.graph.Switch;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.alg.DefaultMonoTrainRoutingStrategy;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.DirectedNodeToWeightedEdgeMapper;
@@ -42,26 +41,23 @@ public class MonoTrainRoutingJGraphT {
 
     public Route generateRoute(Locomotive locomotive, GraphPoint destination, GraphPoint destinationFacing, RoutingOptimization optimisations) throws PathNotPossibleException {
         DirectedNode startNode = beforeRouting(locomotive, optimisations);
-        DirectedNode endNode = getDirectedNode(destination, destinationFacing, false);
+        DirectedNode endNode = getDirectedNode(destination, destinationFacing);
 
         List<DirectedNode> path = strategy.findShortestPath(startNode, endNode);
 
         return finalizeRouting(locomotive, path, destinationFacing);
     }
 
-    private DirectedNode beforeRouting(final Locomotive locomotive, RoutingOptimization optimisations) {
-        // TODO optimisations are not considered
+    private DirectedNode beforeRouting(final Locomotive locomotive, RoutingOptimization optimization) {
+        // TODO optimization are not considered
         GraphPoint start = locomotive.getCurrentPosition();
         GraphPoint facingDirection = locomotive.getCurrentFacingDirection();
 
-        return getDirectedNode(start, facingDirection, true);
+        return getDirectedNode(start, facingDirection);
     }
 
-    private DirectedNode getDirectedNode(GraphPoint point, GraphPoint facingDirection, boolean isSourcePoint) {
+    private DirectedNode getDirectedNode(GraphPoint point, GraphPoint facingDirection) {
         PointSide side = getSideFromPoint(point, facingDirection);
-        if (isSourcePoint) {
-            side = side.getOpposite();
-        }
         return new DirectedNode(point, side);
     }
 
@@ -71,12 +67,19 @@ public class MonoTrainRoutingJGraphT {
      */
     private PointSide getSideFromPoint(GraphPoint point, GraphPoint facingDirection) {
 
-        if (point instanceof Switch switchPoint) {
-            return switchPoint.getSwitchSideFromPoint(facingDirection);
+        if (isFacingDirectionConnectedToPointAtPointSide(point, facingDirection, PointSide.IN)) {
+            return PointSide.IN;
         }
-        // TODO add logic to determine side of point if point is not a switch
-//        throw new UnsupportedOperationException("Determination for a PointSide for non-switches is not implemented yet");
-        return PointSide.IN;
+
+        if (isFacingDirectionConnectedToPointAtPointSide(point, facingDirection, PointSide.OUT)) {
+            return PointSide.OUT;
+        }
+        throw new IllegalArgumentException("Point " + facingDirection + " is not neighbour point of " + point);
+    }
+
+    private boolean isFacingDirectionConnectedToPointAtPointSide(final GraphPoint point, final GraphPoint facingDirection, final PointSide pointSide) {
+        Set<DefaultWeightedEdge> outgoingEdges = this.routingGraph.edgesOf(new DirectedNode(point, pointSide));
+        return outgoingEdges.stream().anyMatch(edge -> this.routingGraph.getEdgeTarget(edge).getPoint().equals(facingDirection));
     }
 
     private List<WeightedDistanceEdge> mapPathToWeightedEdges(final List<DirectedNode> path) {

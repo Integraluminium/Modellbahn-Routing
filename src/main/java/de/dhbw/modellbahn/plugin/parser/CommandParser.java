@@ -261,8 +261,15 @@ public class CommandParser {
             throw new ParseException("Expected graph point after AT but got: " + startPositionToken);
         }
         GraphPoint point = parser.parseGraphPoint(startPositionToken.value());
-        instructions.add(new ModifyLocPosInstr(locId, point));
         lexer.advance();
+        instructions.add(new ModifyLocPosInstr(locId, point));
+
+        Token nextToken = lexer.lookAhead();
+        if (nextToken.type() == TokenType.FACING_KEYWORD) {
+            lexer.advance();
+            GraphPoint facingPoint = parseGraphPoint();
+            instructions.add(new ModifyLocFacingInstr(locId, facingPoint));
+        }
     }
 
 }

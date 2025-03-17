@@ -15,18 +15,18 @@
   accelerationTime: 1000
   accelerationDistance: 200
   decelerationDistance: 200
-  position: A
+  position: W17
   facingDirection: B
 
 - id: 16391
   name: 260 319-9 DB
   # Default values
-  maxSpeed: 1.0
-  accelerationTime: 1000
-  accelerationDistance: 200
-  decelerationDistance: 200
-  position: A
-  facingDirection: B
+  maxSpeed: 0.401
+  accelerationTime: 2244
+  accelerationDistance: 335
+  decelerationDistance: 335
+  position: K16
+  facingDirection: W15
 
 - id: 16392
   name: 96 024 DRG
@@ -45,7 +45,7 @@
   accelerationTime: 1000
   accelerationDistance: 200
   decelerationDistance: 200
-  position: A
+  position: W15
   facingDirection: B
 
 - id: 16398

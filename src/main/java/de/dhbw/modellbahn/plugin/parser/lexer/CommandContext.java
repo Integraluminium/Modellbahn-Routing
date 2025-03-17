@@ -63,6 +63,8 @@ public class CommandContext {
     }
 
     public void toggleLocomotiveDirection(LocId locId) {
+        // TODO FIX ISSUES WITH SWITCHES - NOT WORKING PROPERLY
+
         Locomotive loc = locomotiveRepository.getLocomotive(locId);
         GraphPoint current = loc.getCurrentFacingDirection();
         GraphPoint position = loc.getCurrentPosition();
