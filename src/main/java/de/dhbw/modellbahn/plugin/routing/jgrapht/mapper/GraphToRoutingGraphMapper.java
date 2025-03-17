@@ -57,7 +57,6 @@ public class GraphToRoutingGraphMapper {
                 }
                 for (WeightedEdge edge : adjacentEdges) {
                     Set<DefaultWeightedEdge> edges = newGraph.edgesOf(new DirectedNode(point, PointSide.IN));
-                    System.out.println(edges);
                     if (isEdgeAlreadyConnected(newGraph, edge, edges)) {
                         continue;
                     }

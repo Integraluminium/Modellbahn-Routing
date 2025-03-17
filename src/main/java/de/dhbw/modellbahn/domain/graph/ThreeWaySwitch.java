@@ -59,18 +59,18 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
     }
 
     private void switchStraight() {
-        System.out.println(getClass().getSimpleName() + " " + getName() + " switchStraight");
+        logger.fine(getClass().getSimpleName() + " " + getName() + " switchStraight");
         firstSwitch.setStraight();
         secondSwitch.setStraight();
     }
 
     private void switchLeft() {
-        System.out.println(getClass().getSimpleName() + " " + getName() + " switch Left");
+        logger.fine(getClass().getSimpleName() + " " + getName() + " switch Left");
         firstSwitch.setDiverging();
     }
 
     private void switchRight() {
-        System.out.println(getClass().getSimpleName() + " " + getName() + " switch Right");
+        logger.fine(getClass().getSimpleName() + " " + getName() + " switch Right");
         firstSwitch.setStraight();
         secondSwitch.setDiverging();
     }

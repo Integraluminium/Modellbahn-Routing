@@ -6,8 +6,10 @@ import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Route {
+    private static final Logger logger = Logger.getLogger(Route.class.getSimpleName());
     private final Locomotive loc;
     private final List<RoutingAction> actionList;
     private final GraphPoint newPosition;
@@ -23,8 +25,10 @@ public class Route {
     }
 
     public void driveRoute() {
+        int step = 0;
+        int maxSteps = actionList.size();
         for (RoutingAction action : actionList) {
-            System.out.println("Performing action: " + action);
+            logger.info("Performing action[" + step++ + "/" + maxSteps + "]: " + action);
             action.performAction();
             // NOTE: Maybe the action should be performed at correct time
             //  With some feedback from the hardware there could be a check if the action was successful

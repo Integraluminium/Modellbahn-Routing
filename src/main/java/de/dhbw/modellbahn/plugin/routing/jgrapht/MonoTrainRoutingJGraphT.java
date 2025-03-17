@@ -12,8 +12,10 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class MonoTrainRoutingJGraphT {
+    private static final Logger logger = Logger.getLogger(MonoTrainRoutingJGraphT.class.getSimpleName());
     private final DirectedNodeToWeightedEdgeMapper directedNodeToWeightedEdgeMapper;
     private final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph;
     private final MonoTrainRoutingStrategy strategy;
@@ -26,7 +28,7 @@ public class MonoTrainRoutingJGraphT {
 
     private Route finalizeRouting(final Locomotive locomotive, final List<DirectedNode> path, final GraphPoint newFacingDirection) throws PathNotPossibleException {
         List<WeightedDistanceEdge> weightedDistanceEdges = mapPathToWeightedEdges(path);
-        System.out.println("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList()); // TODO Logging
+        logger.info("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList()); // TODO Logging
         RouteGenerator generator = new RouteGenerator(locomotive, weightedDistanceEdges, newFacingDirection);
         return generator.generateRoute();
     }

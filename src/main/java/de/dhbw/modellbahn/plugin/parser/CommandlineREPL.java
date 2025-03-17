@@ -15,12 +15,14 @@ import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import de.dhbw.modellbahn.plugin.parser.lexer.LexerException;
 import de.dhbw.modellbahn.plugin.parser.lexer.instructions.Instruction;
+import de.dhbw.modellbahn.util.MobaLogConfig;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 public class CommandlineREPL {
@@ -43,10 +45,12 @@ public class CommandlineREPL {
     }
 
     public static void main(String[] args) {
+        MobaLogConfig.configureLogging(Level.INFO);
         // Initialize components similar to RoutingApplication
         ConfigReader configReader = new YAMLConfigReader();
 
         ApiService apiService = new ApiService(SENDER_HASH);
+        apiService.setTimeout(10); // VERY short timeout for REPL
         LocCalls locCalls = new LocCallsAdapter(apiService);
         SystemCalls systemCalls = new SystemCallsAdapter(apiService);
         TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
