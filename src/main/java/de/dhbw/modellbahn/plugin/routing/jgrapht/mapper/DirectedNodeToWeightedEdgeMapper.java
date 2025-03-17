@@ -31,17 +31,18 @@ public class DirectedNodeToWeightedEdgeMapper {
         List<WeightedDistanceEdge> edgeList = new ArrayList<>();
         Iterator<DirectedNode> vertexIterator = path.iterator();
         DirectedNode currentNode = vertexIterator.next();
+        int distance = 0;
         while (vertexIterator.hasNext()) {
             DirectedNode nextNode = vertexIterator.next();
 
-            int distance = (int) Math.round(graph.getEdgeWeight(graph.getEdge(currentNode, nextNode)));
             edgeList.add(new WeightedDistanceEdge(currentNode.getPoint(), new Distance(distance)));
+            distance = (int) Math.round(graph.getEdgeWeight(graph.getEdge(currentNode, nextNode)));
 
             currentNode = nextNode;
         }
 
         // add final node
-        edgeList.add(new WeightedDistanceEdge(currentNode.getPoint(), new Distance(0)));
+        edgeList.add(new WeightedDistanceEdge(currentNode.getPoint(), new Distance(distance)));
 
         return edgeList;
     }
