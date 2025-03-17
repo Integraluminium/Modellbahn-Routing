@@ -83,10 +83,10 @@ public class RouteGenerator {
             long decelerationWaitTime = calculateDecelerationTime() - this.currentWaitTime;
             returnActions.add(new WaitAction(decelerationWaitTime));
             this.currentWaitTime += decelerationWaitTime;
+            this.estimatedTime = this.currentWaitTime + this.loc.getDecelerationTime();
             returnActions.add(ActionFactory.createLocSpeedAction(this.loc, 0));
         }
-
-        this.estimatedTime = this.currentWaitTime + this.loc.getDecelerationTime();
+        returnActions.add(new WaitAction(this.estimatedTime - this.currentWaitTime));
         return returnActions;
     }
 
@@ -147,6 +147,7 @@ public class RouteGenerator {
             );
             waitTime -= decelerationWaitTime;
             this.alreadyDecelerated = true;
+            this.estimatedTime = this.currentWaitTime + this.loc.getDecelerationTime();
         }
 
         returnActions.add(new WaitAction(waitTime));
