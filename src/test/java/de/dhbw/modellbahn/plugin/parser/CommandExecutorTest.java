@@ -2,6 +2,7 @@ package de.dhbw.modellbahn.plugin.parser;
 
 import de.dhbw.modellbahn.adapter.locomotive.LocomotiveRepositoryImpl;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedLockCalls;
+import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedSystemCalls;
 import de.dhbw.modellbahn.application.LocomotiveRepository;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
@@ -25,6 +26,7 @@ class CommandExecutorTest {
 
     private static Graph graph;
     private static LocomotiveRepository repository;
+    private static MockedSystemCalls systemCalls;
 
     private CommandExecutor executor;
     private CommandParser parser;
@@ -35,6 +37,7 @@ class CommandExecutorTest {
         repository = new LocomotiveRepositoryImpl(new MockedConfigReader(), new MockedLockCalls());
         repository.addLocomotive(new MockedLocomotive(LOC_ID1, GraphPoint.of("A"), GraphPoint.of("B")));
         repository.addLocomotive(new MockedLocomotive(LOC_ID2, GraphPoint.of("A"), GraphPoint.of("B")));
+        systemCalls = new MockedSystemCalls();
     }
 
     public static void main(String[] args) {
@@ -44,7 +47,7 @@ class CommandExecutorTest {
     @BeforeEach
     void setUp() {
         parser = new CommandParser(new Lexer(), graph, repository);
-        executor = new CommandExecutor(repository, graph, System.out);
+        executor = new CommandExecutor(repository, graph, systemCalls, System.out);
     }
 
     @Test
