@@ -32,7 +32,7 @@ public class LocomotiveDirectionCommand {
     public static final String JSON_PROPERTY_HASH_VALUE = "hash_value";
     public static final String JSON_PROPERTY_RESPONSE = "response";
     public static final String JSON_PROPERTY_LOC_ID = "loc_id";
-    public static final String JSON_PROPERTY_DIRECTION = "destinationPoint";
+    public static final String JSON_PROPERTY_DIRECTION = "direction";
     private Integer hashValue;
     private Boolean response;
     private Integer locId;

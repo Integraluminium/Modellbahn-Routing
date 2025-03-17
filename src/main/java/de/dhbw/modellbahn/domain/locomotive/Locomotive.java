@@ -66,8 +66,19 @@ public class Locomotive {
         return currentFacingDirection;
     }
 
+    /**
+     * Set the direction without interaction with actual locomotive
+     * <p> usage: updating the direction or fixing the model
+     *
+     * @param currentFacingDirection
+     */
     public void setCurrentFacingDirection(GraphPoint currentFacingDirection) {
         this.currentFacingDirection = currentFacingDirection;
+    }
+
+    public void toggleLocomotiveDirection(GraphPoint currentFacingDirection) {
+        this.currentFacingDirection = currentFacingDirection;
+        this.locCallsAdapter.setLocDirection(this.id, LocDirection.TOGGLE);
     }
 
     public Speed getCurrentSpeed() {
