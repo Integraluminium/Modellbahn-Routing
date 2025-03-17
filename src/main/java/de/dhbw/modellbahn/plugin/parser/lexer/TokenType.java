@@ -27,5 +27,6 @@ public enum TokenType {
     SYSTEM_KEYWORD,
     START_KEYWORD,
     STOP_KEYWORD,
+    SPEED,
     GRAPH_POINT
 }

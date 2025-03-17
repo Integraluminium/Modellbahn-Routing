@@ -5,6 +5,7 @@ import de.dhbw.modellbahn.application.RoutingOptimization;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.LocId;
+import de.dhbw.modellbahn.domain.locomotive.Speed;
 import de.dhbw.modellbahn.plugin.parser.lexer.Lexer;
 import de.dhbw.modellbahn.plugin.parser.lexer.LexerException;
 import de.dhbw.modellbahn.plugin.parser.lexer.Token;
@@ -110,7 +111,20 @@ public class CommandParser {
             lexer.advance();
             GraphPoint facingPoint = parseGraphPoint();
             instructions.add(new ModifyLocFacingInstr(locId, facingPoint));
+        } else if (modification_token.type() == TokenType.SPEED) {
+            lexer.advance();
+            Token speed_token = lexer.lookAhead();
+            lexer.advance();
+            if (speed_token.type() != TokenType.LOC_ID) { // LOC_ID is NUMBER
+                throw new ParseException("Expected locomotive ID after ADD got: " + token);
+            }
+            try {
+                Speed speed = new Speed(Integer.parseInt(speed_token.value()));
+                instructions.add(new ModifyLocSpeedInstr(locId, speed));
 
+            } catch (NumberFormatException e) {
+                throw new ParseException("Expected integer value but got: " + speed_token);
+            }
         } else {
             throw new ParseException("Expected TOGGLE or POSITION after locomotive ID but got: " + modification_token);
         }

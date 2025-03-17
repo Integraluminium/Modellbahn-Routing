@@ -45,6 +45,7 @@ public class Lexer {
         addKeywordMachine("SYSTEM", TokenType.SYSTEM_KEYWORD);
         addKeywordMachine("START", TokenType.START_KEYWORD);
         addKeywordMachine("STOP", TokenType.STOP_KEYWORD);
+        addKeywordMachine("SPEED", TokenType.SPEED);
 
         addMachine(new OptimizationMachine());
         addMachine(new LocIdMachine());
