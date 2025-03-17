@@ -6,6 +6,7 @@ public record ConfigLocomotive(
         double maxSpeed,
         long accelerationTime,
         int accelerationDistance,
+        long decelerationTime,
         int decelerationDistance,
         String position,
         String facingDirection

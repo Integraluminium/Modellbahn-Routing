@@ -4,6 +4,7 @@
   maxSpeed: 1.0 # in mm/ms
   accelerationTime: 1000 # in ms
   accelerationDistance: 200 # in mm
+  decelerationTime: 1000 # in ms
   decelerationDistance: 200 # in mm
   position: W17
   facingDirection: B
@@ -14,6 +15,7 @@
   maxSpeed: 1.0
   accelerationTime: 1000
   accelerationDistance: 200
+  decelerationTime: 1000
   decelerationDistance: 200
   position: W17
   facingDirection: B
@@ -24,6 +26,7 @@
   maxSpeed: 0.401
   accelerationTime: 2244
   accelerationDistance: 335
+  decelerationTime: 2244
   decelerationDistance: 335
   position: K16
   facingDirection: W15
@@ -34,6 +37,7 @@
   maxSpeed: 1.0
   accelerationTime: 1000
   accelerationDistance: 200
+  decelerationTime: 1000
   decelerationDistance: 200
   position: A
   facingDirection: B
@@ -44,6 +48,7 @@
   maxSpeed: 1.0
   accelerationTime: 1000
   accelerationDistance: 200
+  decelerationTime: 1000
   decelerationDistance: 200
   position: W15
   facingDirection: B
@@ -54,6 +59,7 @@
   maxSpeed: 1.0
   accelerationTime: 1000
   accelerationDistance: 200
+  decelerationTime: 1000
   decelerationDistance: 200
   position: A
   facingDirection: B

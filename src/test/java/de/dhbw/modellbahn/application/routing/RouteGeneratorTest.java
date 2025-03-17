@@ -31,6 +31,7 @@ class RouteGeneratorTest {
     private static final MaxLocSpeed maxLocSpeed = new MaxLocSpeed(1.0);
     private static final long accelerationTime = 1000;
     private static final Distance accelerationDistance = new Distance(200);
+    private static final long decelerationTime = 1000;
     private static final Distance decelerationDistance = new Distance(200);
     private static final GraphPoint startPosition = GraphPoint.of("A");
     private static final GraphPoint facingDirection = GraphPoint.of("B");
@@ -42,7 +43,7 @@ class RouteGeneratorTest {
 
     @BeforeAll
     static void beforeAll() {
-        Locomotive loc = new MockedLocomotive(maxLocSpeed, accelerationTime, accelerationDistance, decelerationDistance, startPosition, facingDirection);
+        Locomotive loc = new MockedLocomotive(maxLocSpeed, accelerationTime, accelerationDistance, decelerationTime, decelerationDistance, startPosition, facingDirection);
         ApiService apiService = new ApiService(0);
         TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
         SwitchComponent switchComponent = new SwitchComponent(new TrackComponentId(0), trackComponentCalls);
@@ -85,6 +86,7 @@ class RouteGeneratorTest {
             assertThat(action5).isExactlyInstanceOf(LocSpeedAction.class);
             assertEquals(((LocSpeedAction) action5).getLocSpeed(), new Speed(0));
 
+            assertEquals(route.getEstimatedTime(), 2500);
         } catch (PathNotPossibleException e) {
             throw new RuntimeException(e);
         }
