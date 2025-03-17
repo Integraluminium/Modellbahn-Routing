@@ -38,7 +38,7 @@ class RouteTest {
                 new ChangeSwitchStateAction(normalSwitch, pointA, pointC),
                 new LocSpeedAction(loc, new Speed(0))
         );
-        Route route = new Route(loc, actionList, pointD, pointA);
+        Route route = new Route(loc, actionList, pointD, pointA, 0);
 
         route.driveRoute();
 

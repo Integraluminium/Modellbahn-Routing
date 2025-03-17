@@ -12,12 +12,14 @@ public class Route {
     private final List<RoutingAction> actionList;
     private final GraphPoint newPosition;
     private final GraphPoint newFacingDirection;
+    private final long estimatedTime;
 
-    public Route(Locomotive loc, List<RoutingAction> actionList, GraphPoint newPosition, GraphPoint newFacingDirection) {
+    public Route(Locomotive loc, List<RoutingAction> actionList, GraphPoint newPosition, GraphPoint newFacingDirection, long estimatedTime) {
         this.loc = loc;
         this.actionList = Collections.unmodifiableList(actionList);
         this.newPosition = newPosition;
         this.newFacingDirection = newFacingDirection;
+        this.estimatedTime = estimatedTime;
     }
 
     public void driveRoute() {
@@ -34,5 +36,9 @@ public class Route {
 
     public List<RoutingAction> getActionList() {
         return actionList;
+    }
+
+    public long getEstimatedTime() {
+        return estimatedTime;
     }
 }

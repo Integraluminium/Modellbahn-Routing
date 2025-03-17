@@ -23,6 +23,7 @@ public class RouteGenerator {
     private boolean alreadyDecelerated = false;
     private long currentWaitTime = 0;
     private long distanceSum = 0;
+    private long estimatedTime = 0;
 
     /**
      * Constructor for RouteGenerator.
@@ -66,7 +67,7 @@ public class RouteGenerator {
 
         routingActions.addAll(generateActions());
 
-        return new Route(this.loc, routingActions, newPosition, newFacingDirection);
+        return new Route(this.loc, routingActions, newPosition, newFacingDirection, this.estimatedTime);
     }
 
     private List<RoutingAction> generateActions() {
@@ -85,6 +86,7 @@ public class RouteGenerator {
             returnActions.add(ActionFactory.createLocSpeedAction(this.loc, 0));
         }
 
+        this.estimatedTime = this.currentWaitTime + this.loc.getDecelerationTime();
         return returnActions;
     }
 

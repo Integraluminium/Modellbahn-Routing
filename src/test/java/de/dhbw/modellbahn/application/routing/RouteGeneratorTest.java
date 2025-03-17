@@ -86,6 +86,7 @@ class RouteGeneratorTest {
             assertThat(action5).isExactlyInstanceOf(LocSpeedAction.class);
             assertEquals(((LocSpeedAction) action5).getLocSpeed(), new Speed(0));
 
+            assertEquals(route.getEstimatedTime(), 2500);
         } catch (PathNotPossibleException e) {
             throw new RuntimeException(e);
         }
