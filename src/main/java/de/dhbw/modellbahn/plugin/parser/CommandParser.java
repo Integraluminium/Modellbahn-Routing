@@ -106,6 +106,11 @@ public class CommandParser {
             GraphPoint position = parser.parseGraphPoint(modification_token.value());
             instructions.add(new ModifyLocPosInstr(locId, position));
             lexer.advance();
+        } else if (modification_token.type() == TokenType.FACING_KEYWORD) {
+            lexer.advance();
+            GraphPoint facingPoint = parseGraphPoint();
+            instructions.add(new ModifyLocFacingInstr(locId, facingPoint));
+
         } else {
             throw new ParseException("Expected TOGGLE or POSITION after locomotive ID but got: " + modification_token);
         }
@@ -203,7 +208,8 @@ public class CommandParser {
         // Optional FACING <graphpoint>
         if (lexer.lookAhead().type() == TokenType.FACING_KEYWORD) {
             lexer.advance();
-            parseFacingDirection(locId);
+            GraphPoint facingPoint = parseGraphPoint();
+            instructions.add(new SetFacingDirectionForDestinationInstr(locId, facingPoint));
         }
 
         // Optional USING (<optimization>)
@@ -224,15 +230,14 @@ public class CommandParser {
         instructions.add(new SetOptimizationInstr(locId, optimization));
     }
 
-    private void parseFacingDirection(final LocId locId) throws LexerException, ParseException {
+    private GraphPoint parseGraphPoint() throws LexerException, ParseException {
         // <graphpoint>
         Token token = lexer.lookAhead();
         if (token.type() != TokenType.GRAPH_POINT) {
-            throw new ParseException("Expected graph point after FACING but got: " + token);
+            throw new ParseException("Expected graph point but got: " + token);
         }
-        GraphPoint facing = parser.parseGraphPoint(token.value());
-        instructions.add(new SetFacingDirectionForDestinationInstr(locId, facing));
         lexer.advance();
+        return parser.parseGraphPoint(token.value());
     }
 
     private void parseAtStartPosition(LocId locId) throws LexerException, ParseException {

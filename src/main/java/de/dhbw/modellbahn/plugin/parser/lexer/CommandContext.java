@@ -3,6 +3,7 @@ package de.dhbw.modellbahn.plugin.parser.lexer;
 import de.dhbw.modellbahn.application.LocomotiveRepository;
 import de.dhbw.modellbahn.application.RouteBuilder;
 import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;
+import de.dhbw.modellbahn.application.routing.Route;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;
@@ -96,5 +97,13 @@ public class CommandContext {
         getGraphPoints().forEach(point ->
                 output.println(" - " + point.getName().name() +
                         " connects to: " + graph.getNeighbors(point)));
+    }
+
+    public void driveRoute() {
+        routeBuilder.getLocomotivesWithRoute().forEach(locomotive -> {
+            Route route = routeBuilder.getRouteForLoc(locomotive);
+            route.driveRoute();
+        });
+        resetRouteBuilder();
     }
 }

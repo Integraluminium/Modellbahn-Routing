@@ -98,6 +98,11 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
         return routes.get(loc);
     }
 
+    @Override
+    public Iterable<Locomotive> getLocomotivesWithRoute() {
+        return this.routes.keySet();
+    }
+
     private void generateRouteForMultipleLocomotives(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph) throws PathNotPossibleException {
         throw new UnsupportedOperationException("Routing of multiple locomotives is not implemented yet.");
     }

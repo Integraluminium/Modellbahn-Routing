@@ -6,9 +6,7 @@ public class DriveInstr implements Instruction {
     @Override
     public void execute(final CommandContext context) throws Exception {
         context.getCurrentRouteBuilder().generateRoute();
-
-        // TODO drive command
-        context.resetRouteBuilder();
+        context.driveRoute();
     }
 
     @Override

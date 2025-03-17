@@ -4,6 +4,8 @@ import de.dhbw.modellbahn.application.RoutingAlgorithm;
 import de.dhbw.modellbahn.application.RoutingOptimization;
 import de.dhbw.modellbahn.application.routing.*;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
+import de.dhbw.modellbahn.domain.graph.PointSide;
+import de.dhbw.modellbahn.domain.graph.Switch;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.alg.DefaultMonoTrainRoutingStrategy;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.DirectedNodeToWeightedEdgeMapper;
@@ -23,20 +25,59 @@ public class MonoTrainRoutingJGraphT {
         this.strategy = new DefaultMonoTrainRoutingStrategy(routingGraph, algorithm);
     }
 
-    public Route generateRoute(Locomotive locomotive, GraphPoint end, RoutingOptimization optimisations) throws PathNotPossibleException {
-        // TODO optimisations are not considered
-        GraphPoint start = locomotive.getCurrentPosition();
-        GraphPoint facingDirection = locomotive.getCurrentFacingDirection();
-        List<DirectedNode> path = strategy.findShortestPath(start, facingDirection, end);
+    private Route finalizeRouting(final Locomotive locomotive, final List<DirectedNode> path, final GraphPoint newFacingDirection) throws PathNotPossibleException {
         List<WeightedDistanceEdge> weightedDistanceEdges = mapPathToWeightedEdges(path);
-        GraphPoint newFacingDirection = determineNewFacingDirection(path);
-
         System.out.println("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList()); // TODO Logging
-
         RouteGenerator generator = new RouteGenerator(locomotive, weightedDistanceEdges, newFacingDirection);
         return generator.generateRoute();
     }
 
+    public Route generateRoute(Locomotive locomotive, GraphPoint destination, RoutingOptimization optimisations) throws PathNotPossibleException {
+        DirectedNode startNode = beforeRouting(locomotive, optimisations);
+        List<DirectedNode> path = strategy.findShortestPath(startNode, destination);
+        GraphPoint newFacingDirection = determineNewFacingDirection(path);
+
+        return finalizeRouting(locomotive, path, newFacingDirection);
+    }
+
+    public Route generateRoute(Locomotive locomotive, GraphPoint destination, GraphPoint destinationFacing, RoutingOptimization optimisations) throws PathNotPossibleException {
+        DirectedNode startNode = beforeRouting(locomotive, optimisations);
+        DirectedNode endNode = getDirectedNode(destination, destinationFacing, false);
+
+        List<DirectedNode> path = strategy.findShortestPath(startNode, endNode);
+
+        return finalizeRouting(locomotive, path, destinationFacing);
+    }
+
+    private DirectedNode beforeRouting(final Locomotive locomotive, RoutingOptimization optimisations) {
+        // TODO optimisations are not considered
+        GraphPoint start = locomotive.getCurrentPosition();
+        GraphPoint facingDirection = locomotive.getCurrentFacingDirection();
+
+        return getDirectedNode(start, facingDirection, true);
+    }
+
+    private DirectedNode getDirectedNode(GraphPoint point, GraphPoint facingDirection, boolean isSourcePoint) {
+        PointSide side = getSideFromPoint(point, facingDirection);
+        if (isSourcePoint) {
+            side = side.getOpposite();
+        }
+        return new DirectedNode(point, side);
+    }
+
+    /**
+     * Get the side of a point from a given point and facing direction.
+     * <toModifySystem>assert that facing Direction is neighbor of point
+     */
+    private PointSide getSideFromPoint(GraphPoint point, GraphPoint facingDirection) {
+
+        if (point instanceof Switch switchPoint) {
+            return switchPoint.getSwitchSideFromPoint(facingDirection);
+        }
+        // TODO add logic to determine side of point if point is not a switch
+//        throw new UnsupportedOperationException("Determination for a PointSide for non-switches is not implemented yet");
+        return PointSide.IN;
+    }
 
     private List<WeightedDistanceEdge> mapPathToWeightedEdges(final List<DirectedNode> path) {
         return this.directedNodeToWeightedEdgeMapper.getWeightedDistanceEdgesList(routingGraph, path);

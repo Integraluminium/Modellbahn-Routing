@@ -78,4 +78,11 @@ public interface RouteBuilder {
      * @throws IllegalStateException if {@link #generateRoute()} has not been called
      */
     Route getRouteForLoc(Locomotive loc);
+
+    /**
+     * Return all locomotives which are used in routing
+     *
+     * @return locomotives
+     */
+    Iterable<Locomotive> getLocomotivesWithRoute();
 }

@@ -35,6 +35,9 @@ public class CrossSwitch extends GraphPoint implements Switch {
         return connectsStraight(point1, point2) || connectsDiverging(point1, point2);
     }
 
+    /**
+     * @inheritDoc As this switch has two roots, {@link PointSide#IN} is connected to all roots
+     */
     public PointSide getSwitchSideFromPoint(GraphPoint point) {
         if (point.equals(root1) || point.equals(root2)) {
             return PointSide.IN;
