@@ -35,9 +35,9 @@ public class CommandlineREPL {
     private final PrintStream output;
     private boolean running = true;
 
-    public CommandlineREPL(LocomotiveRepository repository, Graph graph, PrintStream output) {
+    public CommandlineREPL(LocomotiveRepository repository, Graph graph, SystemCalls systemCalls, PrintStream output) {
         this.parser = new CommandParser(new de.dhbw.modellbahn.plugin.parser.lexer.Lexer(), graph, repository);
-        this.executor = new CommandExecutor(repository, graph, output);
+        this.executor = new CommandExecutor(repository, graph, systemCalls, output);
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.output = output;
     }
@@ -55,7 +55,7 @@ public class CommandlineREPL {
         LocomotiveRepository locomotiveRepository = new LocomotiveRepositoryImpl(configReader, locCalls);
 
         // Create and start REPL with the real components
-        CommandlineREPL repl = new CommandlineREPL(locomotiveRepository, domainGraph, System.out);
+        CommandlineREPL repl = new CommandlineREPL(locomotiveRepository, domainGraph, systemCalls, System.out);
         repl.start();
     }
 

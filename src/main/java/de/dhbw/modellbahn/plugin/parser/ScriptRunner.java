@@ -34,9 +34,9 @@ public class ScriptRunner {
     private final CommandExecutor executor;
     private final PrintStream output;
 
-    public ScriptRunner(LocomotiveRepository repository, Graph graph, PrintStream output) {
+    public ScriptRunner(LocomotiveRepository repository, Graph graph, final SystemCalls systemCalls, PrintStream output) {
         this.parser = new CommandParser(new de.dhbw.modellbahn.plugin.parser.lexer.Lexer(), graph, repository);
-        this.executor = new CommandExecutor(repository, graph, output);
+        this.executor = new CommandExecutor(repository, graph, systemCalls, output);
         this.output = output;
     }
 
@@ -59,7 +59,7 @@ public class ScriptRunner {
         LocomotiveRepository locomotiveRepository = new LocomotiveRepositoryImpl(configReader, locCalls);
 
         // Create script runner and execute the script
-        ScriptRunner scriptRunner = new ScriptRunner(locomotiveRepository, domainGraph, System.out);
+        ScriptRunner scriptRunner = new ScriptRunner(locomotiveRepository, domainGraph, systemCalls, System.out);
         try {
             scriptRunner.runScript(scriptPath);
         } catch (IOException e) {

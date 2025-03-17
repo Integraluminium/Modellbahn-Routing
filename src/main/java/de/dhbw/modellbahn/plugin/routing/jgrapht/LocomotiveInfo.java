@@ -4,9 +4,12 @@ import de.dhbw.modellbahn.application.RoutingOptimization;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 
+import java.util.Optional;
+
 class LocomotiveInfo {
     private Locomotive loc;
     private GraphPoint destination;
+    private GraphPoint destinationFacingDirection;
     private RoutingOptimization optimisation;
 
     public LocomotiveInfo(final Locomotive loc) {
@@ -29,6 +32,15 @@ class LocomotiveInfo {
 
     public void setDestination(final GraphPoint destination) {
         this.destination = destination;
+    }
+
+    public Optional<GraphPoint> getDestinationFacingDirection() {
+        return Optional.ofNullable(destinationFacingDirection);
+    }
+
+    public void setDestinationFacingDirection(final GraphPoint destinationFacingDirection) {
+        // NOTE: There might be a validation if the facing direction is neighboring the destination
+        this.destinationFacingDirection = destinationFacingDirection;
     }
 
     public RoutingOptimization getOptimisation() {

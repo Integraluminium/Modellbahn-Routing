@@ -40,6 +40,12 @@ public class Lexer {
         addKeywordMachine("POSITION", TokenType.POSITION_KEYWORD);
         addKeywordMachine("LOCOMOTIVES", TokenType.LOCOMOTIVES_KEYWORD);
         addKeywordMachine("GRAPHPOINTS", TokenType.GRAPHPOINTS_KEYWORD);
+
+
+        addKeywordMachine("SYSTEM", TokenType.SYSTEM_KEYWORD);
+        addKeywordMachine("START", TokenType.START_KEYWORD);
+        addKeywordMachine("STOP", TokenType.STOP_KEYWORD);
+
         addMachine(new OptimizationMachine());
         addMachine(new LocIdMachine());
         addMachine(new GraphPointMachine());

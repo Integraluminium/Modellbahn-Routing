@@ -56,8 +56,23 @@ public class CommandParser {
             parseModificationCommand();
         } else if (token.type() == TokenType.LIST_KEYWORD) {
             parseInformationCommand();
+        } else if (token.type() == TokenType.SYSTEM_KEYWORD) {
+            parseSystemInformation();
         } else {
             throw new LexerException("Expected statement but got: " + token);
+        }
+    }
+
+    private void parseSystemInformation() throws LexerException, ParseException {
+        lexer.expect(TokenType.SYSTEM_KEYWORD);
+        Token token = lexer.lookAhead();
+        lexer.advance();
+        if (token.type() == TokenType.START_KEYWORD) {
+            instructions.add(new SystemStateInstr(true));
+        } else if (token.type() == TokenType.STOP_KEYWORD) {
+            instructions.add(new SystemStateInstr(false));
+        } else {
+            throw new ParseException("Expected START or STOP Keyword after SYSTEM");
         }
     }
 

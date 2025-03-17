@@ -46,7 +46,7 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
 
     @Override
     public RouteBuilder setLocFacingDirectionForDestination(final Locomotive loc, final GraphPoint facingDirection) {
-        this.locomotivesToConsiderInRouting.get(loc).getLoc().setCurrentFacingDirection(facingDirection);
+        this.locomotivesToConsiderInRouting.get(loc).setDestinationFacingDirection(facingDirection);
         return this;
     }
 
@@ -62,6 +62,9 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
         return this;
     }
 
+    /**
+     * @inheritDoc <toModifySystem><i>CURRENTLY UNSUPPORTED</i></toModifySystem>
+     */
     @Override
     public RouteBuilder setRouteOptimization(final Locomotive loc, final RoutingOptimization optimization) {
         this.locomotivesToConsiderInRouting.get(loc).setOptimisation(optimization);
@@ -104,12 +107,18 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
         // TODO consider electrification IF locomotive is electric
         MonoTrainRoutingJGraphT monoTrainRoutingJGraphT = new MonoTrainRoutingJGraphT(algorithm, routingGraph);
 
+        LocomotiveInfo locomotiveInfo = locomotivesToConsiderInRouting.get(locomotive);
 
-        Route route = monoTrainRoutingJGraphT.generateRoute(
-                locomotive,
-                locomotivesToConsiderInRouting.get(locomotive).getDestination(),
-                locomotivesToConsiderInRouting.get(locomotive).getOptimisation()
-        );
+        Route route;
+        if (locomotiveInfo.getDestinationFacingDirection().isPresent()) {
+            route = monoTrainRoutingJGraphT.generateRoute(locomotive, locomotiveInfo.getDestination(), locomotiveInfo.getDestinationFacingDirection().get(), locomotiveInfo.getOptimisation());
+        } else {
+            route = monoTrainRoutingJGraphT.generateRoute(
+                    locomotive,
+                    locomotiveInfo.getDestination(),
+                    locomotiveInfo.getOptimisation()
+            );
+        }
         routes.put(locomotive, route);
     }
 

@@ -2,6 +2,7 @@ package de.dhbw.modellbahn.plugin.parser.lexer;
 
 import de.dhbw.modellbahn.application.LocomotiveRepository;
 import de.dhbw.modellbahn.application.RouteBuilder;
+import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.Switch;
@@ -16,14 +17,20 @@ public class CommandContext {
     private final LocomotiveRepository locomotiveRepository;
     private final Graph graph;
     private final PrintStream output;
+    private final SystemCalls systemCalls;
 
     private RouteBuilder routeBuilder;
 
-    public CommandContext(final LocomotiveRepository locomotiveRepository, final Graph graph, final PrintStream output) {
+    public CommandContext(final LocomotiveRepository locomotiveRepository, final Graph graph, final SystemCalls systemCalls, final PrintStream output) {
         this.locomotiveRepository = locomotiveRepository;
         this.graph = graph;
         this.output = output;
+        this.systemCalls = systemCalls;
         resetRouteBuilder();
+    }
+
+    public SystemCalls getSystemCalls() {
+        return systemCalls;
     }
 
     public Locomotive getLocomotive(final LocId locId) {
@@ -81,7 +88,7 @@ public class CommandContext {
             return;
         }
 
-        loc.setCurrentFacingDirection(otherConnectedPoint);
+        loc.toggleLocomotiveDirection(otherConnectedPoint);
     }
 
     public void listAllGraphPoints() {
