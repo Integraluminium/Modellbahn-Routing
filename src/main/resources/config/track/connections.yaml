@@ -1,11 +1,329 @@
-- source: Z
-  destination: C
-  distance: 1
-  height: 1
+- source: S3
+  destination: K27
+  distance: 643
+  height: 0
   electrified: true
 
-- source: Z
-  destination: A
-  distance: 1
-  height: 1
-  electrified: false
+- source: K27
+  destination: K29
+  distance: 556
+  height: 0
+  electrified: true
+
+- source: K29
+  destination: S5
+  distance: 769
+  height: 0
+  electrified: true
+
+- source: S5
+  destination: K16
+  distance: 0
+  height: 0
+  electrified: true
+
+- source: K16
+  destination: W15
+  distance: 637
+  height: 0
+  electrified: true
+
+- source: W15
+  destination: K7
+  distance: 645
+  height: 0
+  electrified: true
+
+- source: K7
+  destination: W10
+  distance: 376
+  height: 0
+  electrified: true
+
+- source: W10
+  destination: S8
+  distance: 247
+  height: 0
+  electrified: true
+
+- source: S8
+  destination: K4
+  distance: 86
+  height: 0
+  electrified: true
+
+- source: K4
+  destination: K12
+  distance: 863
+  height: 0
+  electrified: true
+
+- source: K12
+  destination: S3
+  distance: 921
+  height: 0
+  electrified: true
+
+- source: W10
+  destination: W9
+  distance: 183
+  height: 0
+  electrified: true
+
+- source: W9
+  destination: W?
+  distance: 282
+  height: 0
+  electrified: true
+
+- source: W?
+  destination: W13
+  distance: 605
+  height: 0
+  electrified: true
+
+- source: W13
+  destination: W14
+  distance: 265
+  height: 0
+  electrified: true
+
+- source: W14
+  destination: K25
+  distance: 286
+  height: 0
+  electrified: true
+
+- source: K25
+  destination: K28
+  distance: 531
+  height: 0
+  electrified: true
+
+- source: K28
+  destination: K15
+  distance: 548
+  height: 0
+  electrified: true
+
+- source: K15
+  destination: S1
+  distance: 94
+  height: 0
+  electrified: true
+
+- source: S1
+  destination: W6
+  distance: 282
+  height: 0
+  electrified: true
+
+- source: W6
+  destination: K13
+  distance: 187
+  height: 0
+  electrified: true
+
+- source: K13
+  destination: W17
+  distance: 565
+  height: 0
+  electrified: true
+
+- source: W17
+  destination: W16
+  distance: 188
+  height: 0
+  electrified: true
+
+- source: W16
+  destination: W15
+  distance: 344
+  height: 0
+  electrified: true
+
+- source: W16
+  destination: S2
+  distance: 266
+  height: 0
+  electrified: true
+
+- source: S2
+  destination: K6
+  distance: 0
+  height: 0
+  electrified: true
+
+- source: K6
+  destination: W3
+  distance: 415
+  height: 0
+  electrified: true
+
+- source: W3
+  destination: K3
+  distance: 284
+  height: 0
+  electrified: true
+
+- source: K3
+  destination: S6
+  distance: 86
+  height: 0
+  electrified: true
+
+- source: S6
+  destination: W9
+  distance: 272
+  height: 0
+  electrified: true
+
+- source: W?
+  destination: P1
+  distance: 0
+  height: 0
+  electrified: true
+
+- source: W14
+  destination: K23
+  distance: 209
+  height: 0
+  electrified: true
+
+- source: K23
+  destination: K26
+  distance: 532
+  height: 0
+  electrified: true
+
+- source: K26
+  destination: K30
+  distance: 557
+  height: 0
+  electrified: true
+
+- source: K30
+  destination: S7
+  distance: 92
+  height: 0
+  electrified: true
+
+- source: S7
+  destination: W6
+  distance: 288
+  height: 0
+  electrified: true
+
+- source: W3
+  destination: W4
+  distance: 183
+  height: 0
+  electrified: true
+
+- source: W4
+  destination: W1
+  distance: 140
+  height: 0
+  electrified: true
+
+- source: W1
+  destination: K9
+  distance: 230
+  height: 0
+  electrified: true
+
+- source: K9
+  destination: P2
+  distance: 658
+  height: 0
+  electrified: true
+
+- source: W1
+  destination: K2
+  distance: 190
+  height: 0
+  electrified: true
+
+- source: K2
+  destination: P3
+  distance: 846
+  height: 0
+  electrified: true
+
+- source: W1
+  destination: W12
+  distance: 564
+  height: 0
+  electrified: true
+
+- source: W12
+  destination: P4
+  distance: 609
+  height: 0
+  electrified: true
+
+- source: W12
+  destination: W13
+  distance: 1173
+  height: 0
+  electrified: true
+
+- source: W12
+  destination: W11
+  distance: 141
+  height: 0
+  electrified: true
+
+- source: W11
+  destination: K31
+  distance: 94
+  height: 0
+  electrified: true
+
+- source: K31
+  destination: W5
+  distance: 140
+  height: 0
+  electrified: true
+
+- source: W5
+  destination: K17
+  distance: 186
+  height: 0
+  electrified: true
+
+- source: K17
+  destination: K19
+  distance: 376
+  height: 0
+  electrified: true
+
+- source: W5
+  destination: K21
+  distance: 182
+  height: 0
+  electrified: true
+
+- source: K21
+  destination: K20
+  distance: 369
+  height: 0
+  electrified: true
+
+- source: W5
+  destination: K10
+  distance: 186
+  height: 0
+  electrified: true
+
+- source: K10
+  destination: K5
+  distance: 376
+  height: 0
+  electrified: true
+
+- source: W17
+  destination: W17
+  distance: 4947
+  height: 0
+  electrified: true

@@ -1,0 +1,21 @@
+# Example MobaScript file
+# This is a comment
+
+# List available locomotives and points
+LIST LOCOMOTIVES
+LIST GRAPHPOINTS
+
+# Add and drive a locomotive
+ADD 16389 TO W17 DRIVE
+
+# Multi-line command with indentation
+ADD 16397
+  AT W6
+  TO K2
+  FACING W7
+  USING DISTANCE
+  DRIVE CONSIDER HEIGHT
+
+# Modify locomotive position
+MODIFY 16389 POSITION W8
+MODIFY 16389 TOGGLE DIRECTION

@@ -45,8 +45,8 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
     }
 
     @Override
-    public RouteBuilder setFacingDirectionForLoc(final Locomotive loc, final GraphPoint facingDirection) {
-        this.locomotivesToConsiderInRouting.get(loc).getLoc().setCurrentFacingDirection(facingDirection);
+    public RouteBuilder setLocFacingDirectionForDestination(final Locomotive loc, final GraphPoint facingDirection) {
+        this.locomotivesToConsiderInRouting.get(loc).setDestinationFacingDirection(facingDirection);
         return this;
     }
 
@@ -62,6 +62,9 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
         return this;
     }
 
+    /**
+     * @inheritDoc <toModifySystem><i>CURRENTLY UNSUPPORTED</i></toModifySystem>
+     */
     @Override
     public RouteBuilder setRouteOptimization(final Locomotive loc, final RoutingOptimization optimization) {
         this.locomotivesToConsiderInRouting.get(loc).setOptimisation(optimization);
@@ -95,6 +98,11 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
         return routes.get(loc);
     }
 
+    @Override
+    public Iterable<Locomotive> getLocomotivesWithRoute() {
+        return this.routes.keySet();
+    }
+
     private void generateRouteForMultipleLocomotives(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph) throws PathNotPossibleException {
         throw new UnsupportedOperationException("Routing of multiple locomotives is not implemented yet.");
     }
@@ -103,11 +111,19 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
         Locomotive locomotive = locomotivesToConsiderInRouting.keySet().iterator().next();
         // TODO consider electrification IF locomotive is electric
         MonoTrainRoutingJGraphT monoTrainRoutingJGraphT = new MonoTrainRoutingJGraphT(algorithm, routingGraph);
-        Route route = monoTrainRoutingJGraphT.generateRoute(
-                locomotive,
-                locomotivesToConsiderInRouting.get(locomotive).getDestination(),
-                locomotivesToConsiderInRouting.get(locomotive).getOptimisation()
-        );
+
+        LocomotiveInfo locomotiveInfo = locomotivesToConsiderInRouting.get(locomotive);
+
+        Route route;
+        if (locomotiveInfo.getDestinationFacingDirection().isPresent()) {
+            route = monoTrainRoutingJGraphT.generateRoute(locomotive, locomotiveInfo.getDestination(), locomotiveInfo.getDestinationFacingDirection().get(), locomotiveInfo.getOptimisation());
+        } else {
+            route = monoTrainRoutingJGraphT.generateRoute(
+                    locomotive,
+                    locomotiveInfo.getDestination(),
+                    locomotiveInfo.getOptimisation()
+            );
+        }
         routes.put(locomotive, route);
     }
 

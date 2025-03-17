@@ -3,9 +3,9 @@ package de.dhbw.modellbahn.plugin;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import de.dhbw.modellbahn.adapter.api.ApiConfig;
-import de.dhbw.modellbahn.adapter.locomotive_reading.ConfigLocomotive;
-import de.dhbw.modellbahn.adapter.track_generation.*;
+import de.dhbw.modellbahn.adapter.locomotive.reading.ConfigLocomotive;
+import de.dhbw.modellbahn.adapter.moba.config.ApiConfig;
+import de.dhbw.modellbahn.adapter.track.generation.*;
 import de.dhbw.modellbahn.domain.ConfigReader;
 
 import java.io.IOException;
@@ -80,12 +80,12 @@ public class YAMLConfigReader implements ConfigReader {
     }
 
     @Override
-    public List<ConfigSignal> getSignals() {
-        return List.of(this.readObjectFromPath("track/signals.yaml", ConfigSignal[].class));
+    public List<ConfigVirtualPoint> getVirtualPoints() {
+        return List.of(this.readObjectFromPath("track/virtual_points.yaml", ConfigVirtualPoint[].class));
     }
 
     @Override
-    public List<ConfigVirtualPoint> getVirtualPoints() {
-        return List.of(this.readObjectFromPath("track/track_contacts.yaml", ConfigVirtualPoint[].class));
+    public List<ConfigSignal> getSignals() {
+        return List.of(this.readObjectFromPath("track/signals.yaml", ConfigSignal[].class));
     }
 }

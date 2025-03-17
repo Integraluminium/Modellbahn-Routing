@@ -31,8 +31,9 @@ public class ChangeSwitchStateAction extends RoutingAction {
     @Override
     public String toString() {
         return "ChangeSwitchStateAction{" +
-                "point1=" + point1.getName().name() +
-                ", point2=" + point2.getName().name() +
-                '}';
+               switchComponent.toString() +
+               ": point1=" + point1.getName().name() +
+               ", point2=" + point2.getName().name() +
+               '}';
     }
 }

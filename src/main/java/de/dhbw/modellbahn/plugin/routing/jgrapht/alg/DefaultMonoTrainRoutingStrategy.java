@@ -108,6 +108,7 @@ public class DefaultMonoTrainRoutingStrategy implements MonoTrainRoutingStrategy
     }
 
     @Override
+    @Deprecated
     public List<DirectedNode> findShortestPath(final GraphPoint start, final GraphPoint startFacingDirection,
                                                final GraphPoint end) throws PathNotPossibleException {
         DirectedNode startNode = new DirectedNode(start, PointSide.OUT); // TODO Determine the correct direction with facingDirection

@@ -1,14 +1,20 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
-import de.dhbw.modellbahn.domain.ConfigReader;
-
-import java.util.List;
-
-public record LocId(int id, ConfigReader configReader) {
+public record LocId(int id) {
     public LocId {
-        List<Integer> validIds = configReader.getValidLocIds();
-        if (!validIds.contains(id)) {
+        if (id <= 0) {
             throw new IllegalArgumentException("Id " + id + " is not a valid loc id.");
         }
     }
+
+    public boolean hasId(int id) {
+        return this.id == id;
+    }
+
+    @Override
+    public String toString() {
+        return "LocId[" +
+                "id=" + id + ']';
+    }
+
 }

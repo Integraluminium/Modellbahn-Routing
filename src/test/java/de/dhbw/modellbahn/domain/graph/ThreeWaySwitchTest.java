@@ -2,8 +2,8 @@ package de.dhbw.modellbahn.domain.graph;
 
 import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ThreeWaySwitchTest {
     private static final PointName name = new PointName("Test");
-    private static final GraphPoint root = new GraphPoint(new PointName("root")),
-            straight = new GraphPoint(new PointName("straight")),
-            left = new GraphPoint(new PointName("left")),
-            right = new GraphPoint(new PointName("right"));
+    private static final GraphPoint root = GraphPoint.of("root"),
+            straight = GraphPoint.of("straight"),
+            left = GraphPoint.of("left"),
+            right = GraphPoint.of("right");
     private static ThreeWaySwitch testSwitch;
 
     @BeforeAll
@@ -47,7 +47,7 @@ class ThreeWaySwitchTest {
                 Arguments.of(root, root),
                 Arguments.of(straight, left),
                 Arguments.of(right, straight),
-                Arguments.of(root, new GraphPoint(new PointName("Invalid")))
+                Arguments.of(root, GraphPoint.of("Invalid"))
         );
     }
 
@@ -73,6 +73,6 @@ class ThreeWaySwitchTest {
         assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(straight));
         assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(left));
         assertEquals(PointSide.OUT, testSwitch.getSwitchSideFromPoint(right));
-        assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(new GraphPoint(new PointName("unknown"))));
+        assertThrows(IllegalArgumentException.class, () -> testSwitch.getSwitchSideFromPoint(GraphPoint.of("unknown")));
     }
 }

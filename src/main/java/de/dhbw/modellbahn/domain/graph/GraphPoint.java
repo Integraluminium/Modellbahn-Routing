@@ -12,6 +12,10 @@ public class GraphPoint {
         this.name = name;
     }
 
+    public static GraphPoint of(String name) {
+        return new GraphPoint(new PointName(name));
+    }
+
     public PointName getName() {
         return name;
     }
@@ -31,7 +35,8 @@ public class GraphPoint {
         return Objects.equals(getName(), that.getName());
     }
 
-    public static GraphPoint of(String name){
-        return new GraphPoint(new PointName(name));
+    @Override
+    public String toString() {
+        return String.format("GP-%s{%s}", getClass().getSimpleName(), name.name());
     }
 }

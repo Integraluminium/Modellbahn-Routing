@@ -1,6 +1,6 @@
 package de.dhbw.modellbahn.domain.graph;
 
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
 
 public class CrossSwitch extends GraphPoint implements Switch {
     private final SwitchComponent switchComponent;
@@ -21,8 +21,10 @@ public class CrossSwitch extends GraphPoint implements Switch {
 
     public void switchToConnectPoints(GraphPoint point1, GraphPoint point2) {
         if (connectsStraight(point1, point2)) {
+            System.out.println(getClass().getSimpleName() + " " + getName() + " switch Straight"); // TODO Logging
             switchComponent.setStraight();
         } else if (connectsDiverging(point1, point2)) {
+            System.out.println(getClass().getSimpleName() + " " + getName() + " switch Diverging"); // TODO Logging
             switchComponent.setDiverging();
         } else {
             throw new IllegalArgumentException("Points cannot be connected by this switch.");
@@ -33,6 +35,9 @@ public class CrossSwitch extends GraphPoint implements Switch {
         return connectsStraight(point1, point2) || connectsDiverging(point1, point2);
     }
 
+    /**
+     * @inheritDoc As this switch has two roots, {@link PointSide#IN} is connected to all roots
+     */
     public PointSide getSwitchSideFromPoint(GraphPoint point) {
         if (point.equals(root1) || point.equals(root2)) {
             return PointSide.IN;
@@ -41,16 +46,6 @@ public class CrossSwitch extends GraphPoint implements Switch {
         } else {
             throw new IllegalArgumentException("Point is not connected to this switch.");
         }
-    }
-
-    private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
-        return (point1.equals(root1) && point2.equals(turnout2)) || (point2.equals(root1) && point1.equals(turnout2)) ||
-                (point1.equals(root2) && point2.equals(turnout1)) || (point2.equals(root2) && point1.equals(turnout1));
-    }
-
-    private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
-        return (point1.equals(root1) && point2.equals(turnout1)) || (point2.equals(root1) && point1.equals(turnout1)) ||
-                (point1.equals(root2) && point2.equals(turnout2)) || (point2.equals(root2) && point1.equals(turnout2));
     }
 
     public GraphPoint getPointThatCanConnectThisPoint(GraphPoint point) {
@@ -62,5 +57,15 @@ public class CrossSwitch extends GraphPoint implements Switch {
         } else {
             throw new IllegalArgumentException("This point is not connected with the switch");
         }
+    }
+
+    private boolean connectsStraight(GraphPoint point1, GraphPoint point2) {
+        return (point1.equals(root1) && point2.equals(turnout2)) || (point2.equals(root1) && point1.equals(turnout2)) ||
+                (point1.equals(root2) && point2.equals(turnout1)) || (point2.equals(root2) && point1.equals(turnout1));
+    }
+
+    private boolean connectsDiverging(GraphPoint point1, GraphPoint point2) {
+        return (point1.equals(root1) && point2.equals(turnout1)) || (point2.equals(root1) && point1.equals(turnout1)) ||
+                (point1.equals(root2) && point2.equals(turnout2)) || (point2.equals(root2) && point1.equals(turnout2));
     }
 }

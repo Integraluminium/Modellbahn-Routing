@@ -1,5 +1,6 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
+import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedLockCalls;
 import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.graph.Distance;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
@@ -18,9 +19,9 @@ class LocomotiveTest {
     @BeforeAll
     static void beforeAll() {
         ConfigReader configReader = new YAMLConfigReader();
-        locId = new LocId(16389, configReader);
+        locId = new LocId(16389);
 
-        locomotive = new Locomotive(new LocName("TestLoc"), locId, new MaxLocSpeed(10), 10, new Distance(0), new Distance(0), startPoint, facingPoint);
+        locomotive = new Locomotive(new LocName("TestLoc"), locId, new MaxLocSpeed(10), 10, new Distance(0), new Distance(0), startPoint, facingPoint, new MockedLockCalls());
     }
 
     @Test

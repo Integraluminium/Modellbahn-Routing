@@ -2,9 +2,9 @@ package de.dhbw.modellbahn.adapter.moba.communication.calls;
 
 
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.domain.track_components.SignalState;
-import de.dhbw.modellbahn.domain.track_components.SwitchState;
-import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track.components.SignalState;
+import de.dhbw.modellbahn.domain.track.components.SwitchState;
+import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
 
 public class MockedTrackComponentCalls implements TrackComponentCalls {
 

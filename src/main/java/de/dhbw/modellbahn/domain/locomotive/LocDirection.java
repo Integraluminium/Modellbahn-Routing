@@ -8,7 +8,7 @@ public enum LocDirection {
 
     private final String direction;
 
-    private LocDirection(String direction) {
+    LocDirection(String direction) {
         this.direction = direction;
     }
 

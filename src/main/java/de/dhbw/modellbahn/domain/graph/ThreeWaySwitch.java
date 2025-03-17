@@ -1,6 +1,6 @@
 package de.dhbw.modellbahn.domain.graph;
 
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
 
 public class ThreeWaySwitch extends GraphPoint implements Switch {
     private final SwitchComponent firstSwitch;
@@ -47,16 +47,30 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
         }
     }
 
+    public GraphPoint getPointThatCanConnectThisPoint(GraphPoint point) {
+        PointName pointName = point.getName();
+        if (pointName.equals(root)) {
+            return new GraphPoint(left);
+        } else if (pointName.equals(left) || pointName.equals(straight) || pointName.equals(right)) {
+            return new GraphPoint(root);
+        } else {
+            throw new IllegalArgumentException("This point is not connected with the switch");
+        }
+    }
+
     private void switchStraight() {
+        System.out.println(getClass().getSimpleName() + " " + getName() + " switchStraight");
         firstSwitch.setStraight();
         secondSwitch.setStraight();
     }
 
     private void switchLeft() {
+        System.out.println(getClass().getSimpleName() + " " + getName() + " switch Left");
         firstSwitch.setDiverging();
     }
 
     private void switchRight() {
+        System.out.println(getClass().getSimpleName() + " " + getName() + " switch Right");
         firstSwitch.setStraight();
         secondSwitch.setDiverging();
     }
@@ -71,16 +85,5 @@ public class ThreeWaySwitch extends GraphPoint implements Switch {
 
     private boolean connectsRight(GraphPoint point1, GraphPoint point2) {
         return (point1.equals(root) && point2.equals(right)) || (point2.equals(root) && point1.equals(right));
-    }
-
-    public GraphPoint getPointThatCanConnectThisPoint(GraphPoint point) {
-        PointName pointName = point.getName();
-        if (pointName.equals(root)) {
-            return new GraphPoint(left);
-        } else if (pointName.equals(left) || pointName.equals(straight) || pointName.equals(right)) {
-            return new GraphPoint(root);
-        } else {
-            throw new IllegalArgumentException("This point is not connected with the switch");
-        }
     }
 }

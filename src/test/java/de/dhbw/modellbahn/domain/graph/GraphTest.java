@@ -8,13 +8,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GraphTest {
-    private static GraphPoint pointA, pointB, pointC;
-    private static Distance distanceAB, distanceBC;
     private static final Height height = new Height(0);
     private static final boolean electrified = true;
+    private static GraphPoint pointA, pointB, pointC;
+    private static Distance distanceAB, distanceBC;
     private static Graph testGraph;
 
     @BeforeAll
@@ -23,9 +23,9 @@ class GraphTest {
         testGraph:  A ------ B ------ C
         distances:      10       20
          */
-        pointA = new GraphPoint(new PointName("A"));
-        pointB = new GraphPoint(new PointName("B"));
-        pointC = new GraphPoint(new PointName("C"));
+        pointA = GraphPoint.of("A");
+        pointB = GraphPoint.of("B");
+        pointC = GraphPoint.of("C");
 
         distanceAB = new Distance(10);
         distanceBC = new Distance(20);

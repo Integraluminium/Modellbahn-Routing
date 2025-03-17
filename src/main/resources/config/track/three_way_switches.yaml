@@ -1,15 +1,15 @@
-- name: switch1
-  id1: 00000
-  id2: 00001
-  root: A
-  straight: B
-  left: C
-  right: D
+- name: W1
+  id1: 12289 # left way
+  id2: 12288 # right way
+  root: W4
+  straight: K2
+  left: K9
+  right: W12
 
-- name: switch2
-  id1: 00010
-  id2: 00011
-  root: A
-  straight: B
-  left: C
-  right: D
+- name: W5
+  id1: 12292 # left way
+  id2: 12295 # right way
+  root: K31
+  straight: K21
+  left: K17
+  right: K10

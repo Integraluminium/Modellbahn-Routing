@@ -29,16 +29,19 @@ public class GraphToRoutingGraphMapper {
     }
 
     private void createVertices(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point, List<WeightedEdge> adjacentEdges) {
-        newGraph.addVertex(new DirectedNode(point, PointSide.IN));
-        newGraph.addVertex(new DirectedNode(point, PointSide.OUT));
         if (point instanceof Switch) {
+            newGraph.addVertex(new DirectedNode(point, PointSide.IN));
+            newGraph.addVertex(new DirectedNode(point, PointSide.OUT));
             for (WeightedEdge edge : adjacentEdges) {
                 PointSide sourceSide = ((Switch) point).getSwitchSideFromPoint(edge.destination());
                 if (point.equals(edge.destination())) {
                     // Special case if a switch is connected to itself
                     DirectedNode source = new DirectedNode(point, sourceSide.getOpposite());
                     DirectedNode destination = new DirectedNode(point, sourceSide);
-                    addEdgeToGraph(newGraph, source, destination, edge.distance().value());
+
+                    if (!newGraph.containsEdge(source, destination)) {    // Checks if edge already exists to prevent duplicate edges
+                        addEdgeToGraph(newGraph, source, destination, edge.distance().value());
+                    }
                 } else {
                     addEdge(newGraph, point, sourceSide, edge);
                 }
@@ -61,6 +64,8 @@ public class GraphToRoutingGraphMapper {
                     addEdge(newGraph, point, PointSide.OUT, edge);
                 }
             } else {
+                newGraph.addVertex(new DirectedNode(point, PointSide.IN));
+                newGraph.addVertex(new DirectedNode(point, PointSide.OUT));
                 for (WeightedEdge edge : adjacentEdges) {
                     addEdge(newGraph, point, sourceSide, edge);
                     sourceSide = sourceSide.getOpposite();

@@ -22,6 +22,7 @@ public class Route {
 
     public void driveRoute() {
         for (RoutingAction action : actionList) {
+            System.out.println("Performing action: " + action);
             action.performAction();
             // NOTE: Maybe the action should be performed at correct time
             //  With some feedback from the hardware there could be a check if the action was successful

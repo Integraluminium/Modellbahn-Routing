@@ -1,8 +1,8 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
+import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedLockCalls;
 import de.dhbw.modellbahn.domain.graph.Distance;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
-import de.dhbw.modellbahn.plugin.MockedConfigReader;
 
 public class MockedLocomotive extends Locomotive {
     public MockedLocomotive(GraphPoint startPosition, GraphPoint startFacingDirection) {
@@ -10,6 +10,10 @@ public class MockedLocomotive extends Locomotive {
     }
 
     public MockedLocomotive(MaxLocSpeed maxLocSpeed, long accelerationTime, Distance accelerationDistance, Distance decelerationDistance, GraphPoint startPosition, GraphPoint startFacingDirection) {
-        super(new LocName("MockedLoc"), new LocId(1, new MockedConfigReader()), maxLocSpeed, accelerationTime, accelerationDistance, decelerationDistance, startPosition, startFacingDirection);
+        super(new LocName("MockedLoc"), new LocId(1), maxLocSpeed, accelerationTime, accelerationDistance, decelerationDistance, startPosition, startFacingDirection, new MockedLockCalls());
+    }
+
+    public MockedLocomotive(int id, GraphPoint startPosition, GraphPoint startFacingDirection) {
+        super(new LocName("MockedLoc-" + id), new LocId(id), new MaxLocSpeed(1.0), 10, new Distance(5), new Distance(5), startPosition, startFacingDirection, new MockedLockCalls());
     }
 }

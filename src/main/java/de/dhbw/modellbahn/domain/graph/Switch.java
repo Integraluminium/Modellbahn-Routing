@@ -5,6 +5,15 @@ public interface Switch {
 
     boolean checkIfConnectsPoints(GraphPoint point1, GraphPoint point2);
 
+    /**
+     * Determines to which side of the switch the graph point is connected to.
+     * <p><toModifySystem>Warning</toModifySystem> Result is not inversed
+     * <p>Example: If the point is connected to the root, it will return {@link PointSide#IN}
+     * If the point is connected to the outgoing point, it will return {@link PointSide#OUT}
+     *
+     * @param point
+     * @return
+     */
     PointSide getSwitchSideFromPoint(GraphPoint point);
 
     GraphPoint getPointThatCanConnectThisPoint(GraphPoint point);

@@ -1,8 +1,8 @@
 package de.dhbw.modellbahn.plugin;
 
-import de.dhbw.modellbahn.adapter.api.ApiConfig;
-import de.dhbw.modellbahn.adapter.locomotive_reading.ConfigLocomotive;
-import de.dhbw.modellbahn.adapter.track_generation.*;
+import de.dhbw.modellbahn.adapter.locomotive.reading.ConfigLocomotive;
+import de.dhbw.modellbahn.adapter.moba.config.ApiConfig;
+import de.dhbw.modellbahn.adapter.track.generation.*;
 import de.dhbw.modellbahn.domain.ConfigReader;
 
 import java.util.ArrayList;
@@ -65,12 +65,12 @@ public class MockedConfigReader implements ConfigReader {
     }
 
     @Override
-    public List<ConfigSignal> getSignals() {
-        return List.of(new ConfigSignal("G", 8));
+    public List<ConfigVirtualPoint> getVirtualPoints() {
+        return List.of(new ConfigVirtualPoint("B"));
     }
 
     @Override
-    public List<ConfigVirtualPoint> getVirtualPoints() {
-        return List.of(new ConfigVirtualPoint("B"));
+    public List<ConfigSignal> getSignals() {
+        return List.of(new ConfigSignal("G", 8));
     }
 }

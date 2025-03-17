@@ -2,6 +2,7 @@ package de.dhbw.modellbahn.application.routing;
 
 import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.LocCallsAdapter;
+import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedLockCalls;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.SystemCallsAdapter;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
 import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
@@ -16,8 +17,8 @@ import de.dhbw.modellbahn.domain.locomotive.LocId;
 import de.dhbw.modellbahn.domain.locomotive.LocName;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.MaxLocSpeed;
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 
 import java.util.ArrayList;
@@ -85,8 +86,9 @@ class RouteIntegrationTest {
 
     private Locomotive getMockedLocomotive(GraphPoint start, GraphPoint facingDirection) {
         LocName name = new LocName("TestLoc");
-        LocId locId = new LocId(16389, configReader);
-        return new Locomotive(name, locId, new MaxLocSpeed(50), 0, new Distance(0), new Distance(0), start, facingDirection);
+        LocId locId = new LocId(16389);
+        LocCalls locCalls = new MockedLockCalls();
+        return new Locomotive(name, locId, new MaxLocSpeed(50), 0, new Distance(0), new Distance(0), start, facingDirection, locCalls);
     }
 
     private PointName createPointName(String name) {

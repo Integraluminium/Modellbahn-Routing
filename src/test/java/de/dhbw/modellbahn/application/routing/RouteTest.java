@@ -11,8 +11,8 @@ import de.dhbw.modellbahn.domain.graph.PointName;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.MockedLocomotive;
 import de.dhbw.modellbahn.domain.locomotive.Speed;
-import de.dhbw.modellbahn.domain.track_components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track_components.TrackComponentId;
+import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
+import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -23,9 +23,9 @@ class RouteTest {
 
     @Test
     void driveRoute() {
-        GraphPoint pointA = new GraphPoint(new PointName("A"));
-        GraphPoint pointC = new GraphPoint(new PointName("C"));
-        GraphPoint pointD = new GraphPoint(new PointName("D"));
+        GraphPoint pointA = GraphPoint.of("A");
+        GraphPoint pointC = GraphPoint.of("C");
+        GraphPoint pointD = GraphPoint.of("D");
 
         SwitchComponent switchComponent = new SwitchComponent(new TrackComponentId(0), new MockedTrackComponentCalls());
         NormalSwitch normalSwitch = new NormalSwitch(new PointName("B"), switchComponent, pointA.getName(), pointC.getName(), pointD.getName());

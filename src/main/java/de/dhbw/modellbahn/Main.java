@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
 
         ConfigReader configReader = new YAMLConfigReader();
-        LocId id = new LocId(16389, configReader);
+        LocId id = new LocId(16389);
 
         var apiService = new ApiService(0);
 
