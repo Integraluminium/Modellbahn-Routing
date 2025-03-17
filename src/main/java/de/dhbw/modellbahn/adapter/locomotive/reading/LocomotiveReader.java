@@ -25,6 +25,7 @@ public class LocomotiveReader {
                 new MaxLocSpeed(loc.maxSpeed()),
                 loc.accelerationTime(),
                 new Distance(loc.accelerationDistance()),
+                loc.decelerationTime(),
                 new Distance(loc.decelerationDistance()),
                 GraphPoint.of(loc.position()),
                 GraphPoint.of(loc.facingDirection()),

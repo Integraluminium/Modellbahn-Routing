@@ -55,14 +55,14 @@ class ApiServiceIntegrationTest {
     }
 
     @Test
-        //@Disabled("This test is disabled because it requires a physical locomotive to be connected to the system")
+        @Disabled("This test is disabled because it requires a physical locomotive to be connected to the system")
     void testLocomotive() {
         LocId id = new LocId(16397);
         locCalls.setLocSpeed(id, new Speed(100));
     }
 
     @Test
-        //@Disabled("This test is disabled because it requires a physical locomotive to be connected to the system")
+        @Disabled("This test is disabled because it requires a physical locomotive to be connected to the system")
     void testEmergencyStop() {
         LocId id = new LocId(16397);
         locCalls.emergencyStopLoc(id);
