@@ -25,7 +25,7 @@ public class Route {
     }
 
     public void driveRoute() {
-        int step = 0;
+        int step = 1;
         int maxSteps = actionList.size();
         for (RoutingAction action : actionList) {
             logger.info("Performing action[" + step++ + "/" + maxSteps + "]: " + action);
