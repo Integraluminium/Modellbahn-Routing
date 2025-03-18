@@ -106,12 +106,4 @@ public class DefaultMonoTrainRoutingStrategy implements MonoTrainRoutingStrategy
         GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathWithAlternative(shortestPathAlgorithm, start, preferredEnd, alternativeEnd);
         return path.getVertexList();
     }
-
-    @Override
-    @Deprecated
-    public List<DirectedNode> findShortestPath(final GraphPoint start, final GraphPoint startFacingDirection,
-                                               final GraphPoint end) throws PathNotPossibleException {
-        DirectedNode startNode = new DirectedNode(start, PointSide.OUT); // TODO Determine the correct direction with facingDirection
-        return findShortestPath(startNode, end);
-    }
 }

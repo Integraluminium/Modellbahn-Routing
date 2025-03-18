@@ -5,7 +5,9 @@ import de.dhbw.modellbahn.domain.graph.*;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class GraphToRoutingGraphMapper {
@@ -16,12 +18,29 @@ public class GraphToRoutingGraphMapper {
         }
     }
 
-    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToJGraphT(Graph originalGraph) {
-        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph = new DefaultDirectedWeightedGraph<>(DefaultWeightedEdge.class);
 
+    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToJGraphT(Graph originalGraph) {
+        return mapGraphToJGraphT(originalGraph, false, new ArrayList<>());
+    }
+
+    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToJGraphT(Graph originalGraph, boolean electrified, List<GraphPoint> blockedPoints) {
+        Objects.requireNonNull(originalGraph);
+        Objects.requireNonNull(blockedPoints);
+
+        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph = new DefaultDirectedWeightedGraph<>(DefaultWeightedEdge.class);
         Set<GraphPoint> graphPoints = originalGraph.getAllVertices();
+        if (!blockedPoints.isEmpty()) {
+            blockedPoints.forEach(graphPoints::remove);
+        }
+
         graphPoints.forEach(vertex -> {
             List<WeightedEdge> adjacentEdges = originalGraph.getEdgesOfVertex(vertex);
+            if (electrified) {
+                adjacentEdges = adjacentEdges.stream().filter(WeightedEdge::electrified).toList();
+            }
+            if (!blockedPoints.isEmpty()) {
+                adjacentEdges = adjacentEdges.stream().filter(edge -> !blockedPoints.contains(edge.destination())).toList();
+            }
             createVertices(newGraph, vertex, adjacentEdges);
         });
 
