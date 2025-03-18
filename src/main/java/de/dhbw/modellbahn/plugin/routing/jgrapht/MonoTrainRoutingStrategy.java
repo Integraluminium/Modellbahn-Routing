@@ -31,7 +31,4 @@ public interface MonoTrainRoutingStrategy {
      * @return a list of edges that represent the shortest path
      */
     List<DirectedNode> findShortestPath(DirectedNode start, GraphPoint destination) throws PathNotPossibleException;
-
-    @Deprecated
-    List<DirectedNode> findShortestPath(GraphPoint start, GraphPoint startFacingDirection, GraphPoint end) throws PathNotPossibleException;
 }
