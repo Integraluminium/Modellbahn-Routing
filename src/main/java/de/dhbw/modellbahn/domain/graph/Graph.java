@@ -26,7 +26,7 @@ public class Graph {
     }
 
     public List<WeightedEdge> getEdgesOfVertex(GraphPoint point) {
-        return this.adjacencyList.get(point);
+        return new ArrayList<>(this.adjacencyList.get(point));
     }
 
     public List<WeightedEdge> getEdgesOfVertex(PointName name) {
@@ -35,7 +35,7 @@ public class Graph {
     }
 
     public Set<GraphPoint> getAllVertices() {
-        return this.adjacencyList.keySet();
+        return new HashSet<>(this.adjacencyList.keySet());
     }
 
     public boolean contains(GraphPoint point) {

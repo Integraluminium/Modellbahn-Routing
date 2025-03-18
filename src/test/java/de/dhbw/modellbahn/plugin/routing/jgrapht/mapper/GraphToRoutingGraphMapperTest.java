@@ -41,6 +41,10 @@ class GraphToRoutingGraphMapperTest {
 
         boolean isEInEdges = jGraph.edgesOf(nodeA.get()).stream().anyMatch(edge -> jGraph.getEdgeTarget(edge).getNodeName().equals("E"));
         assertThat(isEInEdges).isFalse();
+
+        // check graph is not altered
+        Graph graph1 = DomainGraphFactory.createTestGraph();
+        assertThat(graph1).usingRecursiveComparison().isEqualTo(graph);
     }
 
     @Test
@@ -57,6 +61,9 @@ class GraphToRoutingGraphMapperTest {
         boolean existsInEdges = jGraph.edgeSet().stream().anyMatch(edge -> jGraph.getEdgeSource(edge).getPoint().equals(blockedPoint) || jGraph.getEdgeTarget(edge).getPoint().equals(blockedPoint));
         assertThat(existsInEdges).isFalse();
 
+        // check graph is not altered
+        Graph graph1 = DomainGraphFactory.createTestGraph();
+        assertThat(graph1).usingRecursiveComparison().isEqualTo(graph);
     }
 
     @Test
@@ -66,6 +73,10 @@ class GraphToRoutingGraphMapperTest {
         org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> jGraph = mapper.mapGraphToJGraphT(graph, false, blockedPoints);
 
         assertThat(jGraph.vertexSet().isEmpty()).isTrue();
+
+        // check graph is not altered
+        Graph graph1 = DomainGraphFactory.createTestGraph();
+        assertThat(graph1).usingRecursiveComparison().isEqualTo(graph);
     }
 
     @Test
@@ -79,6 +90,9 @@ class GraphToRoutingGraphMapperTest {
         assertThat(jGraph.vertexSet().stream().findFirst().get().getPoint()).isEqualTo(notBlockedPoint);
 
         assertThat(jGraph.edgeSet().size()).isEqualTo(0);
-    }
 
+        // check graph is not altered
+        Graph graph1 = DomainGraphFactory.createTestGraph();
+        assertThat(graph1).usingRecursiveComparison().isEqualTo(graph);
+    }
 }
