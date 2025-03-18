@@ -50,7 +50,6 @@ public class CommandlineREPL {
         ConfigReader configReader = new YAMLConfigReader();
 
         ApiService apiService = new ApiService(SENDER_HASH);
-        apiService.setTimeout(10); // VERY short timeout for REPL
         LocCalls locCalls = new LocCallsAdapter(apiService);
         SystemCalls systemCalls = new SystemCallsAdapter(apiService);
         TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);

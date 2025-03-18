@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 
 public class ApiService {
     private static final Logger logger = Logger.getLogger(ApiService.class.getSimpleName());
+    private static final int OK = 200;
+    private static final int NO_CONTENT = 204;
     private final String url;
     private final int senderHash;
     private Duration timeout;
@@ -56,8 +58,8 @@ public class ApiService {
 
             // Check the response status code
             int statusCode = response.statusCode();
-            if (statusCode != 200 && statusCode != 204) {
-                logger.log(Level.WARNING, "Request failed with status code: " + response.statusCode());
+            if (statusCode != OK && statusCode != NO_CONTENT) {
+                logger.warning("Request failed with status code: " + response.statusCode());
             }
         } catch (HttpTimeoutException e) {
             logger.warning("Request timed out: " + e.getMessage());

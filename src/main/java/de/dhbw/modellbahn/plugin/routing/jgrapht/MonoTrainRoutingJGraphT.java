@@ -28,7 +28,7 @@ public class MonoTrainRoutingJGraphT {
 
     private Route finalizeRouting(final Locomotive locomotive, final List<DirectedNode> path, final GraphPoint newFacingDirection) throws PathNotPossibleException {
         List<WeightedDistanceEdge> weightedDistanceEdges = mapPathToWeightedEdges(path);
-        logger.info("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList()); // TODO Logging
+        logger.info("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList());
         RouteGenerator generator = new RouteGenerator(locomotive, weightedDistanceEdges, newFacingDirection);
         return generator.generateRoute();
     }
