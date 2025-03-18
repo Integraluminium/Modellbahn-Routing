@@ -11,7 +11,6 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpTimeoutException;
 import java.time.Duration;
 import java.util.Objects;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ApiService {
@@ -54,7 +53,7 @@ public class ApiService {
             // Send the request and get the response
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            logger.log(Level.FINE, "Requested: " + uri + " with body: " + jsonBody);
+            logger.fine("Requested: " + uri + " with body: " + jsonBody);
 
             // Check the response status code
             int statusCode = response.statusCode();
