@@ -1,6 +1,9 @@
 package de.dhbw.modellbahn.application.routing.action;
 
+import java.util.logging.Logger;
+
 public class WaitAction extends RoutingAction {
+    private static final Logger logger = Logger.getLogger(WaitAction.class.getSimpleName());
     private final long waitTime;
 
     public WaitAction(long waitTime) {
@@ -16,7 +19,7 @@ public class WaitAction extends RoutingAction {
             return;
         }
         try {
-            System.out.println("Waiting for " + this.waitTime + "ms");
+            logger.fine("Waiting for " + this.waitTime + "ms");
             Thread.sleep(this.waitTime);
         } catch (InterruptedException e) {
             throw new RuntimeException("Waiting in route failed. \n" + e);
@@ -30,7 +33,7 @@ public class WaitAction extends RoutingAction {
     @Override
     public String toString() {
         return "WaitAction{" +
-               "waitTime=" + waitTime +
-               "ms}";
+                "waitTime=" + waitTime +
+                "ms}";
     }
 }

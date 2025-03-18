@@ -19,10 +19,10 @@ public class NormalSwitch extends GraphPoint implements Switch {
 
     public void switchToConnectPoints(GraphPoint point1, GraphPoint point2) {
         if (connectsStraight(point1, point2)) {
-            System.out.println(getClass().getSimpleName() + " " + getName() + " switch Straight");
+            logger.fine(getClass().getSimpleName() + " " + getName() + " switch Straight");
             switchComponent.setStraight();
         } else if (connectsDiverging(point1, point2)) {
-            System.out.println(getClass().getSimpleName() + " " + getName() + " switch Diverging");
+            logger.fine(getClass().getSimpleName() + " " + getName() + " switch Diverging");
             switchComponent.setDiverging();
         } else {
             throw new IllegalArgumentException("Points cannot be connected by this switch.");

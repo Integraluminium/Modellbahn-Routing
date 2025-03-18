@@ -20,6 +20,7 @@ import de.dhbw.modellbahn.domain.locomotive.LocId;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.RouteBuilderForJGraphT;
+import de.dhbw.modellbahn.util.MobaLogConfig;
 
 class RoutingApplication {
     private static final int SENDER_HASH = 25438; // just a random number - stolen from central station
@@ -41,6 +42,7 @@ class RoutingApplication {
     }
 
     public static void main(String[] args) {
+        MobaLogConfig.configureLogging();
         RoutingApplication app = new RoutingApplication();
         try {
 //            app.driveLocomotive("16389", "K2");

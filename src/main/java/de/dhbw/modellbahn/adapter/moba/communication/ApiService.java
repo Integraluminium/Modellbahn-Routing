@@ -11,8 +11,12 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpTimeoutException;
 import java.time.Duration;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class ApiService {
+    private static final Logger logger = Logger.getLogger(ApiService.class.getSimpleName());
+    private static final int OK = 200;
+    private static final int NO_CONTENT = 204;
     private final String url;
     private final int senderHash;
     private Duration timeout;
@@ -48,15 +52,16 @@ public class ApiService {
 
             // Send the request and get the response
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            // System.out.println("Requested: " + uri + " with body: " + jsonBody); // TODO Logging
+
+            logger.fine("Requested: " + uri + " with body: " + jsonBody);
 
             // Check the response status code
             int statusCode = response.statusCode();
-            if (statusCode != 200 && statusCode != 204) {
-                System.err.println("Request failed with status code: " + response.statusCode());
+            if (statusCode != OK && statusCode != NO_CONTENT) {
+                logger.warning("Request failed with status code: " + response.statusCode());
             }
         } catch (HttpTimeoutException e) {
-            System.err.println("Request timed out: " + e.getMessage());
+            logger.warning("Request timed out: " + e.getMessage());
         }
     }
 
@@ -75,7 +80,7 @@ public class ApiService {
             sendHttpRequest(uri, jsonBody, this.timeout);
 
         } catch (Exception e) {
-            System.err.println("An error occurred: " + e.getMessage());
+            logger.severe("An error occurred: " + e.getMessage());
             e.printStackTrace();
         }
     }

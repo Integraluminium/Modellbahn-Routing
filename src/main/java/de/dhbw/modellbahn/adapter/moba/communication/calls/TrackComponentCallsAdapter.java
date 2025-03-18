@@ -7,7 +7,10 @@ import de.dhbw.modellbahn.domain.track.components.SignalState;
 import de.dhbw.modellbahn.domain.track.components.SwitchState;
 import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
 
+import java.util.logging.Logger;
+
 public class TrackComponentCallsAdapter implements TrackComponentCalls {
+    private static final Logger logger = Logger.getLogger(TrackComponentCallsAdapter.class.getSimpleName());
     private final ApiService apiAdapter;
 
     public TrackComponentCallsAdapter(ApiService apiAdapter) {
@@ -29,7 +32,7 @@ public class TrackComponentCallsAdapter implements TrackComponentCalls {
     }
 
     private void setTrackComponentStatus(TrackComponentId trackComponentId, int trackComponentStatus) {
-        System.out.printf("setTrackComponentStatus<%s>: %s->%s\n", apiAdapter.getSenderHash(), trackComponentId.id(), trackComponentStatus);
+        logger.info("setTrackComponentStatus<" + apiAdapter.getSenderHash() + ">: " + trackComponentId.id() + "->" + trackComponentStatus);
         apiAdapter.sendRequest("/loc/switch_accessory", new SwitchingAccessoriesCommand(
                 apiAdapter.getSenderHash(),
                 false,

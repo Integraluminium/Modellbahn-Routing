@@ -15,6 +15,7 @@ import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import de.dhbw.modellbahn.plugin.parser.lexer.LexerException;
 import de.dhbw.modellbahn.plugin.parser.lexer.instructions.Instruction;
+import de.dhbw.modellbahn.util.MobaLogConfig;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -41,6 +42,7 @@ public class ScriptRunner {
     }
 
     public static void main(String[] args) {
+        MobaLogConfig.configureLogging();
         if (args.length < 1) {
             System.err.println("Usage: ScriptRunner <script-file>");
             System.exit(1);

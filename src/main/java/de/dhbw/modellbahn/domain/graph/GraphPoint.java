@@ -1,8 +1,10 @@
 package de.dhbw.modellbahn.domain.graph;
 
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class GraphPoint {
+    protected static final Logger logger = Logger.getLogger(GraphPoint.class.getSimpleName());
     private final PointName name;
 
     public GraphPoint(PointName name) {
