@@ -33,8 +33,7 @@ class DefaultRouteBuilderStrategyTest {
         var routingGraph = mapper.mapGraphToJGraphT(graph);
 
         MonoTrainRoutingStrategy routing = new DefaultMonoTrainRoutingStrategy(routingGraph, RoutingAlgorithm.DIJKSTRA);
-        routing.findShortestPath(new DirectedNode(start, PointSide.IN), direction);
-        List<DirectedNode> shortestPath = routing.findShortestPath(start, direction, end);
+        List<DirectedNode> shortestPath = routing.findShortestPath(new DirectedNode(start, PointSide.OUT), direction);
 
         // Assert
         for (DirectedNode directedNode : shortestPath) {
