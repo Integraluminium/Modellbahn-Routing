@@ -13,6 +13,7 @@ import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMappe
 import org.jgrapht.graph.DefaultWeightedEdge;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class RouteBuilderForJGraphT implements RouteBuilder {
     private final HashMap<Locomotive, LocomotiveInfo> locomotivesToConsiderInRouting;
@@ -128,12 +129,18 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
     }
 
     private org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToRoutingGraph(boolean considerHeight) {
-        GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper(); // TODO consider height and electrification
-        return mapper.mapGraphToJGraphT(graph);
+        GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper(); // TODO consider height
+
+        List<GraphPoint> blockedPoints = locomotivesToConsiderInRouting.values().stream()
+                .filter(info -> info.getDestination() == info.getLoc().getCurrentPosition())
+                .map(info -> info.getLoc().getCurrentPosition())
+                .toList();
+
+        return mapper.mapGraphToJGraphT(graph, considerElectrification, blockedPoints);
     }
 
     private long getAmountOfLocomotivesToConsider() {
-        return this.locomotivesToConsiderInRouting.values().stream().filter(loc -> loc.getDestination() != null).count();
+        return this.locomotivesToConsiderInRouting.values().stream().filter(locInfo -> locInfo.getDestination() != locInfo.getLoc().getCurrentPosition()).count();
     }
 
     public RouteBuilder setRoutingAlgorithm(final RoutingAlgorithm algorithm) {
