@@ -309,4 +309,11 @@ class CommandParserTest {
                 """;
         parser.parse(command);
     }
+
+    @Test
+    void testComments() throws ParseException, LexerException {
+        parser.parse("// This is a comment");
+        parser.parse("NEW ROUTE ADD 123 TO stationA // This is a comment");
+        parser.parse("# This is a comment");
+    }
 }
