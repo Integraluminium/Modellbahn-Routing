@@ -10,12 +10,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 
-public class MobaControllApplication {
+public class RoutingApplicationMain {
     public static void main(String[] args) {
         PrintStream standardOutput = System.out;
         RoutingApplication app = new RoutingApplication();
         DomainObjectParser domainObjectParser = new DomainObjectParser(app.getGraph(), app.getLocomotiveRepository());
-        var executor = new CommandExecutor(app.getLocomotiveRepository(), app.getGraph(), app.getSystemCalls(), standardOutput);
+        CommandExecutor executor = app.getExecutor();
         CommandParser parser = new CommandParser(new Lexer(), domainObjectParser);
 
         if (args.length == 0) {
@@ -27,7 +27,7 @@ public class MobaControllApplication {
             // Set debug level and run REPL
             MobaLogConfig.configureLogging(Level.FINE);
             new CommandlineREPL(parser, executor, standardOutput).start();
-            
+
         } else {
             // Script mode
             MobaLogConfig.configureLogging(Level.INFO);
