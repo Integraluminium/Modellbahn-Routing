@@ -1,9 +1,7 @@
 package de.dhbw.modellbahn.plugin.parser;
 
-import de.dhbw.modellbahn.application.LocomotiveRepository;
 import de.dhbw.modellbahn.application.RoutingAlgorithm;
 import de.dhbw.modellbahn.application.RoutingOptimization;
-import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.LocId;
 import de.dhbw.modellbahn.domain.locomotive.Speed;
@@ -21,11 +19,6 @@ public class CommandParser {
     private final DomainObjectParser parser;
 
     private List<Instruction> instructions;
-
-    public CommandParser(Lexer lexer, Graph graph, LocomotiveRepository locomotiveRepository) {
-        this.lexer = lexer;
-        this.parser = new DomainObjectParser(graph, locomotiveRepository);
-    }
 
     public CommandParser(Lexer lexer, DomainObjectParser domainObjectParser) {
         this.lexer = lexer;

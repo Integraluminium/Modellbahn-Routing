@@ -11,37 +11,6 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 
 public class MobaControllApplication {
-    private static final int SENDER_HASH = 25438; // same value used in RoutingApplication
-
-//    public static void main2(String[] args) {
-//        MobaLogConfig.configureLogging();
-//        if (args.length < 1) {
-//            System.err.println("Usage: ScriptRunner <script-file>");
-//            System.exit(1);
-//        }
-//
-//        String scriptPath = args[0];
-//
-//        // Initialize components similar to RoutingApplication
-//        ConfigReader configReader = new YAMLConfigReader();
-//        ApiService apiService = new ApiService(SENDER_HASH);
-//        LocCalls locCalls = new LocCallsAdapter(apiService);
-//        SystemCalls systemCalls = new SystemCallsAdapter(apiService);
-//        TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
-//
-//        Graph domainGraph = new GraphGenerator(configReader, trackComponentCalls).generateGraph();
-//        LocomotiveRepository locomotiveRepository = new LocomotiveRepositoryImpl(configReader, locCalls);
-//
-//        // Create script runner and execute the script
-//        ScriptRunner scriptRunner = new ScriptRunner(locomotiveRepository, domainGraph, systemCalls, System.out);
-//        try {
-//            scriptRunner.runScript(scriptPath);
-//        } catch (IOException e) {
-//            System.err.println("Error reading script file: " + e.getMessage());
-//            System.exit(1);
-//        }
-//    }
-
     public static void main(String[] args) {
         PrintStream standardOutput = System.out;
         RoutingApplication app = new RoutingApplication();
@@ -53,10 +22,12 @@ public class MobaControllApplication {
             // Interactive REPL mode
             MobaLogConfig.configureLogging(Level.INFO);
             new CommandlineREPL(parser, executor, standardOutput).start();
+
         } else if (args[0].equals("--debug")) {
             // Set debug level and run REPL
             MobaLogConfig.configureLogging(Level.FINE);
             new CommandlineREPL(parser, executor, standardOutput).start();
+            
         } else {
             // Script mode
             MobaLogConfig.configureLogging(Level.INFO);
