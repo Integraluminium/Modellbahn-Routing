@@ -62,6 +62,8 @@ public class CommandParser {
     private void parseRouteCommand() throws LexerException, ParseException {
         // <route_command> ::= <add_command>* (CONSIDER <consider_values>+)? (WITH <routing_algorithm>)?
 
+        instructions.add(new NewRouteInstr());
+
         // Parse multiple ADD commands
         lexer.expect(TokenType.ADD_KEYWORD);
         parseAddCommand();
@@ -81,6 +83,8 @@ public class CommandParser {
             lexer.advance();
             parseRoutingAlgorithm();
         }
+
+        instructions.add(new GenerateRouteInstr());
     }
 
     private void parseAddCommand() throws LexerException, ParseException {

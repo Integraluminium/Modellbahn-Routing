@@ -72,10 +72,12 @@ class CommandParserTest {
     void testBasicCommand() throws LexerException, ParseException {
         List<Instruction> instructions = parser.parse("NEW ROUTE ADD 123 TO stationA DRIVE");
 
-        assertEquals(3, instructions.size());
+        assertEquals(5, instructions.size());
+        assertInstanceOf(NewRouteInstr.class, instructions.removeFirst());
         assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(1));
-        assertInstanceOf(DriveInstr.class, instructions.get(2));
+        assertInstanceOf(GenerateRouteInstr.class, instructions.get(2));
+        assertInstanceOf(DriveInstr.class, instructions.get(3));
 
         AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
         assertEquals(new LocId(LOC_ID1), addInstr.locId());
@@ -89,35 +91,49 @@ class CommandParserTest {
         List<Instruction> instructions = parser.parse(
                 "NEW ROUTE ADD 456 AT stationA FACING stationB TO stationB FACING junctionC USING TIME CONSIDER ELECTRIFICATION");
 
-        assertEquals(7, instructions.size());
-        assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
-        assertInstanceOf(ModifyLocPosInstr.class, instructions.get(1));
-        assertInstanceOf(ModifyLocFacingInstr.class, instructions.get(2));
-        assertInstanceOf(SetDestinationInstr.class, instructions.get(3));
-        assertInstanceOf(SetFacingDirectionForDestinationInstr.class, instructions.get(4));
-        assertInstanceOf(SetOptimizationInstr.class, instructions.get(5));
-        assertInstanceOf(ConsiderElectrificationInstr.class, instructions.get(6));
+        assertEquals(9, instructions.size());
+        Instruction newRouteInstr = instructions.removeFirst();
+        Instruction addLocomotiveToRoutingInstr = instructions.removeFirst();
+        Instruction modifyLocPosInstr = instructions.removeFirst();
+        Instruction modifyLocFacingInstr = instructions.removeFirst();
+        Instruction setDestinationInstr = instructions.removeFirst();
+        Instruction setFacingDirectionForDestinationInstr = instructions.removeFirst();
+        Instruction setOptimizationInstr = instructions.removeFirst();
+        Instruction considerElectrificationInstr = instructions.removeFirst();
+        Instruction routeGenerationInstr = instructions.removeFirst();
+
+        assertSame(instructions.size(), 0);
+
+        assertInstanceOf(NewRouteInstr.class, newRouteInstr);
+        assertInstanceOf(AddLocomotiveToRoutingInstr.class, addLocomotiveToRoutingInstr);
+        assertInstanceOf(ModifyLocPosInstr.class, modifyLocPosInstr);
+        assertInstanceOf(ModifyLocFacingInstr.class, modifyLocFacingInstr);
+        assertInstanceOf(SetDestinationInstr.class, setDestinationInstr);
+        assertInstanceOf(SetFacingDirectionForDestinationInstr.class, setFacingDirectionForDestinationInstr);
+        assertInstanceOf(SetOptimizationInstr.class, setOptimizationInstr);
+        assertInstanceOf(ConsiderElectrificationInstr.class, considerElectrificationInstr);
+        assertInstanceOf(GenerateRouteInstr.class, routeGenerationInstr);
 
 
-        AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
+        AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) addLocomotiveToRoutingInstr;
         assertEquals(new LocId(LOC_ID2), addInstr.locId());
 
-        ModifyLocPosInstr modInstr = (ModifyLocPosInstr) instructions.get(1);
+        ModifyLocPosInstr modInstr = (ModifyLocPosInstr) modifyLocPosInstr;
         assertEquals(gp_statA, modInstr.destination());
 
-        ModifyLocFacingInstr locFacingInstr = (ModifyLocFacingInstr) instructions.get(2);
+        ModifyLocFacingInstr locFacingInstr = (ModifyLocFacingInstr) modifyLocFacingInstr;
         assertEquals(gp_statB, locFacingInstr.facingPoint());
 
-        SetDestinationInstr destInstr = (SetDestinationInstr) instructions.get(3);
+        SetDestinationInstr destInstr = (SetDestinationInstr) setDestinationInstr;
         assertEquals(gp_statB, destInstr.destination());
 
-        SetFacingDirectionForDestinationInstr faceInstr = (SetFacingDirectionForDestinationInstr) instructions.get(4);
+        SetFacingDirectionForDestinationInstr faceInstr = (SetFacingDirectionForDestinationInstr) setFacingDirectionForDestinationInstr;
         assertEquals(gp_junC, faceInstr.facing());
 
-        SetOptimizationInstr optInstr = (SetOptimizationInstr) instructions.get(5);
+        SetOptimizationInstr optInstr = (SetOptimizationInstr) setOptimizationInstr;
         assertEquals(RoutingOptimization.TIME, optInstr.optimization());
 
-        ConsiderElectrificationInstr elecInstr = (ConsiderElectrificationInstr) instructions.get(6);
+        ConsiderElectrificationInstr elecInstr = (ConsiderElectrificationInstr) considerElectrificationInstr;
         assertTrue(elecInstr.toConsider());
     }
 
@@ -161,16 +177,22 @@ class CommandParserTest {
     void testConsiderHeight() throws LexerException, ParseException {
         List<Instruction> instructions = parser.parse("NEW ROUTE ADD 123 TO stationA CONSIDER HEIGHT DRIVE");
 
-        assertEquals(4, instructions.size());
+        assertEquals(6, instructions.size());
 
+        Instruction newRouteInstr = instructions.removeFirst();
         Instruction addLocomotiveToRoutingInstr = instructions.removeFirst();
         Instruction setDestinationInstr = instructions.removeFirst();
         Instruction considerHeightInstr = instructions.removeFirst();
+        Instruction routeGenerationInstr = instructions.removeFirst();
         Instruction driveInstr = instructions.removeFirst();
 
+        assertSame(instructions.size(), 0);
+
+        assertInstanceOf(NewRouteInstr.class, newRouteInstr);
         assertInstanceOf(AddLocomotiveToRoutingInstr.class, addLocomotiveToRoutingInstr);
         assertInstanceOf(SetDestinationInstr.class, setDestinationInstr);
         assertInstanceOf(ConsiderHeightInstr.class, considerHeightInstr);
+        assertInstanceOf(GenerateRouteInstr.class, routeGenerationInstr);
         assertInstanceOf(DriveInstr.class, driveInstr);
 
 
@@ -189,12 +211,14 @@ class CommandParserTest {
     void testConsiderElectrification() throws LexerException, ParseException {
         List<Instruction> instructions = parser.parse("NEW ROUTE ADD 123 TO stationA CONSIDER ELECTRIFICATION DRIVE");
 
-        assertEquals(4, instructions.size());
+        assertEquals(6, instructions.size());
 
+        Instruction newRouteInstr = instructions.removeFirst();
+        assertInstanceOf(NewRouteInstr.class, newRouteInstr);
         assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(1));
         assertInstanceOf(ConsiderElectrificationInstr.class, instructions.get(2));
-        assertInstanceOf(DriveInstr.class, instructions.get(3));
+        assertInstanceOf(GenerateRouteInstr.class, instructions.get(3));
 
 
         AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
@@ -213,18 +237,24 @@ class CommandParserTest {
         List<Instruction> instructions = parser.parse("NEW ROUTE ADD 123 TO stationA LIST ROUTE NEW ROUTE ADD 456 TO stationB DRIVE");
 
 
-        assertEquals(6, instructions.size());
+        assertEquals(10, instructions.size());
+        Instruction newRouteInstr = instructions.removeFirst();
+        assertInstanceOf(NewRouteInstr.class, newRouteInstr);
+
         // First command
         assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(1));
+        assertInstanceOf(GenerateRouteInstr.class, instructions.remove(2));
 
         // Second command
         assertInstanceOf(ListRouteInstr.class, instructions.get(2));
 
         // Third command
+        assertInstanceOf(NewRouteInstr.class, instructions.remove(3));
         assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(3));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(4));
-        assertInstanceOf(DriveInstr.class, instructions.get(5));
+        assertInstanceOf(GenerateRouteInstr.class, instructions.get(5));
+        assertInstanceOf(DriveInstr.class, instructions.get(6));
 
 
         AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);

@@ -3,6 +3,7 @@ package de.dhbw.modellbahn.plugin.parser.lexer;
 import de.dhbw.modellbahn.application.LocomotiveRepository;
 import de.dhbw.modellbahn.application.RouteBuilder;
 import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;
+import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
 import de.dhbw.modellbahn.application.routing.Route;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
@@ -60,6 +61,10 @@ public class CommandContext {
 
     public Iterable<GraphPoint> getGraphPoints() {
         return graph.getAllVertices();
+    }
+
+    public void generateRoute() throws PathNotPossibleException {
+        routeBuilder.generateRoute();
     }
 
     public void toggleLocomotiveDirection(LocId locId) {
