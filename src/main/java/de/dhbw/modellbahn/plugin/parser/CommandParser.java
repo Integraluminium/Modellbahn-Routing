@@ -27,6 +27,11 @@ public class CommandParser {
         this.parser = new DomainObjectParser(graph, locomotiveRepository);
     }
 
+    public CommandParser(Lexer lexer, DomainObjectParser domainObjectParser) {
+        this.lexer = lexer;
+        this.parser = domainObjectParser;
+    }
+
     public List<Instruction> parse(String input) throws LexerException, ParseException {
         instructions = new ArrayList<>();
         lexer.init(input);

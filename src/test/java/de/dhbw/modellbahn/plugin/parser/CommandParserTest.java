@@ -65,7 +65,8 @@ class CommandParserTest {
     @BeforeEach
     void setUp() {
         lexer = new Lexer();
-        parser = new CommandParser(lexer, graph, repository);
+        DomainObjectParser domainObjectParser = new DomainObjectParser(graph, repository);
+        parser = new CommandParser(lexer, domainObjectParser);
     }
 
     @Test

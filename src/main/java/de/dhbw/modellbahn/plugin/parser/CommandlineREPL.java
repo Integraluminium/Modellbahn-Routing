@@ -1,35 +1,19 @@
 package de.dhbw.modellbahn.plugin.parser;
 
-import de.dhbw.modellbahn.adapter.locomotive.LocomotiveRepositoryImpl;
-import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.LocCallsAdapter;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.SystemCallsAdapter;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
-import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
-import de.dhbw.modellbahn.application.LocomotiveRepository;
-import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
-import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;
-import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.domain.ConfigReader;
-import de.dhbw.modellbahn.domain.graph.Graph;
-import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import de.dhbw.modellbahn.plugin.parser.lexer.LexerException;
 import de.dhbw.modellbahn.plugin.parser.lexer.instructions.Instruction;
-import de.dhbw.modellbahn.util.MobaLogConfig;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 public class CommandlineREPL {
     private static final String PROMPT = ">> ";
     private static final String CONTINUATION_PROMPT = "... ";
     private static final Pattern INDENTATION_PATTERN = Pattern.compile("^\\s+");
-    private static final int SENDER_HASH = 25438; // same value used in RoutingApplication
 
     private final CommandParser parser;
     private final CommandExecutor executor;
@@ -37,29 +21,11 @@ public class CommandlineREPL {
     private final PrintStream output;
     private boolean running = true;
 
-    public CommandlineREPL(LocomotiveRepository repository, Graph graph, SystemCalls systemCalls, PrintStream output) {
-        this.parser = new CommandParser(new de.dhbw.modellbahn.plugin.parser.lexer.Lexer(), graph, repository);
-        this.executor = new CommandExecutor(repository, graph, systemCalls, output);
+    public CommandlineREPL(CommandParser parser, CommandExecutor executor, PrintStream output) {
+        this.parser = parser;
+        this.executor = executor;
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.output = output;
-    }
-
-    public static void main(String[] args) {
-        MobaLogConfig.configureLogging(Level.INFO);
-        // Initialize components similar to RoutingApplication
-        ConfigReader configReader = new YAMLConfigReader();
-
-        ApiService apiService = new ApiService(SENDER_HASH);
-        LocCalls locCalls = new LocCallsAdapter(apiService);
-        SystemCalls systemCalls = new SystemCallsAdapter(apiService);
-        TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
-
-        Graph domainGraph = new GraphGenerator(configReader, trackComponentCalls).generateGraph();
-        LocomotiveRepository locomotiveRepository = new LocomotiveRepositoryImpl(configReader, locCalls);
-
-        // Create and start REPL with the real components
-        CommandlineREPL repl = new CommandlineREPL(locomotiveRepository, domainGraph, systemCalls, System.out);
-        repl.start();
     }
 
     public void start() {

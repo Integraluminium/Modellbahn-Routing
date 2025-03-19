@@ -46,7 +46,8 @@ class CommandExecutorTest {
 
     @BeforeEach
     void setUp() {
-        parser = new CommandParser(new Lexer(), graph, repository);
+        DomainObjectParser domainObjectParser = new DomainObjectParser(graph, repository);
+        parser = new CommandParser(new Lexer(), domainObjectParser);
         executor = new CommandExecutor(repository, graph, systemCalls, System.out);
     }
 
