@@ -45,11 +45,15 @@ public class Lexer {
         addKeywordMachine("SYSTEM", TokenType.SYSTEM_KEYWORD);
         addKeywordMachine("START", TokenType.START_KEYWORD);
         addKeywordMachine("STOP", TokenType.STOP_KEYWORD);
-        addKeywordMachine("SPEED", TokenType.SPEED);
+        addKeywordMachine("SPEED", TokenType.SPEED_KEYWORD);
+        addKeywordMachine("NEW", TokenType.NEW_KEYWORD);
+        addKeywordMachine("ROUTE", TokenType.ROUTE_KEYWORD);
+        addKeywordMachine("WITH", TokenType.WITH_KEYWORD);
 
         addMachine(new OptimizationMachine());
-        addMachine(new LocIdMachine());
-        addMachine(new GraphPointMachine());
+        addMachine(new AlgorithmMachine());
+        addMachine(new NumberMachine());
+        addMachine(new IdentifierMachine());
     }
 
     private void addKeywordMachine(String keyword, TokenType type) {

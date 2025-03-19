@@ -70,8 +70,7 @@ class CommandParserTest {
 
     @Test
     void testBasicCommand() throws LexerException, ParseException {
-        parser.parse("ADD 123 TO stationA DRIVE");
-        List<Instruction> instructions = parser.parse("ADD 123 TO stationA DRIVE");
+        List<Instruction> instructions = parser.parse("NEW ROUTE ADD 123 TO stationA DRIVE");
 
         assertEquals(3, instructions.size());
         assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
@@ -88,16 +87,16 @@ class CommandParserTest {
     @Test
     void testFullCommand() throws LexerException, ParseException {
         List<Instruction> instructions = parser.parse(
-                "ADD 456 AT stationA TO stationB FACING junctionC USING TIME DRIVE CONSIDER ELECTRIFICATION");
+                "NEW ROUTE ADD 456 AT stationA FACING stationB TO stationB FACING junctionC USING TIME CONSIDER ELECTRIFICATION");
 
         assertEquals(7, instructions.size());
         assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(ModifyLocPosInstr.class, instructions.get(1));
-        assertInstanceOf(SetDestinationInstr.class, instructions.get(2));
-        assertInstanceOf(SetFacingDirectionForDestinationInstr.class, instructions.get(3));
-        assertInstanceOf(SetOptimizationInstr.class, instructions.get(4));
-        assertInstanceOf(ConsiderElectrificationInstr.class, instructions.get(5));
-        assertInstanceOf(DriveInstr.class, instructions.get(6));
+        assertInstanceOf(ModifyLocFacingInstr.class, instructions.get(2));
+        assertInstanceOf(SetDestinationInstr.class, instructions.get(3));
+        assertInstanceOf(SetFacingDirectionForDestinationInstr.class, instructions.get(4));
+        assertInstanceOf(SetOptimizationInstr.class, instructions.get(5));
+        assertInstanceOf(ConsiderElectrificationInstr.class, instructions.get(6));
 
 
         AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
@@ -106,25 +105,27 @@ class CommandParserTest {
         ModifyLocPosInstr modInstr = (ModifyLocPosInstr) instructions.get(1);
         assertEquals(gp_statA, modInstr.destination());
 
-        SetDestinationInstr destInstr = (SetDestinationInstr) instructions.get(2);
+        ModifyLocFacingInstr locFacingInstr = (ModifyLocFacingInstr) instructions.get(2);
+        assertEquals(gp_statB, locFacingInstr.facingPoint());
+
+        SetDestinationInstr destInstr = (SetDestinationInstr) instructions.get(3);
         assertEquals(gp_statB, destInstr.destination());
 
-        SetFacingDirectionForDestinationInstr faceInstr = (SetFacingDirectionForDestinationInstr) instructions.get(3);
+        SetFacingDirectionForDestinationInstr faceInstr = (SetFacingDirectionForDestinationInstr) instructions.get(4);
         assertEquals(gp_junC, faceInstr.facing());
 
-        SetOptimizationInstr optInstr = (SetOptimizationInstr) instructions.get(4);
+        SetOptimizationInstr optInstr = (SetOptimizationInstr) instructions.get(5);
         assertEquals(RoutingOptimization.TIME, optInstr.optimization());
 
-        ConsiderElectrificationInstr elecInstr = (ConsiderElectrificationInstr) instructions.get(5);
+        ConsiderElectrificationInstr elecInstr = (ConsiderElectrificationInstr) instructions.get(6);
         assertTrue(elecInstr.toConsider());
     }
 
     @Test
     void testMultipleToStatements() throws LexerException, ParseException {
-        Exception exception = assertThrows(ParseException.class, () -> {
-            parser.parse("ADD 123 TO stationA TO stationB DRIVE");
+        assertThrows(ParseException.class, () -> {
+            parser.parse("NEW ROUTE ADD 123 TO stationA TO stationB DRIVE");
         });
-        assertTrue(exception.getMessage().contains("Expected DRIVE_COMMAND but got TO_KEYWORD"));
     }
 
     @Test
@@ -141,7 +142,7 @@ class CommandParserTest {
     @Test
     void testUnknownLocId() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            parser.parse("ADD 999 TO stationA DRIVE");
+            parser.parse("NEW ROUTE ADD 999 TO stationA DRIVE");
         });
 
         assertTrue(exception.getMessage().contains("unknown"));
@@ -150,7 +151,7 @@ class CommandParserTest {
     @Test
     void testUnknownGraphPoint() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            parser.parse("ADD 123 TO unknownStation DRIVE");
+            parser.parse("NEW ROUTE ADD 123 TO unknownStation DRIVE");
         });
 
         assertTrue(exception.getMessage().contains("not in the graph"));
@@ -158,30 +159,35 @@ class CommandParserTest {
 
     @Test
     void testConsiderHeight() throws LexerException, ParseException {
-        List<Instruction> instructions = parser.parse("ADD 123 TO stationA DRIVE CONSIDER HEIGHT");
+        List<Instruction> instructions = parser.parse("NEW ROUTE ADD 123 TO stationA CONSIDER HEIGHT DRIVE");
 
         assertEquals(4, instructions.size());
 
-        assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
-        assertInstanceOf(SetDestinationInstr.class, instructions.get(1));
-        assertInstanceOf(ConsiderHeightInstr.class, instructions.get(2));
-        assertInstanceOf(DriveInstr.class, instructions.get(3));
+        Instruction addLocomotiveToRoutingInstr = instructions.removeFirst();
+        Instruction setDestinationInstr = instructions.removeFirst();
+        Instruction considerHeightInstr = instructions.removeFirst();
+        Instruction driveInstr = instructions.removeFirst();
+
+        assertInstanceOf(AddLocomotiveToRoutingInstr.class, addLocomotiveToRoutingInstr);
+        assertInstanceOf(SetDestinationInstr.class, setDestinationInstr);
+        assertInstanceOf(ConsiderHeightInstr.class, considerHeightInstr);
+        assertInstanceOf(DriveInstr.class, driveInstr);
 
 
-        AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
+        AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) addLocomotiveToRoutingInstr;
         assertEquals(new LocId(LOC_ID1), addInstr.locId());
 
 
-        SetDestinationInstr destInstr = (SetDestinationInstr) instructions.get(1);
+        SetDestinationInstr destInstr = (SetDestinationInstr) setDestinationInstr;
         assertEquals(gp_statA, destInstr.destination());
 
-        ConsiderHeightInstr heightInstr = (ConsiderHeightInstr) instructions.get(2);
+        ConsiderHeightInstr heightInstr = (ConsiderHeightInstr) considerHeightInstr;
         assertTrue(heightInstr.toConsider());
     }
 
     @Test
     void testConsiderElectrification() throws LexerException, ParseException {
-        List<Instruction> instructions = parser.parse("ADD 123 TO stationA DRIVE CONSIDER ELECTRIFICATION");
+        List<Instruction> instructions = parser.parse("NEW ROUTE ADD 123 TO stationA CONSIDER ELECTRIFICATION DRIVE");
 
         assertEquals(4, instructions.size());
 
@@ -204,20 +210,22 @@ class CommandParserTest {
 
     @Test
     void testMultipleCommands() throws LexerException, ParseException {
-        parser.parse("ADD 123 TO stationA DRIVE ADD 456 TO stationB DRIVE");
+        List<Instruction> instructions = parser.parse("NEW ROUTE ADD 123 TO stationA LIST ROUTE NEW ROUTE ADD 456 TO stationB DRIVE");
 
-        List<Instruction> instructions = parser.parse(
-                "ADD 123 TO stationA DRIVE ADD 456 TO stationB DRIVE");
 
         assertEquals(6, instructions.size());
         // First command
         assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(0));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(1));
-        assertInstanceOf(DriveInstr.class, instructions.get(2));
+
         // Second command
+        assertInstanceOf(ListRouteInstr.class, instructions.get(2));
+
+        // Third command
         assertInstanceOf(AddLocomotiveToRoutingInstr.class, instructions.get(3));
         assertInstanceOf(SetDestinationInstr.class, instructions.get(4));
         assertInstanceOf(DriveInstr.class, instructions.get(5));
+
 
         AddLocomotiveToRoutingInstr addInstr = (AddLocomotiveToRoutingInstr) instructions.get(0);
         assertEquals(new LocId(LOC_ID1), addInstr.locId());
@@ -228,7 +236,47 @@ class CommandParserTest {
         assertEquals(new LocId(LOC_ID2), addInstr2.locId());
         SetDestinationInstr destInstr2 = (SetDestinationInstr) instructions.get(4);
         assertEquals(gp_statB, destInstr2.destination());
+    }
 
+    @Test
+    void testMultiLine() throws LexerException, ParseException {
+        String command = """
+                NEW ROUTE
+                    ADD 123 AT stationA FACING stationB TO junctionC FACING junctionD USING DISTANCE
+                    ADD 456
+                    CONSIDER ELECTRIFICATION HEIGHT
+                    WITH Dijkstra
+                
+                """;
+        parser.parse(command);
+    }
 
+    @Test
+    void testMultiLineAndMultiStatements() throws LexerException, ParseException {
+        String command = """
+                // Example MobaScript file
+                SYSTEM START
+                
+                LIST GRAPHPOINTS
+                LIST LOCOMOTIVES
+                
+                MODIFY 123 POSITION stationA FACING stationB
+                MODIFY 123 SPEED 0
+                
+                NEW ROUTE
+                    ADD 123 AT stationA FACING stationB TO junctionC FACING junctionD USING DISTANCE
+                    ADD 456 TO stationA USING DISTANCE
+                    CONSIDER ELECTRIFICATION HEIGHT
+                    WITH Dijkstra
+                
+                // should show the route for the locomotives
+                LIST ROUTE
+                DRIVE
+                
+                LIST GRAPHPOINTS
+                
+                SYSTEM STOP
+                """;
+        parser.parse(command);
     }
 }

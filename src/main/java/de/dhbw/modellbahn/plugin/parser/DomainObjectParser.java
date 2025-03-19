@@ -1,6 +1,7 @@
 package de.dhbw.modellbahn.plugin.parser;
 
 import de.dhbw.modellbahn.application.LocomotiveRepository;
+import de.dhbw.modellbahn.application.RoutingAlgorithm;
 import de.dhbw.modellbahn.application.RoutingOptimization;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
@@ -39,9 +40,17 @@ public class DomainObjectParser {
 
     public RoutingOptimization parseOptimization(final String optimizationString) {
         try {
-            return RoutingOptimization.valueOf(optimizationString);
+            return RoutingOptimization.valueOf(optimizationString.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Optimization " + optimizationString + " is unknown.");
+        }
+    }
+
+    public RoutingAlgorithm parseRoutingAlgorithm(final String algorithmString) {
+        try {
+            return RoutingAlgorithm.valueOf(algorithmString.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Algorithm " + algorithmString + " is unknown.");
         }
     }
 

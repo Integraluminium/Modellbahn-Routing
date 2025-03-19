@@ -1,0 +1,23 @@
+<command> ::= NEW ROUTE <route_command>
+            | MODIFY <loc_id> <modify_command>
+            | LIST <list_command>
+            | SYSTEM <system_command>
+            | DRIVE
+
+<system_command> ::= "START" | "STOP"
+<list_command> ::="LOCOMOTIVES" | "GRAPHPOINTS" | "ROUTE"
+<modify_command> ::= "TOGGLE" "DIRECTION"
+                   | "POSITION" <graph_point> "FACING" <graph_point>
+                   | "FACING" <graph_point>
+                   | "SPEED" <number>
+<route_command> ::= <add_command>* (CONSIDER <consider_values>+)? (WITH <routing_algorithm>)?
+
+<add_command> ::= "ADD" <loc_id> ["AT" <graph_point> "FACING" <graph_point>]? ["TO" <graph_point> ["FACING" <graph_point>]?]? ["USING" <optimization>]?
+
+<optimization> ::= TIME | SUPPLIES | DISTANCE
+<consider_values> ::= "ELECTRIFICATION" | "HEIGHT"
+<routing_algorithm> ::= "Dijkstra" | "Bellman_Ford"
+
+<loc_id> ::= digit*
+
+<graph_point> ::= letter (letter | digit)*

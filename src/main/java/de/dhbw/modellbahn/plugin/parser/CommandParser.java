@@ -1,6 +1,7 @@
 package de.dhbw.modellbahn.plugin.parser;
 
 import de.dhbw.modellbahn.application.LocomotiveRepository;
+import de.dhbw.modellbahn.application.RoutingAlgorithm;
 import de.dhbw.modellbahn.application.RoutingOptimization;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
@@ -15,16 +16,6 @@ import de.dhbw.modellbahn.plugin.parser.lexer.instructions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Grammar: [
- * (ADD <locid> (AT <graphpoint>)? (
- * TO <graphpoint> (FACING <graphpoint>)?(USING <optimization>)?
- * )
- * )+
- * DRIVE (CONSIDER (ELECTRIFICATION | HEIGHT))?
- * ]+
- * Parses commands from the lexer and
- */
 public class CommandParser {
     private final Lexer lexer;
     private final DomainObjectParser parser;
@@ -43,29 +34,119 @@ public class CommandParser {
         while (lexer.lookAhead().type() != TokenType.EOF) {
             parseStatement();
         }
-
-        return instructions;
+        return instructions; // mutability is fine here, as new parsing is creating a new ArrayList
     }
 
     private void parseStatement() throws LexerException, ParseException {
-        // MODIFY <modification> | ADD <routingCommand>
-
+        // <command> ::= NEW ROUTE <route_command> | MODIFY <loc_id> <modify_command> | LIST <list_command> | SYSTEM <system_command> | DRIVE
         Token token = lexer.lookAhead();
-        if (token.type() == TokenType.ADD_KEYWORD) {
-            parseRoutingCommand();
+        lexer.advance();
+
+        if (token.type() == TokenType.NEW_KEYWORD) {
+            lexer.expect(TokenType.ROUTE_KEYWORD);
+            parseRouteCommand();
         } else if (token.type() == TokenType.MODIFY_KEYWORD) {
             parseModificationCommand();
         } else if (token.type() == TokenType.LIST_KEYWORD) {
             parseInformationCommand();
         } else if (token.type() == TokenType.SYSTEM_KEYWORD) {
             parseSystemInformation();
+        } else if (token.type() == TokenType.DRIVE_COMMAND) {
+            // Handle standalone DRIVE command
+            instructions.add(new DriveInstr());
         } else {
-            throw new LexerException("Expected statement but got: " + token);
+            throw new ParseException("Expected statement but got: " + token);
         }
     }
 
+    private void parseRouteCommand() throws LexerException, ParseException {
+        // <route_command> ::= <add_command>* (CONSIDER <consider_values>+)? (WITH <routing_algorithm>)?
+
+        // Parse multiple ADD commands
+        lexer.expect(TokenType.ADD_KEYWORD);
+        parseAddCommand();
+        while (lexer.lookAhead().type() == TokenType.ADD_KEYWORD) {
+            lexer.advance();
+            parseAddCommand();
+        }
+
+        // Optional CONSIDER clause
+        if (lexer.lookAhead().type() == TokenType.CONSIDER_KEYWORD) {
+            lexer.advance();
+            parseConsiderValues();
+        }
+
+        // Optional WITH clause for routing algorithm
+        if (lexer.lookAhead().type() == TokenType.WITH_KEYWORD) {
+            lexer.advance();
+            parseRoutingAlgorithm();
+        }
+    }
+
+    private void parseAddCommand() throws LexerException, ParseException {
+        // <add_command> ::= "ADD" <loc_id> ["AT" <graph_point> "FACING" <graph_point>]? ["TO" <graph_point> ["FACING" <graph_point>]?]? ["USING" <optimization>]?
+        LocId locId = parseLocId();
+        instructions.add(new AddLocomotiveToRoutingInstr(locId));
+
+        // Optional AT <graphpoint> FACING <graphpoint>
+        if (lexer.lookAhead().type() == TokenType.AT_KEYWORD) {
+            lexer.advance();
+            parseAtStartPosition(locId);
+        }
+
+        // Optional TO <graphpoint> [FACING <graphpoint>]?
+        if (lexer.lookAhead().type() == TokenType.TO_KEYWORD) {
+            lexer.advance();
+            parseDestination(locId);
+        }
+
+        // Optional USING <optimization>
+        if (lexer.lookAhead().type() == TokenType.USING_KEYWORD) {
+            lexer.advance();
+            parseOptimization(locId);
+        }
+    }
+
+    private void parseConsiderValues() throws LexerException, ParseException {
+        // <consider_values> ::= "ELECTRIFICATION" | "HEIGHT"
+        // Parse at least one value, potentially multiple
+        boolean parsedValue = false;
+
+        while (true) {
+            Token token = lexer.lookAhead();
+            if (!(token.type() == TokenType.ELECTRIFICATION_KEYWORD || token.type() == TokenType.HEIGHT_KEYWORD)) {
+                break;
+            }
+            parsedValue = true;
+
+            if (token.type() == TokenType.ELECTRIFICATION_KEYWORD) {
+                lexer.advance();
+                instructions.add(new ConsiderElectrificationInstr(true));
+            } else {
+                lexer.advance();
+                instructions.add(new ConsiderHeightInstr(true));
+            }
+        }
+
+        if (!parsedValue) {
+            throw new ParseException("Expected ELECTRIFICATION or HEIGHT after CONSIDER");
+        }
+    }
+
+    private void parseRoutingAlgorithm() throws LexerException, ParseException {
+        // <routing_algorithm> ::= "Dijkstra" | "BellmanFord"
+        Token token = lexer.lookAhead();
+        if (token.type() != TokenType.ALGORITHM) {
+            throw new ParseException("Expected routing algorithm (Dijkstra or Bellman_Ford) but got: " + token);
+        }
+        RoutingAlgorithm algorithm = parser.parseRoutingAlgorithm(token.value());
+        lexer.advance();
+
+        // Add instruction for setting algorithm
+        instructions.add(new SetRoutingAlgorithmInstr(algorithm));
+    }
+
     private void parseSystemInformation() throws LexerException, ParseException {
-        lexer.expect(TokenType.SYSTEM_KEYWORD);
         Token token = lexer.lookAhead();
         lexer.advance();
         if (token.type() == TokenType.START_KEYWORD) {
@@ -77,62 +158,7 @@ public class CommandParser {
         }
     }
 
-    private void parseModificationCommand() throws LexerException, ParseException {
-        lexer.expect(TokenType.MODIFY_KEYWORD);
-
-        // Parse locomotive ID
-        Token token = lexer.lookAhead();
-        if (token.type() != TokenType.LOC_ID) {
-            throw new ParseException("Expected locomotive ID after MODIFY but got: " + token);
-        }
-
-        LocId locId = parser.parseLocId(token.value());
-        lexer.advance();
-
-        // Parse modification type
-        Token modification_token = lexer.lookAhead();
-
-        if (modification_token.type() == TokenType.TOGGLE_KEYWORD) {
-            lexer.advance();
-            lexer.expect(TokenType.DIRECTION_KEYWORD);
-            instructions.add(new ToggleDirectionInstr(locId));
-        } else if (modification_token.type() == TokenType.POSITION_KEYWORD) {
-            lexer.advance();
-            modification_token = lexer.lookAhead();
-
-            if (modification_token.type() != TokenType.GRAPH_POINT) {
-                throw new ParseException("Expected graph point for position but got: " + modification_token);
-            }
-
-            GraphPoint position = parser.parseGraphPoint(modification_token.value());
-            instructions.add(new ModifyLocPosInstr(locId, position));
-            lexer.advance();
-        } else if (modification_token.type() == TokenType.FACING_KEYWORD) {
-            lexer.advance();
-            GraphPoint facingPoint = parseGraphPoint();
-            instructions.add(new ModifyLocFacingInstr(locId, facingPoint));
-        } else if (modification_token.type() == TokenType.SPEED) {
-            lexer.advance();
-            Token speed_token = lexer.lookAhead();
-            lexer.advance();
-            if (speed_token.type() != TokenType.LOC_ID) { // LOC_ID is NUMBER
-                throw new ParseException("Expected locomotive ID after ADD got: " + token);
-            }
-            try {
-                Speed speed = new Speed(Integer.parseInt(speed_token.value()));
-                instructions.add(new ModifyLocSpeedInstr(locId, speed));
-
-            } catch (NumberFormatException e) {
-                throw new ParseException("Expected integer value but got: " + speed_token);
-            }
-        } else {
-            throw new ParseException("Expected TOGGLE or POSITION after locomotive ID but got: " + modification_token);
-        }
-    }
-
     private void parseInformationCommand() throws LexerException, ParseException {
-        lexer.expect(TokenType.LIST_KEYWORD);
-
         Token token = lexer.lookAhead();
 
         if (token.type() == TokenType.LOCOMOTIVES_KEYWORD) {
@@ -141,82 +167,52 @@ public class CommandParser {
         } else if (token.type() == TokenType.GRAPHPOINTS_KEYWORD) {
             lexer.advance();
             instructions.add(new ListGraphPointsInstr());
+        } else if (token.type() == TokenType.ROUTE_KEYWORD) {
+            lexer.advance();
+            instructions.add(new ListRouteInstr());
         } else {
-            throw new ParseException("Expected LOCOMOTIVES or GRAPHPOINTS after LIST but got: " + token);
+            throw new ParseException("Expected LOCOMOTIVES, GRAPHPOINTS, or ROUTE after LIST but got: " + token);
         }
     }
 
-    private void parseRoutingCommand() throws LexerException, ParseException {
-        // ADD <locId> [AT <position>]? [[TO <destination>] [FACING <direction>]?] [USING <optimization>]? DRIVE [CONSIDER <considerations>]?
-        lexer.expect(TokenType.ADD_KEYWORD);
+    private void parseModificationCommand() throws LexerException, ParseException {
+        // <modify_command> ::= "TOGGLE" "DIRECTION"
+        //                    | "POSITION" <graph_point> "FACING" <graph_point>
+        //                    | "FACING" <graph_point>
+        //                    | "SPEED" <number>
+        LocId locId = parseLocId();
 
-        // Parse locomotive ID
-        Token token = lexer.lookAhead();
-        if (token.type() != TokenType.LOC_ID) {
-            throw new ParseException("Expected locomotive ID after ADD got: " + token);
-        }
-        LocId locId = parser.parseLocId(token.value());
+        // Parse modification type
+        Token modification_token = lexer.lookAhead();
         lexer.advance();
-        instructions.add(new AddLocomotiveToRoutingInstr(locId));
 
-        // Optional AT <graphpoint>
-        if (lexer.lookAhead().type() == TokenType.AT_KEYWORD) {
-            lexer.advance();
-            parseAtStartPosition(locId);
-        }
+        if (modification_token.type() == TokenType.TOGGLE_KEYWORD) {
+            lexer.expect(TokenType.DIRECTION_KEYWORD);
+            instructions.add(new ToggleDirectionInstr(locId));
 
-        // Optional TO <graphpoint>;
-        // At least one TO keyword is required
-        // but cannot be checked in syntactic analysis
-        if (lexer.lookAhead().type() == TokenType.TO_KEYWORD) {
-            lexer.advance();
-            parseDestination(locId);
-        }
+        } else if (modification_token.type() == TokenType.POSITION_KEYWORD) {
+            GraphPoint position = parseGraphPoint();
+            instructions.add(new ModifyLocPosInstr(locId, position));
 
-        // DRIVE keyword
-        lexer.expect(TokenType.DRIVE_COMMAND);
+            lexer.expect(TokenType.FACING_KEYWORD);
+            GraphPoint facingPoint = parseGraphPoint();
+            instructions.add(new ModifyLocFacingInstr(locId, facingPoint));
 
-        // Optional CONSIDER (ELECTRIFICATION | HEIGHT)
-        if (lexer.lookAhead().type() == TokenType.CONSIDER_KEYWORD) {
-            lexer.advance();
-            parseGlobalRoutingModifier();
-        }
-        // Execute the route generation
-        instructions.add(new DriveInstr());
-    }
+        } else if (modification_token.type() == TokenType.FACING_KEYWORD) {
+            GraphPoint facingPoint = parseGraphPoint();
+            instructions.add(new ModifyLocFacingInstr(locId, facingPoint));
 
-    private void parseGlobalRoutingModifier() throws LexerException, ParseException {
-        // (ELECTRIFICATION?  HEIGHT?) | (HEIGHT? ELECTRIFICATION?)
-        Token token = lexer.lookAhead();
-        if (token.type() == TokenType.ELECTRIFICATION_KEYWORD) {
-            lexer.advance();
-            instructions.add(new ConsiderElectrificationInstr(true));
-            if (lexer.lookAhead().type() == TokenType.HEIGHT_KEYWORD) {
-                lexer.advance();
-                instructions.add(new ConsiderHeightInstr(true));
-            }
-        } else if (token.type() == TokenType.HEIGHT_KEYWORD) {
-            lexer.advance();
-            instructions.add(new ConsiderHeightInstr(true));
-            if (lexer.lookAhead().type() == TokenType.ELECTRIFICATION_KEYWORD) {
-                lexer.advance();
-                instructions.add(new ConsiderElectrificationInstr(true));
-            }
+        } else if (modification_token.type() == TokenType.SPEED_KEYWORD) {
+            Speed speed = new Speed(parseNumber());
+            instructions.add(new ModifyLocSpeedInstr(locId, speed));
+
         } else {
-            throw new ParseException("Expected ELECTRIFICATION or HEIGHT as Routing Modifier, got: " + token);
+            throw new ParseException("Expected TOGGLE, POSITION, FACING, or SPEED after locomotive ID but got: " + modification_token);
         }
     }
 
     private void parseDestination(final LocId locId) throws LexerException, ParseException {
-        // <graphpoint> (FACING <graphpoint>)? (USING <optimization>)?
-        Token token = lexer.lookAhead();
-        if (token.type() != TokenType.GRAPH_POINT) {
-            throw new ParseException("Expected graph point as destination. Got: " + token);
-        }
-        lexer.advance();
-        GraphPoint destination = parser.parseGraphPoint(token.value());
-
-        // Set destination for locomotive
+        GraphPoint destination = parseGraphPoint();
         instructions.add(new SetDestinationInstr(locId, destination));
 
         // Optional FACING <graphpoint>
@@ -225,16 +221,9 @@ public class CommandParser {
             GraphPoint facingPoint = parseGraphPoint();
             instructions.add(new SetFacingDirectionForDestinationInstr(locId, facingPoint));
         }
-
-        // Optional USING (<optimization>)
-        if (lexer.lookAhead().type() == TokenType.USING_KEYWORD) {
-            lexer.advance();
-            parseOptimization(locId);
-        }
     }
 
     private void parseOptimization(final LocId locId) throws ParseException, LexerException {
-        // <optimization>:= RoutingOptimization.values
         Token token = lexer.lookAhead();
         if (token.type() != TokenType.OPTIMIZATION) {
             throw new ParseException("Expected optimization Token but got: " + token);
@@ -245,31 +234,44 @@ public class CommandParser {
     }
 
     private GraphPoint parseGraphPoint() throws LexerException, ParseException {
-        // <graphpoint>
         Token token = lexer.lookAhead();
-        if (token.type() != TokenType.GRAPH_POINT) {
+        if (token.type() != TokenType.STRING) {
             throw new ParseException("Expected graph point but got: " + token);
         }
         lexer.advance();
         return parser.parseGraphPoint(token.value());
     }
 
-    private void parseAtStartPosition(LocId locId) throws LexerException, ParseException {
-        // <graphpoint>
-        Token startPositionToken = lexer.lookAhead();
-        if (startPositionToken.type() != TokenType.GRAPH_POINT) {
-            throw new ParseException("Expected graph point after AT but got: " + startPositionToken);
+    private LocId parseLocId() throws LexerException, ParseException {
+        Token token = lexer.lookAhead();
+        if (token.type() != TokenType.NUMBER) {
+            throw new ParseException("Expected locomotive ID but got: " + token);
         }
-        GraphPoint point = parser.parseGraphPoint(startPositionToken.value());
         lexer.advance();
-        instructions.add(new ModifyLocPosInstr(locId, point));
-
-        Token nextToken = lexer.lookAhead();
-        if (nextToken.type() == TokenType.FACING_KEYWORD) {
-            lexer.advance();
-            GraphPoint facingPoint = parseGraphPoint();
-            instructions.add(new ModifyLocFacingInstr(locId, facingPoint));
-        }
+        return parser.parseLocId(token.value());
     }
 
+    private int parseNumber() throws LexerException, ParseException {
+        Token token = lexer.lookAhead();
+        lexer.advance();
+        if (token.type() != TokenType.NUMBER) {
+            throw new ParseException("Expected number but got: " + token);
+        }
+        int number;
+        try {
+            number = Integer.parseInt(token.value());
+        } catch (NumberFormatException e) {
+            throw new ParseException("Expected integer value but got: " + token);
+        }
+        return number;
+    }
+
+    private void parseAtStartPosition(LocId locId) throws LexerException, ParseException {
+        GraphPoint point = parseGraphPoint();
+        instructions.add(new ModifyLocPosInstr(locId, point));
+
+        lexer.expect(TokenType.FACING_KEYWORD);
+        GraphPoint facingPoint = parseGraphPoint();
+        instructions.add(new ModifyLocFacingInstr(locId, facingPoint));
+    }
 }

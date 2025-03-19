@@ -85,4 +85,12 @@ public interface RouteBuilder {
      * @return locomotives
      */
     Iterable<Locomotive> getLocomotivesWithRoute();
+
+    /**
+     * Sets the routing algorithm for the route builder
+     *
+     * @param algorithm enum value
+     * @return this
+     */
+    RouteBuilder setRoutingAlgorithm(RoutingAlgorithm algorithm);
 }

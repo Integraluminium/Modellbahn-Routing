@@ -2,9 +2,9 @@ package de.dhbw.modellbahn.plugin.parser.lexer.machines;
 
 import de.dhbw.modellbahn.plugin.parser.lexer.TokenType;
 
-public class GraphPointMachine extends TokenMachine {
-    public GraphPointMachine() {
-        super(TokenType.GRAPH_POINT);
+public class IdentifierMachine extends TokenMachine {
+    public IdentifierMachine() {
+        super(TokenType.STRING);
     }
 
     @Override

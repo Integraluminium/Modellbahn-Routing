@@ -52,7 +52,7 @@ class CommandExecutorTest {
 
     @Test
     void testExecute() throws Exception, LexerException {
-        List<Instruction> commands = parser.parse("ADD 123 TO C DRIVE");
+        List<Instruction> commands = parser.parse("NEW ROUTE ADD 123 TO C DRIVE");
         executor.execute(commands, true);
     }
 
