@@ -3,6 +3,8 @@ package de.dhbw.modellbahn.plugin.routing.jgrapht;
 import de.dhbw.modellbahn.application.RoutingAlgorithm;
 import de.dhbw.modellbahn.application.RoutingOptimization;
 import de.dhbw.modellbahn.application.routing.*;
+import de.dhbw.modellbahn.application.routing.action.LocToggleAction;
+import de.dhbw.modellbahn.application.routing.action.RoutingAction;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointSide;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
@@ -26,21 +28,44 @@ public class MonoTrainRoutingJGraphT {
         this.strategy = new DefaultMonoTrainRoutingStrategy(routingGraph, algorithm);
     }
 
-    private Route finalizeRouting(final Locomotive locomotive, final List<DirectedNode> path, final GraphPoint newFacingDirection) throws PathNotPossibleException {
-        List<WeightedDistanceEdge> weightedDistanceEdges = mapPathToWeightedEdges(path);
-        logger.info("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList());
-        RouteGenerator generator = new RouteGenerator(locomotive, weightedDistanceEdges, newFacingDirection);
-        return generator.generateRoute();
-    }
-
+    /**
+     * Generate a route for a locomotive to a destination <b>without</b> explicit facing direction.
+     * Automatic toggle of facing direction at buffer stops.
+     *
+     * @param locomotive    the locomotive to route
+     * @param destination   the destination to route to
+     * @param optimisations the optimisations to apply
+     * @return the generated route
+     * @throws PathNotPossibleException if no path could be found
+     */
     public Route generateRoute(Locomotive locomotive, GraphPoint destination, RoutingOptimization optimisations) throws PathNotPossibleException {
         DirectedNode startNode = beforeRouting(locomotive, optimisations);
         List<DirectedNode> path = strategy.findShortestPath(startNode, destination);
-        GraphPoint newFacingDirection = determineNewFacingDirection(path);
 
-        return finalizeRouting(locomotive, path, newFacingDirection);
+        try {
+            GraphPoint newFacingDirection = determineNewFacingDirection(path);
+            return finalizeRouting(locomotive, path, newFacingDirection);
+
+        } catch (PathNotPossibleException e) {
+            DirectedNode secondLastNode = path.get(path.size() - 2);
+            RoutingAction toggleAction = new LocToggleAction(locomotive, secondLastNode.getPoint());
+            Route route = finalizeRouting(locomotive, path, secondLastNode.getPoint());
+
+            return route.addAction(toggleAction);
+        }
     }
 
+    /**
+     * Generate a route for a locomotive to a destination <b>with</b> explicit facing direction.
+     * Could not route to a buffer stop, as FacingDirection cannot be reached in buffer stops without toggle.
+     *
+     * @param locomotive        the locomotive to route
+     * @param destination       the destination to route to
+     * @param destinationFacing the facing direction at the destination
+     * @param optimisations     the optimisations to apply
+     * @return the generated route
+     * @throws PathNotPossibleException if no path could be found
+     */
     public Route generateRoute(Locomotive locomotive, GraphPoint destination, GraphPoint destinationFacing, RoutingOptimization optimisations) throws PathNotPossibleException {
         DirectedNode startNode = beforeRouting(locomotive, optimisations);
         DirectedNode endNode = getDirectedNode(destination, destinationFacing);
@@ -57,6 +82,15 @@ public class MonoTrainRoutingJGraphT {
 
         return getDirectedNode(start, facingDirection);
     }
+
+
+    private Route finalizeRouting(final Locomotive locomotive, final List<DirectedNode> path, final GraphPoint newFacingDirection) throws PathNotPossibleException {
+        List<WeightedDistanceEdge> weightedDistanceEdges = mapPathToWeightedEdges(path);
+        logger.info("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList());
+        RouteGenerator generator = new RouteGenerator(locomotive, weightedDistanceEdges, newFacingDirection);
+        return generator.generateRoute();
+    }
+
 
     private DirectedNode getDirectedNode(GraphPoint point, GraphPoint facingDirection) {
         PointSide side = getSideFromPoint(point, facingDirection);
@@ -88,10 +122,11 @@ public class MonoTrainRoutingJGraphT {
         return this.directedNodeToWeightedEdgeMapper.getWeightedDistanceEdgesList(routingGraph, path);
     }
 
-    private GraphPoint determineNewFacingDirection(final List<DirectedNode> path) {
+    private GraphPoint determineNewFacingDirection(final List<DirectedNode> path) throws PathNotPossibleException {
         DirectedNode lastNode = path.getLast();
         if (routingGraph.outDegreeOf(lastNode) == 0) {
-            throw new IllegalArgumentException("The last node (" + lastNode.getNodeName() + ") of the path has no outgoing edges.");
+            // Buffer stop or blocked rail has no outgoing edges
+            throw new PathNotPossibleException("The last node (" + lastNode.getNodeName() + ") of the path has no outgoing edges.");
         }
         Set<DefaultWeightedEdge> edges = routingGraph.outgoingEdgesOf(lastNode);
         DefaultWeightedEdge weightedEdge = edges.stream().toList().get(0);

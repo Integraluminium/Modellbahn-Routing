@@ -71,7 +71,7 @@ public class CommandContext {
         // TODO FIX ISSUES WITH SWITCHES - NOT WORKING PROPERLY
 
         Locomotive loc = locomotiveRepository.getLocomotive(locId);
-        GraphPoint current = loc.getCurrentFacingDirection();
+        GraphPoint currentFacingDirection = loc.getCurrentFacingDirection();
         GraphPoint position = loc.getCurrentPosition();
 
         // Find a neighbor that is not the current position
@@ -81,11 +81,11 @@ public class CommandContext {
             return;
         }
         GraphPoint otherConnectedPoint = null;
-        if (current instanceof Switch currentSwitch) {
-            otherConnectedPoint = currentSwitch.getPointThatCanConnectThisPoint(current);
+        if (currentFacingDirection instanceof Switch currentSwitch) {
+            otherConnectedPoint = currentSwitch.getPointThatCanConnectThisPoint(currentFacingDirection);
         } else {
             for (GraphPoint connected : neighbors) {
-                if (!connected.equals(current)) {
+                if (!connected.equals(currentFacingDirection)) {
                     otherConnectedPoint = connected;
                     break;
                 }
