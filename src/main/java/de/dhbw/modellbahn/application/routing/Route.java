@@ -24,6 +24,23 @@ public class Route {
         this.estimatedTime = estimatedTime;
     }
 
+    public Route addAction(RoutingAction action) {
+        List<RoutingAction> newActionList = new java.util.ArrayList<>(getActionList());
+        newActionList.add(action);
+        return new Route(loc, newActionList, newPosition, newFacingDirection, estimatedTime);
+    }
+
+    public Route addRoute(Route newRoute) {
+        if (!this.getLoc().equals(newRoute.getLoc())) {
+            throw new IllegalArgumentException("Route loc does not match route loc");
+        }
+
+        List<RoutingAction> combinedActionList = new java.util.ArrayList<>(this.getActionList());
+        combinedActionList.addAll(newRoute.getActionList());
+        long combinedTime = estimatedTime + newRoute.getEstimatedTime();
+        return new Route(loc, combinedActionList, newRoute.getNewPosition(), newRoute.getNewFacingDirection(), combinedTime);
+    }
+
     public void driveRoute() {
         int step = 1;
         int maxSteps = actionList.size();
@@ -34,8 +51,8 @@ public class Route {
             //  With some feedback from the hardware there could be a check if the action was successful
             //  further more: position should be present at all time enabling routing of multiple trains
         }
-        this.loc.setCurrentPosition(this.newPosition);
-        this.loc.setCurrentFacingDirection(this.newFacingDirection);
+        this.getLoc().setCurrentPosition(this.getNewPosition());
+        this.getLoc().setCurrentFacingDirection(this.getNewFacingDirection());
     }
 
     public List<RoutingAction> getActionList() {
@@ -44,5 +61,17 @@ public class Route {
 
     public long getEstimatedTime() {
         return estimatedTime;
+    }
+
+    protected GraphPoint getNewPosition() {
+        return newPosition;
+    }
+
+    protected GraphPoint getNewFacingDirection() {
+        return newFacingDirection;
+    }
+
+    protected Locomotive getLoc() {
+        return loc;
     }
 }
