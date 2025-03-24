@@ -23,6 +23,7 @@ public enum TokenType {
     NEW_KEYWORD,
     ROUTE_KEYWORD,
     WITH_KEYWORD,
+    REMOVE_KEYWORD,
 
     HEIGHT_KEYWORD,
     ELECTRIFICATION_KEYWORD,
@@ -32,5 +33,6 @@ public enum TokenType {
     COMMENT,
 
     NUMBER,
-    STRING, ALGORITHM;
+    STRING,
+    ALGORITHM;
 }

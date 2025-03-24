@@ -52,6 +52,10 @@ public class CommandParser {
         } else if (token.type() == TokenType.DRIVE_COMMAND) {
             // Handle standalone DRIVE command
             instructions.add(new DriveInstr());
+        } else if (token.type() == TokenType.REMOVE_KEYWORD) {
+            // moves locomotive to NotOnTrack
+            LocId locId = parseLocId();
+            instructions.add(new RemoveLocomotiveFromTrackInstr(locId));
         } else {
             throw new ParseException("Expected statement but got: " + token);
         }
