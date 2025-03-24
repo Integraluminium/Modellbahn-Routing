@@ -1,5 +1,7 @@
 package de.dhbw.modellbahn.domain.graph;
 
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.PointName;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

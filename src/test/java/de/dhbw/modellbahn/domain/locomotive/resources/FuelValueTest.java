@@ -1,12 +1,14 @@
 package de.dhbw.modellbahn.domain.locomotive.resources;
 
+import de.dhbw.modellbahn.domain.locomotive.attributes.resources.FuelValue;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FuelValueTest {
 
@@ -28,7 +30,7 @@ class FuelValueTest {
 
     @ParameterizedTest
     @MethodSource("provideValidFuelValues")
-    void testValidFuelValues(int input){
+    void testValidFuelValues(int input) {
         FuelValue fuelValue = new FuelValue(input);
 
         assertEquals(input, fuelValue.value());
@@ -36,7 +38,7 @@ class FuelValueTest {
 
     @ParameterizedTest
     @MethodSource("provideInvalidFuelValues")
-    void testInvalidFuelValues(int input){
+    void testInvalidFuelValues(int input) {
         assertThrows(IllegalArgumentException.class, () -> new FuelValue(input));
     }
 }

@@ -1,14 +1,15 @@
 package de.dhbw.modellbahn.application.routing;
 
-import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
-import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
-import de.dhbw.modellbahn.domain.graph.NormalSwitch;
-import de.dhbw.modellbahn.domain.graph.PointName;
-import de.dhbw.modellbahn.domain.graph.PointSide;
-import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.ApiService;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.TrackComponentCallsAdapter;
+import de.dhbw.modellbahn.application.routing.directed.graph.DirectedNode;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.PointName;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.PointSide;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
+import de.dhbw.modellbahn.domain.graph.nodes.switches.NormalSwitch;
+import de.dhbw.modellbahn.domain.physical.railway.communication.TrackComponentCalls;
+import de.dhbw.modellbahn.domain.physical.railway.components.SwitchComponent;
+import de.dhbw.modellbahn.domain.physical.railway.components.TrackComponentId;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

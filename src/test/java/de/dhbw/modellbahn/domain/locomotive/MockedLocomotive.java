@@ -1,8 +1,11 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
-import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedLockCalls;
-import de.dhbw.modellbahn.domain.graph.Distance;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.MockedLockCalls;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Distance;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
+import de.dhbw.modellbahn.domain.locomotive.attributes.LocId;
+import de.dhbw.modellbahn.domain.locomotive.attributes.LocName;
+import de.dhbw.modellbahn.domain.locomotive.attributes.MaxLocSpeed;
 
 public class MockedLocomotive extends Locomotive {
     public MockedLocomotive(GraphPoint startPosition, GraphPoint startFacingDirection) {

@@ -1,11 +1,11 @@
 package de.dhbw.modellbahn;
 
-import de.dhbw.modellbahn.plugin.parser.CommandParser;
-import de.dhbw.modellbahn.plugin.parser.CommandlineREPL;
-import de.dhbw.modellbahn.plugin.parser.DomainObjectParser;
-import de.dhbw.modellbahn.plugin.parser.ScriptRunner;
-import de.dhbw.modellbahn.plugin.parser.lexer.Lexer;
-import de.dhbw.modellbahn.util.MobaLogConfig;
+import de.dhbw.modellbahn.parser.CommandParser;
+import de.dhbw.modellbahn.parser.CommandlineREPL;
+import de.dhbw.modellbahn.parser.DomainObjectParser;
+import de.dhbw.modellbahn.parser.ScriptRunner;
+import de.dhbw.modellbahn.parser.lexer.Lexer;
+import de.dhbw.modellbahn.plugin.logging.MobaLogConfig;
 
 import java.io.IOException;
 import java.io.PrintStream;

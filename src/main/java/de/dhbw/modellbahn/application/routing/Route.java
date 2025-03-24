@@ -1,7 +1,7 @@
 package de.dhbw.modellbahn.application.routing;
 
-import de.dhbw.modellbahn.application.routing.action.RoutingAction;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
+import de.dhbw.modellbahn.application.routing.actions.RoutingAction;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 
 import java.util.Collections;

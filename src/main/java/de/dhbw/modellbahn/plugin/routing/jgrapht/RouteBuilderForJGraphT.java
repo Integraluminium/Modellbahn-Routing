@@ -1,14 +1,15 @@
 package de.dhbw.modellbahn.plugin.routing.jgrapht;
 
-import de.dhbw.modellbahn.application.RouteBuilder;
-import de.dhbw.modellbahn.application.RoutingAlgorithm;
-import de.dhbw.modellbahn.application.RoutingOptimization;
-import de.dhbw.modellbahn.application.routing.DirectedNode;
-import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
 import de.dhbw.modellbahn.application.routing.Route;
+import de.dhbw.modellbahn.application.routing.building.PathNotPossibleException;
+import de.dhbw.modellbahn.application.routing.building.RouteBuilder;
+import de.dhbw.modellbahn.application.routing.building.RoutingAlgorithm;
+import de.dhbw.modellbahn.application.routing.building.RoutingOptimization;
+import de.dhbw.modellbahn.application.routing.directed.graph.DirectedNode;
 import de.dhbw.modellbahn.domain.graph.Graph;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.algorithm.MonoTrainRouteGeneratorJGraphT;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
@@ -68,7 +69,7 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
      */
     @Override
     public RouteBuilder setRouteOptimization(final Locomotive loc, final RoutingOptimization optimization) {
-        this.locomotivesToConsiderInRouting.get(loc).setOptimisation(optimization);
+        this.locomotivesToConsiderInRouting.get(loc).setOptimization(optimization);
         return this;
     }
 
@@ -104,6 +105,12 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
         return this.routes.keySet();
     }
 
+    @Override
+    public RouteBuilder setRoutingAlgorithm(final RoutingAlgorithm algorithm) {
+        this.algorithm = algorithm;
+        return this;
+    }
+
     private void generateRouteForMultipleLocomotives(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph) throws PathNotPossibleException {
         throw new UnsupportedOperationException("Routing of multiple locomotives is not implemented yet.");
     }
@@ -111,18 +118,18 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
     private void generateRouteForSingleLocomotive(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph) throws PathNotPossibleException {
         Locomotive locomotive = locomotivesToConsiderInRouting.keySet().iterator().next();
         // TODO consider electrification IF locomotive is electric
-        MonoTrainRoutingJGraphT monoTrainRoutingJGraphT = new MonoTrainRoutingJGraphT(algorithm, routingGraph);
+        MonoTrainRouteGeneratorJGraphT monoTrainRouteGenerator = new MonoTrainRouteGeneratorJGraphT(algorithm, routingGraph);
 
         LocomotiveInfo locomotiveInfo = locomotivesToConsiderInRouting.get(locomotive);
 
         Route route;
         if (locomotiveInfo.getDestinationFacingDirection().isPresent()) {
-            route = monoTrainRoutingJGraphT.generateRoute(locomotive, locomotiveInfo.getDestination(), locomotiveInfo.getDestinationFacingDirection().get(), locomotiveInfo.getOptimisation());
+            route = monoTrainRouteGenerator.generateRoute(locomotive, locomotiveInfo.getDestination(), locomotiveInfo.getDestinationFacingDirection().get(), locomotiveInfo.getOptimization());
         } else {
-            route = monoTrainRoutingJGraphT.generateRoute(
+            route = monoTrainRouteGenerator.generateRoute(
                     locomotive,
                     locomotiveInfo.getDestination(),
-                    locomotiveInfo.getOptimisation()
+                    locomotiveInfo.getOptimization()
             );
         }
         routes.put(locomotive, route);
@@ -141,12 +148,6 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
 
     private long getAmountOfLocomotivesToConsider() {
         return this.locomotivesToConsiderInRouting.values().stream().filter(locInfo -> locInfo.getDestination() != locInfo.getLoc().getCurrentPosition()).count();
-    }
-
-    @Override
-    public RouteBuilder setRoutingAlgorithm(final RoutingAlgorithm algorithm) {
-        this.algorithm = algorithm;
-        return this;
     }
 
 }

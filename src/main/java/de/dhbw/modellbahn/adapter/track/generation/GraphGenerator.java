@@ -1,12 +1,24 @@
 package de.dhbw.modellbahn.adapter.track.generation;
 
-import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.domain.ConfigReader;
-import de.dhbw.modellbahn.domain.graph.*;
-import de.dhbw.modellbahn.domain.track.components.SignalComponent;
-import de.dhbw.modellbahn.domain.track.components.SwitchComponent;
-import de.dhbw.modellbahn.domain.track.components.TrackComponentId;
-import de.dhbw.modellbahn.domain.track.components.TrackContactComponent;
+import de.dhbw.modellbahn.application.ConfigReader;
+import de.dhbw.modellbahn.domain.graph.Graph;
+import de.dhbw.modellbahn.domain.graph.edges.GraphConnection;
+import de.dhbw.modellbahn.domain.graph.edges.WeightedEdge;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Distance;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Height;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.PointName;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.BufferStop;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.Signal;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.TrackContact;
+import de.dhbw.modellbahn.domain.graph.nodes.switches.CrossSwitch;
+import de.dhbw.modellbahn.domain.graph.nodes.switches.NormalSwitch;
+import de.dhbw.modellbahn.domain.graph.nodes.switches.ThreeWaySwitch;
+import de.dhbw.modellbahn.domain.physical.railway.communication.TrackComponentCalls;
+import de.dhbw.modellbahn.domain.physical.railway.components.SignalComponent;
+import de.dhbw.modellbahn.domain.physical.railway.components.SwitchComponent;
+import de.dhbw.modellbahn.domain.physical.railway.components.TrackComponentId;
+import de.dhbw.modellbahn.domain.physical.railway.components.TrackContactComponent;
 
 import java.util.Collection;
 import java.util.List;

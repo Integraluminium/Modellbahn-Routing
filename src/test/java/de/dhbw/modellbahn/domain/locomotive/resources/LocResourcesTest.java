@@ -1,9 +1,11 @@
 package de.dhbw.modellbahn.domain.locomotive.resources;
 
-import de.dhbw.modellbahn.domain.locomotive.LocId;
+import de.dhbw.modellbahn.domain.locomotive.attributes.resources.FuelType;
+import de.dhbw.modellbahn.domain.locomotive.attributes.resources.FuelValue;
+import de.dhbw.modellbahn.domain.locomotive.attributes.resources.LocResources;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LocResourcesTest {
     private final FuelValue fuelA = new FuelValue(0);

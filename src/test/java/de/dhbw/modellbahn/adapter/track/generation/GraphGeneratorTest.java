@@ -1,13 +1,13 @@
 package de.dhbw.modellbahn.adapter.track.generation;
 
-import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
-import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.domain.ConfigReader;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.ApiService;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.TrackComponentCallsAdapter;
+import de.dhbw.modellbahn.application.ConfigReader;
 import de.dhbw.modellbahn.domain.graph.Graph;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
-import de.dhbw.modellbahn.domain.graph.PointName;
-import de.dhbw.modellbahn.domain.graph.WeightedEdge;
+import de.dhbw.modellbahn.domain.graph.edges.WeightedEdge;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.PointName;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
+import de.dhbw.modellbahn.domain.physical.railway.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.plugin.MockedConfigReader;
 import org.junit.jupiter.api.Test;
 

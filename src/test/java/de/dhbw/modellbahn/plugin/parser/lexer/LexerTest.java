@@ -1,6 +1,10 @@
 package de.dhbw.modellbahn.plugin.parser.lexer;
 
-import de.dhbw.modellbahn.plugin.parser.ParseException;
+import de.dhbw.modellbahn.parser.ParseException;
+import de.dhbw.modellbahn.parser.lexer.Lexer;
+import de.dhbw.modellbahn.parser.lexer.LexerException;
+import de.dhbw.modellbahn.parser.lexer.Token;
+import de.dhbw.modellbahn.parser.lexer.TokenType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
