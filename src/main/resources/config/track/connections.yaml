@@ -327,3 +327,21 @@
   distance: 4947
   height: 0
   electrified: true
+
+- source: K19
+  destination: P5
+  distance: 0
+  height: 0
+  electrified: true
+
+- source: K20
+  destination: P6
+  distance: 0
+  height: 0
+  electrified: true
+
+- source: K5
+  destination: P7
+  distance: 0
+  height: 0
+  electrified: true
