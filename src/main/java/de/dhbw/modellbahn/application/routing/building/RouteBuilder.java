@@ -54,9 +54,9 @@ public interface RouteBuilder {
      * <i>Optional</i>
      * <b>only one optimization can be set per locomotive
      *
-     * @param loc
-     * @param optimization
-     * @return
+     * @param loc the locomotive
+     * @param optimization the optimization to set
+     * @return this
      */
     RouteBuilder setRouteOptimization(Locomotive loc, RoutingOptimization optimization);
 

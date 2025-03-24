@@ -8,13 +8,9 @@ import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.attributes.LocId;
 
 
-@SuppressWarnings("UseOfSystemOutOrSystemErr")
 public class DomainObjectParser {
-
-
     private final Graph graph;
     private final LocomotiveRepository locomotiveRepository;
-
 
     public DomainObjectParser(Graph graph, LocomotiveRepository locomotiveRepository) {
         this.graph = graph;

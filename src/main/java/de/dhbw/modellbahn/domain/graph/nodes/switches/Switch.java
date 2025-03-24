@@ -14,8 +14,8 @@ public interface Switch {
      * <p>Example: If the point is connected to the root, it will return {@link PointSide#IN}
      * If the point is connected to the outgoing point, it will return {@link PointSide#OUT}
      *
-     * @param point
-     * @return
+     * @param point The point to check
+     * @return The side of the switch the point is connected to
      */
     PointSide getSwitchSideFromPoint(GraphPoint point);
 

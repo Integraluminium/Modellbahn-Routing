@@ -7,10 +7,6 @@ public record LocId(int id) {
         }
     }
 
-    public boolean hasId(int id) {
-        return this.id == id;
-    }
-
     @Override
     public String toString() {
         return "LocId[" +

@@ -34,5 +34,5 @@ public enum TokenType {
 
     NUMBER,
     STRING,
-    ALGORITHM;
+    ALGORITHM
 }

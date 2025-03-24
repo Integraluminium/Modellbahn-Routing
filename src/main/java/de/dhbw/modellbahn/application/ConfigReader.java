@@ -7,7 +7,6 @@ import de.dhbw.modellbahn.adapter.track.generation.*;
 import java.util.List;
 
 public interface ConfigReader {
-    List<Integer> getValidLocIds();
 
     List<ConfigLocomotive> getLocomotives();
 
