@@ -50,7 +50,9 @@ public class Lexer {
         addKeywordMachine("NEW", TokenType.NEW_KEYWORD);
         addKeywordMachine("ROUTE", TokenType.ROUTE_KEYWORD);
         addKeywordMachine("WITH", TokenType.WITH_KEYWORD);
+        addKeywordMachine("AUTOMATIC", TokenType.AUTOMATIC_KEYWORD);
 
+        addMachine(new BooleanMachine());
         addMachine(new OptimizationMachine());
         addMachine(new AlgorithmMachine());
         addMachine(new NumberMachine());

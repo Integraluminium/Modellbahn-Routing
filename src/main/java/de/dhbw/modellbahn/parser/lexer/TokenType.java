@@ -24,6 +24,7 @@ public enum TokenType {
     ROUTE_KEYWORD,
     WITH_KEYWORD,
     REMOVE_KEYWORD,
+    AUTOMATIC_KEYWORD,
 
     HEIGHT_KEYWORD,
     ELECTRIFICATION_KEYWORD,
@@ -34,5 +35,6 @@ public enum TokenType {
 
     NUMBER,
     STRING,
-    ALGORITHM
+    ALGORITHM,
+    BOOLEAN
 }
