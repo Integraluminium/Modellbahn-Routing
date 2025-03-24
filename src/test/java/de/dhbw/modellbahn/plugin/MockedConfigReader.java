@@ -62,7 +62,7 @@ public class MockedConfigReader implements ConfigReader {
 
     @Override
     public List<ConfigVirtualPoint> getVirtualPoints() {
-        return List.of(new ConfigVirtualPoint("B"));
+        return List.of(new ConfigVirtualPoint("B"), new ConfigVirtualPoint("NotInGraph"));
     }
 
     @Override

@@ -1,11 +1,17 @@
 package de.dhbw.modellbahn.plugin;
 
+import de.dhbw.modellbahn.adapter.locomotive.reading.ConfigLocomotive;
 import de.dhbw.modellbahn.adapter.track.generation.*;
 import de.dhbw.modellbahn.application.ConfigReader;
 
 import java.util.List;
 
 public class MockedConfigReader_smallGraph extends MockedConfigReader implements ConfigReader {
+
+    @Override
+    public List<ConfigLocomotive> getLocomotives() {
+        return List.of();
+    }
 
     // MockedGraph.png shows the output graph of the MockedConfigReader
     @Override
@@ -57,7 +63,7 @@ public class MockedConfigReader_smallGraph extends MockedConfigReader implements
 
     @Override
     public List<ConfigVirtualPoint> getVirtualPoints() {
-        return List.of(new ConfigVirtualPoint("F"), new ConfigVirtualPoint("Z"));
+        return List.of(new ConfigVirtualPoint("F"), new ConfigVirtualPoint("Z"), new ConfigVirtualPoint("NotInGraph"));
     }
 
     @Override
