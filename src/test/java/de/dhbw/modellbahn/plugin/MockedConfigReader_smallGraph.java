@@ -1,7 +1,7 @@
 package de.dhbw.modellbahn.plugin;
 
 import de.dhbw.modellbahn.adapter.track.generation.*;
-import de.dhbw.modellbahn.domain.ConfigReader;
+import de.dhbw.modellbahn.application.ConfigReader;
 
 import java.util.List;
 

@@ -1,10 +1,11 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
-import de.dhbw.modellbahn.adapter.locomotive.LocomotiveRepositoryImpl;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedLockCalls;
-import de.dhbw.modellbahn.application.LocomotiveRepository;
-import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
-import de.dhbw.modellbahn.domain.ConfigReader;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.MockedLockCalls;
+import de.dhbw.modellbahn.application.ConfigReader;
+import de.dhbw.modellbahn.application.repositories.LocomotiveRepository;
+import de.dhbw.modellbahn.application.repositories.LocomotiveRepositoryImpl;
+import de.dhbw.modellbahn.domain.locomotive.attributes.LocId;
+import de.dhbw.modellbahn.domain.physical.railway.communication.LocCalls;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;

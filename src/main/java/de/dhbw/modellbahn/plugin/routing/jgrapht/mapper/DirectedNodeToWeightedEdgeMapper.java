@@ -1,8 +1,8 @@
 package de.dhbw.modellbahn.plugin.routing.jgrapht.mapper;
 
-import de.dhbw.modellbahn.application.routing.DirectedNode;
-import de.dhbw.modellbahn.application.routing.WeightedDistanceEdge;
-import de.dhbw.modellbahn.domain.graph.Distance;
+import de.dhbw.modellbahn.application.routing.directed.graph.DirectedNode;
+import de.dhbw.modellbahn.application.routing.directed.graph.WeightedDistanceEdge;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Distance;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 

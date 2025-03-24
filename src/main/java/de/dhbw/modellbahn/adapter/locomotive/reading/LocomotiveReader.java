@@ -1,13 +1,13 @@
 package de.dhbw.modellbahn.adapter.locomotive.reading;
 
-import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
-import de.dhbw.modellbahn.domain.ConfigReader;
-import de.dhbw.modellbahn.domain.graph.Distance;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
-import de.dhbw.modellbahn.domain.locomotive.LocId;
-import de.dhbw.modellbahn.domain.locomotive.LocName;
+import de.dhbw.modellbahn.application.ConfigReader;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Distance;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
-import de.dhbw.modellbahn.domain.locomotive.MaxLocSpeed;
+import de.dhbw.modellbahn.domain.locomotive.attributes.LocId;
+import de.dhbw.modellbahn.domain.locomotive.attributes.LocName;
+import de.dhbw.modellbahn.domain.locomotive.attributes.MaxLocSpeed;
+import de.dhbw.modellbahn.domain.physical.railway.communication.LocCalls;
 
 import java.util.List;
 

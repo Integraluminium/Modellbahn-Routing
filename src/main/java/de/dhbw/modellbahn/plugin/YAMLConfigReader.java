@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import de.dhbw.modellbahn.adapter.locomotive.reading.ConfigLocomotive;
-import de.dhbw.modellbahn.adapter.moba.config.ApiConfig;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.ApiConfig;
 import de.dhbw.modellbahn.adapter.track.generation.*;
-import de.dhbw.modellbahn.domain.ConfigReader;
+import de.dhbw.modellbahn.application.ConfigReader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,11 +37,6 @@ public class YAMLConfigReader implements ConfigReader {
     private <T> T readObjectFromPath(String path, Class<T> objectClass) {
         String file = this.readFile(path);
         return mapFileToObject(file, objectClass);
-    }
-
-    @Override
-    public List<Integer> getValidLocIds() {
-        return List.of(this.readObjectFromPath("locs/loc_ids.yaml", Integer[].class));
     }
 
     @Override

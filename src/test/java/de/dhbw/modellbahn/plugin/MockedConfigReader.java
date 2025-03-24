@@ -1,18 +1,14 @@
 package de.dhbw.modellbahn.plugin;
 
 import de.dhbw.modellbahn.adapter.locomotive.reading.ConfigLocomotive;
-import de.dhbw.modellbahn.adapter.moba.config.ApiConfig;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.ApiConfig;
 import de.dhbw.modellbahn.adapter.track.generation.*;
-import de.dhbw.modellbahn.domain.ConfigReader;
+import de.dhbw.modellbahn.application.ConfigReader;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MockedConfigReader implements ConfigReader {
-    @Override
-    public List<Integer> getValidLocIds() {
-        return List.of(1, 2, 3);
-    }
 
     @Override
     public List<ConfigLocomotive> getLocomotives() {

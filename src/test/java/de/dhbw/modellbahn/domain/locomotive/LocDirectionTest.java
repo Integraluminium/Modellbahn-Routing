@@ -1,12 +1,13 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
+import de.dhbw.modellbahn.domain.locomotive.attributes.LocDirection;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LocDirectionTest {
 
@@ -21,7 +22,7 @@ class LocDirectionTest {
 
     @ParameterizedTest
     @MethodSource("provideValidDirections")
-    void testValidDirections(LocDirection input, String expected){
+    void testValidDirections(LocDirection input, String expected) {
         assertEquals(input.getDirection(), expected);
     }
 

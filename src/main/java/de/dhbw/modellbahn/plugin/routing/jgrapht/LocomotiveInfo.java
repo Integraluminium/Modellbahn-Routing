@@ -1,7 +1,7 @@
 package de.dhbw.modellbahn.plugin.routing.jgrapht;
 
-import de.dhbw.modellbahn.application.RoutingOptimization;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
+import de.dhbw.modellbahn.application.routing.building.RoutingOptimization;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 
 import java.util.Optional;
@@ -10,12 +10,12 @@ class LocomotiveInfo {
     private Locomotive loc;
     private GraphPoint destination;
     private GraphPoint destinationFacingDirection;
-    private RoutingOptimization optimisation;
+    private RoutingOptimization optimization;
 
     public LocomotiveInfo(final Locomotive loc) {
         this.loc = loc;
         this.destination = loc.getCurrentPosition();
-        this.optimisation = RoutingOptimization.DISTANCE;
+        this.optimization = RoutingOptimization.DISTANCE;
     }
 
     public Locomotive getLoc() {
@@ -43,11 +43,11 @@ class LocomotiveInfo {
         this.destinationFacingDirection = destinationFacingDirection;
     }
 
-    public RoutingOptimization getOptimisation() {
-        return optimisation;
+    public RoutingOptimization getOptimization() {
+        return optimization;
     }
 
-    public void setOptimisation(final RoutingOptimization optimisation) {
-        this.optimisation = optimisation;
+    public void setOptimization(final RoutingOptimization optimization) {
+        this.optimization = optimization;
     }
 }

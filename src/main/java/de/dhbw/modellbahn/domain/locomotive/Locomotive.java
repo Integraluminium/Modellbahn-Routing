@@ -1,11 +1,12 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
-import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
-import de.dhbw.modellbahn.domain.graph.Distance;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
-import de.dhbw.modellbahn.domain.locomotive.resources.FuelType;
-import de.dhbw.modellbahn.domain.locomotive.resources.FuelValue;
-import de.dhbw.modellbahn.domain.locomotive.resources.LocResources;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Distance;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
+import de.dhbw.modellbahn.domain.locomotive.attributes.*;
+import de.dhbw.modellbahn.domain.locomotive.attributes.resources.FuelType;
+import de.dhbw.modellbahn.domain.locomotive.attributes.resources.FuelValue;
+import de.dhbw.modellbahn.domain.locomotive.attributes.resources.LocResources;
+import de.dhbw.modellbahn.domain.physical.railway.communication.LocCalls;
 
 public class Locomotive {
     private final LocName name;

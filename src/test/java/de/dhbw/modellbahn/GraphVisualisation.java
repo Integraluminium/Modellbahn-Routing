@@ -1,13 +1,13 @@
 package de.dhbw.modellbahn;
 
-import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedTrackComponentCalls;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.MockedTrackComponentCalls;
 import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
-import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.application.routing.DirectedNode;
-import de.dhbw.modellbahn.domain.ConfigReader;
+import de.dhbw.modellbahn.application.ConfigReader;
+import de.dhbw.modellbahn.application.routing.directed.graph.DirectedNode;
 import de.dhbw.modellbahn.domain.graph.Graph;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
-import de.dhbw.modellbahn.domain.graph.Switch;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
+import de.dhbw.modellbahn.domain.graph.nodes.switches.Switch;
+import de.dhbw.modellbahn.domain.physical.railway.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.plugin.DomainGraphFactory;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
