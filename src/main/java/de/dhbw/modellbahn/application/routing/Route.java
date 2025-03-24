@@ -25,7 +25,7 @@ public class Route {
     }
 
     public Route addAction(RoutingAction action) {
-        List<RoutingAction> newActionList = new java.util.ArrayList<>(List.copyOf(getActionList()));
+        List<RoutingAction> newActionList = new java.util.ArrayList<>(getActionList());
         newActionList.add(action);
         return new Route(loc, newActionList, newPosition, newFacingDirection, estimatedTime);
     }
@@ -35,7 +35,7 @@ public class Route {
             throw new IllegalArgumentException("Route loc does not match route loc");
         }
 
-        List<RoutingAction> combinedActionList = this.getActionList();
+        List<RoutingAction> combinedActionList = new java.util.ArrayList<>(this.getActionList());
         combinedActionList.addAll(newRoute.getActionList());
         long combinedTime = estimatedTime + newRoute.getEstimatedTime();
         return new Route(loc, combinedActionList, newRoute.getNewPosition(), newRoute.getNewFacingDirection(), combinedTime);

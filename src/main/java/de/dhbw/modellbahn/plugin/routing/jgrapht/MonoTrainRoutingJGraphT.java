@@ -13,6 +13,7 @@ import de.dhbw.modellbahn.plugin.routing.jgrapht.alg.DefaultMonoTrainRoutingStra
 import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.DirectedNodeToWeightedEdgeMapper;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -41,23 +42,75 @@ public class MonoTrainRoutingJGraphT {
      */
     public Route generateRoute(Locomotive locomotive, GraphPoint destination, RoutingOptimization optimisations) throws PathNotPossibleException {
         DirectedNode startNode = beforeRouting(locomotive, optimisations);
-        List<DirectedNode> path = strategy.findShortestPath(startNode, destination);
-
         try {
-            GraphPoint newFacingDirection = determineNewFacingDirection(path);
-            return finalizeRouting(locomotive, path, newFacingDirection);
+            List<DirectedNode> path = strategy.findShortestPath(startNode, destination);
+            try {
+                GraphPoint newFacingDirection = determineNewFacingDirection(path);
+                return finalizeRouting(locomotive, path, newFacingDirection);
 
+            } catch (PathNotPossibleException e) {
+                // Last node is a buffer stop, toggle facing direction
+                if (!(path.getLast().getPoint() instanceof BufferStop)) {
+                    throw new PathNotPossibleException("Last node is not a buffer stop and no facing direction could be determined.");
+                }
+
+                DirectedNode secondLastNode = path.get(path.size() - 2);
+                RoutingAction toggleAction = new LocToggleAction(locomotive, secondLastNode.getPoint());
+                Route route = finalizeRouting(locomotive, path, secondLastNode.getPoint());
+
+                return route.addAction(toggleAction);
+            }
         } catch (PathNotPossibleException e) {
-            if (!(path.getLast().getPoint() instanceof BufferStop)) {
-                throw new PathNotPossibleException("Last node is not a buffer stop and no facing direction could be determined.");
+            // check if destination could be reached by toggling the facing direction
+            DirectedNode tempNode = new DirectedNode(startNode.getPoint(), startNode.getSide().getOpposite());
+            List<DirectedNode> path = strategy.findShortestPath(tempNode, destination);
+            if (path.isEmpty()) {
+                throw e; // rethrow original exception
             }
 
-            DirectedNode secondLastNode = path.get(path.size() - 2);
-            RoutingAction toggleAction = new LocToggleAction(locomotive, secondLastNode.getPoint());
-            Route route = finalizeRouting(locomotive, path, secondLastNode.getPoint());
-
-            return route.addAction(toggleAction);
+            return calculateRouteUsingBufferStop(locomotive, destination, startNode);
         }
+    }
+
+    private Route calculateRouteUsingBufferStop(final Locomotive locomotive, final GraphPoint destination, final DirectedNode startNode) throws PathNotPossibleException {
+        // find nearest buffer stop
+
+        List<List<DirectedNode>> possiblePaths = new ArrayList<>();
+        for (DirectedNode bufferStopNode : routingGraph.vertexSet().stream().filter(node -> node.getPoint() instanceof BufferStop).toList()) {
+            try {
+                List<DirectedNode> bufferStopPath = strategy.findShortestPath(startNode, bufferStopNode);
+                if (!bufferStopPath.isEmpty()) {
+                    possiblePaths.add(bufferStopPath);
+                }
+            } catch (PathNotPossibleException e) {
+                // ignore, because not all buffer stops must be reachable
+            }
+        }
+
+        List<DirectedNode> pathToBufferStop = possiblePaths.stream().min((nodeList1, nodeList2) ->
+                        Long.compare(sumOfPathDistances(nodeList1), sumOfPathDistances(nodeList2)))
+                .orElseThrow(() -> new PathNotPossibleException("No path to buffer stop found"));
+
+        if (pathToBufferStop.size() < 2) {
+            throw new PathNotPossibleException("No path to buffer stop found; this should not happen");
+        }
+
+        DirectedNode bufferStopNode = pathToBufferStop.get(pathToBufferStop.size() - 1);
+        GraphPoint newFacingDirection = pathToBufferStop.get(pathToBufferStop.size() - 2).getPoint();
+
+        Route routeToBufferStop = finalizeRouting(locomotive, pathToBufferStop, newFacingDirection);
+
+        // route from buffer stop to destination
+        DirectedNode invertedBufferStopNode = new DirectedNode(bufferStopNode.getPoint(), bufferStopNode.getSide().getOpposite());
+        List<DirectedNode> pathToDestination = strategy.findShortestPath(invertedBufferStopNode, destination);
+
+        Route routeToDestination = finalizeRouting(locomotive, pathToDestination, destination);
+
+        return routeToBufferStop.addAction(new LocToggleAction(locomotive, newFacingDirection)).addRoute(routeToDestination);
+    }
+
+    private long sumOfPathDistances(final List<DirectedNode> nodeList) {
+        return mapPathToWeightedEdges(nodeList).stream().mapToLong(edge -> ((long) edge.distance().value())).sum();
     }
 
     /**
