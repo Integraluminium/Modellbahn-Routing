@@ -32,5 +32,5 @@ public enum TokenType {
     COMMENT,
 
     NUMBER,
-    STRING, ALGORITHM;
+    STRING, ALGORITHM
 }
