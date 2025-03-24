@@ -7,62 +7,64 @@ import de.dhbw.modellbahn.adapter.moba.communication.calls.SystemCallsAdapter;
 import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
 import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
 import de.dhbw.modellbahn.application.LocomotiveRepository;
-import de.dhbw.modellbahn.application.RouteBuilder;
 import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
 import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;
 import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.application.routing.PathNotPossibleException;
-import de.dhbw.modellbahn.application.routing.Route;
 import de.dhbw.modellbahn.domain.ConfigReader;
 import de.dhbw.modellbahn.domain.graph.Graph;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
-import de.dhbw.modellbahn.domain.locomotive.LocId;
-import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
-import de.dhbw.modellbahn.plugin.routing.jgrapht.RouteBuilderForJGraphT;
+import de.dhbw.modellbahn.plugin.parser.CommandExecutor;
+import de.dhbw.modellbahn.plugin.parser.lexer.instructions.Instruction;
 import de.dhbw.modellbahn.util.MobaLogConfig;
 
-class RoutingApplication {
-    private static final int SENDER_HASH = 25438; // just a random number - stolen from central station
+import java.io.PrintStream;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-    private final LocomotiveRepository locomotiveRepository;
-    private final ConfigReader configReader;
+public class RoutingApplication {
+    private static final Logger logger = Logger.getLogger(RoutingApplication.class.getName());
+    private static final int SENDER_HASH = 25438;
+
     private final Graph domainGraph;
+    private final LocomotiveRepository locomotiveRepository;
+    private final CommandExecutor executor;
 
-    public RoutingApplication() {
-        configReader = new YAMLConfigReader();
+    public RoutingApplication(PrintStream output) {
+        this(Level.INFO, output);
+    }
 
+    public RoutingApplication(Level logLevel, PrintStream output) {
+        // Initialize logging
+        MobaLogConfig.configureLogging(logLevel);
+
+        logger.info("Initializing MobaRail application");
+
+        // Initialize components
+        ConfigReader configReader = new YAMLConfigReader();
         ApiService apiService = new ApiService(SENDER_HASH);
         LocCalls locCalls = new LocCallsAdapter(apiService);
         SystemCalls systemCalls = new SystemCallsAdapter(apiService);
-
         TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
+
+        logger.info("Generating track graph");
         domainGraph = new GraphGenerator(configReader, trackComponentCalls).generateGraph();
         locomotiveRepository = new LocomotiveRepositoryImpl(configReader, locCalls);
+
+        // Initialize parser components
+        executor = new CommandExecutor(locomotiveRepository, domainGraph, systemCalls, output);
     }
 
-    public static void main(String[] args) {
-        MobaLogConfig.configureLogging();
-        RoutingApplication app = new RoutingApplication();
-        try {
-//            app.driveLocomotive("16389", "K2");
-            app.driveLocomotive("16397", "W6");
-        } catch (PathNotPossibleException e) {
-            e.printStackTrace();
-        }
+    // Getters for components (Java API)
+    public Graph getGraph() {
+        return domainGraph;
     }
 
-    public void driveLocomotive(String locomotiveId, String destinationName) throws PathNotPossibleException {
-        int locomotiveIdInt = Integer.parseInt(locomotiveId);
-        LocId locId = new LocId(locomotiveIdInt);
-        Locomotive loc = locomotiveRepository.getLocomotive(locId);
+    public LocomotiveRepository getLocomotiveRepository() {
+        return locomotiveRepository;
+    }
 
-        GraphPoint destination = GraphPoint.of(destinationName);
-        RouteBuilder builder = new RouteBuilderForJGraphT(domainGraph).addLocomotive(loc).considerElectrification(false).setDestinationForLoc(loc, destination);
-
-        builder.generateRoute();
-        Route route = builder.getRouteForLoc(loc);
-
-        route.driveRoute();
+    public void executeCommand(List<Instruction> instructions) throws Exception {
+        executor.execute(instructions, true);
     }
 }

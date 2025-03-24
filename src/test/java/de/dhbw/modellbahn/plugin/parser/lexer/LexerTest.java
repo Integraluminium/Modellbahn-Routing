@@ -51,14 +51,14 @@ class LexerTest {
         assertEquals(TokenType.DRIVE_COMMAND, lexer.lookAhead().type());
         lexer.advance();
 
-        assertEquals(TokenType.LOC_ID, lexer.lookAhead().type());
+        assertEquals(TokenType.NUMBER, lexer.lookAhead().type());
         assertEquals("1234", lexer.lookAhead().value());
         lexer.advance();
 
         assertEquals(TokenType.TO_KEYWORD, lexer.lookAhead().type());
         lexer.advance();
 
-        assertEquals(TokenType.GRAPH_POINT, lexer.lookAhead().type());
+        assertEquals(TokenType.STRING, lexer.lookAhead().type());
         assertEquals("junction_5", lexer.lookAhead().value());
         lexer.advance();
 
@@ -119,7 +119,7 @@ class LexerTest {
     @ValueSource(strings = {"stationA", "S", "W12", "A13", "junction1", "junction_5", "TIMO", "A1B2C3"})
     void testCorrectGraphPoint(String tokenValue) throws LexerException {
         lexer.init(tokenValue);
-        assertEquals(TokenType.GRAPH_POINT, lexer.lookAhead().type(), "value=(" + lexer.lookAhead().value() + ")");
+        assertEquals(TokenType.STRING, lexer.lookAhead().type(), "value=(" + lexer.lookAhead().value() + ")");
     }
 
     @ParameterizedTest
@@ -127,7 +127,7 @@ class LexerTest {
     void testNotRecognizeAsGraphPoint(String tokenValue) {
         try {
             lexer.init(tokenValue);
-            assertNotEquals(TokenType.GRAPH_POINT, lexer.lookAhead().type(), "value=(" + lexer.lookAhead().value() + ")");
+            assertNotEquals(TokenType.STRING, lexer.lookAhead().type(), "value=(" + lexer.lookAhead().value() + ")");
         } catch (LexerException e) {
             // Expected if token is invalid
         }
@@ -137,7 +137,7 @@ class LexerTest {
     @ValueSource(strings = {"1234", "0", "9999", "1", "1000"})
     void testCorrectLocID(String tokenValue) throws LexerException {
         lexer.init(tokenValue);
-        assertEquals(TokenType.LOC_ID, lexer.lookAhead().type(), "value=(" + lexer.lookAhead().value() + ")");
+        assertEquals(TokenType.NUMBER, lexer.lookAhead().type(), "value=(" + lexer.lookAhead().value() + ")");
     }
 
     @ParameterizedTest
@@ -146,7 +146,7 @@ class LexerTest {
         try {
             lexer.init(tokenValue);
             Token token = lexer.lookAhead();
-            assertNotEquals(TokenType.LOC_ID, token.type(), "value=(" + token.value() + ")");
+            assertNotEquals(TokenType.NUMBER, token.type(), "value=(" + token.value() + ")");
         } catch (LexerException e) {
             // Expected if token is invalid
         }

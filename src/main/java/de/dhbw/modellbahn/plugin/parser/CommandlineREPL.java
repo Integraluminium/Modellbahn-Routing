@@ -1,65 +1,32 @@
 package de.dhbw.modellbahn.plugin.parser;
 
-import de.dhbw.modellbahn.adapter.locomotive.LocomotiveRepositoryImpl;
-import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.LocCallsAdapter;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.SystemCallsAdapter;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
-import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
-import de.dhbw.modellbahn.application.LocomotiveRepository;
-import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
-import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;
-import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.domain.ConfigReader;
-import de.dhbw.modellbahn.domain.graph.Graph;
-import de.dhbw.modellbahn.plugin.YAMLConfigReader;
+import de.dhbw.modellbahn.RoutingApplication;
 import de.dhbw.modellbahn.plugin.parser.lexer.LexerException;
 import de.dhbw.modellbahn.plugin.parser.lexer.instructions.Instruction;
-import de.dhbw.modellbahn.util.MobaLogConfig;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 public class CommandlineREPL {
     private static final String PROMPT = ">> ";
     private static final String CONTINUATION_PROMPT = "... ";
     private static final Pattern INDENTATION_PATTERN = Pattern.compile("^\\s+");
-    private static final int SENDER_HASH = 25438; // same value used in RoutingApplication
 
     private final CommandParser parser;
-    private final CommandExecutor executor;
+    private final RoutingApplication app;
     private final BufferedReader reader;
     private final PrintStream output;
     private boolean running = true;
 
-    public CommandlineREPL(LocomotiveRepository repository, Graph graph, SystemCalls systemCalls, PrintStream output) {
-        this.parser = new CommandParser(new de.dhbw.modellbahn.plugin.parser.lexer.Lexer(), graph, repository);
-        this.executor = new CommandExecutor(repository, graph, systemCalls, output);
+    public CommandlineREPL(CommandParser parser, RoutingApplication app, PrintStream output) {
+        this.parser = parser;
+        this.app = app;
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.output = output;
-    }
-
-    public static void main(String[] args) {
-        MobaLogConfig.configureLogging(Level.INFO);
-        // Initialize components similar to RoutingApplication
-        ConfigReader configReader = new YAMLConfigReader();
-
-        ApiService apiService = new ApiService(SENDER_HASH);
-        LocCalls locCalls = new LocCallsAdapter(apiService);
-        SystemCalls systemCalls = new SystemCallsAdapter(apiService);
-        TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
-
-        Graph domainGraph = new GraphGenerator(configReader, trackComponentCalls).generateGraph();
-        LocomotiveRepository locomotiveRepository = new LocomotiveRepositoryImpl(configReader, locCalls);
-
-        // Create and start REPL with the real components
-        CommandlineREPL repl = new CommandlineREPL(locomotiveRepository, domainGraph, systemCalls, System.out);
-        repl.start();
     }
 
     public void start() {
@@ -75,7 +42,7 @@ public class CommandlineREPL {
 
                 // Parse and execute regular command
                 List<Instruction> instructions = parser.parse(command);
-                executor.execute(instructions, true);
+                app.executeCommand(instructions);
             } catch (LexerException | ParseException e) {
                 output.println("Parse error: " + e.getMessage());
             } catch (Exception e) {
@@ -107,7 +74,7 @@ public class CommandlineREPL {
             }
 
             // Check if continued input needed (indentation or special character at end)
-            if (line != null && (indented || line.endsWith("\\") || line.endsWith("{") || line.endsWith("("))) {
+            if (indented || line.endsWith("\\") || line.endsWith("{") || line.endsWith("(")) {
                 output.print(CONTINUATION_PROMPT);
                 output.flush();
 
@@ -157,9 +124,35 @@ public class CommandlineREPL {
 
     private void printHelp() {
         output.println("Available commands:");
-        output.println("  ADD <locId> [AT <position>] TO <destination> [FACING <direction>] [USING <optimization>] DRIVE [CONSIDER <considerations>]");
         output.println("  help - Display this help message");
         output.println("  exit/quit - Exit the command interpreter");
-        output.println();
+
+        String helpMessage = """
+                <command> ::= NEW ROUTE <route_command>
+                            | MODIFY <loc_id> <modify_command>
+                            | LIST <list_command>
+                            | SYSTEM <system_command>
+                            | DRIVE
+                
+                <system_command> ::= "START" | "STOP"
+                <list_command> ::="LOCOMOTIVES" | "GRAPHPOINTS" | "ROUTE"
+                <modify_command> ::= "TOGGLE" "DIRECTION"
+                                   | "POSITION" <graph_point> "FACING" <graph_point>
+                                   | "FACING" <graph_point>
+                                   | "SPEED" <number>
+                <route_command> ::= <add_command>* (CONSIDER <consider_values>+)? (WITH <routing_algorithm>)?
+                
+                <add_command> ::= "ADD" <loc_id> ["AT" <graph_point> "FACING" <graph_point>]? ["TO" <graph_point> ["FACING" <graph_point>]?]? ["USING" <optimization>]?
+                
+                <optimization> ::= TIME | SUPPLIES | DISTANCE
+                <consider_values> ::= "ELECTRIFICATION" | "HEIGHT"
+                <routing_algorithm> ::= "Dijkstra" | "Bellman_Ford"
+                
+                <loc_id> ::= digit*
+                
+                <graph_point> ::= letter (letter | digit)*
+                
+                """;
+        output.println(helpMessage);
     }
 }

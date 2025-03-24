@@ -46,13 +46,14 @@ class CommandExecutorTest {
 
     @BeforeEach
     void setUp() {
-        parser = new CommandParser(new Lexer(), graph, repository);
+        DomainObjectParser domainObjectParser = new DomainObjectParser(graph, repository);
+        parser = new CommandParser(new Lexer(), domainObjectParser);
         executor = new CommandExecutor(repository, graph, systemCalls, System.out);
     }
 
     @Test
     void testExecute() throws Exception, LexerException {
-        List<Instruction> commands = parser.parse("ADD 123 TO C DRIVE");
+        List<Instruction> commands = parser.parse("NEW ROUTE ADD 123 TO C DRIVE");
         executor.execute(commands, true);
     }
 

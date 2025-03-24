@@ -3,12 +3,7 @@ package de.dhbw.modellbahn.util;
 import java.util.logging.*;
 
 public class MobaLogConfig {
-    public static void configureLogging() {
-        configureLogging(Level.INFO);
-    }
-
     public static void configureLogging(Level level) {
-        // Get root logger
         Logger rootLogger = Logger.getLogger("");
         rootLogger.setLevel(level);
 

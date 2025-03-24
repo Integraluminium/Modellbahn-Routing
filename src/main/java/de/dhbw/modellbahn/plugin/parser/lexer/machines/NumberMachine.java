@@ -2,9 +2,9 @@ package de.dhbw.modellbahn.plugin.parser.lexer.machines;
 
 import de.dhbw.modellbahn.plugin.parser.lexer.TokenType;
 
-public class LocIdMachine extends TokenMachine {
-    public LocIdMachine() {
-        super(TokenType.LOC_ID);
+public class NumberMachine extends TokenMachine {
+    public NumberMachine() {
+        super(TokenType.NUMBER);
     }
 
     @Override
