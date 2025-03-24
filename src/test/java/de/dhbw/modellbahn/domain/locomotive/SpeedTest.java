@@ -1,12 +1,14 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
+import de.dhbw.modellbahn.domain.locomotive.attributes.Speed;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SpeedTest {
 
@@ -27,7 +29,7 @@ class SpeedTest {
 
     @ParameterizedTest
     @MethodSource("provideValidSpeedValues")
-    void testValidSpeedValues(int input){
+    void testValidSpeedValues(int input) {
         Speed speed = new Speed(input);
 
         assertEquals(input, speed.value());
@@ -35,7 +37,7 @@ class SpeedTest {
 
     @ParameterizedTest
     @MethodSource("provideInvalidSpeedValues")
-    void testInvalidSpeedValues(int input){
+    void testInvalidSpeedValues(int input) {
         assertThrows(IllegalArgumentException.class, () -> new Speed(input));
     }
 }

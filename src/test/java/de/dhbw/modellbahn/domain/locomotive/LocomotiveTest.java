@@ -1,9 +1,13 @@
 package de.dhbw.modellbahn.domain.locomotive;
 
-import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedLockCalls;
-import de.dhbw.modellbahn.domain.ConfigReader;
-import de.dhbw.modellbahn.domain.graph.Distance;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.MockedLockCalls;
+import de.dhbw.modellbahn.application.ConfigReader;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Distance;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
+import de.dhbw.modellbahn.domain.locomotive.attributes.LocId;
+import de.dhbw.modellbahn.domain.locomotive.attributes.LocName;
+import de.dhbw.modellbahn.domain.locomotive.attributes.MaxLocSpeed;
+import de.dhbw.modellbahn.domain.locomotive.attributes.Speed;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

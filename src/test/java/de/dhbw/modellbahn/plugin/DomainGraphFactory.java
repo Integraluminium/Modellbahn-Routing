@@ -1,9 +1,9 @@
 package de.dhbw.modellbahn.plugin;
 
-import de.dhbw.modellbahn.adapter.moba.communication.calls.MockedTrackComponentCalls;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.MockedTrackComponentCalls;
 import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
-import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
 import de.dhbw.modellbahn.domain.graph.Graph;
+import de.dhbw.modellbahn.domain.physical.railway.communication.TrackComponentCalls;
 
 public class DomainGraphFactory {
     public static Graph createTestGraph() {

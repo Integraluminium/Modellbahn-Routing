@@ -1,13 +1,13 @@
 package de.dhbw.modellbahn.domain.locomotive.resources;
 
-import de.dhbw.modellbahn.domain.locomotive.LocDirection;
+import de.dhbw.modellbahn.domain.locomotive.attributes.resources.FuelType;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FuelTypeTest {
 
@@ -21,7 +21,7 @@ class FuelTypeTest {
 
     @ParameterizedTest
     @MethodSource("provideValidFuelTypes")
-    void testValidDirections(FuelType input, int expected){
+    void testValidDirections(FuelType input, int expected) {
         assertEquals(input.getType(), expected);
     }
 

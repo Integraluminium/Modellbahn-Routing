@@ -1,6 +1,13 @@
 package de.dhbw.modellbahn.domain.graph;
 
 
+import de.dhbw.modellbahn.domain.graph.edges.GraphConnection;
+import de.dhbw.modellbahn.domain.graph.edges.WeightedEdge;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Distance;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Height;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.PointName;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
+
 import java.util.*;
 
 public class Graph {

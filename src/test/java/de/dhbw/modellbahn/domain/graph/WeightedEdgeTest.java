@@ -1,5 +1,9 @@
 package de.dhbw.modellbahn.domain.graph;
 
+import de.dhbw.modellbahn.domain.graph.edges.WeightedEdge;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Distance;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.Height;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

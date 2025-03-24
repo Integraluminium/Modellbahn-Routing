@@ -1,21 +1,21 @@
 package de.dhbw.modellbahn;
 
-import de.dhbw.modellbahn.adapter.locomotive.LocomotiveRepositoryImpl;
-import de.dhbw.modellbahn.adapter.moba.communication.ApiService;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.LocCallsAdapter;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.SystemCallsAdapter;
-import de.dhbw.modellbahn.adapter.moba.communication.calls.TrackComponentCallsAdapter;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.ApiService;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.LocCallsAdapter;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.SystemCallsAdapter;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.TrackComponentCallsAdapter;
 import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
-import de.dhbw.modellbahn.application.LocomotiveRepository;
-import de.dhbw.modellbahn.application.port.moba.communication.LocCalls;
-import de.dhbw.modellbahn.application.port.moba.communication.SystemCalls;
-import de.dhbw.modellbahn.application.port.moba.communication.TrackComponentCalls;
-import de.dhbw.modellbahn.domain.ConfigReader;
+import de.dhbw.modellbahn.application.ConfigReader;
+import de.dhbw.modellbahn.application.repositories.LocomotiveRepository;
+import de.dhbw.modellbahn.application.repositories.LocomotiveRepositoryImpl;
 import de.dhbw.modellbahn.domain.graph.Graph;
+import de.dhbw.modellbahn.domain.physical.railway.communication.LocCalls;
+import de.dhbw.modellbahn.domain.physical.railway.communication.SystemCalls;
+import de.dhbw.modellbahn.domain.physical.railway.communication.TrackComponentCalls;
+import de.dhbw.modellbahn.parser.CommandExecutor;
+import de.dhbw.modellbahn.parser.instructions.Instruction;
 import de.dhbw.modellbahn.plugin.YAMLConfigReader;
-import de.dhbw.modellbahn.plugin.parser.CommandExecutor;
-import de.dhbw.modellbahn.plugin.parser.lexer.instructions.Instruction;
-import de.dhbw.modellbahn.util.MobaLogConfig;
+import de.dhbw.modellbahn.plugin.logging.MobaLogConfig;
 
 import java.io.PrintStream;
 import java.util.List;

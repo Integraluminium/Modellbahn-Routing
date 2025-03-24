@@ -1,10 +1,10 @@
 package de.dhbw.modellbahn.adapter.routing;
 
-import de.dhbw.modellbahn.application.routing.DirectedNode;
+import de.dhbw.modellbahn.application.routing.directed.graph.DirectedNode;
 import de.dhbw.modellbahn.domain.graph.Graph;
-import de.dhbw.modellbahn.domain.graph.GraphPoint;
-import de.dhbw.modellbahn.domain.graph.PointName;
-import de.dhbw.modellbahn.domain.graph.PointSide;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.PointName;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.PointSide;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import de.dhbw.modellbahn.plugin.DomainGraphFactory;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.mapper.GraphToRoutingGraphMapper;
 import org.jgrapht.graph.DefaultWeightedEdge;
