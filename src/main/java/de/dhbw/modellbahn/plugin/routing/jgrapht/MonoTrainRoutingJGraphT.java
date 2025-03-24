@@ -5,6 +5,7 @@ import de.dhbw.modellbahn.application.RoutingOptimization;
 import de.dhbw.modellbahn.application.routing.*;
 import de.dhbw.modellbahn.application.routing.action.LocToggleAction;
 import de.dhbw.modellbahn.application.routing.action.RoutingAction;
+import de.dhbw.modellbahn.domain.graph.BufferStop;
 import de.dhbw.modellbahn.domain.graph.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.PointSide;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
@@ -47,6 +48,10 @@ public class MonoTrainRoutingJGraphT {
             return finalizeRouting(locomotive, path, newFacingDirection);
 
         } catch (PathNotPossibleException e) {
+            if (!(path.getLast().getPoint() instanceof BufferStop)) {
+                throw new PathNotPossibleException("Last node is not a buffer stop and no facing direction could be determined.");
+            }
+
             DirectedNode secondLastNode = path.get(path.size() - 2);
             RoutingAction toggleAction = new LocToggleAction(locomotive, secondLastNode.getPoint());
             Route route = finalizeRouting(locomotive, path, secondLastNode.getPoint());

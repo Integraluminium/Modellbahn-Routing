@@ -83,10 +83,15 @@ public class GraphGenerator {
         return virtualPointList.stream().map(p -> new GraphPoint(new PointName(p.name()))).toList();
     }
 
+    private List<BufferStop> generateBufferStops() {
+        List<ConfigBufferStop> bufferStopList = this.configReader.getBufferStops();
+        return bufferStopList.stream().map(p -> new BufferStop(new PointName(p.name()))).toList();
+    }
+
     private List<GraphConnection> generateGraphConnections(List<NormalSwitch> normalSwitches, List<ThreeWaySwitch> threeWaySwitches, List<CrossSwitch> crossSwitches,
-                                                           List<TrackContact> trackContacts, List<Signal> signals, List<GraphPoint> virtualPoints) {
+                                                           List<TrackContact> trackContacts, List<Signal> signals, List<GraphPoint> virtualPoints, List<BufferStop> bufferStops) {
         List<ConfigConnection> connectionList = this.configReader.getConnections();
-        List<GraphPoint> allComponents = Stream.of(normalSwitches, threeWaySwitches, crossSwitches, trackContacts, signals, virtualPoints)
+        List<GraphPoint> allComponents = Stream.of(normalSwitches, threeWaySwitches, crossSwitches, trackContacts, signals, virtualPoints, bufferStops)
                 .flatMap(Collection::stream).collect(Collectors.toList());
         Map<String, GraphPoint> graphPointMap = allComponents.stream().collect(Collectors.toMap(point -> point.getName().name(), point -> point));
 
@@ -107,8 +112,9 @@ public class GraphGenerator {
         List<TrackContact> trackContacts = generateTrackContacts();
         List<Signal> signals = generateSignals();
         List<GraphPoint> virtualPoints = generateVirtualPoints();
+        List<BufferStop> bufferStops = generateBufferStops();
         List<GraphConnection> graphConnections = generateGraphConnections(
-                normalSwitches, threeWaySwitches, crossSwitches, trackContacts, signals, virtualPoints);
+                normalSwitches, threeWaySwitches, crossSwitches, trackContacts, signals, virtualPoints, bufferStops);
 
         Graph returnGraph = new Graph();
         graphConnections.forEach(returnGraph::addEdge);

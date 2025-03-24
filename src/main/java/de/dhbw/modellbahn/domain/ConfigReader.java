@@ -25,5 +25,7 @@ public interface ConfigReader {
 
     List<ConfigVirtualPoint> getVirtualPoints();
 
+    List<ConfigBufferStop> getBufferStops();
+
     List<ConfigSignal> getSignals();
 }

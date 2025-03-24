@@ -70,6 +70,11 @@ public class MockedConfigReader implements ConfigReader {
     }
 
     @Override
+    public List<ConfigBufferStop> getBufferStops() {
+        return List.of();
+    }
+
+    @Override
     public List<ConfigSignal> getSignals() {
         return List.of(new ConfigSignal("G", 8));
     }

@@ -85,6 +85,11 @@ public class YAMLConfigReader implements ConfigReader {
     }
 
     @Override
+    public List<ConfigBufferStop> getBufferStops() {
+        return List.of(this.readObjectFromPath("track/buffer_stops.yaml", ConfigBufferStop[].class));
+    }
+
+    @Override
     public List<ConfigSignal> getSignals() {
         return List.of(this.readObjectFromPath("track/signals.yaml", ConfigSignal[].class));
     }
