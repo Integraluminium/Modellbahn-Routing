@@ -40,11 +40,6 @@ public class YAMLConfigReader implements ConfigReader {
     }
 
     @Override
-    public List<Integer> getValidLocIds() {
-        return List.of(this.readObjectFromPath("locs/loc_ids.yaml", Integer[].class));
-    }
-
-    @Override
     public List<ConfigLocomotive> getLocomotives() {
         return List.of(this.readObjectFromPath("locs/locs.yaml", ConfigLocomotive[].class));
     }

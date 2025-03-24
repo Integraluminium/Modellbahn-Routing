@@ -9,10 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MockedConfigReader implements ConfigReader {
-    @Override
-    public List<Integer> getValidLocIds() {
-        return List.of(1, 2, 3);
-    }
 
     @Override
     public List<ConfigLocomotive> getLocomotives() {
