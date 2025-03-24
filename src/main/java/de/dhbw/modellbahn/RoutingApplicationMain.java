@@ -1,6 +1,9 @@
 package de.dhbw.modellbahn;
 
-import de.dhbw.modellbahn.plugin.parser.*;
+import de.dhbw.modellbahn.plugin.parser.CommandParser;
+import de.dhbw.modellbahn.plugin.parser.CommandlineREPL;
+import de.dhbw.modellbahn.plugin.parser.DomainObjectParser;
+import de.dhbw.modellbahn.plugin.parser.ScriptRunner;
 import de.dhbw.modellbahn.plugin.parser.lexer.Lexer;
 import de.dhbw.modellbahn.util.MobaLogConfig;
 
@@ -13,20 +16,19 @@ import java.util.logging.Level;
 public class RoutingApplicationMain {
     public static void main(String[] args) {
         PrintStream standardOutput = System.out;
-        RoutingApplication app = new RoutingApplication();
+        RoutingApplication app = new RoutingApplication(standardOutput);
         DomainObjectParser domainObjectParser = new DomainObjectParser(app.getGraph(), app.getLocomotiveRepository());
-        CommandExecutor executor = app.getExecutor();
         CommandParser parser = new CommandParser(new Lexer(), domainObjectParser);
 
         if (args.length == 0) {
             // Interactive REPL mode
             MobaLogConfig.configureLogging(Level.INFO);
-            new CommandlineREPL(parser, executor, standardOutput).start();
+            new CommandlineREPL(parser, app, standardOutput).start();
 
         } else if (args[0].equals("--debug")) {
             // Set debug level and run REPL
             MobaLogConfig.configureLogging(Level.FINE);
-            new CommandlineREPL(parser, executor, standardOutput).start();
+            new CommandlineREPL(parser, app, standardOutput).start();
 
         } else {
             // Script mode
@@ -38,7 +40,7 @@ public class RoutingApplicationMain {
                 System.exit(1);
             }
             try {
-                new ScriptRunner(parser, executor, standardOutput).runScript(path);
+                new ScriptRunner(parser, app, standardOutput).runScript(path);
             } catch (IOException e) {
                 System.err.println("Error reading script: " + e.getMessage());
                 System.exit(1);

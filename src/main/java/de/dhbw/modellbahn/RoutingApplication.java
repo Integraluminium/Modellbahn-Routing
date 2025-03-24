@@ -26,17 +26,15 @@ public class RoutingApplication {
     private static final Logger logger = Logger.getLogger(RoutingApplication.class.getName());
     private static final int SENDER_HASH = 25438;
 
-    private final SystemCalls systemCalls;
     private final Graph domainGraph;
     private final LocomotiveRepository locomotiveRepository;
-
     private final CommandExecutor executor;
 
-    public RoutingApplication() {
-        this(Level.INFO);
+    public RoutingApplication(PrintStream output) {
+        this(Level.INFO, output);
     }
 
-    public RoutingApplication(Level logLevel) {
+    public RoutingApplication(Level logLevel, PrintStream output) {
         // Initialize logging
         MobaLogConfig.configureLogging(logLevel);
 
@@ -46,7 +44,7 @@ public class RoutingApplication {
         ConfigReader configReader = new YAMLConfigReader();
         ApiService apiService = new ApiService(SENDER_HASH);
         LocCalls locCalls = new LocCallsAdapter(apiService);
-        systemCalls = new SystemCallsAdapter(apiService);
+        SystemCalls systemCalls = new SystemCallsAdapter(apiService);
         TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
 
         logger.info("Generating track graph");
@@ -54,7 +52,7 @@ public class RoutingApplication {
         locomotiveRepository = new LocomotiveRepositoryImpl(configReader, locCalls);
 
         // Initialize parser components
-        executor = new CommandExecutor(locomotiveRepository, domainGraph, systemCalls, System.out);
+        executor = new CommandExecutor(locomotiveRepository, domainGraph, systemCalls, output);
     }
 
     // Getters for components (Java API)
@@ -66,17 +64,7 @@ public class RoutingApplication {
         return locomotiveRepository;
     }
 
-    public SystemCalls getSystemCalls() {
-        return systemCalls;
-    }
-
-    public CommandExecutor getExecutor() {
-        return executor;
-    }
-
-    public void executeCommand(List<Instruction> instructions, PrintStream output) throws Exception {
-        CommandExecutor customExecutor = new CommandExecutor(
-                locomotiveRepository, domainGraph, systemCalls, output);
-        customExecutor.execute(instructions, true);
+    public void executeCommand(List<Instruction> instructions) throws Exception {
+        executor.execute(instructions, true);
     }
 }

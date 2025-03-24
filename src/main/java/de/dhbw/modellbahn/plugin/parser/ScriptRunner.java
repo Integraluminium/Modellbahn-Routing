@@ -1,5 +1,6 @@
 package de.dhbw.modellbahn.plugin.parser;
 
+import de.dhbw.modellbahn.RoutingApplication;
 import de.dhbw.modellbahn.plugin.parser.lexer.LexerException;
 import de.dhbw.modellbahn.plugin.parser.lexer.instructions.Instruction;
 
@@ -11,12 +12,12 @@ import java.util.List;
 
 public class ScriptRunner {
     private final CommandParser parser;
-    private final CommandExecutor executor;
+    private final RoutingApplication app;
     private final PrintStream output;
 
-    public ScriptRunner(CommandParser parser, CommandExecutor executor, PrintStream output) {
+    public ScriptRunner(CommandParser parser, RoutingApplication app, PrintStream output) {
         this.parser = parser;
-        this.executor = executor;
+        this.app = app;
         this.output = output;
     }
 
@@ -28,7 +29,7 @@ public class ScriptRunner {
         try {
             // Let the parser handle multiline commands and comments
             List<Instruction> instructions = parser.parse(scriptContent);
-            executor.execute(instructions, true);
+            app.executeCommand(instructions);
         } catch (Exception | LexerException e) {
             output.println("[Error] executing script: " + e.getMessage());
             e.printStackTrace(output);

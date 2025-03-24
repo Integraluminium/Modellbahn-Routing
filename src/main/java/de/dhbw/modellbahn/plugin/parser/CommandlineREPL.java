@@ -1,5 +1,6 @@
 package de.dhbw.modellbahn.plugin.parser;
 
+import de.dhbw.modellbahn.RoutingApplication;
 import de.dhbw.modellbahn.plugin.parser.lexer.LexerException;
 import de.dhbw.modellbahn.plugin.parser.lexer.instructions.Instruction;
 
@@ -16,14 +17,14 @@ public class CommandlineREPL {
     private static final Pattern INDENTATION_PATTERN = Pattern.compile("^\\s+");
 
     private final CommandParser parser;
-    private final CommandExecutor executor;
+    private final RoutingApplication app;
     private final BufferedReader reader;
     private final PrintStream output;
     private boolean running = true;
 
-    public CommandlineREPL(CommandParser parser, CommandExecutor executor, PrintStream output) {
+    public CommandlineREPL(CommandParser parser, RoutingApplication app, PrintStream output) {
         this.parser = parser;
-        this.executor = executor;
+        this.app = app;
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.output = output;
     }
@@ -41,7 +42,7 @@ public class CommandlineREPL {
 
                 // Parse and execute regular command
                 List<Instruction> instructions = parser.parse(command);
-                executor.execute(instructions, true);
+                app.executeCommand(instructions);
             } catch (LexerException | ParseException e) {
                 output.println("Parse error: " + e.getMessage());
             } catch (Exception e) {
@@ -73,7 +74,7 @@ public class CommandlineREPL {
             }
 
             // Check if continued input needed (indentation or special character at end)
-            if (line != null && (indented || line.endsWith("\\") || line.endsWith("{") || line.endsWith("("))) {
+            if (indented || line.endsWith("\\") || line.endsWith("{") || line.endsWith("(")) {
                 output.print(CONTINUATION_PROMPT);
                 output.flush();
 
