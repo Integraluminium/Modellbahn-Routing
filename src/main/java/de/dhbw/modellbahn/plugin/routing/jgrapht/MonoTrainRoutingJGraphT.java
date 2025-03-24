@@ -138,11 +138,23 @@ public class MonoTrainRoutingJGraphT {
         GraphPoint start = locomotive.getCurrentPosition();
         GraphPoint facingDirection = locomotive.getCurrentFacingDirection();
 
-        return getDirectedNode(start, facingDirection);
+
+        DirectedNode currentPosition = getDirectedNode(start, facingDirection);
+        return this.routingGraph.outgoingEdgesOf(currentPosition).stream()
+                .filter(edge -> this.routingGraph.getEdgeTarget(edge).getPoint().equals(facingDirection))
+                .map(this.routingGraph::getEdgeTarget)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No edge found for start node " + start + " facing " + facingDirection));
     }
 
 
     private Route finalizeRouting(final Locomotive locomotive, final List<DirectedNode> path, final GraphPoint newFacingDirection) throws PathNotPossibleException {
+        GraphPoint start = locomotive.getCurrentPosition();
+        GraphPoint facingDirection = locomotive.getCurrentFacingDirection();
+        DirectedNode currentStartPosition = getDirectedNode(start, facingDirection);
+
+        path.add(0, currentStartPosition);
+
         List<WeightedDistanceEdge> weightedDistanceEdges = mapPathToWeightedEdges(path);
         logger.info("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList());
         RouteGenerator generator = new RouteGenerator(locomotive, weightedDistanceEdges, newFacingDirection);
