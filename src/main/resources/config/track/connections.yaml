@@ -234,7 +234,7 @@
 
 - source: K9
   destination: P2
-  distance: 658
+  distance: 564
   height: 0
   electrified: true
 
@@ -246,7 +246,7 @@
 
 - source: K2
   destination: P3
-  distance: 846
+  distance: 754
   height: 0
   electrified: true
 
@@ -258,7 +258,7 @@
 
 - source: W12
   destination: P4
-  distance: 609
+  distance: 524
   height: 0
   electrified: true
 
@@ -325,5 +325,23 @@
 - source: W17
   destination: W17
   distance: 4947
+  height: 0
+  electrified: true
+
+- source: K19
+  destination: P5
+  distance: 0
+  height: 0
+  electrified: true
+
+- source: K20
+  destination: P6
+  distance: 0
+  height: 0
+  electrified: true
+
+- source: K5
+  destination: P7
+  distance: 0
   height: 0
   electrified: true
