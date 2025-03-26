@@ -6,7 +6,7 @@ import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 
 import java.util.Optional;
 
-class LocomotiveInfo {
+public class LocomotiveInfo {
     private Locomotive loc;
     private GraphPoint destination;
     private GraphPoint destinationFacingDirection;

@@ -30,6 +30,12 @@ public class Route {
         return new Route(loc, newActionList, newPosition, newFacingDirection, estimatedTime);
     }
 
+    public Route addAction(RoutingAction action, int index) {
+        List<RoutingAction> newActionList = new java.util.ArrayList<>(getActionList());
+        newActionList.add(index, action);
+        return new Route(loc, newActionList, newPosition, newFacingDirection, estimatedTime);
+    }
+
     public Route addRoute(Route newRoute) {
         if (!this.getLoc().equals(newRoute.getLoc())) {
             throw new IllegalArgumentException("Route loc does not match route loc");
@@ -63,7 +69,7 @@ public class Route {
         return estimatedTime;
     }
 
-    protected GraphPoint getNewPosition() {
+    public GraphPoint getNewPosition() {
         return newPosition;
     }
 
