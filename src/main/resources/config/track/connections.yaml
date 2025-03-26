@@ -345,3 +345,9 @@
   distance: 0
   height: 0
   electrified: true
+
+- source: NotOnTrack
+  destination: NotOnTrack1
+  distance: 0
+  height: 0
+  electrified: true

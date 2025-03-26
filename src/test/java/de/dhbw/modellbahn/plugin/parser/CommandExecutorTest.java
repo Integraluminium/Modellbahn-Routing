@@ -38,7 +38,7 @@ class CommandExecutorTest {
     static void beforeAll() {
         graph = createSmallTestGraph();
         repository = new LocomotiveRepositoryImpl(new MockedConfigReader(), new MockedLockCalls());
-        repository.addLocomotive(new MockedLocomotive(LOC_ID1, GraphPoint.of("A"), GraphPoint.of("B")));
+        repository.addLocomotive(new MockedLocomotive(LOC_ID1, GraphPoint.of("C"), GraphPoint.of("B")));
         repository.addLocomotive(new MockedLocomotive(LOC_ID2, GraphPoint.of("A"), GraphPoint.of("B")));
         systemCalls = new MockedSystemCalls();
     }
