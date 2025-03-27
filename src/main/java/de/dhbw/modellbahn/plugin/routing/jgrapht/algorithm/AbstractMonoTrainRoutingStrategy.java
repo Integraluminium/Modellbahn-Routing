@@ -13,9 +13,11 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public abstract class AbstractMonoTrainRoutingStrategy implements TrainRoutingStrategy {
+    protected static final Logger logger = Logger.getLogger(Route.class.getSimpleName());
 
     /**
      * Creates a routing graph considering blocked points
@@ -28,6 +30,7 @@ public abstract class AbstractMonoTrainRoutingStrategy implements TrainRoutingSt
     ) {
         GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper(); // TODO consider height
 
+        logger.info("Blocked points: " + blockedPoints);
         return mapper.mapGraphToJGraphT(graph, considerElectrification, blockedPoints);
     }
 

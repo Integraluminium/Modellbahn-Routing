@@ -51,7 +51,7 @@ public class Route {
         int step = 1;
         int maxSteps = actionList.size();
         for (RoutingAction action : actionList) {
-            logger.info("Performing action[" + step++ + "/" + maxSteps + "]: " + action);
+            logger.info("Performing action[" + step++ + "/" + maxSteps + "]: " + action + " for loc: " + loc.getLocId());
             action.performAction();
             // NOTE: Maybe the action should be performed at correct time
             //  With some feedback from the hardware there could be a check if the action was successful

@@ -35,8 +35,12 @@ public class SerializedPolyTrainRouting extends AbstractMonoTrainRoutingStrategy
             List<GraphPoint> blockedPoints = determineBlockedPoints(infoMap.values());
 
             // Include points of locomotives already routed (as they will be there)
-            routes.keySet().forEach(routedLoc ->
-                    blockedPoints.add(routes.get(routedLoc).getNewPosition()));
+            routes.keySet().forEach(routedLoc -> {
+                        LocomotiveInfo routedLocInfo = infoMap.get(routedLoc);
+                        blockedPoints.add(routedLocInfo.getDestination());
+                        blockedPoints.remove(routedLocInfo.getLoc().getCurrentPosition());
+                    }
+            );
 
             blockedPoints.remove(currentLoc.getCurrentPosition());
 
