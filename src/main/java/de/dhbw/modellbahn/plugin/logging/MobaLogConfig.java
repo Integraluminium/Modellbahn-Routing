@@ -1,9 +1,17 @@
 package de.dhbw.modellbahn.plugin.logging;
 
+import java.io.OutputStream;
 import java.util.logging.*;
 
 public class MobaLogConfig {
+
+
     public static void configureLogging(Level level) {
+        OutputStream outputStream = System.out;
+        configureLogging(level, outputStream);
+    }
+
+    public static void configureLogging(Level level, OutputStream outputStream) {
         Logger rootLogger = Logger.getLogger("");
         rootLogger.setLevel(level);
 
@@ -12,18 +20,18 @@ public class MobaLogConfig {
             rootLogger.removeHandler(handler);
         }
 
-        // Add custom handler with better formatting
-        ConsoleHandler handler = new ConsoleHandler();
+        Handler handler = new StreamHandler(outputStream, createSimpleFormatter());
         handler.setLevel(level);
-        handler.setFormatter(new SimpleFormatter() {
+
+        rootLogger.addHandler(handler);
+    }
+
+    private static SimpleFormatter createSimpleFormatter() {
+        return new SimpleFormatter() {
             @Override
             public String format(LogRecord record) {
-                return String.format("[%s] %s: %s%n",
-                        record.getLevel(),
-                        record.getLoggerName(),
-                        record.getMessage());
+                return String.format("[%s] %s: %s%n", record.getLevel(), record.getLoggerName(), record.getMessage());
             }
-        });
-        rootLogger.addHandler(handler);
+        };
     }
 }
