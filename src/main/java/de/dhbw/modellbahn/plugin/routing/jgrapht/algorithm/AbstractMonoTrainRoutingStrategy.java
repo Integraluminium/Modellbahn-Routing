@@ -39,7 +39,7 @@ public abstract class AbstractMonoTrainRoutingStrategy implements TrainRoutingSt
      */
     protected List<GraphPoint> determineBlockedPoints(Collection<LocomotiveInfo> locomotives) {
         return locomotives.stream()
-                .filter(info -> needsRouting(info.getLoc(), info))
+                .filter(info -> locConsideredInRouting(info.getLoc(), info))
                 .map(info -> info.getLoc().getCurrentPosition())
                 .collect(Collectors.toList());
     }
@@ -77,7 +77,7 @@ public abstract class AbstractMonoTrainRoutingStrategy implements TrainRoutingSt
     /**
      * Checks if a locomotive needs routing
      */
-    protected boolean needsRouting(Locomotive locomotive, LocomotiveInfo info) {
+    protected boolean locConsideredInRouting(Locomotive locomotive, LocomotiveInfo info) {
         return !info.getDestination().equals(locomotive.getCurrentPosition());
     }
 }

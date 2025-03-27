@@ -28,7 +28,7 @@ public class SerializedPolyTrainRouting extends AbstractMonoTrainRoutingStrategy
             LocomotiveInfo locInfo = entry.getValue();
 
             // Skip locomotives that are already at their destination
-            if (!needsRouting(currentLoc, locInfo)) {
+            if (!locConsideredInRouting(currentLoc, locInfo)) {
                 continue;
             }
 
@@ -44,7 +44,9 @@ public class SerializedPolyTrainRouting extends AbstractMonoTrainRoutingStrategy
 
             blockedPoints.remove(currentLoc.getCurrentPosition());
 
-            Graph<DirectedNode, DefaultWeightedEdge> routingGraph = mapGraphToRoutingGraph(graph, blockedPoints, context.considerHeight(), context.considerElectrification());
+            boolean considerOnlyElectrifiedTracks = context.considerElectrification() && currentLoc.isElectric();
+
+            Graph<DirectedNode, DefaultWeightedEdge> routingGraph = mapGraphToRoutingGraph(graph, blockedPoints, context.considerHeight(), considerOnlyElectrifiedTracks);
 
             Route route = generateRouteForLocomotive(routingGraph, currentLoc, locInfo, context.routingAlgorithm());
             route = route.addAction(new WaitAction(startDelay), 0);

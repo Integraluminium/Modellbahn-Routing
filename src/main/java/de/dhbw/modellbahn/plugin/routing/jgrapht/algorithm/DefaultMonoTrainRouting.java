@@ -23,15 +23,17 @@ public class DefaultMonoTrainRouting extends AbstractMonoTrainRoutingStrategy im
         de.dhbw.modellbahn.domain.graph.Graph graph = routingContext.domainGraph();
 
         Collection<LocomotiveInfo> values = locomotivesToConsiderInRouting.values();
+        Locomotive loc = locomotivesToConsiderInRouting.keySet().iterator().next();
 
         List<GraphPoint> blockedPoints = determineBlockedPoints(values);
-        Graph<DirectedNode, DefaultWeightedEdge> routingGraph = mapGraphToRoutingGraph(graph, blockedPoints, routingContext.considerHeight(), routingContext.considerElectrification());
+        blockedPoints.remove(loc.getCurrentPosition());
+        boolean considerOnlyElectrifiedTracks = routingContext.considerElectrification() && loc.isElectric();
 
-        Locomotive locomotive = locomotivesToConsiderInRouting.keySet().iterator().next();
-        LocomotiveInfo locomotiveInfo = locomotivesToConsiderInRouting.get(locomotive);
-        // TODO consider electrification IF locomotive is electric
-        Route route = generateRouteForLocomotive(routingGraph, locomotive, locomotiveInfo, algorithm);
-        return Map.of(locomotive, route);
+        Graph<DirectedNode, DefaultWeightedEdge> routingGraph = mapGraphToRoutingGraph(graph, blockedPoints, routingContext.considerHeight(), considerOnlyElectrifiedTracks);
+
+        LocomotiveInfo locomotiveInfo = locomotivesToConsiderInRouting.get(loc);
+        Route route = generateRouteForLocomotive(routingGraph, loc, locomotiveInfo, algorithm);
+        return Map.of(loc, route);
     }
 
 }

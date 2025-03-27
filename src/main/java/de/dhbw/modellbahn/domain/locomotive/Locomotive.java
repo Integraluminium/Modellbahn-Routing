@@ -17,13 +17,14 @@ public class Locomotive {
     private final long decelerationTime;
     private final Distance decelerationDistance;
     private final LocCalls locCallsAdapter;
+    private final boolean isElectric;
     private LocResources resources;
     private GraphPoint currentPosition;
     private GraphPoint currentFacingDirection;
     private Speed currentSpeed;
 
 
-    public Locomotive(LocName locName, LocId locId, MaxLocSpeed maxSpeed, long accelerationTime, Distance accelerationDistance, long decelerationTime, Distance decelerationDistance, GraphPoint startPosition, GraphPoint startFacingDirection, LocCalls locCallsAdapter) {
+    public Locomotive(LocName locName, LocId locId, MaxLocSpeed maxSpeed, final boolean isElectric, long accelerationTime, Distance accelerationDistance, long decelerationTime, Distance decelerationDistance, GraphPoint startPosition, GraphPoint startFacingDirection, LocCalls locCallsAdapter) {
         this.name = locName;
         this.id = locId;
         this.maxSpeed = maxSpeed;
@@ -33,6 +34,7 @@ public class Locomotive {
         this.decelerationDistance = decelerationDistance;
         this.currentPosition = startPosition;
         this.currentFacingDirection = startFacingDirection;
+        this.isElectric = isElectric;
         this.currentSpeed = new Speed(0);
         this.locCallsAdapter = locCallsAdapter;
     }
@@ -111,5 +113,9 @@ public class Locomotive {
 
     public long getDecelerationTime() {
         return decelerationTime;
+    }
+
+    public boolean isElectric() {
+        return isElectric;
     }
 }

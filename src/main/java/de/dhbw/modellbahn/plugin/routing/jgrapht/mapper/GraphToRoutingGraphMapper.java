@@ -15,6 +15,8 @@ import java.util.Objects;
 import java.util.Set;
 
 public class GraphToRoutingGraphMapper {
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GraphToRoutingGraphMapper.class.getSimpleName());
+
     private static void addEdgeToGraph(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> graph, final DirectedNode source, final DirectedNode target, double weight) {
         DefaultWeightedEdge edge = graph.addEdge(source, target);
         if (edge != null) {
@@ -41,13 +43,20 @@ public class GraphToRoutingGraphMapper {
             List<WeightedEdge> adjacentEdges = originalGraph.getEdgesOfVertex(vertex);
             if (electrified) {
                 adjacentEdges = adjacentEdges.stream().filter(WeightedEdge::electrified).toList();
+
+
+                // JUST FOR LOGGING
+                List<WeightedEdge> removedEdges = originalGraph.getEdgesOfVertex(vertex).stream().filter(edge -> !edge.electrified()).toList();
+                if (!removedEdges.isEmpty()) {
+                    logger.fine("Removed non electric edges of " + vertex + ": " + removedEdges.stream().map(WeightedEdge::destination).toList());
+                }
+                // END LOGGING
             }
             if (!blockedPoints.isEmpty()) {
                 adjacentEdges = adjacentEdges.stream().filter(edge -> !blockedPoints.contains(edge.destination())).toList();
             }
             createVertices(newGraph, vertex, adjacentEdges);
         });
-
         return newGraph;
     }
 

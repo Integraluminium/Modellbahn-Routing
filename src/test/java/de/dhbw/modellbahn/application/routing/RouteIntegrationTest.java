@@ -90,7 +90,7 @@ class RouteIntegrationTest {
         LocName name = new LocName("TestLoc");
         LocId locId = new LocId(16389);
         LocCalls locCalls = new MockedLockCalls();
-        return new Locomotive(name, locId, new MaxLocSpeed(50), 0, new Distance(0), 0, new Distance(0), start, facingDirection, locCalls);
+        return new Locomotive(name, locId, new MaxLocSpeed(50), false, 0, new Distance(0), 0, new Distance(0), start, facingDirection, locCalls);
     }
 
     private PointName createPointName(String name) {
