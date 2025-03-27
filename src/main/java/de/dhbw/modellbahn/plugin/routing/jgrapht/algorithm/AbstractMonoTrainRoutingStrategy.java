@@ -28,10 +28,10 @@ public abstract class AbstractMonoTrainRoutingStrategy implements TrainRoutingSt
             boolean considerHeight,
             boolean considerElectrification
     ) {
-        GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper(); // TODO consider height
+        GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper();
 
         logger.info("Blocked points: " + blockedPoints);
-        return mapper.mapGraphToJGraphT(graph, considerElectrification, blockedPoints);
+        return mapper.mapGraphToJGraphT(graph, considerElectrification, considerHeight, blockedPoints);
     }
 
     /**
