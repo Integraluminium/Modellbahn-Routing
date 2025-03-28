@@ -8,7 +8,7 @@ import de.dhbw.modellbahn.application.routing.building.RoutingOptimization;
 import de.dhbw.modellbahn.domain.graph.Graph;
 import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
-import de.dhbw.modellbahn.plugin.routing.jgrapht.algorithm.DefaultMonoTrainRouting;
+import de.dhbw.modellbahn.plugin.routing.jgrapht.algorithm.MonoTrainRouting;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.algorithm.RoutingContext;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.algorithm.SerializedPolyTrainRouting;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.algorithm.TrainRoutingStrategy;
@@ -78,11 +78,11 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
         if (getAmountOfLocomotivesToConsider() == 0) {
             throw new IllegalStateException("No locomotives to consider in routing.");
         }
-        TrainRoutingStrategy routingStrategy;
+        TrainRoutingStrategy routingAlgorithm;
         if (getAmountOfLocomotivesToConsider() > 1) {
-            routingStrategy = new SerializedPolyTrainRouting();
+            routingAlgorithm = new SerializedPolyTrainRouting();
         } else {
-            routingStrategy = new DefaultMonoTrainRouting();
+            routingAlgorithm = new MonoTrainRouting();
         }
         RoutingContext routingContext = new RoutingContext(
                 graph,
@@ -91,7 +91,7 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
                 considerElectrification,
                 considerHeight
         );
-        Map<Locomotive, Route> locomotiveRouteMap = routingStrategy.generateRoutes(routingContext);
+        Map<Locomotive, Route> locomotiveRouteMap = routingAlgorithm.generateRoutes(routingContext);
         routes.putAll(locomotiveRouteMap);
     }
 

@@ -120,7 +120,6 @@ public class CommandContext {
                 thread.join();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                throw new RuntimeException(e);
             }
         });
         resetRouteBuilder();

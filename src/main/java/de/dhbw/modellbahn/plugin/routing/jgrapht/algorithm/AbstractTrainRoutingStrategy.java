@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public abstract class AbstractMonoTrainRoutingStrategy implements TrainRoutingStrategy {
+public abstract class AbstractTrainRoutingStrategy implements TrainRoutingStrategy {
     protected static final Logger logger = Logger.getLogger(Route.class.getSimpleName());
 
     /**
@@ -34,14 +34,8 @@ public abstract class AbstractMonoTrainRoutingStrategy implements TrainRoutingSt
         return mapper.mapGraphToJGraphT(graph, considerElectrification, considerHeight, blockedPoints);
     }
 
-    /**
-     * Determines which points are blocked by stationary locomotives
-     */
-    protected List<GraphPoint> determineBlockedPoints(Collection<LocomotiveInfo> locomotives) {
-        return locomotives.stream()
-                .filter(info -> locConsideredInRouting(info.getLoc(), info))
-                .map(info -> info.getLoc().getCurrentPosition())
-                .collect(Collectors.toList());
+    public static boolean isConsiderElectrification(final RoutingContext context, final Locomotive currentLoc) {
+        return context.considerElectrification() && currentLoc.isElectric();
     }
 
     /**
@@ -75,9 +69,21 @@ public abstract class AbstractMonoTrainRoutingStrategy implements TrainRoutingSt
     }
 
     /**
-     * Checks if a locomotive needs routing
+     * Determines which points are blocked by stationary locomotives
      */
-    protected boolean locConsideredInRouting(Locomotive locomotive, LocomotiveInfo info) {
-        return !info.getDestination().equals(locomotive.getCurrentPosition());
+    protected List<GraphPoint> getCurrentPositionsOfLocsConsideredInRouting(Collection<LocomotiveInfo> locomotives) {
+        return locomotives.stream()
+                .filter(this::locConsideredInRouting)
+                .map(info -> info.getLoc().getCurrentPosition())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Checks if a locomotive is already at destination
+     *
+     * @return ``true`` if the locomotive is not at its destination
+     */
+    protected boolean locConsideredInRouting(LocomotiveInfo info) {
+        return !info.getDestination().equals(info.getLoc().getCurrentPosition());
     }
 }

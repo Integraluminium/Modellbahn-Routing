@@ -25,12 +25,12 @@ public class MonoTrainRouteGeneratorJGraphT {
     private static final Logger logger = Logger.getLogger(MonoTrainRouteGeneratorJGraphT.class.getSimpleName());
     private final DirectedNodeToWeightedEdgeMapper directedNodeToWeightedEdgeMapper;
     private final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph;
-    private final MonoTrainRouting monoTrainRouting;
+    private final ShortestPathFinder shortestPathFinder;
 
     public MonoTrainRouteGeneratorJGraphT(RoutingAlgorithm algorithm, org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> routingGraph) {
         this.directedNodeToWeightedEdgeMapper = new DirectedNodeToWeightedEdgeMapper();
         this.routingGraph = routingGraph;
-        this.monoTrainRouting = new MonoTrainRouting(routingGraph, algorithm);
+        this.shortestPathFinder = new ShortestPathFinder(routingGraph, algorithm);
     }
 
     /**
@@ -46,7 +46,7 @@ public class MonoTrainRouteGeneratorJGraphT {
     public Route generateRoute(Locomotive locomotive, GraphPoint destination, RoutingOptimization optimisations) throws PathNotPossibleException {
         DirectedNode startNode = beforeRouting(locomotive, optimisations);
         try {
-            List<DirectedNode> path = monoTrainRouting.findShortestPath(startNode, destination);
+            List<DirectedNode> path = shortestPathFinder.findShortestPath(startNode, destination);
             try {
                 GraphPoint newFacingDirection = determineNewFacingDirection(path);
                 return finalizeRouting(locomotive, path, newFacingDirection);
@@ -66,7 +66,7 @@ public class MonoTrainRouteGeneratorJGraphT {
         } catch (PathNotPossibleException e) {
             // check if destination could be reached by toggling the facing direction
             DirectedNode tempNode = new DirectedNode(startNode.getPoint(), startNode.getSide().getOpposite());
-            List<DirectedNode> path = monoTrainRouting.findShortestPath(tempNode, destination);
+            List<DirectedNode> path = shortestPathFinder.findShortestPath(tempNode, destination);
             if (path.isEmpty()) {
                 throw e; // rethrow original exception
             }
@@ -81,7 +81,7 @@ public class MonoTrainRouteGeneratorJGraphT {
         List<List<DirectedNode>> possiblePaths = new ArrayList<>();
         for (DirectedNode bufferStopNode : routingGraph.vertexSet().stream().filter(node -> node.getPoint() instanceof BufferStop).toList()) {
             try {
-                List<DirectedNode> bufferStopPath = monoTrainRouting.findShortestPath(startNode, bufferStopNode);
+                List<DirectedNode> bufferStopPath = shortestPathFinder.findShortestPath(startNode, bufferStopNode);
                 if (!bufferStopPath.isEmpty()) {
                     possiblePaths.add(bufferStopPath);
                 }
@@ -105,7 +105,7 @@ public class MonoTrainRouteGeneratorJGraphT {
 
         // route from buffer stop to destination
         DirectedNode invertedBufferStopNode = new DirectedNode(bufferStopNode.getPoint(), bufferStopNode.getSide().getOpposite());
-        List<DirectedNode> pathToDestination = monoTrainRouting.findShortestPath(invertedBufferStopNode, destination);
+        List<DirectedNode> pathToDestination = shortestPathFinder.findShortestPath(invertedBufferStopNode, destination);
 
         Route routeToDestination = finalizeRouting(locomotive, pathToDestination, destination);
 
@@ -131,7 +131,7 @@ public class MonoTrainRouteGeneratorJGraphT {
         DirectedNode startNode = beforeRouting(locomotive, optimisations);
         DirectedNode endNode = getDirectedNode(destination, destinationFacing);
 
-        List<DirectedNode> path = monoTrainRouting.findShortestPath(startNode, endNode);
+        List<DirectedNode> path = shortestPathFinder.findShortestPath(startNode, endNode);
 
         return finalizeRouting(locomotive, path, destinationFacing);
     }
