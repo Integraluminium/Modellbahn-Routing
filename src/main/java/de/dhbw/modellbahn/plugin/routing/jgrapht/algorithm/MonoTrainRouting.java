@@ -19,7 +19,11 @@ public class MonoTrainRouting extends AbstractTrainRoutingStrategy implements Tr
     @Override
     public Map<Locomotive, Route> generateRoutes(final RoutingContext routingContext) throws PathNotPossibleException {
         Map<Locomotive, LocomotiveInfo> locomotivesToConsiderInRouting = routingContext.locomotiveInfoMap();
-        Locomotive loc = locomotivesToConsiderInRouting.keySet().iterator().next();
+        Locomotive loc = locomotivesToConsiderInRouting.values().stream()
+                .filter(this::locConsideredInRouting)
+                .map(LocomotiveInfo::getLoc)
+                .findFirst()
+                .orElseThrow(() -> new PathNotPossibleException("No locomotive to consider in routing"));
 
         Graph<DirectedNode, DefaultWeightedEdge> routingGraph = mapGraphToRoutingGraph(
                 routingContext.domainGraph(),

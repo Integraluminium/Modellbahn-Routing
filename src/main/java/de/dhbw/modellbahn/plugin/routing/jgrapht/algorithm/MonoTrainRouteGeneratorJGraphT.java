@@ -106,20 +106,23 @@ public class MonoTrainRouteGeneratorJGraphT {
                         Long.compare(sumOfPathDistances(nodeList1), sumOfPathDistances(nodeList2)))
                 .orElseThrow(() -> new PathNotPossibleException("No path to buffer stop found"));
 
+        GraphPoint newFacingDirection;
         if (pathToBufferStop.size() < 2) {
-            throw new PathNotPossibleException("No path to buffer stop found; this should not happen");
+            newFacingDirection = locomotive.getCurrentPosition();
+        } else {
+            newFacingDirection = pathToBufferStop.get(pathToBufferStop.size() - 2).getPoint();
         }
 
         DirectedNode bufferStopNode = pathToBufferStop.get(pathToBufferStop.size() - 1);
-        GraphPoint newFacingDirection = pathToBufferStop.get(pathToBufferStop.size() - 2).getPoint();
 
         Route routeToBufferStop = finalizeRouting(locomotive, pathToBufferStop, newFacingDirection);
 
         // route from buffer stop to destination
         DirectedNode invertedBufferStopNode = new DirectedNode(bufferStopNode.getPoint(), bufferStopNode.getSide().getOpposite());
         List<DirectedNode> pathToDestination = shortestPathFinder.findShortestPath(invertedBufferStopNode, destination);
+        GraphPoint endFacingDirection = determineNewFacingDirection(pathToDestination);
 
-        Route routeToDestination = finalizeRouting(locomotive, pathToDestination, destination);
+        Route routeToDestination = finalizeRouting(locomotive, pathToDestination, endFacingDirection);
 
         return routeToBufferStop.addAction(new LocToggleAction(locomotive, newFacingDirection)).addRoute(routeToDestination);
     }
@@ -171,7 +174,9 @@ public class MonoTrainRouteGeneratorJGraphT {
         GraphPoint facingDirection = locomotive.getCurrentFacingDirection();
         DirectedNode currentStartPosition = getDirectedNode(start, facingDirection);
 
-        path.add(0, currentStartPosition);
+        if (path.get(0).getPoint().equals(facingDirection)) {
+            path.add(0, currentStartPosition);
+        }
 
         List<WeightedDistanceEdge> weightedDistanceEdges = mapPathToWeightedEdges(path);
         logger.info("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList());

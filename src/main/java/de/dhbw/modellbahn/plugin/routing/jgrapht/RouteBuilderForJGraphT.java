@@ -118,6 +118,6 @@ public class RouteBuilderForJGraphT implements RouteBuilder {
     }
 
     private long getAmountOfLocomotivesToConsider() {
-        return this.locomotivesToConsiderInRouting.values().stream().filter(locInfo -> locInfo.getDestination() != locInfo.getLoc().getCurrentPosition()).count();
+        return this.locomotivesToConsiderInRouting.values().stream().filter(locInfo -> !locInfo.getDestination().equals(locInfo.getLoc().getCurrentPosition())).count();
     }
 }
