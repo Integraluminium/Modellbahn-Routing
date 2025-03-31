@@ -4,9 +4,12 @@ import de.dhbw.modellbahn.adapter.locomotive.reading.ConfigLocomotive;
 import de.dhbw.modellbahn.adapter.physical.railway.communication.ApiConfig;
 import de.dhbw.modellbahn.adapter.track.generation.*;
 import de.dhbw.modellbahn.application.ConfigReader;
+import de.dhbw.modellbahn.domain.locomotive.Locomotive;
+import de.dhbw.modellbahn.domain.locomotive.attributes.LocId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MockedConfigReader implements ConfigReader {
 
@@ -73,5 +76,10 @@ public class MockedConfigReader implements ConfigReader {
     @Override
     public List<ConfigSignal> getSignals() {
         return List.of(new ConfigSignal("G", 8));
+    }
+
+    @Override
+    public void updateLocomotives(Map<LocId, Locomotive> locomotiveMap) {
+        
     }
 }
