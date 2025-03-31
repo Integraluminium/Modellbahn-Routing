@@ -25,7 +25,7 @@ class LocomotiveTest {
         ConfigReader configReader = new YAMLConfigReader();
         locId = new LocId(16389);
 
-        locomotive = new Locomotive(new LocName("TestLoc"), locId, new MaxLocSpeed(10), 10, new Distance(0), 10, new Distance(0), startPoint, facingPoint, new MockedLockCalls());
+        locomotive = new Locomotive(new LocName("TestLoc"), locId, new MaxLocSpeed(10), false, 10, new Distance(0), 10, new Distance(0), startPoint, facingPoint, new MockedLockCalls());
     }
 
     @Test
