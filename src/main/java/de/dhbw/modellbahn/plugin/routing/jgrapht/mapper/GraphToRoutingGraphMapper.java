@@ -24,7 +24,7 @@ public class GraphToRoutingGraphMapper {
         }
     }
 
-    private static int getEdgeWeight(final WeightedEdge edge, boolean considerHeight) {
+    private static double getEdgeWeight(final WeightedEdge edge, boolean considerHeight) {
         if (considerHeight) {
             // TODO adjust formula
             return edge.distance().value() + edge.height().value();
