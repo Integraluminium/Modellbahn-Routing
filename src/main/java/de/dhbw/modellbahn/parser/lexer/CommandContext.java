@@ -5,6 +5,7 @@ import de.dhbw.modellbahn.application.routing.Route;
 import de.dhbw.modellbahn.application.routing.building.PathNotPossibleException;
 import de.dhbw.modellbahn.application.routing.building.RouteBuilder;
 import de.dhbw.modellbahn.domain.graph.Graph;
+import de.dhbw.modellbahn.domain.graph.nodes.attributes.PointName;
 import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.nodes.switches.Switch;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
@@ -51,9 +52,15 @@ public class CommandContext {
         if (automaticallyAddAllLocomotivesToRoute) {
             locomotiveRepository.getAvailableLocIds().stream()
                     .map(locomotiveRepository::getLocomotive)
+                    .filter(this::getNotOnTrack)
                     .forEach(routeBuilder::addLocomotive);
         }
     }
+
+    private boolean getNotOnTrack(Locomotive locomotive) {
+        return locomotive.getCurrentPosition().equals(new PointName("NotOnTrack"));
+    }
+
 
     public PrintStream getOutput() {
         return output;
