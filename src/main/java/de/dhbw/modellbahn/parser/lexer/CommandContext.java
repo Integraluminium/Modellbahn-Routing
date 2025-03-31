@@ -133,6 +133,7 @@ public class CommandContext {
                 Thread.currentThread().interrupt();
             }
         });
+        this.locomotiveRepository.updateLocomotives();
         resetRouteBuilder();
     }
 }

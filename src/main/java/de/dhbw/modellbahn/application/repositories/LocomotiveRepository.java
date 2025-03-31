@@ -13,4 +13,6 @@ public interface LocomotiveRepository {
     Set<LocId> getAvailableLocIds();
 
     void addLocomotive(Locomotive loc);
+
+    void updateLocomotives();
 }
