@@ -12,6 +12,7 @@ import org.jgrapht.alg.shortestpath.BellmanFordShortestPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -89,7 +90,7 @@ public class ShortestPathFinder {
             throw new IllegalArgumentException("Start or end node not in graph");
         }
         GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathForExactDirection(shortestPathAlgorithm, start, end);
-        return path.getVertexList();
+        return new ArrayList<>(path.getVertexList());
     }
 
     public List<DirectedNode> findShortestPath(final DirectedNode start, final GraphPoint destination) throws
@@ -101,6 +102,6 @@ public class ShortestPathFinder {
         DirectedNode alternativeEnd = new DirectedNode(destination, PointSide.OUT);
 
         GraphPath<DirectedNode, DefaultWeightedEdge> path = runShortestPathWithAlternative(shortestPathAlgorithm, start, preferredEnd, alternativeEnd);
-        return path.getVertexList();
+        return new ArrayList<>(path.getVertexList());
     }
 }
