@@ -16,12 +16,12 @@ public class BooleanMachine extends TokenMachine {
 
         // Check for "true"
         if (matches(input, pos, "true")) {
-            return pos + 4;
+            return 4;
         }
 
         // Check for "false"
         if (matches(input, pos, "false")) {
-            return pos + 5;
+            return 5;
         }
 
         return 0;
