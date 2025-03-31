@@ -4,8 +4,6 @@ import java.io.OutputStream;
 import java.util.logging.*;
 
 public class MobaLogConfig {
-
-
     public static void configureLogging(Level level) {
         OutputStream outputStream = System.out;
         configureLogging(level, outputStream);

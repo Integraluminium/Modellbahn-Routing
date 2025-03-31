@@ -13,7 +13,7 @@ import de.dhbw.modellbahn.parser.DomainObjectParser;
 import de.dhbw.modellbahn.parser.instructions.Instruction;
 import de.dhbw.modellbahn.parser.lexer.Lexer;
 import de.dhbw.modellbahn.parser.lexer.LexerException;
-import de.dhbw.modellbahn.plugin.MockedConfigReader;
+import de.dhbw.modellbahn.plugin.MockedConfigReader_smallGraph;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,9 +37,9 @@ class CommandExecutorTest {
     @BeforeAll
     static void beforeAll() {
         graph = createSmallTestGraph();
-        repository = new LocomotiveRepositoryImpl(new MockedConfigReader(), new MockedLockCalls());
-        repository.addLocomotive(new MockedLocomotive(LOC_ID1, GraphPoint.of("C"), GraphPoint.of("B")));
-        repository.addLocomotive(new MockedLocomotive(LOC_ID2, GraphPoint.of("A"), GraphPoint.of("B")));
+        repository = new LocomotiveRepositoryImpl(new MockedConfigReader_smallGraph(), new MockedLockCalls());
+        repository.addLocomotive(new MockedLocomotive(LOC_ID1, GraphPoint.of("A"), GraphPoint.of("B")));
+//        repository.addLocomotive(new MockedLocomotive(LOC_ID2, GraphPoint.of("NotInGraph"), GraphPoint.of("NotInGraph")));
         systemCalls = new MockedSystemCalls();
     }
 

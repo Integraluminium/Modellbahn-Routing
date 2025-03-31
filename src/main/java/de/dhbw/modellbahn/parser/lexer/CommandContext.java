@@ -22,6 +22,7 @@ public class CommandContext {
     private final PrintStream output;
     private final SystemCalls systemCalls;
 
+    private boolean automaticallyAddAllLocomotivesToRoute = true;
     private RouteBuilder routeBuilder;
 
     public CommandContext(final LocomotiveRepository locomotiveRepository, final Graph graph, final SystemCalls systemCalls, final PrintStream output) {
@@ -46,6 +47,12 @@ public class CommandContext {
 
     public void resetRouteBuilder() {
         routeBuilder = new RouteBuilderForJGraphT(graph);
+
+        if (automaticallyAddAllLocomotivesToRoute) {
+            locomotiveRepository.getAvailableLocIds().stream()
+                    .map(locomotiveRepository::getLocomotive)
+                    .forEach(routeBuilder::addLocomotive);
+        }
     }
 
     public PrintStream getOutput() {
@@ -66,6 +73,10 @@ public class CommandContext {
 
     public void generateRoute() throws PathNotPossibleException {
         routeBuilder.generateRoute();
+    }
+
+    public void setAutomaticallyAddAllLocomotivesToRoute(final boolean automaticallyAddAllLocomotivesToRoute) {
+        this.automaticallyAddAllLocomotivesToRoute = automaticallyAddAllLocomotivesToRoute;
     }
 
     public void toggleLocomotiveDirection(LocId locId) {

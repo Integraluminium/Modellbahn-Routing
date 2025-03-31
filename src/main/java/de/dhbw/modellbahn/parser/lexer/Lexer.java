@@ -22,6 +22,7 @@ public class Lexer {
     private void addLexerMachines() {
         addMachine(new LineCommentMachine());
         addKeywordMachine("ADD", TokenType.ADD_KEYWORD);
+        addKeywordMachine("REMOVE", TokenType.REMOVE_KEYWORD);
         addKeywordMachine("AT", TokenType.AT_KEYWORD);
         addKeywordMachine("TO", TokenType.TO_KEYWORD);
         addKeywordMachine("FACING", TokenType.FACING_KEYWORD);
@@ -49,7 +50,9 @@ public class Lexer {
         addKeywordMachine("NEW", TokenType.NEW_KEYWORD);
         addKeywordMachine("ROUTE", TokenType.ROUTE_KEYWORD);
         addKeywordMachine("WITH", TokenType.WITH_KEYWORD);
+        addKeywordMachine("AUTOMATIC", TokenType.AUTOMATIC_KEYWORD);
 
+        addMachine(new BooleanMachine());
         addMachine(new OptimizationMachine());
         addMachine(new AlgorithmMachine());
         addMachine(new NumberMachine());

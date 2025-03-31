@@ -1,12 +1,16 @@
 <command> ::= NEW ROUTE <route_command>
-            | MODIFY <loc_id> <modify_command>
+            | MODIFY <modify_command>
             | LIST <list_command>
             | SYSTEM <system_command>
+            | REMOVE <loc_id>
             | DRIVE
+
+<modify_command> ::= <loc_id> <modify_locomotive_command>
+                   | AUTOMATIC ADD LOCOMOTIVES TO ROUTE <boolean>
 
 <system_command> ::= "START" | "STOP"
 <list_command> ::="LOCOMOTIVES" | "GRAPHPOINTS" | "ROUTE"
-<modify_command> ::= "TOGGLE" "DIRECTION"
+<modify_locomotive_command> ::= "TOGGLE" "DIRECTION"
                    | "POSITION" <graph_point> "FACING" <graph_point>
                    | "FACING" <graph_point>
                    | "SPEED" <number>

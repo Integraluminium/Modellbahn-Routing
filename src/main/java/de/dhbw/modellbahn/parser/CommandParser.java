@@ -52,6 +52,10 @@ public class CommandParser {
         } else if (token.type() == TokenType.DRIVE_COMMAND) {
             // Handle standalone DRIVE command
             instructions.add(new DriveInstr());
+        } else if (token.type() == TokenType.REMOVE_KEYWORD) {
+            // moves locomotive to NotOnTrack
+            LocId locId = parseLocId();
+            instructions.add(new RemoveLocomotiveFromTrackInstr(locId));
         } else {
             throw new ParseException("Expected statement but got: " + token);
         }
@@ -178,11 +182,28 @@ public class CommandParser {
     }
 
     private void parseModificationCommand() throws LexerException, ParseException {
-        // <modify_command> ::= "TOGGLE" "DIRECTION"
+        // <modify_command> ::= <loc_id> <modify_locomotive_command>
+        //                   | AUTOMATIC ADD LOCOMOTIVES TO ROUTE <boolean>
+        //
+        if (lexer.lookAhead().type() == TokenType.AUTOMATIC_KEYWORD) {
+            lexer.advance();
+            lexer.expect(TokenType.ADD_KEYWORD);
+            lexer.expect(TokenType.LOCOMOTIVES_KEYWORD);
+            lexer.expect(TokenType.TO_KEYWORD);
+            lexer.expect(TokenType.ROUTE_KEYWORD);
+            boolean value = parseBoolean();
+            instructions.add(new SetAutomaticAddLocomotivesInstr(value));
+        } else {
+            LocId locId = parseLocId();
+            parseModifyLocomotiveCommand(locId);
+        }
+    }
+
+    private void parseModifyLocomotiveCommand(final LocId locId) throws LexerException, ParseException {
+        // <modify_locomotive_command> ::= "TOGGLE" "DIRECTION"
         //                    | "POSITION" <graph_point> "FACING" <graph_point>
         //                    | "FACING" <graph_point>
         //                    | "SPEED" <number>
-        LocId locId = parseLocId();
 
         // Parse modification type
         Token modification_token = lexer.lookAhead();
@@ -275,5 +296,21 @@ public class CommandParser {
         lexer.expect(TokenType.FACING_KEYWORD);
         GraphPoint facingPoint = parseGraphPoint();
         instructions.add(new ModifyLocFacingInstr(locId, facingPoint));
+    }
+
+    private boolean parseBoolean() throws LexerException, ParseException {
+        Token token = lexer.lookAhead();
+        lexer.advance();
+        if (token.type() == TokenType.NUMBER) {
+            if (!token.value().equals("0") && !token.value().equals("1")) {
+                throw new ParseException("Expected boolean value (0 or 1) but got: " + token);
+            }
+            return token.value().equals("1");
+        } else if (token.type() == TokenType.BOOLEAN) {
+            return token.value().equalsIgnoreCase("true");
+        } else {
+            throw new ParseException("Expected boolean value but got: " + token);
+        }
+
     }
 }
