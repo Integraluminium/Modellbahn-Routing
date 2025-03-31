@@ -44,6 +44,9 @@ public class MonoTrainRouteGeneratorJGraphT {
      * @throws PathNotPossibleException if no path could be found
      */
     public Route generateRoute(Locomotive locomotive, GraphPoint destination, RoutingOptimization optimisations) throws PathNotPossibleException {
+        if (destination.equals(locomotive.getCurrentFacingDirection())){
+            return calculateRouteToFacingDirection(locomotive, destination, optimisations);
+        }
         DirectedNode startNode = beforeRouting(locomotive, optimisations);
         try {
             List<DirectedNode> path = shortestPathFinder.findShortestPath(startNode, destination);
@@ -73,6 +76,15 @@ public class MonoTrainRouteGeneratorJGraphT {
 
             return calculateRouteUsingBufferStop(locomotive, destination, startNode);
         }
+    }
+
+    private Route calculateRouteToFacingDirection(Locomotive locomotive, GraphPoint destination, RoutingOptimization optimisations) throws PathNotPossibleException {
+        List<DirectedNode> path = new ArrayList<>();
+        DirectedNode startNode = getDirectedNode(locomotive.getCurrentPosition(), destination);
+        path.add(startNode);
+        DirectedNode endNode = beforeRouting(locomotive, optimisations);
+        path.add(endNode);
+        return finalizeRouting(locomotive, path, determineNewFacingDirection(path));
     }
 
     private Route calculateRouteUsingBufferStop(final Locomotive locomotive, final GraphPoint destination, final DirectedNode startNode) throws PathNotPossibleException {
@@ -128,6 +140,9 @@ public class MonoTrainRouteGeneratorJGraphT {
      * @throws PathNotPossibleException if no path could be found
      */
     public Route generateRoute(Locomotive locomotive, GraphPoint destination, GraphPoint destinationFacing, RoutingOptimization optimisations) throws PathNotPossibleException {
+        if (destination.equals(locomotive.getCurrentFacingDirection())){
+            return calculateRouteToFacingDirection(locomotive, destination, optimisations);
+        }
         DirectedNode startNode = beforeRouting(locomotive, optimisations);
         DirectedNode endNode = getDirectedNode(destination, destinationFacing);
 

@@ -14,10 +14,12 @@ import java.util.Set;
 public class LocomotiveRepositoryImpl implements LocomotiveRepository {
     private final LocCalls locCalls;
     private final Map<LocId, Locomotive> locomotiveMap;
+    private final ConfigReader configReader;
 
     public LocomotiveRepositoryImpl(final ConfigReader configReader, final LocCalls locCalls) {
         this.locCalls = locCalls;
         this.locomotiveMap = new HashMap<>();
+        this.configReader = configReader;
         loadLocomotives(configReader);
     }
 
@@ -50,5 +52,10 @@ public class LocomotiveRepositoryImpl implements LocomotiveRepository {
     @Override
     public void addLocomotive(final Locomotive loc) {
         locomotiveMap.put(loc.getLocId(), loc);
+    }
+
+    @Override
+    public void updateLocomotives() {
+        this.configReader.updateLocomotives(this.locomotiveMap);
     }
 }

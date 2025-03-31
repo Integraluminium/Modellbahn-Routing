@@ -1,17 +1,23 @@
 package de.dhbw.modellbahn.plugin;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import de.dhbw.modellbahn.adapter.locomotive.reading.ConfigLocomotive;
 import de.dhbw.modellbahn.adapter.physical.railway.communication.ApiConfig;
 import de.dhbw.modellbahn.adapter.track.generation.*;
 import de.dhbw.modellbahn.application.ConfigReader;
+import de.dhbw.modellbahn.domain.locomotive.Locomotive;
+import de.dhbw.modellbahn.domain.locomotive.attributes.LocId;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 public class YAMLConfigReader implements ConfigReader {
     private final String projectDir = System.getProperty("user.dir");
@@ -87,5 +93,35 @@ public class YAMLConfigReader implements ConfigReader {
     @Override
     public List<ConfigSignal> getSignals() {
         return List.of(this.readObjectFromPath("track/signals.yaml", ConfigSignal[].class));
+    }
+
+    @Override
+    public void updateLocomotives(Map<LocId, Locomotive> locomotiveMap) {
+        JsonNode root = readFileAsJsonNode("locs/locs.yaml");
+        root.forEach(node -> {
+            LocId id = new LocId(node.findValue("id").asInt());
+            Locomotive loc = locomotiveMap.get(id);
+            ((ObjectNode) node).put("position", loc.getCurrentPosition().getName().name());
+            ((ObjectNode) node).put("facingDirection", loc.getCurrentFacingDirection().getName().name());
+        });
+        writeNodeToFile("locs/locs.yaml", root);
+    }
+
+    private JsonNode readFileAsJsonNode(String path) {
+        try {
+            File file = new File(configPath + path);
+            return mapper.readTree(file);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not find YAML config file at" + path + "\n" + e);
+        }
+    }
+
+    private void writeNodeToFile(String path, JsonNode node) {
+        try {
+            File file = new File(configPath + path);
+            mapper.writeValue(file, node);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not find YAML config file at" + path + "\n" + e);
+        }
     }
 }
