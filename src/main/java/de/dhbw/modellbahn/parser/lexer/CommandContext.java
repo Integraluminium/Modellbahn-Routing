@@ -52,13 +52,13 @@ public class CommandContext {
         if (automaticallyAddAllLocomotivesToRoute) {
             locomotiveRepository.getAvailableLocIds().stream()
                     .map(locomotiveRepository::getLocomotive)
-                    .filter(this::getNotOnTrack)
+                    .filter(this::isLocomotiveOnTrack)
                     .forEach(routeBuilder::addLocomotive);
         }
     }
 
-    private boolean getNotOnTrack(Locomotive locomotive) {
-        return locomotive.getCurrentPosition().equals(new PointName("NotOnTrack"));
+    private boolean isLocomotiveOnTrack(Locomotive locomotive) {
+        return !locomotive.getCurrentPosition().equals(new PointName("NotOnTrack"));
     }
 
 
