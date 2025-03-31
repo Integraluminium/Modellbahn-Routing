@@ -156,7 +156,9 @@ public class MonoTrainRouteGeneratorJGraphT {
         GraphPoint facingDirection = locomotive.getCurrentFacingDirection();
         DirectedNode currentStartPosition = getDirectedNode(start, facingDirection);
 
-        path.add(0, currentStartPosition);
+        if (path.get(0).getPoint().equals(facingDirection)) {
+            path.add(0, currentStartPosition);
+        }
 
         List<WeightedDistanceEdge> weightedDistanceEdges = mapPathToWeightedEdges(path);
         logger.info("Calculated Route: " + weightedDistanceEdges.stream().map(e -> "(" + e.point().getName().name() + " d=" + e.distance().value() + ")").toList());
