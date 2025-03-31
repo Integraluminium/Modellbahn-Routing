@@ -13,6 +13,7 @@ import de.dhbw.modellbahn.domain.physical.railway.communication.SystemCalls;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.RouteBuilderForJGraphT;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommandContext {
@@ -107,9 +108,19 @@ public class CommandContext {
     }
 
     public void driveRoute() {
+        List<Thread> threadList = new ArrayList<>();
         routeBuilder.getLocomotivesWithRoute().forEach(locomotive -> {
             Route route = routeBuilder.getRouteForLoc(locomotive);
-            route.driveRoute();
+            String name = "Route-Thread-" + locomotive.getLocId().id();
+            threadList.add(new Thread(route::driveRoute, name));
+        });
+        threadList.forEach(Thread::start);
+        threadList.forEach(thread -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         });
         resetRouteBuilder();
     }

@@ -32,7 +32,7 @@ class GraphToRoutingGraphMapperTest {
 
     @Test
     void testElectrified() {
-        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> jGraph = mapper.mapGraphToJGraphT(graph, true, new ArrayList<>());
+        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> jGraph = mapper.mapGraphToJGraphT(graph, true, false, new ArrayList<>());
         assertThat(graph.getAllVertices().size()).isEqualTo(7);
         assertThat(jGraph.vertexSet().size()).isEqualTo(14);
 
@@ -53,7 +53,7 @@ class GraphToRoutingGraphMapperTest {
 
         GraphPoint blockedPoint = GraphPoint.of("C");
         blockedPoints.add(blockedPoint);
-        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> jGraph = mapper.mapGraphToJGraphT(graph, false, blockedPoints);
+        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> jGraph = mapper.mapGraphToJGraphT(graph, false, false, blockedPoints);
 
         boolean exists = jGraph.vertexSet().stream().anyMatch(vertex -> vertex.getPoint().equals(blockedPoint));
         assertThat(exists).isFalse();
@@ -70,7 +70,7 @@ class GraphToRoutingGraphMapperTest {
     void testBlockedAllPoints() {
         List<GraphPoint> blockedPoints = graph.getAllVertices().stream().toList();
 
-        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> jGraph = mapper.mapGraphToJGraphT(graph, false, blockedPoints);
+        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> jGraph = mapper.mapGraphToJGraphT(graph, false, false, blockedPoints);
 
         assertThat(jGraph.vertexSet().isEmpty()).isTrue();
 
@@ -84,7 +84,7 @@ class GraphToRoutingGraphMapperTest {
         List<GraphPoint> blockedPoints = new ArrayList<>(graph.getAllVertices());
 
         GraphPoint notBlockedPoint = blockedPoints.removeFirst();
-        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> jGraph = mapper.mapGraphToJGraphT(graph, false, blockedPoints);
+        org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> jGraph = mapper.mapGraphToJGraphT(graph, false, false, blockedPoints);
 
         assertThat(jGraph.vertexSet().size()).isEqualTo(2);
         assertThat(jGraph.vertexSet().stream().findFirst().get().getPoint()).isEqualTo(notBlockedPoint);

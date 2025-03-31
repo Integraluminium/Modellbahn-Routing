@@ -23,6 +23,7 @@ public class LocomotiveReader {
                 new LocName(loc.name()),
                 new LocId(loc.id()),
                 new MaxLocSpeed(loc.maxSpeed()),
+                loc.electric(),
                 loc.accelerationTime(),
                 new Distance(loc.accelerationDistance()),
                 loc.decelerationTime(),

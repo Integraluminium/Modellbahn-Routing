@@ -12,7 +12,7 @@ public class MockedConfigReader implements ConfigReader {
 
     @Override
     public List<ConfigLocomotive> getLocomotives() {
-        return List.of(new ConfigLocomotive(1, "mockedLoc", 1.0, 1000, 200, 1000, 200, "A", "B"));
+        return List.of(new ConfigLocomotive(1, "mockedLoc", 1.0, 1000, false, 200, 1000, 200, "A", "B"));
     }
 
     @Override

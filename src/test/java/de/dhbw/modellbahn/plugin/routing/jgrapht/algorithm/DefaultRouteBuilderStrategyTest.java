@@ -31,8 +31,8 @@ class DefaultRouteBuilderStrategyTest {
         GraphToRoutingGraphMapper mapper = new GraphToRoutingGraphMapper(); // TODO toConsider height and electrification
         var routingGraph = mapper.mapGraphToJGraphT(graph);
 
-        MonoTrainRouting monoTrainRouting = new MonoTrainRouting(routingGraph, RoutingAlgorithm.DIJKSTRA);
-        List<DirectedNode> shortestPath = monoTrainRouting.findShortestPath(new DirectedNode(start, PointSide.OUT), direction);
+        ShortestPathFinder shortestPathFinder = new ShortestPathFinder(routingGraph, RoutingAlgorithm.DIJKSTRA);
+        List<DirectedNode> shortestPath = shortestPathFinder.findShortestPath(new DirectedNode(start, PointSide.OUT), direction);
 
         // Assert
         for (DirectedNode directedNode : shortestPath) {
@@ -57,8 +57,8 @@ class DefaultRouteBuilderStrategyTest {
         DirectedNode pointCIn = new DirectedNode(GraphPoint.of("C"), PointSide.IN);
         DirectedNode pointZIn = new DirectedNode(GraphPoint.of("Z"), PointSide.IN);
 
-        MonoTrainRouting monoTrainRouting = new MonoTrainRouting(routingGraph, RoutingAlgorithm.DIJKSTRA);
-        List<DirectedNode> shortestPath = monoTrainRouting.findShortestPath(pointAIn, pointZIn);
+        ShortestPathFinder shortestPathFinder = new ShortestPathFinder(routingGraph, RoutingAlgorithm.DIJKSTRA);
+        List<DirectedNode> shortestPath = shortestPathFinder.findShortestPath(pointAIn, pointZIn);
 
         assertThat(shortestPath).isNotNull();
         assertThat(shortestPath).isEqualTo(List.of(pointAIn, pointBOut, pointCIn, pointBIn, pointAOut, pointZIn));

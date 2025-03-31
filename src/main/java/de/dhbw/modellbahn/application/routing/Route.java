@@ -30,6 +30,12 @@ public class Route {
         return new Route(loc, newActionList, newPosition, newFacingDirection, estimatedTime);
     }
 
+    public Route addAction(RoutingAction action, int index) {
+        List<RoutingAction> newActionList = new java.util.ArrayList<>(getActionList());
+        newActionList.add(index, action);
+        return new Route(loc, newActionList, newPosition, newFacingDirection, estimatedTime);
+    }
+
     public Route addRoute(Route newRoute) {
         if (!this.getLoc().equals(newRoute.getLoc())) {
             throw new IllegalArgumentException("Route loc does not match route loc");
@@ -45,7 +51,7 @@ public class Route {
         int step = 1;
         int maxSteps = actionList.size();
         for (RoutingAction action : actionList) {
-            logger.info("Performing action[" + step++ + "/" + maxSteps + "]: " + action);
+            logger.info("Performing action[" + step++ + "/" + maxSteps + "]: " + action + " for loc: " + loc.getLocId());
             action.performAction();
             // NOTE: Maybe the action should be performed at correct time
             //  With some feedback from the hardware there could be a check if the action was successful
@@ -63,7 +69,7 @@ public class Route {
         return estimatedTime;
     }
 
-    protected GraphPoint getNewPosition() {
+    public GraphPoint getNewPosition() {
         return newPosition;
     }
 

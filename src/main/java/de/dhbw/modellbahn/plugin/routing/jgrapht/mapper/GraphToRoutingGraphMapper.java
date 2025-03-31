@@ -15,6 +15,8 @@ import java.util.Objects;
 import java.util.Set;
 
 public class GraphToRoutingGraphMapper {
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GraphToRoutingGraphMapper.class.getSimpleName());
+
     private static void addEdgeToGraph(final org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> graph, final DirectedNode source, final DirectedNode target, double weight) {
         DefaultWeightedEdge edge = graph.addEdge(source, target);
         if (edge != null) {
@@ -22,12 +24,19 @@ public class GraphToRoutingGraphMapper {
         }
     }
 
-
-    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToJGraphT(Graph originalGraph) {
-        return mapGraphToJGraphT(originalGraph, false, new ArrayList<>());
+    private static double getEdgeWeight(final WeightedEdge edge, boolean considerHeight) {
+        if (considerHeight) {
+            // TODO adjust formula
+            return edge.distance().value() + edge.height().value();
+        }
+        return edge.distance().value();
     }
 
-    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToJGraphT(Graph originalGraph, boolean electrified, List<GraphPoint> blockedPoints) {
+    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToJGraphT(Graph originalGraph) {
+        return mapGraphToJGraphT(originalGraph, false, false, new ArrayList<>());
+    }
+
+    public org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> mapGraphToJGraphT(Graph originalGraph, boolean electrified, boolean considerHeight, List<GraphPoint> blockedPoints) {
         Objects.requireNonNull(originalGraph);
         Objects.requireNonNull(blockedPoints);
 
@@ -41,17 +50,24 @@ public class GraphToRoutingGraphMapper {
             List<WeightedEdge> adjacentEdges = originalGraph.getEdgesOfVertex(vertex);
             if (electrified) {
                 adjacentEdges = adjacentEdges.stream().filter(WeightedEdge::electrified).toList();
+
+
+                // JUST FOR LOGGING
+                List<WeightedEdge> removedEdges = originalGraph.getEdgesOfVertex(vertex).stream().filter(edge -> !edge.electrified()).toList();
+                if (!removedEdges.isEmpty()) {
+                    logger.fine("Removed non electric edges of " + vertex + ": " + removedEdges.stream().map(WeightedEdge::destination).toList());
+                }
+                // END LOGGING
             }
             if (!blockedPoints.isEmpty()) {
                 adjacentEdges = adjacentEdges.stream().filter(edge -> !blockedPoints.contains(edge.destination())).toList();
             }
-            createVertices(newGraph, vertex, adjacentEdges);
+            createVertices(newGraph, vertex, adjacentEdges, considerHeight);
         });
-
         return newGraph;
     }
 
-    private void createVertices(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point, List<WeightedEdge> adjacentEdges) {
+    private void createVertices(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point, List<WeightedEdge> adjacentEdges, boolean considerHeight) {
         if (point instanceof Switch) {
             newGraph.addVertex(new DirectedNode(point, PointSide.IN));
             newGraph.addVertex(new DirectedNode(point, PointSide.OUT));
@@ -63,10 +79,10 @@ public class GraphToRoutingGraphMapper {
                     DirectedNode destination = new DirectedNode(point, sourceSide);
 
                     if (!newGraph.containsEdge(source, destination)) {    // Checks if edge already exists to prevent duplicate edges
-                        addEdgeToGraph(newGraph, source, destination, edge.distance().value());
+                        addEdgeToGraph(newGraph, source, destination, getEdgeWeight(edge, considerHeight));
                     }
                 } else {
-                    addEdge(newGraph, point, sourceSide, edge);
+                    addEdge(newGraph, point, sourceSide, edge, considerHeight);
                 }
             }
         } else {
@@ -83,13 +99,13 @@ public class GraphToRoutingGraphMapper {
                     if (isEdgeAlreadyConnected(newGraph, edge, edges)) {
                         continue;
                     }
-                    addEdge(newGraph, point, PointSide.OUT, edge);
+                    addEdge(newGraph, point, PointSide.OUT, edge, considerHeight);
                 }
             } else {
                 newGraph.addVertex(new DirectedNode(point, PointSide.IN));
                 newGraph.addVertex(new DirectedNode(point, PointSide.OUT));
                 for (WeightedEdge edge : adjacentEdges) {
-                    addEdge(newGraph, point, sourceSide, edge);
+                    addEdge(newGraph, point, sourceSide, edge, considerHeight);
                     sourceSide = sourceSide.getOpposite();
                 }
             }
@@ -105,7 +121,7 @@ public class GraphToRoutingGraphMapper {
         return false;
     }
 
-    private void addEdge(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point, PointSide sourceSide, WeightedEdge edge) {
+    private void addEdge(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point, PointSide sourceSide, WeightedEdge edge, boolean considerHeight) {
         PointSide destinationSide;
         if (edge.destination() instanceof Switch) {
             destinationSide = ((Switch) edge.destination()).getSwitchSideFromPoint(point);
@@ -128,8 +144,8 @@ public class GraphToRoutingGraphMapper {
         DirectedNode connection2source = new DirectedNode(edge.destination(), destinationSide.getOpposite());
         DirectedNode connection2destination = new DirectedNode(point, sourceSide);
 
-        addEdgeToGraph(newGraph, connection1source, connection1destination, edge.distance().value());
-        addEdgeToGraph(newGraph, connection2source, connection2destination, edge.distance().value());
+        addEdgeToGraph(newGraph, connection1source, connection1destination, getEdgeWeight(edge, considerHeight));
+        addEdgeToGraph(newGraph, connection2source, connection2destination, getEdgeWeight(edge, considerHeight));
     }
 
     private boolean outSideAlreadyConnected(org.jgrapht.Graph<DirectedNode, DefaultWeightedEdge> newGraph, GraphPoint point) {
