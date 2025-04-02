@@ -95,6 +95,10 @@ public class Locomotive {
         this.locCallsAdapter.setLocSpeed(this.id, currentSpeed);
     }
 
+    public void emergencyStop() {
+        this.locCallsAdapter.emergencyStopLoc(this.id);
+    }
+
     public Distance getAccelerationDistance() {
         return accelerationDistance;
     }
