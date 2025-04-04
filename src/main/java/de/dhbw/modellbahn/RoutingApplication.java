@@ -4,6 +4,7 @@ import de.dhbw.modellbahn.adapter.physical.railway.communication.ApiService;
 import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.LocCallsAdapter;
 import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.SystemCallsAdapter;
 import de.dhbw.modellbahn.adapter.physical.railway.communication.calls.TrackComponentCallsAdapter;
+import de.dhbw.modellbahn.adapter.physical.railway.communication.socket.RailwayWebSocketClient;
 import de.dhbw.modellbahn.adapter.track.generation.GraphGenerator;
 import de.dhbw.modellbahn.application.ConfigReader;
 import de.dhbw.modellbahn.application.repositories.LocomotiveRepository;
@@ -29,6 +30,7 @@ public class RoutingApplication {
     private final Graph domainGraph;
     private final LocomotiveRepository locomotiveRepository;
     private final CommandExecutor executor;
+    private RailwayWebSocketClient webSocketClient;
 
     public RoutingApplication(PrintStream output) {
         this(Level.INFO, output);
@@ -46,6 +48,7 @@ public class RoutingApplication {
         LocCalls locCalls = new LocCallsAdapter(apiService);
         SystemCalls systemCalls = new SystemCallsAdapter(apiService);
         TrackComponentCalls trackComponentCalls = new TrackComponentCallsAdapter(apiService);
+        initializeWebSocket();
 
         logger.info("Generating track graph");
         domainGraph = new GraphGenerator(configReader, trackComponentCalls).generateGraph();
@@ -66,5 +69,23 @@ public class RoutingApplication {
 
     public void executeCommand(List<Instruction> instructions) throws Exception {
         executor.execute(instructions, true);
+    }
+
+    // In your main application or service class:
+    public void initializeWebSocket() {
+        try {
+            webSocketClient = new RailwayWebSocketClient("127.0.0.1", 8001);
+            webSocketClient.connect().thenRun(() -> {
+                if (webSocketClient.isConnected()) {
+                    logger.info("WebSocket client connected and ready");
+                }
+            }).exceptionally(ex -> {
+                logger.severe("WebSocket connection failed: " + ex.getMessage());
+                return null;
+            });
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error initializing WebSocket client", e);
+        }
+
     }
 }
