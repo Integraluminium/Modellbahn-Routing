@@ -13,6 +13,40 @@ interface.
 - **Speed Management**: Handles acceleration, maximum speed, and deceleration
 - **Real-time Communication**: WebSocket integration with Märklin CS3
 - **Scripting Support**: Run predefined command sequences from script files
+- **Interactive REPL**: Command-line interface for real-time interaction
+
+#### Route Calculation
+
+The routing engine supports single and multiple locomotive path planning with these capabilities:
+
+- **Path Finding**: Automatically calculates the shortest path from current position to destination
+    - If direct routing isn't possible, the system attempts to reverse the locomotive
+    - If reversing the locomotive could reach the destination, the system route to a buffer stop first to reverse, then
+      to the final destination.
+
+- **Collision Avoidance**: By default, the system tracks locomotive positions during routing
+    - Occupied track sections are blocked for other locomotives to prevent collisions
+    - This behavior can be disabled with `MODIFY AUTOMATIC ADD LOCOMOTIVES TO ROUTE false`
+
+- **Directional Control**:
+    - You can specify a required facing direction at the destination with `TO W13 FACING W12`
+    - If no facing direction is specified, the system chooses the most efficient approach
+
+- **Algorithm Selection**:
+    - Uses Dijkstra's algorithm by default for shortest path calculation
+    - Alternative algorithms can be specified with the `WITH` keyword (e.g., `WITH Bellman_Ford`)
+    - Routing constraints can be added with `CONSIDER` and the optional flags `ELECTRIFICATION` and `HEIGHT`
+
+#### Route Execution
+
+- **Current Implementation**: Routes are executed using a timing-based approach at fixed speeds
+    - The system calculates movement time based on distance and locomotive specifications
+    - Switches are automatically set before the locomotive reaches them
+
+- **Planned Improvements**:
+    - Enhanced speed control with proper acceleration and deceleration phases
+    - Integration with S88 feedback contacts for real-time position verification
+    - Dynamic speed adjustments based on track conditions and signal states
 
 ## Prerequisites
 
