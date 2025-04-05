@@ -16,25 +16,27 @@ public class PositionVerificationAction implements RoutingAction {
     private final TrackContact expectedPoint;
     private final int timeoutSeconds;
     private final DomainEventPublisher eventPublisher;
+    private final long negSensitivityTime;
     private boolean isSensitive = false;
-
     private CompletableFuture<Boolean> verificationResult;
 
     public PositionVerificationAction(DomainEventPublisher eventPublisher, Locomotive locomotive, TrackContact expectedPoint) {
-        this(eventPublisher, locomotive, expectedPoint, 10);
+        this(eventPublisher, locomotive, expectedPoint, 10, 0);
     }
 
-    public PositionVerificationAction(DomainEventPublisher eventPublisher, Locomotive locomotive, TrackContact expectedPoint, int timeoutSeconds) {
+    public PositionVerificationAction(DomainEventPublisher eventPublisher, Locomotive locomotive, TrackContact expectedPoint, int timeoutSeconds, long negSensitivityTime) {
         this.locomotive = locomotive;
         this.expectedPoint = expectedPoint;
         this.timeoutSeconds = timeoutSeconds;
         this.eventPublisher = eventPublisher;
+        this.negSensitivityTime = negSensitivityTime;
     }
 
     @Override
     public void performAction() {
+        long startTime = System.nanoTime();
         isSensitive = true;
-        logger.info("Verifying position of locomotive " + locomotive.getLocId() +
+        logger.fine("Verifying position of locomotive " + locomotive.getLocId() +
                 " expected at " + expectedPoint.getName());
 
         verificationResult = new CompletableFuture<>();
@@ -45,9 +47,10 @@ public class PositionVerificationAction implements RoutingAction {
 
         try {
             Boolean result = verificationResult.get(timeoutSeconds, TimeUnit.SECONDS);
+            long elapsedTimeInMs = (System.nanoTime() - startTime) / 1_000_000;
             if (!result) logger.warning("Position verification failed for locomotive " + locomotive.getLocId());
 
-            logger.finer("Successfully verified Position for locomotive " + locomotive.getLocId());
+            logger.info("Successfully verified Position for locomotive " + locomotive.getLocId() + " with " + ((elapsedTimeInMs - negSensitivityTime)) + "ms elapsed compared to allocated Time");
 
         } catch (Exception e) {
             logger.severe("Position verification timed out: " + e.getMessage());
