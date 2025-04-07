@@ -13,14 +13,13 @@ import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.attributes.Speed;
 import de.dhbw.modellbahn.domain.physical.railway.components.SignalState;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Generates a route for a given Locomotive and a list of WeightedDistanceEdges.
  */
 public class RouteGenerator {
+    private static final Distance PUFFER_DISTANCE_SWITCH = new Distance(300);
     private final Locomotive loc;
     private final List<WeightedDistanceEdge> routingEdges;
     private final GraphPoint newFacingDirection;
@@ -100,34 +99,51 @@ public class RouteGenerator {
         List<RoutingAction> returnActions = new ArrayList<>();
         Distance currentDistance = new Distance(0);
         WeightedDistanceEdge previousEdge = this.routingEdges.removeFirst();
+        Set<GraphPoint> processedSwitches = new HashSet<>();
+
         while (this.routingEdges.size() > 1) {
             WeightedDistanceEdge currentEdge = this.routingEdges.removeFirst();
             WeightedDistanceEdge nextEdge = this.routingEdges.getFirst();
             currentDistance = currentDistance.add(currentEdge.distance());
-
-            // Switch action
             GraphPoint currentPoint = currentEdge.point();
-            if (currentPoint instanceof Switch) { // Switch
-                Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.point(), currentPoint, nextEdge.point());
-                if (switchAction.isPresent()) {
-                    returnActions.addAll(generateSwitchActions(switchAction.get(), currentDistance));
-                }
 
-            } else if (currentPoint instanceof Signal) { // Signal action
+            if (currentPoint instanceof Switch) {
+                if (!processedSwitches.contains(currentPoint)) {
+                    Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.point(), currentPoint, nextEdge.point());
+
+                    if (switchAction.isPresent()) {
+                        returnActions.addAll(generateSwitchActions(switchAction.get(), currentDistance));
+                        processedSwitches.add(currentPoint);
+                    }
+                }
+            } else if (currentPoint instanceof Signal) {// Signal action
                 // Signal is activated directly after previous component, because no timing needed
                 SignalChangeAction signalChangeAction = new SignalChangeAction((Signal) currentPoint, SignalState.CLEAR);
                 returnActions.add(signalChangeAction);
+            } else if (currentPoint instanceof TrackContact) {
+                // Before adding wait for track contact, check for switches within buffer
+                // Check for switches in remaining edges that need activation during this wait
+                returnActions.addAll(checkAndProcessSwitchesInBuffer(previousEdge, processedSwitches, currentPoint));
 
 
-            } else if (currentPoint instanceof TrackContact) { // Position verification action
-                // Should be executed when locomotive IS exactly at the current component
+                // Now process the track contact (recalculate wait time as it may have changed)
                 long waitTime = calculateWaitTimeForSwitch(currentDistance, new Distance(500));
                 long deltaTime = calculateWaitTimeForSwitch(currentDistance, new Distance(0)) - waitTime;
 
-//                if (deltaTime > 0) {
-//                    WaitAction waitAction = new WaitAction(waitTime);
-//                    returnActions.add(waitAction);
-//                }
+                long decelerationTime = calculateDecelerationTime();
+                if (!this.alreadyDecelerated && this.currentWaitTime + waitTime + deltaTime > decelerationTime) {
+                    long decelerationWaitTime = decelerationTime - this.currentWaitTime;
+                    returnActions.add(new WaitAction(decelerationWaitTime));
+//                    this.currentWaitTime += decelerationWaitTime;
+                    Speed speed = new Speed(0);
+                    returnActions.add(
+                            new LocSpeedAction(this.loc, speed)
+                    );
+                    waitTime -= decelerationWaitTime;
+                    this.alreadyDecelerated = true;
+                    this.estimatedTime = this.currentWaitTime + this.loc.getDecelerationTime();
+                }
+
                 PositionVerificationAction verificationAction = new PositionVerificationAction(
                         DomainEventPublisher.getInstance(),
                         loc,
@@ -136,23 +152,60 @@ public class RouteGenerator {
                         waitTime + deltaTime
                 );
                 returnActions.add(verificationAction);
-
-                // TODO: this might not work as expected, as switches and further contacts need some prior delay
-                //  Adding this delay might break the position
-                //  using a priority queue might be a better solution
                 this.currentWaitTime += waitTime + deltaTime;
 
             }
 
-
             previousEdge = currentEdge;
         }
 
+        // Handle last switch
         WeightedDistanceEdge lastEdge = this.routingEdges.getFirst();
-        if (lastEdge.point() instanceof Switch) {
+        if (lastEdge.point() instanceof Switch && !processedSwitches.contains(lastEdge.point())) {
             returnActions.addAll(generateActionsForLastSwitch(previousEdge, lastEdge, currentDistance));
         }
+
         return returnActions;
+    }
+
+    private List<RoutingAction> checkAndProcessSwitchesInBuffer(
+            WeightedDistanceEdge previousEdge,
+            Set<GraphPoint> processedSwitches,
+            GraphPoint currentPoint) {
+        // Look ahead in remaining edges
+        int maxSize = this.routingEdges.size();
+
+        List<RoutingAction> optionalReturnActions = new ArrayList<>();
+
+        int currentIndex = 0;
+        int cumulativeDistance = 0;
+
+        GraphPoint previousPoint = previousEdge.point();
+        GraphPoint nextPoint;
+        while (currentIndex <= maxSize - 1 && cumulativeDistance < PUFFER_DISTANCE_SWITCH.value()) {
+            WeightedDistanceEdge futureEdge = this.routingEdges.get(currentIndex);
+            cumulativeDistance += futureEdge.distance().value();
+
+
+            if (currentIndex < maxSize - 1) {
+
+                WeightedDistanceEdge futureAfterFutureEdge = this.routingEdges.get(currentIndex + 1);
+                nextPoint = futureAfterFutureEdge.point();
+            } else {
+                nextPoint = this.newFacingDirection;
+            }
+            GraphPoint futurePoint = futureEdge.point();
+            if (futurePoint instanceof Switch && !processedSwitches.contains(futurePoint)) {
+
+                optionalReturnActions.add(new ChangeSwitchStateAction((Switch) futurePoint, previousPoint, nextPoint));
+                processedSwitches.add(futurePoint);
+            }
+            currentIndex++;
+            previousPoint = futureEdge.point();
+
+
+        }
+        return optionalReturnActions;
     }
 
     private List<RoutingAction> generateActionsForLastSwitch(WeightedDistanceEdge previousEdge, WeightedDistanceEdge switchEdge, Distance currentDistance) {
@@ -175,7 +228,7 @@ public class RouteGenerator {
 
     private List<RoutingAction> generateSwitchActions(ChangeSwitchStateAction switchAction, Distance currentDistance) {
         List<RoutingAction> returnActions = new ArrayList<>();
-        long waitTime = calculateWaitTimeForSwitch(currentDistance, new Distance(300));
+        long waitTime = calculateWaitTimeForSwitch(currentDistance, PUFFER_DISTANCE_SWITCH);
         // TODO Parameterize puffer distance
 
         long decelerationTime = calculateDecelerationTime();
