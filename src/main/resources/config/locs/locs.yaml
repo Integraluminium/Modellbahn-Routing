@@ -27,8 +27,8 @@
   accelerationDistance: 335
   decelerationTime: 2244
   decelerationDistance: 335
-  position: "NotOnTrack"
-  facingDirection: "NotOnTrack"
+  position: "S7"
+  facingDirection: "W6"
 - id: 16392
   name: "96 024 DRG"
   electric: false
@@ -47,8 +47,8 @@
   accelerationDistance: 713
   decelerationTime: 2960
   decelerationDistance: 713
-  position: "NotOnTrack"
-  facingDirection: "NotOnTrack"
+  position: "W6"
+  facingDirection: "K13"
 - id: 16398
   name: "Fc 2x3/4 122 01"
   electric: true

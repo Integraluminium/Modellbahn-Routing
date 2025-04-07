@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * WebSocket listener to handle incoming messages
  */
 public class WebSocketListener implements WebSocket.Listener {
-    private static final Logger logger = Logger.getLogger(RailwayWebSocketClient.class.getSimpleName());
+    private static final Logger logger = Logger.getLogger(WebSocketListener.class.getSimpleName());
     private final StringBuilder messageBuilder = new StringBuilder();
     private final RailwayWebSocketClient railwayWebSocketClient;
 
@@ -55,7 +55,7 @@ public class WebSocketListener implements WebSocket.Listener {
         }
 
         // Log if no handler found
-        logger.fine("No handler found for message: " +
+        logger.finer("No handler found for message: " +
                 (message.length() > 100 ? message.substring(0, 100) + "..." : message));
     }
 }

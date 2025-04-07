@@ -27,7 +27,7 @@ public class RoutingApplicationMain {
 
         } else if (args[0].equals("--debug")) {
             // Set debug level and run REPL
-            MobaLogConfig.configureLogging(Level.FINEST);
+            MobaLogConfig.configureLogging(Level.FINE);
             new CommandlineREPL(parser, app, standardOutput).start();
 
         } else {

@@ -121,20 +121,26 @@ public class RouteGenerator {
 
             } else if (currentPoint instanceof TrackContact) { // Position verification action
                 // Should be executed when locomotive IS exactly at the current component
-                long waitTime = calculateWaitTimeForSwitch(currentDistance, new Distance(100));
-                long deltaTime = waitTime - calculateWaitTimeForSwitch(currentDistance, new Distance(0));
+                long waitTime = calculateWaitTimeForSwitch(currentDistance, new Distance(500));
+                long deltaTime = calculateWaitTimeForSwitch(currentDistance, new Distance(0)) - waitTime;
 
-                WaitAction waitAction = new WaitAction(waitTime);
+//                if (deltaTime > 0) {
+//                    WaitAction waitAction = new WaitAction(waitTime);
+//                    returnActions.add(waitAction);
+//                }
                 PositionVerificationAction verificationAction = new PositionVerificationAction(
                         DomainEventPublisher.getInstance(),
                         loc,
                         (TrackContact) currentPoint,
-                        10,
-                        deltaTime
+                        (int) waitTime + (int) deltaTime * 2,
+                        waitTime + deltaTime
                 );
-
-                returnActions.add(waitAction);
                 returnActions.add(verificationAction);
+
+                // TODO: this might not work as expected, as switches and further contacts need some prior delay
+                //  Adding this delay might break the position
+                //  using a priority queue might be a better solution
+                this.currentWaitTime += waitTime + deltaTime;
 
             }
 
