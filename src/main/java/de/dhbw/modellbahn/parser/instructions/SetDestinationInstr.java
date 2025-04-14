@@ -7,9 +7,9 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public record SetDestinationInstr(LocId locId, GraphPoint destination) implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) {
         if (!context.existsLocomotive(locId)) {
-            throw new Exception("Locomotive with id " + locId + " does not exist");
+            throw new InstructionException("Locomotive with id " + locId + " does not exist");
         }
 
         Locomotive loc = context.getLocomotive(locId);

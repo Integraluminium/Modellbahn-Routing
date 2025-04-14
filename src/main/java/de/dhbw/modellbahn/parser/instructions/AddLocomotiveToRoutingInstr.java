@@ -6,7 +6,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public record AddLocomotiveToRoutingInstr(LocId locId) implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) throws InstructionException {
         Locomotive loc = context.getLocomotive(locId);
         context.getCurrentRouteBuilder().addLocomotive(loc);
     }

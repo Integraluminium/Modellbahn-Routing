@@ -5,7 +5,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public record ToggleDirectionInstr(LocId locId) implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) {
         context.toggleLocomotiveDirection(locId);
         context.getOutput().println("Toggled direction of: " + locId + " to: " + context.getLocomotive(locId).getCurrentFacingDirection().getName());
     }

@@ -5,7 +5,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public record SetRoutingAlgorithmInstr(RoutingAlgorithm algorithm) implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) {
         context.getCurrentRouteBuilder().setRoutingAlgorithm(algorithm);
     }
 

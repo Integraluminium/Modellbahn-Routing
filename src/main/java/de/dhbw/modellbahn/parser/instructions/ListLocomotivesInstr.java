@@ -8,7 +8,7 @@ import java.io.PrintStream;
 
 public record ListLocomotivesInstr() implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) throws InstructionException {
         PrintStream output = context.getOutput();
         for (LocId locId : context.getLocInfos()) {
             Locomotive loc = context.getLocomotive(locId);

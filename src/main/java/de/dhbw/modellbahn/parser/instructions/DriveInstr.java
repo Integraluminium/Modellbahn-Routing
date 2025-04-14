@@ -4,7 +4,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public class DriveInstr implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) throws InstructionException {
         context.driveRoute();
     }
 

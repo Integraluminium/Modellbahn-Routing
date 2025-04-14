@@ -11,7 +11,7 @@ import java.util.List;
 
 public record ListRouteInstr() implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) {
         RouteBuilder routeBuilder = context.getCurrentRouteBuilder();
         PrintStream output = context.getOutput();
         Iterable<Locomotive> locomotivesWithRoute = routeBuilder.getLocomotivesWithRoute();

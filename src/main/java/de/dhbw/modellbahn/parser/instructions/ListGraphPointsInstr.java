@@ -4,7 +4,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public record ListGraphPointsInstr() implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) throws InstructionException {
         context.listAllGraphPoints();
     }
 
