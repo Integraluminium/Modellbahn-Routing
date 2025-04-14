@@ -9,10 +9,12 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 import java.io.PrintStream;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.StreamSupport;
 
 public class CommandExecutor {
     private final CommandContext commandContext;
+    private final Logger logger = Logger.getLogger(CommandExecutor.class.getName());
 
     public CommandExecutor(LocomotiveRepository locomotiveRepository, Graph graph, SystemCalls systemCalls, PrintStream stream) {
         this.commandContext = new CommandContext(locomotiveRepository, graph, systemCalls, stream);
@@ -28,7 +30,7 @@ public class CommandExecutor {
             }
         } catch (Exception e) {
             commandContext.getSystemCalls().systemStop();
-            commandContext.getOutput().println("Stopped System due to error during execution of last instruction > " + e.getMessage());
+            logger.severe("Stopped System due to error during execution of last instruction > " + e.getMessage());
             setAllLocomotivesNotOnTrack();
             throw e;
         }
@@ -36,6 +38,7 @@ public class CommandExecutor {
     }
 
     private void setAllLocomotivesNotOnTrack() throws Exception {
+        logger.warning("Setting all locomotives to 'not on track'");
         List<RemoveLocomotiveFromTrackInstr> removeInstr = StreamSupport.stream(commandContext.getLocInfos().spliterator(), false)
                 .map(RemoveLocomotiveFromTrackInstr::new).toList();
         for (Instruction inst : removeInstr) {

@@ -55,7 +55,7 @@ public class WebSocketListener implements WebSocket.Listener {
         }
 
         // Log if no handler found
-        logger.fine("No handler found for message: " +
+        logger.finer("No handler found for message: " +
                 (message.length() > 100 ? message.substring(0, 100) + "..." : message));
     }
 }
