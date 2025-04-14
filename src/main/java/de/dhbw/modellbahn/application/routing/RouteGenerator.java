@@ -3,11 +3,9 @@ package de.dhbw.modellbahn.application.routing;
 import de.dhbw.modellbahn.application.routing.actions.*;
 import de.dhbw.modellbahn.application.routing.building.PathNotPossibleException;
 import de.dhbw.modellbahn.application.routing.directed.graph.WeightedDistanceEdge;
-import de.dhbw.modellbahn.domain.events.DomainEventPublisher;
 import de.dhbw.modellbahn.domain.graph.nodes.attributes.Distance;
 import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
 import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.Signal;
-import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.TrackContact;
 import de.dhbw.modellbahn.domain.graph.nodes.switches.Switch;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.attributes.Speed;
@@ -119,19 +117,7 @@ public class RouteGenerator {
                 returnActions.add(signalChangeAction);
 
 
-            } else if (currentPoint instanceof TrackContact) { // Position verification action
-                // Should be executed when locomotive IS exactly at the current component
-                long waitTime = calculateWaitTimeForSwitch(currentDistance, new Distance(0));
-                WaitAction waitAction = new WaitAction(waitTime);
-                DomainEventPublisher eventPublisher = DomainEventPublisher.getInstance();
-                PositionVerificationAction verificationAction = new PositionVerificationAction(eventPublisher, loc, (TrackContact) currentPoint);
-
-                returnActions.add(waitAction);
-                returnActions.add(verificationAction);
-
             }
-
-
             previousEdge = currentEdge;
         }
 
