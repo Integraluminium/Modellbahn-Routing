@@ -78,7 +78,8 @@ The routing engine supports single and multiple locomotive path planning with th
 
 ### Track Layout
 
-Track configuration is stored in YAML files in the `src/main/resources/config/track/` directory:
+Track configuration is stored in YAML files in the [src/main/resources/config/track/*](src/main/resources/config/track)
+directory:
 
 every file is a list of track elements with its specific properties.
 The Name is the unique identifier for the track element and is used to reference it in the route planning.
@@ -97,7 +98,7 @@ Example switch configuration:
 
 ### Locomotives
 
-Locomotives are described in `src/main/resources/config/locs/locs.yaml`:
+Locomotives are described in [src/main/resources/config/locs/locs.yaml](src/main/resources/config/locs/locs.yaml).:
 
 The ID is the identifier which is provided for the locomotive by the Central Station.
 The Name is the name of the locomotive.
@@ -126,21 +127,41 @@ Graphpoint, where the locomotive is looking to.
 
 [//]: # ()
 
+[//]: # ()
+
+[//]: # ()
+
 [//]: # (First, start the required Modelleisenbahn-Websteuerung services:)
+
+[//]: # ()
+
+[//]: # ()
 
 [//]: # ()
 
 [//]: # (```powershell)
 
+[//]: # ()
+
 [//]: # (Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "raw_can_sender")
+
+[//]: # ()
 
 [//]: # (Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "can_sender")
 
+[//]: # ()
+
 [//]: # (Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "raw_can_receiver")
+
+[//]: # ()
 
 [//]: # (Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "can_receiver")
 
+[//]: # ()
+
 [//]: # (Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "can")
+
+[//]: # ()
 
 [//]: # (```)
 
@@ -210,7 +231,8 @@ NEW ROUTE
 DRIVE               # Execute the defined route
 ```
 
-One example Script can be found in: `src/main/resources/scripts/sampleScript.moba`
+One example Script can be found
+in: [src/main/resources/scripts/sampleScript.moba](src/main/resources/scripts/sampleScript.moba)
 
 ## Troubleshooting
 
