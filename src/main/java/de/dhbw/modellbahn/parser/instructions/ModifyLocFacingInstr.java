@@ -6,7 +6,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public record ModifyLocFacingInstr(LocId locId, GraphPoint facingPoint) implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) {
         context.getLocomotive(locId).setCurrentFacingDirection(facingPoint);
     }
 

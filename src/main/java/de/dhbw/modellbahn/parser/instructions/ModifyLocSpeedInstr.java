@@ -6,7 +6,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public record ModifyLocSpeedInstr(LocId locId, Speed speed) implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) {
         context.getLocomotive(locId).setCurrentSpeed(speed);
     }
 

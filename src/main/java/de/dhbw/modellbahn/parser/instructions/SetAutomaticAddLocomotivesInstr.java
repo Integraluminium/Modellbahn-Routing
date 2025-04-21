@@ -4,7 +4,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public record SetAutomaticAddLocomotivesInstr(boolean value) implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) {
         context.setAutomaticallyAddAllLocomotivesToRoute(value);
     }
 

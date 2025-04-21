@@ -14,7 +14,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
  */
 public record SetFacingDirectionForDestinationInstr(LocId locId, GraphPoint facing) implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) {
         Locomotive loc = context.getLocomotive(locId);
         context.getCurrentRouteBuilder().setLocFacingDirectionForDestination(loc, facing);
     }

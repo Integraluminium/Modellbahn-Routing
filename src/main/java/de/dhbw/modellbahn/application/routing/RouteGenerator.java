@@ -1,16 +1,15 @@
 package de.dhbw.modellbahn.application.routing;
 
-import de.dhbw.modellbahn.application.routing.actions.ChangeSwitchStateAction;
-import de.dhbw.modellbahn.application.routing.actions.LocSpeedAction;
-import de.dhbw.modellbahn.application.routing.actions.RoutingAction;
-import de.dhbw.modellbahn.application.routing.actions.WaitAction;
+import de.dhbw.modellbahn.application.routing.actions.*;
 import de.dhbw.modellbahn.application.routing.building.PathNotPossibleException;
 import de.dhbw.modellbahn.application.routing.directed.graph.WeightedDistanceEdge;
 import de.dhbw.modellbahn.domain.graph.nodes.attributes.Distance;
 import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.Signal;
 import de.dhbw.modellbahn.domain.graph.nodes.switches.Switch;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.attributes.Speed;
+import de.dhbw.modellbahn.domain.physical.railway.components.SignalState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,11 +103,21 @@ public class RouteGenerator {
             WeightedDistanceEdge nextEdge = this.routingEdges.getFirst();
             currentDistance = currentDistance.add(currentEdge.distance());
 
-            Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.point(), currentEdge.point(), nextEdge.point());
-            if (switchAction.isPresent()) {
-                returnActions.addAll(generateSwitchActions(switchAction.get(), currentDistance));
-            }
+            // Switch action
+            GraphPoint currentPoint = currentEdge.point();
+            if (currentPoint instanceof Switch) { // Switch
+                Optional<ChangeSwitchStateAction> switchAction = generateSwitchStateActionIfNecessary(previousEdge.point(), currentPoint, nextEdge.point());
+                if (switchAction.isPresent()) {
+                    returnActions.addAll(generateSwitchActions(switchAction.get(), currentDistance));
+                }
 
+            } else if (currentPoint instanceof Signal) { // Signal action
+                // Signal is activated directly after previous component, because no timing needed
+                SignalChangeAction signalChangeAction = new SignalChangeAction((Signal) currentPoint, SignalState.CLEAR);
+                returnActions.add(signalChangeAction);
+
+
+            }
             previousEdge = currentEdge;
         }
 
@@ -175,6 +184,13 @@ public class RouteGenerator {
         return maxSpeedTime + this.loc.getAccelerationTime();
     }
 
+    /**
+     * Calculates the wait time, when the train is arrived at the specific component
+     *
+     * @param currentDistance distance till the current component
+     * @param pufferDistance  Distance before the component when the train should switch the component
+     * @return the wait time till the action should be performed
+     */
     private long calculateWaitTimeForSwitch(Distance currentDistance, Distance pufferDistance) {
         int absolutePufferDistance = currentDistance.value() - pufferDistance.value();
         if (absolutePufferDistance <= this.loc.getAccelerationDistance().value()) {

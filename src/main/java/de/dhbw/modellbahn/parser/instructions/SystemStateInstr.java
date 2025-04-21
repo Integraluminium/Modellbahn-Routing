@@ -4,7 +4,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public record SystemStateInstr(boolean toModifySystem) implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) {
         if (toModifySystem) {
             context.getSystemCalls().systemGo();
             context.getOutput().println("System is being started");

@@ -8,7 +8,7 @@ import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 public record RemoveLocomotiveFromTrackInstr(LocId locId) implements Instruction {
     @Override
-    public void execute(final CommandContext context) throws Exception {
+    public void execute(final CommandContext context) {
         GraphPoint notOnTrackPoint = GraphPoint.of("NotOnTrack");
         Locomotive locomotive = context.getLocomotive(locId);
 

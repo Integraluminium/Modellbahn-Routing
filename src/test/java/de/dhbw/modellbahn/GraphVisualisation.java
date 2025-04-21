@@ -31,7 +31,7 @@ import java.util.Set;
 @SuppressWarnings("UtilityClassCanBeEnum")
 public class GraphVisualisation {
     public static void main(String[] args) {
-        boolean mocked = false;
+        boolean mocked = true;
 
         System.out.println(java.awt.GraphicsEnvironment.isHeadless());
         Graph graph;
