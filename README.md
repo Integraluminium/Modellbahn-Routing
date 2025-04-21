@@ -5,6 +5,31 @@ Station 3 integration.
 This application provides path planning, locomotive control, and real-time position tracking through a command-line
 interface.
 
+## Prerequisites
+
+- Java JDK 23 or newer
+- Märklin Central Station 3 (CS3)
+- [Modelleisenbahn-Websteuerung](https://github.com/Rediate15/Modelleisenbahn-Websteuerung) backend services running
+- Gradle for building
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Integraluminium/Modellbahn-Routing.git
+   cd Modellbahn-Routing
+   ```
+
+2. **Build with Gradle**
+   ```bash
+   ./gradlew build
+   ```
+
+3. **Create executable JAR**
+   ```bash
+   ./gradlew jar
+   ```
+
 ## Features
 
 - **Automated Route Planning**: Create routes for locomotives using algorithms like Dijkstra
@@ -12,6 +37,7 @@ interface.
 - **Switch Control**: Automatic control of switches during route execution
 - **Speed Management**: Handles acceleration, maximum speed, and deceleration
 - **Real-time Communication**: WebSocket integration with Märklin CS3
+  over [Modelleisenbahn-Websteuerung](https://github.com/Rediate15/Modelleisenbahn-Websteuerung)
 - **Scripting Support**: Run predefined command sequences from script files
 - **Interactive REPL**: Command-line interface for real-time interaction
 
@@ -47,31 +73,6 @@ The routing engine supports single and multiple locomotive path planning with th
     - Enhanced speed control with proper acceleration and deceleration phases
     - Integration with S88 feedback contacts for real-time position verification
     - Dynamic speed adjustments based on track conditions and signal states
-
-## Prerequisites
-
-- Java JDK 23 or newer
-- Märklin Central Station 3 (CS3)
-- [Modelleisenbahn-Websteuerung](https://github.com/Rediate15/Modelleisenbahn-Websteuerung) services running
-- Gradle for building
-
-## Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/YourUsername/Model-Railway-Routing-Application.git
-   cd Model-Railway-Routing-Application
-   ```
-
-2. **Build with Gradle**
-   ```bash
-   ./gradlew build
-   ```
-
-3. **Create executable JAR**
-   ```bash
-   ./gradlew jar
-   ```
 
 ## Configuration
 
@@ -121,17 +122,27 @@ Graphpoint, where the locomotive is looking to.
   facingDirection: "W6"
 ```
 
-## Starting the WebSocket Backend
+[//]: # (## Starting the WebSocket Backend)
 
-First, start the required Modelleisenbahn-Websteuerung services:
+[//]: # ()
 
-```powershell
-Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "raw_can_sender"
-Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "can_sender"
-Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "raw_can_receiver"
-Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "can_receiver"
-Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "can"
-```
+[//]: # (First, start the required Modelleisenbahn-Websteuerung services:)
+
+[//]: # ()
+
+[//]: # (```powershell)
+
+[//]: # (Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "raw_can_sender")
+
+[//]: # (Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "can_sender")
+
+[//]: # (Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "raw_can_receiver")
+
+[//]: # (Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "can_receiver")
+
+[//]: # (Start-Process -FilePath ".venv\Scripts\python.exe" -ArgumentList "backend/src/start.py", "can")
+
+[//]: # (```)
 
 ## Usage
 
@@ -205,8 +216,9 @@ One example Script can be found in: `src/main/resources/scripts/sampleScript.mob
 
 ### Common Issues
 
-- **WebSocket Connection Failed**: Ensure all Modelleisenbahn-Websteuerung services are running
-- **Commands Not Recognized**: Check command syntax in BNF grammar
-- **Locomotives Not Moving**: Verify CS3 is connected and powered on
+- **WebSocket Connection Failed**: Ensure all Modelleisenbahn-Websteuerung backend services are running
+- **Commands Not Recognized**: Check [grammar](src/main/resources/Backus–Naur-format.txt) of command
+- **Locomotives Not Moving**: Verify CS3 is connected, powered on and system is started by using the button on the CS3.
+  Check if rails are powered.
 - **Route Planning Errors**: Ensure track layout is properly configured
 
