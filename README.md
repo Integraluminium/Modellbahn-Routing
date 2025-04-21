@@ -78,7 +78,7 @@ The routing engine supports single and multiple locomotive path planning with th
 
 ### Track Layout
 
-Track configuration is stored in YAML files in the [src/main/resources/config/track/*](src/main/resources/config/track)
+Track configuration is stored in YAML files in the [src/main/resources/config/track/](src/main/resources/config/track)
 directory:
 
 every file is a list of track elements with its specific properties.
@@ -98,7 +98,7 @@ Example switch configuration:
 
 ### Locomotives
 
-Locomotives are described in [src/main/resources/config/locs/locs.yaml](src/main/resources/config/locs/locs.yaml).:
+Locomotives are described in [src/main/resources/config/locs/locs.yaml](src/main/resources/config/locs/locs.yaml):
 
 The ID is the identifier which is provided for the locomotive by the Central Station.
 The Name is the name of the locomotive.
