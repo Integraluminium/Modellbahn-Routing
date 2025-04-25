@@ -1,71 +1,78 @@
+- name: K01
+  id: 1
+
 - name: K2
-  id: 00000
+  id: 2
 
 - name: K3
-  id: 00000
+  id: 3
 
 - name: K4
-  id: 00000
+  id: 4
 
 - name: K5
-  id: 00000
+  id: 5
 
 - name: K6
-  id: 00000
+  id: 6
 
 - name: K7
-  id: 00000
+  id: 7
 
 - name: K9
-  id: 00000
+  id: 9
 
 - name: K10
-  id: 00000
+  id: 10
 
 - name: K12
-  id: 00000
+  id: 12
 
 - name: K13
-  id: 00000
+  id: 13
 
 - name: K15
-  id: 00000
+  id: 15
 
 - name: K16
-  id: 00000
+  id: 16
 
 - name: K17
-  id: 00000
+  id: 17
 
 - name: K19
-  id: 00000
+  id: 19
 
 - name: K20
-  id: 00000
+  id: 20
 
 - name: K21
-  id: 00000
+  id: 21
+
+- name: K24
+  id: 24
 
 - name: K23
-  id: 00000
+  id: 23
 
 - name: K25
-  id: 00000
+  id: 25
 
 - name: K26
-  id: 00000
+  id: 26
 
+# Behaves strangely
 - name: K27
-  id: 00000
+  id: 27
 
 - name: K28
-  id: 00000
+  id: 28
 
 - name: K29
-  id: 00000
+  id: 29
 
 - name: K30
-  id: 00000
+  id: 30
 
 - name: K31
-  id: 00000
+  id: 31

@@ -6,7 +6,6 @@ import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.TrackContact;
 import de.dhbw.modellbahn.parser.lexer.CommandContext;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
@@ -26,26 +25,64 @@ public class AwaitTrackContact implements Instruction {
         this.eventPublisher = DomainEventPublisher.getInstance();
     }
 
+
     @Override
     public void execute(final CommandContext context) throws InstructionException {
+        logger.info("Awaiting track contact: " + expectedPoint.getName() + " with timeout: " + timeoutSeconds + " seconds");
+
         // Subscribe to track contact events
         Consumer<TrackContactEvent> contactListener = this::handleContactEvent;
         eventPublisher.subscribe(TrackContactEvent.class, contactListener);
 
         try {
-            Boolean result = verificationResult.get(timeoutSeconds, TimeUnit.SECONDS);
-            if (Boolean.FALSE.equals(result)) {
-                throw new InstructionException("Track contact verification failed");
+            // Busy waiting implementation
+            final long startTime = System.currentTimeMillis();
+            final long timeoutMillis = timeoutSeconds * 1000L;
+
+            while (true) {
+                // Process any pending events by yielding this thread briefly
+                Thread.yield();
+
+                // Check if we've received the event
+                if (verificationResult.isDone()) {
+                    try {
+                        boolean result = verificationResult.getNow(false);
+                        if (!result) {
+                            throw new InstructionException("Track contact verification failed");
+                        }
+
+                        logger.info("Successfully verified track contact: " + expectedPoint.getName());
+                        return;
+                    } catch (Exception e) {
+                        if (!(e instanceof InstructionException)) {
+                            throw new InstructionException("Error during verification", e);
+                        }
+                        throw (InstructionException) e;
+                    }
+                }
+
+                // Check if we've timed out
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                if (elapsedTime > timeoutMillis) {
+                    logger.warning("Timed out waiting for track contact: " + expectedPoint.getName());
+                    context.getOutput().println("Timed out waiting for track contact: " + expectedPoint.getName());
+                    return; // Return without exception
+                }
+
+                // Sleep briefly to avoid excessive CPU usage
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new InstructionException("Track contact verification interrupted", e);
+                }
             }
-            logger.fine("Successfully verified track contact: " + expectedPoint.getName());
-        } catch (Exception e) {
-            // Timeout or other error
-            throw new InstructionException("Timed out waiting for track contact: " + expectedPoint.getName(), e);
         } finally {
-            isSensitive = false;
+
             eventPublisher.unsubscribe(TrackContactEvent.class, contactListener);
         }
     }
+
 
     @Override
     public void trace(final CommandContext context) {
@@ -53,11 +90,12 @@ public class AwaitTrackContact implements Instruction {
     }
 
     private void handleContactEvent(TrackContactEvent event) {
-        if (!isSensitive) return;
+
 
         // Extract the component ID from the TrackContact and compare with the event's contactId
         if (event.activated() && expectedPoint.hasTrackComponentId(event.contactId())) {
             verificationResult.complete(true);
+            logger.warning("SDGJK");
         }
     }
 }

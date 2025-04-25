@@ -55,52 +55,13 @@ public class CommandParser {
                 LocId locId = parseLocId();
                 instructions.add(new RemoveLocomotiveFromTrackInstr(locId));
             }
-            case IF_KEYWORD -> {
-                parseIfStatement();
-            }
+            case AWAIT_KEYWORD -> parseAwaitExpression();
             default -> throw new ParseException("Expected statement but got: " + token);
         }
     }
 
-    private void parseIfStatement() throws ParseException, LexerException {
-        Instruction condition = parseExpression();
 
-        lexer.expect(TokenType.THEN_KEYWORD);
-        List<Instruction> thenInstructions = new ArrayList<>();
-
-        while (lexer.lookAhead().type() != TokenType.ELSE_KEYWORD &&
-                lexer.lookAhead().type() != TokenType.ENDIF_KEYWORD) {
-            parseStatement(); // This adds to the instructions list
-            thenInstructions.add(instructions.remove(instructions.size() - 1));
-        }
-
-        // Parse ELSE block if present
-        List<Instruction> elseInstructions = new ArrayList<>();
-        if (lexer.lookAhead().type() == TokenType.ELSE_KEYWORD) {
-            lexer.advance();
-
-            while (lexer.lookAhead().type() != TokenType.ENDIF_KEYWORD) {
-                parseStatement();
-                elseInstructions.add(instructions.remove(instructions.size() - 1));
-            }
-        }
-
-        lexer.expect(TokenType.ENDIF_KEYWORD);
-
-        // Create the conditional instruction
-        instructions.add(new ConditionalInstruction(condition, thenInstructions, elseInstructions));
-    }
-
-    private Instruction parseExpression() throws LexerException, ParseException {
-        if (lexer.lookAhead().type() == TokenType.AWAIT_KEYWORD) {
-            return parseAwaitExpression();
-        }
-        throw new ParseException("Expected expression but got: " + lexer.lookAhead().type());
-    }
-
-    private Instruction parseAwaitExpression() throws ParseException, LexerException {
-        lexer.expect(TokenType.AWAIT_KEYWORD);
-
+    private void parseAwaitExpression() throws ParseException, LexerException {
 //        if (!(point instanceof TrackContact)) {
 //            throw new ParseException("Expected TrackContact but got: " + point.getName());
 //        }
@@ -111,7 +72,7 @@ public class CommandParser {
         int timeout = parseNumber();
 
 
-        return new AwaitTrackContact(point, timeout);
+        instructions.add(new AwaitTrackContact(point, timeout));
     }
 
     private void parseRouteCommand() throws LexerException, ParseException {
