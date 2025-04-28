@@ -59,6 +59,9 @@ public class Lexer {
         addKeywordMachine("ELSE", TokenType.ELSE_KEYWORD);
         addKeywordMachine("ENDIF", TokenType.ENDIF_KEYWORD);
 
+        addKeywordMachine("RUN", TokenType.RUN_KEYWORD);
+        addMachine(new FilePathMachine());
+
         addMachine(new BooleanMachine());
         addMachine(new OptimizationMachine());
         addMachine(new AlgorithmMachine());

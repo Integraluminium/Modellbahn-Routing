@@ -12,6 +12,9 @@ import de.dhbw.modellbahn.parser.lexer.LexerException;
 import de.dhbw.modellbahn.parser.lexer.Token;
 import de.dhbw.modellbahn.parser.lexer.TokenType;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +27,18 @@ public class CommandParser {
     public CommandParser(Lexer lexer, DomainObjectParser domainObjectParser) {
         this.lexer = lexer;
         this.parser = domainObjectParser;
+    }
+
+    private File parseFilePath(final Token filePath, String suffix) throws ParseException {
+        Path path = Paths.get(filePath.value());
+        if (!path.toString().endsWith(suffix)) {
+            throw new ParseException("Expected file path with" + suffix + "extension but got: " + filePath);
+        }
+        File file = path.toFile();
+        if (!file.exists()) {
+            throw new ParseException("File " + file.getAbsolutePath() + " does not exist");
+        }
+        return file;
     }
 
     public List<Instruction> parse(String input) throws LexerException, ParseException {
@@ -46,6 +61,7 @@ public class CommandParser {
                 lexer.expect(TokenType.ROUTE_KEYWORD);
                 parseRouteCommand();
             }
+            case RUN_KEYWORD -> parseRunCommand();
             case MODIFY_KEYWORD -> parseModificationCommand();
             case LIST_KEYWORD -> parseInformationCommand();
             case SYSTEM_KEYWORD -> parseSystemInformation();
@@ -60,6 +76,16 @@ public class CommandParser {
         }
     }
 
+    private void parseRunCommand() throws ParseException, LexerException {
+        Token filePath = lexer.lookAhead();
+        lexer.advance();
+        if (filePath.type() != TokenType.FILE_PATH) {
+            throw new ParseException("Expected file path but got: " + filePath);
+        }
+        File file = parseFilePath(filePath, ".moba");
+
+        instructions.add(new RunScriptInstr(file, this));
+    }
 
     private void parseAwaitExpression() throws ParseException, LexerException {
 //        if (!(point instanceof TrackContact)) {
