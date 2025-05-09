@@ -13,14 +13,13 @@ public class AwaitTrackContact implements Instruction {
     private static final Logger logger = Logger.getLogger(AwaitTrackContact.class.getName());
 
     private final TrackContact expectedPoint;
-    private final int deciSeconds;
+    private final int milliSeconds;
     private final CompletableFuture<Boolean> verificationResult;
     private final DomainEventPublisher eventPublisher;
-    private volatile boolean isSensitive = true;
 
-    public AwaitTrackContact(TrackContact expectedPoint, int deciSeconds) {
+    public AwaitTrackContact(TrackContact expectedPoint, int milliSeconds) {
         this.expectedPoint = expectedPoint;
-        this.deciSeconds = deciSeconds;
+        this.milliSeconds = milliSeconds;
         this.verificationResult = new CompletableFuture<>();
         this.eventPublisher = DomainEventPublisher.getInstance();
     }
@@ -28,7 +27,7 @@ public class AwaitTrackContact implements Instruction {
 
     @Override
     public void execute(final CommandContext context) throws InstructionException {
-        logger.info("Awaiting track contact: " + expectedPoint.getName() + " with timeout: " + deciSeconds + " seconds");
+        logger.info("Awaiting track contact: " + expectedPoint.getName() + " with timeout: " + milliSeconds + " seconds");
 
         // Subscribe to track contact events
         Consumer<TrackContactEvent> contactListener = this::handleContactEvent;
@@ -37,7 +36,6 @@ public class AwaitTrackContact implements Instruction {
         try {
             // Busy waiting implementation
             final long startTime = System.currentTimeMillis();
-            final long timeoutMillis = deciSeconds * 100L;
 
             while (true) {
                 // Process any pending events by yielding this thread briefly
@@ -63,7 +61,7 @@ public class AwaitTrackContact implements Instruction {
 
                 // Check if we've timed out
                 long elapsedTime = System.currentTimeMillis() - startTime;
-                if (elapsedTime > timeoutMillis) {
+                if (elapsedTime > milliSeconds) {
                     logger.warning("Timed out waiting for track contact: " + expectedPoint.getName());
                     context.getOutput().println("Timed out waiting for track contact: " + expectedPoint.getName());
                     return; // Return without exception
@@ -86,7 +84,7 @@ public class AwaitTrackContact implements Instruction {
 
     @Override
     public void trace(final CommandContext context) {
-        context.getOutput().println("AWAIT TRACK_CONTACT " + expectedPoint.getName() + " TIMEOUT " + deciSeconds);
+        context.getOutput().println("AWAIT TRACK_CONTACT " + expectedPoint.getName() + " TIMEOUT " + milliSeconds);
     }
 
     private void handleContactEvent(TrackContactEvent event) {
