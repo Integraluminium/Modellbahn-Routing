@@ -61,7 +61,7 @@
 - name: K26
   id: 26
 
-# Behaves strangely
+# K27 has been observed to cause issues in certain edge cases. Investigate further if problems arise.
 - name: K27
   id: 27
 

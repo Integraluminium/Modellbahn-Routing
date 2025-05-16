@@ -88,11 +88,10 @@ public class CommandParser {
     }
 
     private void parseAwaitExpression() throws ParseException, LexerException {
-//        if (!(point instanceof TrackContact)) {
-//            throw new ParseException("Expected TrackContact but got: " + point.getName());
-//        }
-        TrackContact point = (TrackContact) parseGraphPoint(); // TODO remove this unsafe cast
-
+        GraphPoint awaitedGraphPoint = parseGraphPoint();
+        if (!(awaitedGraphPoint instanceof TrackContact point)) {
+            throw new ParseException("Expected track contact but got: " + awaitedGraphPoint);
+        }
 
         lexer.expect(TokenType.TIMEOUT_KEYWORD);
         int timeout = parseNumber();

@@ -53,7 +53,7 @@ public class Graph {
         return this.adjacencyList.keySet().stream()
                 .filter(point -> point.getName().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("GraphPoint with name " + name + " is not in the graph."));
+                .orElseThrow(() -> new IllegalArgumentException("GraphPoint with name " + name + " is not in the graph."));
     }
 
     public List<GraphPoint> getNeighbors(GraphPoint point) {
