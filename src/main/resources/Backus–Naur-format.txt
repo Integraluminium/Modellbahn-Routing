@@ -4,6 +4,8 @@
             | SYSTEM <system_command>
             | REMOVE <loc_id>
             | DRIVE
+            | RUN <file_path>
+            | AWAIT <graph_point> TIMEOUT <number>
 
 <modify_command> ::= <loc_id> <modify_locomotive_command>
                    | AUTOMATIC ADD LOCOMOTIVES TO ROUTE <boolean>
@@ -23,5 +25,6 @@
 <routing_algorithm> ::= "Dijkstra" | "Bellman_Ford"
 
 <loc_id> ::= digit*
-
 <graph_point> ::= letter (letter | digit)*
+<file_path> ::= a valid file path ending with ".moba"
+<boolean> ::= "0" | "1" | "true" | "false"

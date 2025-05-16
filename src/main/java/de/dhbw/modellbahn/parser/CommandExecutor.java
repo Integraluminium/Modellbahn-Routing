@@ -17,7 +17,7 @@ public class CommandExecutor {
     private final Logger logger = Logger.getLogger(CommandExecutor.class.getName());
 
     public CommandExecutor(LocomotiveRepository locomotiveRepository, Graph graph, SystemCalls systemCalls, PrintStream stream) {
-        this.commandContext = new CommandContext(locomotiveRepository, graph, systemCalls, stream);
+        this.commandContext = new CommandContext(locomotiveRepository, graph, systemCalls, stream, this);
     }
 
     public void execute(List<Instruction> instructions, boolean trace) throws Exception {

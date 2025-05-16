@@ -3,6 +3,7 @@ package de.dhbw.modellbahn.parser;
 import de.dhbw.modellbahn.application.routing.building.RoutingAlgorithm;
 import de.dhbw.modellbahn.application.routing.building.RoutingOptimization;
 import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.GraphPoint;
+import de.dhbw.modellbahn.domain.graph.nodes.nonswitches.TrackContact;
 import de.dhbw.modellbahn.domain.locomotive.attributes.LocId;
 import de.dhbw.modellbahn.domain.locomotive.attributes.Speed;
 import de.dhbw.modellbahn.parser.instructions.*;
@@ -11,6 +12,9 @@ import de.dhbw.modellbahn.parser.lexer.LexerException;
 import de.dhbw.modellbahn.parser.lexer.Token;
 import de.dhbw.modellbahn.parser.lexer.TokenType;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,18 @@ public class CommandParser {
     public CommandParser(Lexer lexer, DomainObjectParser domainObjectParser) {
         this.lexer = lexer;
         this.parser = domainObjectParser;
+    }
+
+    private File parseFilePath(final Token filePath, String suffix) throws ParseException {
+        Path path = Paths.get(filePath.value());
+        if (!path.toString().endsWith(suffix)) {
+            throw new ParseException("Expected file path with" + suffix + "extension but got: " + filePath);
+        }
+        File file = path.toFile();
+        if (!file.exists()) {
+            throw new ParseException("File " + file.getAbsolutePath() + " does not exist");
+        }
+        return file;
     }
 
     public List<Instruction> parse(String input) throws LexerException, ParseException {
@@ -40,25 +56,48 @@ public class CommandParser {
         Token token = lexer.lookAhead();
         lexer.advance();
 
-        if (token.type() == TokenType.NEW_KEYWORD) {
-            lexer.expect(TokenType.ROUTE_KEYWORD);
-            parseRouteCommand();
-        } else if (token.type() == TokenType.MODIFY_KEYWORD) {
-            parseModificationCommand();
-        } else if (token.type() == TokenType.LIST_KEYWORD) {
-            parseInformationCommand();
-        } else if (token.type() == TokenType.SYSTEM_KEYWORD) {
-            parseSystemInformation();
-        } else if (token.type() == TokenType.DRIVE_COMMAND) {
-            // Handle standalone DRIVE command
-            instructions.add(new DriveInstr());
-        } else if (token.type() == TokenType.REMOVE_KEYWORD) {
-            // moves locomotive to NotOnTrack
-            LocId locId = parseLocId();
-            instructions.add(new RemoveLocomotiveFromTrackInstr(locId));
-        } else {
-            throw new ParseException("Expected statement but got: " + token);
+        switch (token.type()) {
+            case NEW_KEYWORD -> {
+                lexer.expect(TokenType.ROUTE_KEYWORD);
+                parseRouteCommand();
+            }
+            case RUN_KEYWORD -> parseRunCommand();
+            case MODIFY_KEYWORD -> parseModificationCommand();
+            case LIST_KEYWORD -> parseInformationCommand();
+            case SYSTEM_KEYWORD -> parseSystemInformation();
+            case DRIVE_COMMAND -> instructions.add(new DriveInstr());
+            case REMOVE_KEYWORD -> {
+                // moves locomotive to NotOnTrack
+                LocId locId = parseLocId();
+                instructions.add(new RemoveLocomotiveFromTrackInstr(locId));
+            }
+            case AWAIT_KEYWORD -> parseAwaitExpression();
+            default -> throw new ParseException("Expected statement but got: " + token);
         }
+    }
+
+    private void parseRunCommand() throws ParseException, LexerException {
+        Token filePath = lexer.lookAhead();
+        lexer.advance();
+        if (filePath.type() != TokenType.FILE_PATH) {
+            throw new ParseException("Expected file path but got: " + filePath);
+        }
+        File file = parseFilePath(filePath, ".moba");
+
+        instructions.add(new RunScriptInstr(file, this));
+    }
+
+    private void parseAwaitExpression() throws ParseException, LexerException {
+        GraphPoint awaitedGraphPoint = parseGraphPoint();
+        if (!(awaitedGraphPoint instanceof TrackContact point)) {
+            throw new ParseException("Expected track contact but got: " + awaitedGraphPoint);
+        }
+
+        lexer.expect(TokenType.TIMEOUT_KEYWORD);
+        int timeout = parseNumber();
+
+
+        instructions.add(new AwaitTrackContact(point, timeout));
     }
 
     private void parseRouteCommand() throws LexerException, ParseException {

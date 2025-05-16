@@ -200,20 +200,15 @@ SYSTEM START        # Start the system
 SYSTEM STOP         # Stop the system
 ```
 
+> Warning: SYSTEM START will not work if the System is by the emergency stop button on the CS3 or if the CS3 was
+> rebooted.
+
 ### List Commands
 
 ```
 LIST LOCOMOTIVES    # Show all locomotives
 LIST GRAPHPOINTS    # Show all track points
 LIST ROUTE          # Show current route if previously calculated
-```
-
-### Locomotive Control
-
-```
-MODIFY 16397 POSITION W17 FACING W16  # Set locomotive position
-MODIFY 16397 SPEED 50                 # Set locomotive speed
-MODIFY 16397 TOGGLE DIRECTION         # Toggle locomotive direction
 ```
 
 ### Route Planning
@@ -225,11 +220,53 @@ NEW ROUTE
     WITH Dijkstra
 ```
 
-### Execution
+### Execution of the Route
+
+Execution the last calculated route on the railway.
 
 ```
 DRIVE               # Execute the defined route
 ```
+
+> Please make sure, that nothing has changed since the route was calculated.
+
+### Locomotive Control
+
+These commands are used to control the locomotives directly:
+
+```
+MODIFY 16397 POSITION W17 FACING W16  # Set locomotive position
+MODIFY 16397 SPEED 50                 # Set locomotive speed
+MODIFY 16397 TOGGLE DIRECTION         # Toggle locomotive direction
+```
+
+The positioning of the locomotive just sets the position of the locomotive in the Repository.
+It should be used to readjust the position of the locomotive in case it is not correct.
+The `AT`-Part in the new route command is just syntactical sugar for this `MODIFY` command.
+
+The Facing direction is the next graphpoint where the locomotive is looking to.
+It is used to obtain the current direction of the locomotive, which is used for the route planning.
+
+### Script Execution
+
+```
+RUN path/to/script.moba   # Execute commands from a script file
+```
+
+This command enables the execution of a sequence of commands from a `.moba` script file in the REPL.
+
+### Track Contact Events
+
+This feature is _experimental_!
+
+```
+AWAIT K2 TIMEOUT 600      # Wait for track contact K2 but at most 600ms
+```
+
+The `AWAIT` command pauses execution until a specific track contact is triggered or the timeout (in milliseconds) is
+reached.
+Afterward, the script continues with the next command.
+This is a useful tool for Scripts to test something on the track, and could also be used as a timing tool.
 
 One example Script can be found
 in: [src/main/resources/scripts/sampleScript.moba](src/main/resources/scripts/sampleScript.moba)

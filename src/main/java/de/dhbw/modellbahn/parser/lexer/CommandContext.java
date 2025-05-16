@@ -11,6 +11,8 @@ import de.dhbw.modellbahn.domain.graph.nodes.switches.Switch;
 import de.dhbw.modellbahn.domain.locomotive.Locomotive;
 import de.dhbw.modellbahn.domain.locomotive.attributes.LocId;
 import de.dhbw.modellbahn.domain.physical.railway.communication.SystemCalls;
+import de.dhbw.modellbahn.parser.CommandExecutor;
+import de.dhbw.modellbahn.parser.instructions.Instruction;
 import de.dhbw.modellbahn.plugin.routing.jgrapht.RouteBuilderForJGraphT;
 
 import java.io.PrintStream;
@@ -22,15 +24,17 @@ public class CommandContext {
     private final Graph graph;
     private final PrintStream output;
     private final SystemCalls systemCalls;
+    private final CommandExecutor commandExecutorForScripts;
 
     private boolean automaticallyAddAllLocomotivesToRoute = true;
     private RouteBuilder routeBuilder;
 
-    public CommandContext(final LocomotiveRepository locomotiveRepository, final Graph graph, final SystemCalls systemCalls, final PrintStream output) {
+    public CommandContext(final LocomotiveRepository locomotiveRepository, final Graph graph, final SystemCalls systemCalls, final PrintStream output, final CommandExecutor commandExecutor) {
         this.locomotiveRepository = locomotiveRepository;
         this.graph = graph;
         this.output = output;
         this.systemCalls = systemCalls;
+        this.commandExecutorForScripts = commandExecutor;
         resetRouteBuilder();
     }
 
@@ -142,5 +146,14 @@ public class CommandContext {
         });
         this.locomotiveRepository.updateLocomotives();
         resetRouteBuilder();
+    }
+
+    public void runScript(List<Instruction> instructions) {
+        try {
+            commandExecutorForScripts.execute(instructions, false);
+        } catch (Exception e) {
+            output.println("[Error] executing script: " + e.getMessage());
+            e.printStackTrace(output);
+        }
     }
 }

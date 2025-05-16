@@ -52,6 +52,16 @@ public class Lexer {
         addKeywordMachine("WITH", TokenType.WITH_KEYWORD);
         addKeywordMachine("AUTOMATIC", TokenType.AUTOMATIC_KEYWORD);
 
+        addKeywordMachine("AWAIT", TokenType.AWAIT_KEYWORD);
+        addKeywordMachine("TIMEOUT", TokenType.TIMEOUT_KEYWORD);
+        addKeywordMachine("IF", TokenType.IF_KEYWORD);
+        addKeywordMachine("THEN", TokenType.THEN_KEYWORD);
+        addKeywordMachine("ELSE", TokenType.ELSE_KEYWORD);
+        addKeywordMachine("ENDIF", TokenType.ENDIF_KEYWORD);
+
+        addKeywordMachine("RUN", TokenType.RUN_KEYWORD);
+        addMachine(new FilePathMachine());
+
         addMachine(new BooleanMachine());
         addMachine(new OptimizationMachine());
         addMachine(new AlgorithmMachine());
