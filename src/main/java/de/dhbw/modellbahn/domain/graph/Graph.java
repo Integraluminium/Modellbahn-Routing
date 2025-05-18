@@ -49,6 +49,13 @@ public class Graph {
         return this.adjacencyList.containsKey(point);
     }
 
+    public GraphPoint getGraphPoint(PointName name) {
+        return this.adjacencyList.keySet().stream()
+                .filter(point -> point.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("GraphPoint with name " + name + " is not in the graph."));
+    }
+
     public List<GraphPoint> getNeighbors(GraphPoint point) {
         List<WeightedEdge> edgesOfVertex = getEdgesOfVertex(point);
         return edgesOfVertex.stream().map(WeightedEdge::destination).toList();
